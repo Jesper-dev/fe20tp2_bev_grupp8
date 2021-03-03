@@ -4,3 +4,11 @@ export const recommendation = (recommendation) => {
         payload: recommendation,
     };
 };
+
+
+export const chosenShare = (share) => {
+    return {
+        type: 'CHOSENSHARE',
+        payload: share,
+    };
+};

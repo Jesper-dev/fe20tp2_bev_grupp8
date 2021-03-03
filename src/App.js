@@ -1,7 +1,8 @@
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
+import Toolbar from './components/toolbar-bottom/Toolbar'
+import StockInfoPage from './components/stock-infomation/StockInformationPage'
 import { createGlobalStyle } from 'styled-components';
-import Recommendations from './api/recommendations/Recommendations';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,9 +17,15 @@ const App = () => {
                 <Switch>
                   <Route exact path="/">
                     <Home />
+                    <Toolbar />
                   </Route>
                   <Route exact path="/profile">
                     <Profile />
+                    <Toolbar />
+                  </Route>
+                  <Route exact path="/info">
+                    <StockInfoPage />
+                    <Toolbar />
                   </Route>
                 </Switch>
         </Router>
