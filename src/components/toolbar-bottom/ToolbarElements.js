@@ -2,22 +2,33 @@ import styled from 'styled-components'
 
 
 export const ToolbarElement = styled.nav`
-    position: sticky;
+    position: fixed;
     bottom: 0;
 
     width: 100%;
-    height: 8vh;
+    height: 10vh;
+	overflow-x: auto;
+
+	background-color: blueviolet;
 
 	ul {
 		margin: 0;
 		padding: 0;
+
+		height: 100%;
+		width: 100%;
+
         list-style: none;
 		display: flex;
 		justify-content: space-evenly;
+		align-items: center;
 	}
 
 	a {
-		color: red;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: var(--white);
         text-decoration: none;
 	}
 
