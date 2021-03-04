@@ -7,13 +7,14 @@ import Mock from "../../api/Mock.json"
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-    console.log(Mock.finance.result[0].quotes)
 
     const stocksList = useSelector((state) => state.RecommendationReducer);
     return (
         <>
         <ContentWrapper>
-            <h1>Portfolio</h1>
+            <h1>FLOW</h1>
+
+            <h2>PORTFOLIO</h2>
 
             {Mock.finance.result[0].quotes.map((item, index) => {
                 return (

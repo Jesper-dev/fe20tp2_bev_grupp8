@@ -14,6 +14,7 @@ export const ContentWrapper = styled.div`
 
     p {
         border: 2px solid black;
+        border-radius: 10px;
         padding: 16px;
         margin: 8px;
         font-size: 1.2rem;

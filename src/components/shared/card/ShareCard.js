@@ -21,6 +21,7 @@ const ShareCard = ({ name, cost, percent, fav, stocksList }) => {
 
     return (
         <CardWrapper id={name}>
+            <span>⭐</span>
             <span>{name}</span>
             <span>{cost} $</span>
             <span>{percent.toFixed(2)}%</span>

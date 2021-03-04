@@ -1,4 +1,5 @@
 import React from 'react'
+import LineChart from '../charts/InfopageLinechart'
 import { useSelector } from 'react-redux';
 import {Link} from "react-router-dom"
 
@@ -9,10 +10,12 @@ const StockInformationPage = () => {
 
     return (
         <ContentWrapper>
+
             {chosenShare.map((item, index) => {
                 return <div key={index}>
                     <h1>{item.shortName}</h1>
                     <p>{item.symbol}</p>
+                    <LineChart />
                     <p>Pre market price: {item.preMarketPrice} $</p>
                     <p>Market price: {item.regularMarketPrice} $</p>
                     <p>Market change: {item.regularMarketChange.toFixed(2)}%</p>
