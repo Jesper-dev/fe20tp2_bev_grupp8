@@ -6,7 +6,7 @@ export const ToolbarElement = styled.nav`
     bottom: 0;
     width: 100%;
     height: 3.5rem;
-	background-color: blueviolet;
+	background-color: var(--primary);
 
 	ul {
 		display: grid;
@@ -24,11 +24,11 @@ export const ToolbarElement = styled.nav`
 		justify-content: center;
 		gap: 0.25rem;
 		height: 100%;
-		color: var(--white);
+		color: var(--body);
         text-decoration: none;
 
 		&:hover {
-			background-color: #8029D1;
+			background-color: var(--primary-dark);
 		}
 	}
 `

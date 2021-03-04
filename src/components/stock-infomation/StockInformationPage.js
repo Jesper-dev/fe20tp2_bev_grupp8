@@ -7,22 +7,20 @@ import {ContentWrapper} from "./StockInfromationElements"
 
 const StockInformationPage = () => {
     const chosenShare = useSelector((state) => state.ChosenShare);
-
+    console.log(chosenShare)
     return (
         <ContentWrapper>
 
             {chosenShare.map((item, index) => {
                 return <div key={index}>
                     <h1>{item.shortName}</h1>
-                    <p>{item.symbol}</p>
                     <LineChart />
-                    <p>Pre market price: {item.preMarketPrice} $</p>
+                    <p>{item.symbol}</p>
                     <p>Market price: {item.regularMarketPrice} $</p>
-                    <p>Market change: {item.regularMarketChange.toFixed(2)}%</p>
+                    <p>Reg market change: {item.regularMarketChange.toFixed(2)}%</p>
                     <p>Market change percent: {item.regularMarketChangePercent.toFixed(2)}%</p>
                 </div>
             })}
-            <Link to="/">Back</Link>
         </ContentWrapper>
     )
 }

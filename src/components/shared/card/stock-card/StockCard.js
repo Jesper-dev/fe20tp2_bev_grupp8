@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import { CardWrapper } from './ShareCardElements';
+import { CardWrapper } from './StockCardElements';
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { chosenShare } from '../../../redux/actions'
+import { chosenShare } from '../../../../redux/actions'
 
 let chosenShareArray = [];
 

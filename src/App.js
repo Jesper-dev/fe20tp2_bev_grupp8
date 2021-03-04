@@ -44,12 +44,14 @@ const App = () => {
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --primary-color: purple;
-    --secondary-color: lightpink;
-    --third-color: lightblue;
+    --primary: purple;
+    --secondary: lightpink;
+    --third: lightblue;
 
-    --white: #ffffff;
-    --grey: #636363;
+    --primary-dark: #6B076B;
+
+    --body: #ffffff; 
+    --body-secondary: #575757;
   }
 
   body {
@@ -62,5 +64,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
+
 
 export default App;

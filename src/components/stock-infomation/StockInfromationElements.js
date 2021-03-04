@@ -5,7 +5,7 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: turquoise;
+    background-color: var --body;
 
     h1 {
         text-align: center;
@@ -13,10 +13,14 @@ export const ContentWrapper = styled.div`
     }
 
     p {
-        border: 2px solid black;
-        border-radius: 10px;
+        border: 2px solid var(--primary);
+        border-radius: 4px;
         padding: 16px;
         margin: 8px;
         font-size: 1.2rem;
+        height: 0;
+        display: flex;
+        align-items: center;
+        
     }
 `
