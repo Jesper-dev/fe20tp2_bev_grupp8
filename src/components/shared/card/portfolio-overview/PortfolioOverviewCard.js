@@ -5,7 +5,7 @@ const PortfolioOverviewCard = ({total, difference, percent}) => {
     return (
         
         <PortOverviewWrapper>
-            <h1>Total: {total} USD</h1>
+            <h1>Total: {total} Anton-valuta</h1>
             <p>Return share <span>{difference} USD</span> <span>({percent}%)</span></p>
         </PortOverviewWrapper>
     )

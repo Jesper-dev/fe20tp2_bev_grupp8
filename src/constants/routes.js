@@ -1,0 +1,10 @@
+export const HOME = '/';
+export const LANDING = '/changlater';
+export const SIGN_UP = '/signup';
+export const SIGN_IN = '/signin';
+export const ACCOUNT = '/account';
+export const ADMIN = '/admin';
+export const PASSWORD_FORGET = '/pw-forget';
+export const DISCOVER = '/discover';
+export const SOCIAL = '/social';
+export const PROFILE = '/profile';

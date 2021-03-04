@@ -7,7 +7,7 @@ import {ContentWrapper} from "./StockInfromationElements"
 
 const StockInformationPage = () => {
     const chosenShare = useSelector((state) => state.ChosenShare);
-    console.log(chosenShare)
+   
     return (
         <ContentWrapper>
 
@@ -15,6 +15,14 @@ const StockInformationPage = () => {
                 return <div key={index}>
                     <h1>{item.shortName}</h1>
                     <LineChart />
+                    <div className="buttonWrapper">
+                    <button style={{backgroundColor: "green"}}>BUY</button>
+                    <button style={{backgroundColor: "red"}}>SELL</button>
+                    </div>
+                    <span>⭐</span>
+                    <label>
+                    <input type="checkbox" />FOLLOW {/* <span>FOLLOW</span> */}
+                    </label>
                     <p>{item.symbol}</p>
                     <p>Market price: {item.regularMarketPrice} $</p>
                     <p>Reg market change: {item.regularMarketChange.toFixed(2)}%</p>

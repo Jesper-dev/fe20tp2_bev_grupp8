@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
     height: 100vh;
-    background-color: white;
+    background-color: var (--body);
     display: flex;
     flex-flow: column nowrap;
     gap: 2rem;

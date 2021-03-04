@@ -5,7 +5,7 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: var --body;
+    background-color: var(--body);
 
     h1 {
         text-align: center;
@@ -22,5 +22,29 @@ export const ContentWrapper = styled.div`
         display: flex;
         align-items: center;
         
+    }
+
+    button {
+        padding: 0.75rem 1rem;
+        background: none;
+        border: 2px solid black;
+        outline: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    button:focus {
+        box-shadow: var(--box-shadow-focus);
+    }
+
+    button:not(:focus-visible) {
+        box-shadow: none;
+    }
+
+    .buttonWrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
     }
 `
