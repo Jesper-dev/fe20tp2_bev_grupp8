@@ -1,5 +1,7 @@
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
+import SocialPage from './components/social-page/SocialPage'
+import Discover from './components/search/Search'
 import Toolbar from './components/toolbar-bottom/Toolbar'
 import StockInfoPage from './components/stock-infomation/StockInformationPage'
 import { createGlobalStyle } from 'styled-components';
@@ -17,6 +19,14 @@ const App = () => {
                 <Switch>
                   <Route exact path="/">
                     <Home />
+                    <Toolbar />
+                  </Route>
+                  <Route exact path="/discover">
+                    <Discover />
+                    <Toolbar />
+                  </Route>
+                  <Route exact path="/social">
+                    <SocialPage />
                     <Toolbar />
                   </Route>
                   <Route exact path="/profile">
@@ -44,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    margin: 0%;
+    margin: 0 0 8vh 0;
     padding: 0%;
     box-sizing: border-box;
     font-family: sans-serif;
