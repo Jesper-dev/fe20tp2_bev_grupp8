@@ -7,11 +7,11 @@ const Toolbar = () => {
         <ToolbarElement>
             <ul>
                 <li>
-					<Link to="/">Home</Link>
+					<Link to="/"><i class="fas fa-home"></i>Home</Link>
 				</li>
-                <li>DISCOVER</li>
-                <li>SOCIAL</li>
-                <li>PROFILE</li>
+                <li><Link to="/discover"><i class="fas fa-search-dollar"></i>Discover</Link></li>
+                <li><Link to="/social"><i class="fas fa-users"></i>Social</Link></li>
+                <li><Link to="/profile"><i class="fas fa-user-circle"></i>Profile</Link></li>
             </ul>
         </ToolbarElement>
     )
