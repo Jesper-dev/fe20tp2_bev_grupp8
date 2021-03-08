@@ -6,7 +6,7 @@ import { ContentWrapper } from './SignupElements';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
-const SignUpPage = () => (
+const SignUp = () => (
     <div>
         <SignUpForm />
     </div>
@@ -107,7 +107,7 @@ class SignUpFormBase extends Component {
                         type="password"
                         placeholder="Confirm Password"
                     />
-                    <label>
+                    {/*  <label>
                         Admin:
                         <input
                             name="isAdmin"
@@ -115,7 +115,7 @@ class SignUpFormBase extends Component {
                             checked={isAdmin}
                             onChange={this.onChangeCheckbox}
                         />
-                    </label>
+                    </label> */}
                     <button disabled={isInvalid} type="submit">
                         Sign Up
                     </button>
@@ -134,6 +134,6 @@ const SignUpLink = () => (
 
 const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 
-export default SignUpPage;
+export default SignUp;
 
 export { SignUpForm, SignUpLink };

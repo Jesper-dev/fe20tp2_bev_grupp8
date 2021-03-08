@@ -4,7 +4,9 @@ import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/search/Search';
 import Toolbar from './components//shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
-import Signup from './components/signgup/Signup';
+import SignUp from './components/signup/SignUp';
+import SignIn from './components/signin/SignIn';
+import PasswordForget from './components/PasswordForget';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
@@ -23,20 +25,26 @@ const App = () => {
                     <Discover />
                     <Toolbar />
                 </Route>
-                <Route exact path="/social">
+                <Route exact path={ROUTES.SOCIAL}>
                     <SocialPage />
                     <Toolbar />
                 </Route>
-                <Route exact path="/profile">
+                <Route exact path={ROUTES.PROFILE}>
                     <Profile />
                     <Toolbar />
                 </Route>
-                <Route exact path="/info">
+                <Route exact path={ROUTES.INFO}>
                     <StockInfoPage />
                     <Toolbar />
                 </Route>
-                <Route exact path="/signup">
-                    <Signup />
+                <Route exact path={ROUTES.SIGN_IN}>
+                    <SignIn />
+                </Route>
+                <Route exact path={ROUTES.SIGN_UP}>
+                    <SignUp />
+                </Route>
+                <Route exact path={ROUTES.PASSWORD_FORGET}>
+                    <PasswordForget />
                 </Route>
                 <Route exact path={ROUTES.LANDING}>
                     <Landingpage />
