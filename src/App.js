@@ -1,49 +1,47 @@
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
-import SocialPage from './components/social-page/SocialPage'
-import Discover from './components/search/Search'
-import Toolbar from './components//shared/toolbar-bottom/Toolbar'
-import StockInfoPage from './components/stock-infomation/StockInformationPage'
-import Signup from "./components/signgup/Signup"
+import SocialPage from './components/social-page/SocialPage';
+import Discover from './components/search/Search';
+import Toolbar from './components//shared/toolbar-bottom/Toolbar';
+import StockInfoPage from './components/stock-infomation/StockInformationPage';
+import Signup from './components/signgup/Signup';
 import { createGlobalStyle } from 'styled-components';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
-
+import Landingpage from './components/landingpage/Landingpage';
 
 const App = () => {
     return (
         <Router>
-              <GlobalStyle />
-                <Switch>
-                  <Route exact path={ROUTES.HOME}>
+            <GlobalStyle />
+            <Switch>
+                <Route exact path={ROUTES.HOME}>
                     <Home />
                     <Toolbar />
-                  </Route>
-                  <Route exact path={ROUTES.DISCOVER}>
+                </Route>
+                <Route exact path={ROUTES.DISCOVER}>
                     <Discover />
                     <Toolbar />
-                  </Route>
-                  <Route exact path="/social">
+                </Route>
+                <Route exact path="/social">
                     <SocialPage />
                     <Toolbar />
-                  </Route>
-                  <Route exact path="/profile">
+                </Route>
+                <Route exact path="/profile">
                     <Profile />
                     <Toolbar />
-                  </Route>
-                  <Route exact path="/info">
+                </Route>
+                <Route exact path="/info">
                     <StockInfoPage />
                     <Toolbar />
-                  </Route>
-                  <Route exact path="/signup">
+                </Route>
+                <Route exact path="/signup">
                     <Signup />
-                  </Route>
-                </Switch>
+                </Route>
+                <Route exact path={ROUTES.LANDING}>
+                    <Landingpage />
+                </Route>
+            </Switch>
         </Router>
     );
 };
@@ -76,6 +74,5 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
-
 
 export default App;
