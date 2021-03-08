@@ -5,4 +5,8 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: nowrap column;
     align-items: center;
+
+    > p {
+        color: red;
+    }
 `;

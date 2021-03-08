@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { SignUpLink } from '../signup/SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { ContentWrapper } from './SigninElements';
+import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../../constants/routes';
@@ -73,6 +74,8 @@ class SignInFormBase extends Component {
                     </button>
                     {error && <p>{error.message}</p>}
                 </form>
+                <p>Dont have an account? well.. sucks for you</p>
+                <Link to={ROUTES.SIGN_UP}>Signup</Link>
             </ContentWrapper>
         );
     }

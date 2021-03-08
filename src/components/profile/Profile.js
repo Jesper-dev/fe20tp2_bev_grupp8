@@ -1,11 +1,24 @@
-import React from 'react'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
+
+import SignOutButton from '../SignOut';
 
 const Profile = () => {
-    return (
-        <div>
-            PROFILE
-        </div>
-    )
-}
+    const history = useHistory();
 
-export default Profile
+    const redirect = () => {
+        console.log('REDIRECT ME');
+        history.push('/');
+    };
+
+    return (
+        <>
+            <h1>SIGN OUT</h1>
+
+            <SignOutButton />
+        </>
+    );
+};
+
+export default Profile;

@@ -11,6 +11,7 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
+import { withAuthentication } from './components/session';
 
 const App = () => {
     return (
@@ -83,4 +84,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default App;
+export default withAuthentication(App);

@@ -8,7 +8,7 @@ import * as ROLES from '../../../constants/roles';
 
 import { AuthUserContext } from '../../session';
 
-const Toolbar = () => {
+const Toolbar = ({ authUser }) => {
     return (
         // <ToolbarElement>
         //     <ul>
@@ -47,7 +47,7 @@ const Toolbar = () => {
 };
 
 // authUser.roles[ROLES.ADMIN]
-const NavigationAuth = ({ authUser }) => (
+const NavigationAuth = () => (
     <div>
         <ToolbarElement>
             <ul>
