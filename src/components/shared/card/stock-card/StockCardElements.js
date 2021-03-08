@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
     border: 2px solid var(--primary);
-    border-radius: 2px;
+    border-radius: 5px;
     background: var(--body);
     width: 90vw;
-    height: 6vh;
+    min-height: 38px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 
     span {
-        font-size: 1.0rem;
+        font-size: 1rem;
         font-weight: bold;
     }
 

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
     height: 100vh;
@@ -17,11 +17,10 @@ export const ContentWrapper = styled.div`
         border-radius: 4px;
         padding: 16px;
         margin: 8px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         height: 0;
         display: flex;
         align-items: center;
-        
     }
 
     button {
@@ -47,4 +46,4 @@ export const ContentWrapper = styled.div`
         display: flex;
         justify-content: space-around;
     }
-`
+`;

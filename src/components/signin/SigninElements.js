@@ -1,15 +1,17 @@
 import styled from 'styled-components';
+import { Link as SignL} from 'react-router-dom'
 
 export const ContentWrapper = styled.div`
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: var(--body);
-    color: var(--primary);
+    background-color: var(--body-secondary);
+    color: var(--body-fifth);
 
     h1 {
         margin: 8px;
+        color: var(--primary);
     }
 
     form > h1 {
@@ -40,23 +42,34 @@ export const ContentWrapper = styled.div`
     input {
         font-size: 1rem;
         width: 100%;
-        height: 20%;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
+        height: 10%;
+        border: 2px solid var(--body-third);
+        border-radius: 12px;
         margin: 16px;
+        padding-left: 8px;
         outline: none;
-        background: none;
+        ::placeholder {
+            padding-left: 8px;
+        }
     }
 
     button {
-        padding: 16px 24px;
-        border: 2px solid var(--primary);
-        background: none;
-        border-radius: 10px;
-        color: var(--primary);
+        padding: 8px 72px;
+        background: var(--primary);
+        border-radius: 16px;
+        color: var(--body);
         font-size: 1rem;
         outline: none;
         margin: 8px;
         cursor: pointer;
     }
+
+    p {
+        margin-top: 64px;
+    }
 `;
+
+
+export const SignLink = styled(SignL)`
+color: blue;
+`

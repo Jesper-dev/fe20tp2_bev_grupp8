@@ -5,13 +5,16 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: var(--body);
-    color: var(--primary);
+    background: var(--body-secondary);
 
     h1 {
         margin: 8px;
+        color: var(--primary);
     }
-
+    h3 {
+        color: var(--body-fourth);
+        margin: 0;
+    }
     form > h1 {
         margin: 16px;
     }
@@ -40,20 +43,23 @@ export const ContentWrapper = styled.div`
     input {
         font-size: 1rem;
         width: 100%;
-        height: 20%;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
+        height: 10%;
+        border: 2px solid var(--body-third);
+        /*         background: var(--body-second); */
+        border-radius: 12px;
         margin: 16px;
         outline: none;
-        background: none;
+        padding-left: 8px;
+        ::placeholder {
+            padding-left: 8px;
+        }
     }
 
     button {
-        padding: 16px 24px;
-        border: 2px solid var(--primary);
-        background: none;
-        border-radius: 10px;
-        color: var(--primary);
+        padding: 8px 72px;
+        background: var(--primary);
+        border-radius: 16px;
+        color: var(--body);
         font-size: 1rem;
         outline: none;
         margin: 8px;

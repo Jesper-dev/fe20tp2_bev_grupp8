@@ -8,4 +8,9 @@ export const ContentWrapper = styled.div`
     gap: 2rem;
     align-items: center;
     /* padding: 1rem; */
+
+    h2{
+        margin: 0;
+        margin-top: 16px;
+    }
 `;

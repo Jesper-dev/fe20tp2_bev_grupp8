@@ -1,5 +1,5 @@
 import React from 'react';
-import ShareCard from '../shared/card/stock-card/StockCard';
+import StockCard from '../shared/card/stock-card/StockCard';
 import { ContentWrapper } from './HomeElements';
 import Recommendations from '../../api/recommendations/Recommendations';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
     const stocksList = useSelector((state) => state.RecommendationReducer);
+    const following = useSelector((state) => state.Following)
     return (
         <>
             <ContentWrapper>
@@ -20,9 +21,9 @@ const Home = () => {
                     percent={2.5}
                 />
 
-                {MockData.finance.result[0].quotes.map((item, index) => {
+                {/* {MockData.finance.result[0].quotes.map((item, index) => {
                     return (
-                        <ShareCard
+                        <StockCard
                             stocksList={MockData.finance.result[0].quotes}
                             key={index}
                             name={item.symbol}
@@ -30,7 +31,21 @@ const Home = () => {
                             percent={item.regularMarketChangePercent}
                         />
                     );
+                })} */}
+
+                 {following.map((item, index) => {
+                    return (
+                        <StockCard
+                            stocksList={following}
+                            key={index}
+                            name={item.symbol}
+                            cost={item.regularMarketPrice}
+                            percent={item.regularMarketChangePercent}
+                        />
+                    );
                 })}
+
+
             </ContentWrapper>
             {/*        <Recommendations /> */}
         </>

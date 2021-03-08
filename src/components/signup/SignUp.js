@@ -77,7 +77,8 @@ class SignUpFormBase extends Component {
 
         return (
             <ContentWrapper>
-                <h1>SignUp</h1>
+                <h1>B-E-V</h1>
+                <h3>create your account</h3>
                 <form onSubmit={this.onSubmit}>
                     <input
                         name="username"

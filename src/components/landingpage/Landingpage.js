@@ -11,10 +11,10 @@ const Landingpage = () => {
             <p>Already have an account? Signin, otherwise signup!</p>
             <div>
                 <Link to={ROUTES.SIGN_IN}>
-                    <SignInAndOutBtn>Login</SignInAndOutBtn>
+                    <SignInAndOutBtn>Sign in</SignInAndOutBtn>
                 </Link>
                 <Link to={ROUTES.SIGN_UP}>
-                    <SignInAndOutBtn>Signup</SignInAndOutBtn>
+                    <SignInAndOutBtn>Sign up</SignInAndOutBtn>
                 </Link>
             </div>
         </ContentWrapper>

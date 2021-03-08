@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { SignUpLink } from '../signup/SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-import { ContentWrapper } from './SigninElements';
-import { Link } from 'react-router-dom';
+import { ContentWrapper, SignLink } from '../signin/SigninElements';
+/* import { Link } from 'react-router-dom'; */
 
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignIn = () => (
     <div>
-        <h1>SignIn</h1>
         <SignInForm />
-        <PasswordForgetLink />
-        <SignUpLink />
+        {/*     <PasswordForgetLink />
+        <SignUpLink /> */}
     </div>
 );
 
@@ -54,6 +53,7 @@ class SignInFormBase extends Component {
 
         return (
             <ContentWrapper>
+                <h1>B-E-V</h1>
                 <form onSubmit={this.onSubmit}>
                     <input
                         name="email"
@@ -73,9 +73,12 @@ class SignInFormBase extends Component {
                         Sign In
                     </button>
                     {error && <p>{error.message}</p>}
+
+                    <p>
+                        Don't have an account?{' '}
+                        <SignLink to={ROUTES.SIGN_UP}>Signup</SignLink>
+                    </p>
                 </form>
-                <p>Dont have an account? well.. sucks for you</p>
-                <Link to={ROUTES.SIGN_UP}>Signup</Link>
             </ContentWrapper>
         );
     }

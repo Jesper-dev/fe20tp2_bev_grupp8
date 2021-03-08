@@ -12,3 +12,11 @@ export const chosenShare = (share) => {
         payload: share,
     };
 };
+
+
+export const setFollowing = (follow) => {
+    return {
+        type: 'FOLLOW',
+        payload: follow,
+    };
+};
