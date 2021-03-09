@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { SignUpLink } from '../signup/SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-import { ContentWrapper, SignLink } from '../signin/SigninElements';
+import { ContentWrapper, SignLink } from './SigninElements';
 /* import { Link } from 'react-router-dom'; */
 
 import { withFirebase } from '../firebase';
@@ -55,28 +55,32 @@ class SignInFormBase extends Component {
             <ContentWrapper>
                 <h1>B-E-V</h1>
                 <form onSubmit={this.onSubmit}>
-                    <input
-                        name="email"
-                        value={email}
-                        onChange={this.onChange}
-                        type="text"
-                        placeholder="Email Address"
-                    />
-                    <input
-                        name="password"
-                        value={password}
-                        onChange={this.onChange}
-                        type="password"
-                        placeholder="Password"
-                    />
+					<label>E-mail
+						<input
+							name="email"
+							value={email}
+							onChange={this.onChange}
+							type="email"
+							placeholder="E-mail address"
+						/>
+					</label>
+					<label>Password
+						<input
+							name="password"
+							value={password}
+							onChange={this.onChange}
+							type="password"
+							placeholder="Password"
+						/>
+					</label>
                     <button disabled={isInvalid} type="submit">
                         Sign In
                     </button>
-                    {error && <p>{error.message}</p>}
+                    {error && <p className="error-message">{error.message}</p>}
 
                     <p>
                         Don't have an account?{' '}
-                        <SignLink to={ROUTES.SIGN_UP}>Signup</SignLink>
+                        <SignLink to={ROUTES.SIGN_UP}>Sign Up</SignLink>
                     </p>
                 </form>
             </ContentWrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 import { ToolbarElement } from './ToolbarElements';
 import { Link } from 'react-router-dom';
 
-import SignOutButton from '../../SignOut';
+import SignOutButton from '../../signout/SignOut';
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
 

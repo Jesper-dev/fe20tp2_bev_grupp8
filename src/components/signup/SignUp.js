@@ -78,36 +78,44 @@ class SignUpFormBase extends Component {
         return (
             <ContentWrapper>
                 <h1>B-E-V</h1>
-                <h3>create your account</h3>
+                <h3>Create your account</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input
-                        name="username"
-                        value={username}
-                        onChange={this.onChange}
-                        type="text"
-                        placeholder="Full Name"
-                    />
-                    <input
-                        name="email"
-                        value={email}
-                        onChange={this.onChange}
-                        type="text"
-                        placeholder="Email Address"
-                    />{' '}
-                    <input
-                        name="passwordOne"
-                        value={passwordOne}
-                        onChange={this.onChange}
-                        type="password"
-                        placeholder="Password"
-                    />{' '}
-                    <input
-                        name="passwordTwo"
-                        value={passwordTwo}
-                        onChange={this.onChange}
-                        type="password"
-                        placeholder="Confirm Password"
-                    />
+					<label>Username
+						<input
+							name="username"
+							value={username}
+							onChange={this.onChange}
+							type="text"
+							placeholder="Username"
+						/>
+					</label>
+					<label>E-mail
+						<input
+							name="email"
+							value={email}
+							onChange={this.onChange}
+							type="email"
+							placeholder="E-mail address"
+						/>
+					</label>
+					<label>Password
+						<input
+							name="passwordOne"
+							value={passwordOne}
+							onChange={this.onChange}
+							type="password"
+							placeholder="Password"
+						/>
+					</label>
+					<label>Confirm password
+						<input
+							name="passwordTwo"
+							value={passwordTwo}
+							onChange={this.onChange}
+							type="password"
+							placeholder="Confirm password"
+						/>
+					</label>
                     {/*  <label>
                         Admin:
                         <input
@@ -120,7 +128,9 @@ class SignUpFormBase extends Component {
                     <button disabled={isInvalid} type="submit">
                         Sign Up
                     </button>
-                    {error && <p>{error.message}</p>}
+                    {error && <p className="error-message">{error.message}</p>}
+
+					<p>Already have an account? <Link to={ROUTES.SIGN_IN}>Sign in</Link></p>
                 </form>
             </ContentWrapper>
         );

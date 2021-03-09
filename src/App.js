@@ -73,12 +73,14 @@ const GlobalStyle = createGlobalStyle`
     --body-fifth: #262626;
 
     --box-shadow-focus: 0 0 0 0.125rem #90CAF9, 0 0 0 0.375rem #E3F2FD;
+
+	--typefaces: "Inter", sans-serif;
   }
 
   body {
     margin: 0 0 56px 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: var(--typefaces);
     background-color: var(--body-secondary);
   }
 

@@ -32,7 +32,7 @@ class Firebase {
 
     doSignOut = () => {
         this.auth.signOut();
-        window.location.replace('/landing');
+        window.location.replace('/');
     };
 
     doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
