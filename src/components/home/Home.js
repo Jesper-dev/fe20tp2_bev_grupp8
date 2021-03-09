@@ -5,12 +5,16 @@ import Recommendations from '../../api/recommendations/Recommendations';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
 import Mock from '../../api/Mock.json';
 import MockData from '../../api/MockData.json';
+import MockGetTickers from '../../api/MockGetTickers.json';
 
 import { useSelector } from 'react-redux';
 
 const Home = () => {
     const stocksList = useSelector((state) => state.RecommendationReducer);
-    const following = useSelector((state) => state.Following)
+    const following = useSelector((state) => state.Following);
+
+    let array = MockGetTickers.finance.result[0].quotes;
+    console.log(array);
     return (
         <>
             <ContentWrapper>
@@ -33,7 +37,9 @@ const Home = () => {
                     );
                 })} */}
 
-                 {following.map((item, index) => {
+                {/* //TODO Gör om denna till en component */}
+
+                {following.map((item, index) => {
                     return (
                         <StockCard
                             stocksList={following}
@@ -44,8 +50,6 @@ const Home = () => {
                         />
                     );
                 })}
-
-
             </ContentWrapper>
             {/*        <Recommendations /> */}
         </>

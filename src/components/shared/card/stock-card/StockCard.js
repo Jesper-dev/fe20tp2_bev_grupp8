@@ -7,8 +7,6 @@ import { chosenShare } from '../../../../redux/actions';
 let chosenShareArray = [];
 
 const StockCard = ({ name, cost, percent, fav, stocksList }) => {
-    const [share, setShare] = useState(undefined);
-
     const dispatch = useDispatch();
 
     const setChosenStockOption = (name) => {

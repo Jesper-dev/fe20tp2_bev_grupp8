@@ -1,50 +1,46 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { setFollowing } from '../../redux/actions'
+import { setFollowing } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 import { ContentWrapper } from './StockInfromationElements';
 let following = [];
 const StockInformationPage = () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     const chosenShare = useSelector((state) => state.ChosenShare);
-    const dispatch = useDispatch()
-    const followingArr = useSelector((state) => state.Following)
+    const dispatch = useDispatch();
+    const followingArr = useSelector((state) => state.Following);
 
     useEffect(() => {
-        if(followingArr.includes(chosenShare[0])) {
-            setChecked(true)
+        if (followingArr.includes(chosenShare[0])) {
+            setChecked(true);
         } else {
-            setChecked(false)
+            setChecked(false);
         }
-    }, [])
+    }, []);
 
+    const onFollow = () => {
+        if (followingArr.includes(chosenShare[0])) {
+            let name = chosenShare[0].symbol;
+            setChecked(false);
+            let index = followingArr.findIndex((x) => x.symbol == name);
 
-    const onFollow = (e) => {
-
-        if(followingArr.includes(chosenShare[0])) {
-            let name = chosenShare[0].longName;
-            setChecked(false)
-            let index = following.findIndex(x => x.name == name)
-
-            following.splice(index, 1)
-            dispatch(setFollowing(following))
-
+            console.log(index);
+            followingArr.splice(index, 1);
+            dispatch(setFollowing(followingArr));
         } else {
-            following.push(chosenShare[0])
-            dispatch(setFollowing(following))
-            setChecked(true)
-
+            following.push(chosenShare[0]);
+            dispatch(setFollowing(following));
+            setChecked(true);
         }
     };
-
+    console.log(following);
     const onChange = (e) => {
-        setChecked(!checked)
-    }
-
+        setChecked(!checked);
+    };
 
     return (
         <ContentWrapper>
@@ -63,8 +59,12 @@ const StockInformationPage = () => {
                         </div>
                         <span>⭐</span>
                         <label>
-                             <input type="checkbox" onClick={onFollow} checked={checked} onChange={onChange}/>
-
+                            <input
+                                type="checkbox"
+                                onClick={onFollow}
+                                checked={checked}
+                                onChange={onChange}
+                            />
                             FOLLOW {/* <span>FOLLOW</span> */}
                         </label>
                         <p>{item.symbol}</p>
