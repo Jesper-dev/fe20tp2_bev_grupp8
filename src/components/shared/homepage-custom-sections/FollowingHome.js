@@ -10,7 +10,7 @@ const FollowingHome = ({ array }) => {
                 <h3>Following</h3>
                 <p>
                     {array.length == 0
-                        ? 'You are not following any stocks at the moment! Use the discover page to find stocks of your interesst'
+                        ? 'You are not following any stocks at the moment! Use the discover page to find stocks of your interest'
                         : ''}
                 </p>
                 {array.map((item, index) => {

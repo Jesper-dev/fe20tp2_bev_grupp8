@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-    /* height: 100vh; */
     height: 100%;
     display: flex;
-    flex-flow: nowrap column;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 2rem;
 
     h2 {
+        margin: 0;
         color: var(--primary);
     }
 
@@ -17,18 +19,13 @@ export const ContentWrapper = styled.div`
     }
 
     div {
-        height: 15%;
-
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
+        gap: 1rem;
     }
 
     .money-svg {
-        /* width: 80%; */
-        /* height: 50%; */
-        width: 100px;
-        height: 100px;
+        width: auto;
+        height: 30%;
     }
 `;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { ToolbarElement } from './ToolbarElements';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import SignOutButton from '../../signout/SignOut';
+import SignOutButton from '../../sign-out/SignOut';
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
 
@@ -52,24 +52,24 @@ const NavigationAuth = () => (
         <ToolbarElement>
             <ul>
                 <li>
-                    <Link to={ROUTES.HOME}>
+                    <NavLink to={ROUTES.HOME}>
                         <i className="fas fa-home"></i>Home
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to={ROUTES.DISCOVER}>
+                    <NavLink to={ROUTES.DISCOVER}>
                         <i className="fas fa-search-dollar"></i>Discover
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to={ROUTES.SOCIAL}>
+                    <NavLink to={ROUTES.SOCIAL}>
                         <i className="fas fa-users"></i>Social
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to={ROUTES.PROFILE}>
+                    <NavLink to={ROUTES.PROFILE}>
                         <i className="fas fa-user-circle"></i>Profile
-                    </Link>
+                    </NavLink>
                 </li>
             </ul>
         </ToolbarElement>
@@ -79,24 +79,24 @@ const NavigationNonAuth = () => (
     <ToolbarElement>
         <ul>
             <li>
-                <Link to={ROUTES.SIGN_IN}>
+                <NavLink to={ROUTES.SIGN_IN}>
                     <i className="fas fa-home"></i>Home
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link to={ROUTES.SIGN_IN}>
+                <NavLink to={ROUTES.SIGN_IN}>
                     <i className="fas fa-search-dollar"></i>Discover
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link to={ROUTES.SIGN_IN}>
+                <NavLink to={ROUTES.SIGN_IN}>
                     <i className="fas fa-users"></i>Social
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link to={ROUTES.SIGN_IN}>
+                <NavLink to={ROUTES.SIGN_IN}>
                     <i className="fas fa-user-circle"></i>Profile
-                </Link>
+                </NavLink>
             </li>
         </ul>
     </ToolbarElement>

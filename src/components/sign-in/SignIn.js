@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { SignUpLink } from '../signup/SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-import { ContentWrapper, SignLink } from './SigninElements';
+import { SignUpLink } from '../sign-up/SignUp';
+import { PasswordForgetLink } from '../password-forget';
+import { ContentWrapper, SignLink } from './SignInElements';
 /* import { Link } from 'react-router-dom'; */
 
 import { withFirebase } from '../firebase';
@@ -55,24 +55,26 @@ class SignInFormBase extends Component {
             <ContentWrapper>
                 <h1>B-E-V</h1>
                 <form onSubmit={this.onSubmit}>
-					<label>E-mail
-						<input
-							name="email"
-							value={email}
-							onChange={this.onChange}
-							type="email"
-							placeholder="E-mail address"
-						/>
-					</label>
-					<label>Password
-						<input
-							name="password"
-							value={password}
-							onChange={this.onChange}
-							type="password"
-							placeholder="Password"
-						/>
-					</label>
+                    <label>
+                        E-mail
+                        <input
+                            name="email"
+                            value={email}
+                            onChange={this.onChange}
+                            type="email"
+                            placeholder="E-mail address"
+                        />
+                    </label>
+                    <label>
+                        Password
+                        <input
+                            name="password"
+                            value={password}
+                            onChange={this.onChange}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </label>
                     <button disabled={isInvalid} type="submit">
                         Sign In
                     </button>

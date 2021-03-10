@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContentWrapper } from './LandingpageElements';
-import { SignInAndOutBtn } from '../shared/button/ButtonElements';
+import { SignInAndOutLink } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';
 import { Link } from 'react-router-dom';
 
@@ -13,16 +13,18 @@ const Landingpage = () => {
             <MoneySvg className="money-svg" />
             <p>New to the webiste? Join below today! Otherwise sign in.</p>
             <div>
-                <Link to={ROUTES.SIGN_IN}>
-                    <SignInAndOutBtn backgroundColor="var(--primary)">
-                        Sign in
-                    </SignInAndOutBtn>
-                </Link>
-                <Link to={ROUTES.SIGN_UP}>
-                    <SignInAndOutBtn backgroundColor="var(--primary)">
-                        Sign up
-                    </SignInAndOutBtn>
-                </Link>
+                <SignInAndOutLink
+                    to={ROUTES.SIGN_IN}
+                    backgroundColor="var(--primary)"
+                >
+                    Sign In
+                </SignInAndOutLink>
+                <SignInAndOutLink
+                    to={ROUTES.SIGN_UP}
+                    backgroundColor="var(--primary)"
+                >
+                    Sign Up
+                </SignInAndOutLink>
             </div>
         </ContentWrapper>
     );

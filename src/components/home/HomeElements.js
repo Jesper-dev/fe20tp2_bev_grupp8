@@ -7,6 +7,7 @@ export const ContentWrapper = styled.div`
     gap: 2rem;
     padding: 0.7rem;
     align-items: center;
+    margin-bottom: 56px;
 
     h2 {
         margin: 0;

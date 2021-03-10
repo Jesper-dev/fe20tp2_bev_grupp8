@@ -8,9 +8,7 @@ import StockCard from '../shared/card/stock-card/StockCard';
 import { ContentWrapper, StockWrapper } from './DiscoverElements';
 
 const Discover = () => {
-    console.log(MockGetTickers);
     let array = MockGetTickers.finance.result[0].quotes;
-    console.log(array);
 
     return (
         <>

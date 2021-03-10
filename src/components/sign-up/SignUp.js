@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../firebase';
-import { ContentWrapper } from './SignupElements';
+import { ContentWrapper } from './SignUpElements';
 
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
@@ -80,42 +80,46 @@ class SignUpFormBase extends Component {
                 <h1>B-E-V</h1>
                 <h3>Create your account</h3>
                 <form onSubmit={this.onSubmit}>
-					<label>Username
-						<input
-							name="username"
-							value={username}
-							onChange={this.onChange}
-							type="text"
-							placeholder="Username"
-						/>
-					</label>
-					<label>E-mail
-						<input
-							name="email"
-							value={email}
-							onChange={this.onChange}
-							type="email"
-							placeholder="E-mail address"
-						/>
-					</label>
-					<label>Password
-						<input
-							name="passwordOne"
-							value={passwordOne}
-							onChange={this.onChange}
-							type="password"
-							placeholder="Password"
-						/>
-					</label>
-					<label>Confirm password
-						<input
-							name="passwordTwo"
-							value={passwordTwo}
-							onChange={this.onChange}
-							type="password"
-							placeholder="Confirm password"
-						/>
-					</label>
+                    <label>
+                        Username
+                        <input
+                            name="username"
+                            value={username}
+                            onChange={this.onChange}
+                            type="text"
+                            placeholder="Username"
+                        />
+                    </label>
+                    <label>
+                        E-mail
+                        <input
+                            name="email"
+                            value={email}
+                            onChange={this.onChange}
+                            type="email"
+                            placeholder="E-mail address"
+                        />
+                    </label>
+                    <label>
+                        Password
+                        <input
+                            name="passwordOne"
+                            value={passwordOne}
+                            onChange={this.onChange}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </label>
+                    <label>
+                        Confirm password
+                        <input
+                            name="passwordTwo"
+                            value={passwordTwo}
+                            onChange={this.onChange}
+                            type="password"
+                            placeholder="Confirm password"
+                        />
+                    </label>
                     {/*  <label>
                         Admin:
                         <input
@@ -130,7 +134,10 @@ class SignUpFormBase extends Component {
                     </button>
                     {error && <p className="error-message">{error.message}</p>}
 
-					<p>Already have an account? <Link to={ROUTES.SIGN_IN}>Sign in</Link></p>
+                    <p>
+                        Already have an account?{' '}
+                        <Link to={ROUTES.SIGN_IN}>Sign in</Link>
+                    </p>
                 </form>
             </ContentWrapper>
         );

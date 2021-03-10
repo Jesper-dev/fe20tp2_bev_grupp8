@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 
-import SignOutButton from '../signout/SignOut';
+import SignOutButton from '../sign-out/SignOut';
 
 const Profile = () => {
     const history = useHistory();
