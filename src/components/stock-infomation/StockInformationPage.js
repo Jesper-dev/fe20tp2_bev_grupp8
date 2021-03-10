@@ -67,6 +67,7 @@ const StockInformationPage = () => {
             setBuy(true)
             setSell(false)
         } else if (buy === true) {
+
             let newCurrency = Currency - chosenShare[0].regularMarketPrice * numOfStocks;
             dispatch(setCurrency(newCurrency));
             for(let i = 0; i < numOfStocks; i++) {
@@ -83,6 +84,20 @@ const StockInformationPage = () => {
             setSell(true)
             setBuy(false)
         } else if(sell === true){
+            if(numOfStocks > holding) {
+                console.log("You cant sell more than you have")
+                return;
+            }
+            if(Stocks.includes(chosenShare[0])) {
+                for(let i = 0; i < numOfStocks; i++) {
+                    let newCurrency = Currency + chosenShare[0].regularMarketPrice * numOfStocks;
+                    dispatch(setCurrency(newCurrency));
+                    let symbol = chosenShare[0].symbol;
+                    let index = Stocks.findIndex(x => x.symbol === symbol)
+                    Stocks.splice(index, 1)
+                    dispatch(setStocks(Stocks));
+                }
+            }
             setSell(false)
         }
 
@@ -97,8 +112,6 @@ const StockInformationPage = () => {
             onSell(numOfStocks)
         }
     };
-
-
 
     return (
         <ContentWrapper>

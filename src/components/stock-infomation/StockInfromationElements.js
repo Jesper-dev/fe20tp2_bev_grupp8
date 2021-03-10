@@ -6,6 +6,7 @@ export const ContentWrapper = styled.div`
     flex-flow: column nowrap;
     align-items: center;
     background-color: var(--body);
+    margin-bottom: 56px;
 
     h1 {
         text-align: center;
@@ -18,7 +19,6 @@ export const ContentWrapper = styled.div`
         padding: 16px;
         margin: 8px;
         font-size: 1.1rem;
-        height: 0;
         display: flex;
         align-items: center;
     }
