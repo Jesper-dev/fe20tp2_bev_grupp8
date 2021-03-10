@@ -11,7 +11,7 @@ export const CardWrapper = styled.div`
     justify-content: space-around;
 
     span {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: bold;
     }
 
@@ -20,5 +20,10 @@ export const CardWrapper = styled.div`
         border: 1px solid black;
         padding: 8px;
         outline: none;
+    }
+
+    img {
+        width: 25px;
+        height: 25px;
     }
 `;

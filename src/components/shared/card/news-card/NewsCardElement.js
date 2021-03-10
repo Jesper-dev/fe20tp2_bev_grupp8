@@ -14,6 +14,7 @@ const ContentWrapper = styled.div`
 
     p {
         margin: 0.5rem 0;
+		text-align: left;
     }
 
     a {

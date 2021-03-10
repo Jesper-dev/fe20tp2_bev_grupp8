@@ -69,6 +69,10 @@ const StockInformationPage = () => {
         } else if (buy === true) {
 
             let newCurrency = Currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            if (newCurrency < 0) {
+                console.log("Insufficient funds");
+                return;
+            }
             dispatch(setCurrency(newCurrency));
             for(let i = 0; i < numOfStocks; i++) {
                 Stocks.push(chosenShare[0])

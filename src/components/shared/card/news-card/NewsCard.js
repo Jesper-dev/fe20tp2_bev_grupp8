@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ContentWrapper from './NewsCardElement';
 import * as ROUTES from '../../../../constants/routes';
 
-const NewsCard = ({ title = `Let's Vest goes public and disrupts the market!`, summary = 'Yes news very true' }) => {
+const NewsCard = ({ title, summary }) => {
     return (
         <ContentWrapper>
             <h1>{title}</h1>

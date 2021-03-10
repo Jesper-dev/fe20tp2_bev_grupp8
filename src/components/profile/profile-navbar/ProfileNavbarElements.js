@@ -6,6 +6,7 @@ export const ProfileNavbarElement = styled.nav`
     background-color: var(--primary);
 
 	ul {
+        color: var(--body);
         display: grid;
         grid-auto-flow: column;
         padding: 0;
@@ -15,16 +16,17 @@ export const ProfileNavbarElement = styled.nav`
 	}
 
 	a {
-		display: flex;
+	display: flex;
         align-items: center;
         justify-content: center;
         height: 100%;
         color: var(--body);
         text-decoration: none;
+
 	}
 
-	.active {
-		background-color: white;
-		color: black;
+	    .active {
+        background-color: var(--primary-dark);
+        color: white;
 	}
 `

@@ -7,17 +7,19 @@ import {
     Route
   } from "react-router-dom";
 
-/* import ProfileImg from './profile-img/ProfileImg' */
+import { ContentWrapper, ProfileSettingsBtn } from './ProfileElements'
+
+import ProfileImg from './profile-img/ProfileImg'
 import NavbarProfile from './profile-navbar/ProfileNavbar'
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio'
 import ProfilePosts from './profile-posts/ProfilePosts'
 import ProfileLikes from './profile-likes/ProfileLikes'
 import SignOutButton from '../sign-out/SignOut';
+import { withAuthorization } from '../session'; //must be logged in to see content
+import ProfileSvg from '../svgs/ProfileSvg'
 
 const Profile = () => {
     const history = useHistory();
-
-
 
     const [navpath, setNavPath] = useState('portfolio')
 
@@ -26,31 +28,31 @@ const Profile = () => {
         history.push('/');
     };
 
-    const CheckWichNavTab = () => {
-        if(navpath == 'portfolio'){
-            return   <ProfilePortfolio />
-        } else if(navpath == 'posts') {
-            return <ProfilePosts />
-        } else if(navpath == 'likes'){
-            return  <ProfileLikes />
-        }
-    }
 
-
-    let tab = CheckWichNavTab()
 
 
     return (
         <>
-          {/*   <ProfileImg /> */}
-            <SignOutButton />
+        <ContentWrapper>
+            <div>
+               {/*  <ProfileImg /> */}
+                <ProfileSvg className="profile-avatar-svg" />
+                <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}><i class="fas fa-cog"></i> Profile Settings</ProfileSettingsBtn>
+                <SignOutButton />
+            </div>
             <NavbarProfile />
+        {/* <Switch>
 
+        </Switch> */}
+            {/* <ProfilePosts />
+            <ProfilePortfolio />
+            <ProfileLikes /> */}
 
-        {tab}
+     </ContentWrapper>
 
         </>
     );
 };
+const condition = authUser => !!authUser; //if logged in is not true, send user to sign in page
 
-export default Profile;
+export default withAuthorization(condition)(Profile); //check to see if you are signed in

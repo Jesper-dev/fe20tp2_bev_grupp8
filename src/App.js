@@ -4,10 +4,15 @@ import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
+import CryptoInfoPage from './components/crypto-information/CryptoInformationPage'
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
-//import ProfileNavbar from './components/profile-navbar/ProfileNavbar';
+import ProfileLikes from './components/profile/profile-likes/ProfileLikes';
+import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
+import ProfilePosts from './components/profile/profile-posts/ProfilePosts';
+import ProfileNavbar from './components/profile/profile-navbar/ProfileNavbar';
+import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
 
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -34,10 +39,15 @@ const App = () => {
                 </Route>
                 <Route exact path={ROUTES.PROFILE}>
                     <Profile />
+                    <ProfilePortfolio />
                     <Toolbar />
                 </Route>
                 <Route exact path={ROUTES.INFO}>
                     <StockInfoPage />
+                    <Toolbar />
+                </Route>
+                <Route exact path="/info-crypto">
+                    <CryptoInfoPage />
                     <Toolbar />
                 </Route>
                 <Route exact path={ROUTES.SIGN_IN}>
@@ -52,18 +62,27 @@ const App = () => {
                 <Route exact path={ROUTES.LANDING}>
                     <Landingpage />
                 </Route>
-{/*                 <Route exact path={ROUTES.PORTFOLIO}>
-                    <ProfileNavbar />
+                {/*  <Route exact path={ROUTES.PORTFOLIO}>
                     <Profile />
-                </Route>
+                    <ProfilePortfolio />
+                    <Toolbar />
+
+                </Route> */}
                 <Route exact path={ROUTES.POSTS}>
-                    <ProfileNavbar />
                     <Profile />
+                    <ProfilePosts />
+                    <Toolbar />
+
                 </Route>
                 <Route exact path={ROUTES.LIKES}>
-                    <ProfileNavbar />
                     <Profile />
-                </Route> */}
+                    <ProfileLikes />
+                    <Toolbar />
+                </Route>
+                <Route exact path={ROUTES.PROFILE_SETTINGS}>
+                    <ProfileSettings />
+                    <Toolbar />
+                </Route>
 
 
 
@@ -81,7 +100,7 @@ const GlobalStyle = createGlobalStyle`
     --background-co: #000;
 
     /* --primary-dark: #6B076B; */
-    --primary-dark: #445df2;
+    --primary-dark: #344fe5;
 
     --body: #ffffff;
     --body-secondary: #f9f9f9;

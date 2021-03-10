@@ -12,6 +12,13 @@ export const chosenShare = (share) => {
     };
 };
 
+export const chosenCrypto = (crypto) => {
+    return {
+        type: 'CHOSENCRYPTO',
+        payload: crypto,
+    };
+};
+
 export const setFollowing = (follow) => {
     return {
         type: 'FOLLOW',

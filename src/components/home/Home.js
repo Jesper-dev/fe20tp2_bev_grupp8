@@ -8,6 +8,8 @@ import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOvervi
 import Mock from '../../api/Mock/Mock.json';
 import MockData from '../../api/Mock/MockData.json';
 import MockGetTickers from '../../api/Mock/MockGetTickers.json';
+import News from '../shared/homepage-custom-sections/NewsCardSection';
+import MockNewsList from '../../api/Mock/MockNewsList.json';
 
 import { useSelector } from 'react-redux';
 
@@ -22,12 +24,14 @@ const Home = () => {
         <>
             <ContentWrapper>
                 <h2>PORTFOLIO</h2>
-
                 <PortfolioOverview
                     total={Currency.toLocaleString()}
                     difference={0}
                     percent={0}
                 />
+
+                <News array={MockNewsList.items.result.slice(0, 1)}/>
+
                 <Following array={following} />
                 <RecommendationHome MockData={MockData} />
             </ContentWrapper>

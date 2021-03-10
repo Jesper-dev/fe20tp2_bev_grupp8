@@ -17,3 +17,13 @@ export const SignInAndOutLink = styled(Link)`
         box-shadow: 0 0 0 0.1875rem var(--third);
     }
 `;
+
+export const ShowCryptoBtn = styled.button`
+    background: none;
+    padding: 8px 16px;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    outline: none;
+    margin: 8px;
+    cursor: pointer;
+`

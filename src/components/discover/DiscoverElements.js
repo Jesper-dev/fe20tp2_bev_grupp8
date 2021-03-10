@@ -7,6 +7,7 @@ export const ContentWrapper = styled.div`
     align-items: center;
     justify-content: space-around;
     /*     margin: 8px; */
+    margin-bottom: 56px;
 
     div {
         margin-bottom: 8px;

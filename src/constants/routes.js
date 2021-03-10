@@ -11,4 +11,5 @@ export const SOCIAL = '/social';
 export const PROFILE = '/profile';
 export const POSTS = '/profile/posts';
 export const LIKES = '/profile/likes';
-export const PORTFOLIO = '/profile/portfolio';
+export const PROFILE_SETTINGS = '/profile-settings';
+export const PORTFOLIO = '/profile';
