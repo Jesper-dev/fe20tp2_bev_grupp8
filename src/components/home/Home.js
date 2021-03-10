@@ -5,9 +5,9 @@ import Recommendations from '../../api/recommendations/Recommendations';
 import Following from '../shared/homepage-custom-sections/FollowingHome';
 import RecommendationHome from '../shared/homepage-custom-sections/RecommendationHome';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
-import Mock from '../../api/Mock.json';
-import MockData from '../../api/MockData.json';
-import MockGetTickers from '../../api/MockGetTickers.json';
+import Mock from '../../api/Mock/Mock.json';
+import MockData from '../../api/Mock/MockData.json';
+import MockGetTickers from '../../api/Mock/MockGetTickers.json';
 
 import { useSelector } from 'react-redux';
 
@@ -16,7 +16,6 @@ const Home = () => {
     const following = useSelector((state) => state.Following);
 
     let array = MockGetTickers.finance.result[0].quotes;
-    console.log(array);
 
     return (
         <>

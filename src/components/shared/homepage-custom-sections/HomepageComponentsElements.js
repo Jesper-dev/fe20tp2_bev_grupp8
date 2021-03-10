@@ -6,7 +6,7 @@ export const ContentWrapper = styled.div`
     flex-direction: column;
     align-items: center;
 
-    /* 
+    /*
     background-color: var(--body);
     border-radius: 8px;
     box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 25%); */
@@ -16,5 +16,9 @@ export const ContentWrapper = styled.div`
     p {
         text-align: center;
         font-size: 0.8rem;
+    }
+
+    div {
+        margin: 8px;
     }
 `;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 
-import MockChartsAMZN from '../../api/MockChartsAMZN.json';
-import MockChartsFB from '../../api/MockChartsFB.json';
+import MockChartsAMZN from '../../api/Mock/MockChartsAMZN.json';
+import MockChartsFB from '../../api/Mock/MockChartsFB.json';
 
 const InfopageLinechart = () => {
     const [data, setData] = useState();

@@ -14,6 +14,10 @@ const StockCard = ({ name, cost, percent, fav, stocksList }) => {
         chosenShareArray = stocksList.filter(function (item) {
             return item.symbol === filterName;
         });
+
+        // if (chosenShareArray[0].symbol === 'RBLX') {
+        //     return null;
+        // }
         dispatch(chosenShare(chosenShareArray));
     };
 

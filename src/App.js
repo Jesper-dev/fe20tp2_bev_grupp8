@@ -2,10 +2,10 @@ import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
-import Toolbar from './components//shared/toolbar-bottom/Toolbar';
+import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import SignUp from './components/signup/SignUp';
-import SignIn from './components/signin/Signin';
+import SignIn from './components/signin/SignIn';
 import PasswordForget from './components/PasswordForget';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -77,13 +77,19 @@ const GlobalStyle = createGlobalStyle`
 	--typefaces: "Inter", sans-serif;
   }
 
+
   body {
+    min-height: 100vh;
     margin: 0 0 56px 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: var(--typefaces);
     background-color: var(--body-secondary);
   }
 
+    p {
+        margin: 0;
+    }
   h1 {
     margin: 0;
   }

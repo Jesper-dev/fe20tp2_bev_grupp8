@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-    height: 100vh;
+    /* height: 100vh; */
+    height: 100%;
     display: flex;
     flex-flow: nowrap column;
     align-items: center;
@@ -25,7 +26,9 @@ export const ContentWrapper = styled.div`
     }
 
     .money-svg {
-        width: 80%;
-        height: 50%;
+        /* width: 80%; */
+        /* height: 50%; */
+        width: 100px;
+        height: 100px;
     }
 `;

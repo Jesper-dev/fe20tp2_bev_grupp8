@@ -26,7 +26,7 @@ const StockInformationPage = () => {
         if (followingArr.includes(chosenShare[0])) {
             let name = chosenShare[0].symbol;
             setChecked(false);
-            let index = followingArr.findIndex((x) => x.symbol == name);
+            let index = followingArr.findIndex((x) => x.symbol === name);
 
             console.log(index);
             followingArr.splice(index, 1);
@@ -68,14 +68,26 @@ const StockInformationPage = () => {
                             FOLLOW {/* <span>FOLLOW</span> */}
                         </label>
                         <p>{item.symbol}</p>
-                        <p>Market price: {item.regularMarketPrice} $</p>
+                        <p>
+                            Market price:{' '}
+                            {item.regularMarketPrice
+                                ? item.regularMarketPrice
+                                : 200}{' '}
+                            $
+                        </p>
                         <p>
                             Reg market change:{' '}
-                            {item.regularMarketChange.toFixed(2)}%
+                            {item.regularMarketChange
+                                ? item.regularMarketChange.toFixed(2)
+                                : 200}
+                            %
                         </p>
                         <p>
                             Market change percent:{' '}
-                            {item.regularMarketChangePercent.toFixed(2)}%
+                            {item.regularMarketChangePercent
+                                ? item.regularMarketChangePercent.toFixed(2)
+                                : 2}
+                            %
                         </p>
                     </div>
                 );
