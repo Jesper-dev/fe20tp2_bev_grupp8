@@ -5,7 +5,6 @@ export const recommendation = (recommendation) => {
     };
 };
 
-
 export const chosenShare = (share) => {
     return {
         type: 'CHOSENSHARE',
@@ -13,10 +12,23 @@ export const chosenShare = (share) => {
     };
 };
 
-
 export const setFollowing = (follow) => {
     return {
         type: 'FOLLOW',
         payload: follow,
+    };
+};
+
+export const setCurrency = (currency) => {
+    return {
+        type: 'CURRENCY',
+        payload: currency,
+    };
+};
+
+export const setStocks = (stocks) => {
+    return {
+        type: 'STOCKS',
+        payload: stocks,
     };
 };

@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 const Home = () => {
     const stocksList = useSelector((state) => state.RecommendationReducer);
     const following = useSelector((state) => state.Following);
+    const Currency = useSelector((state) => state.Currency);
 
     let array = MockGetTickers.finance.result[0].quotes;
 
@@ -23,9 +24,9 @@ const Home = () => {
                 <h2>PORTFOLIO</h2>
 
                 <PortfolioOverview
-                    total={218249.0}
-                    difference={20000}
-                    percent={2.5}
+                    total={Currency.toLocaleString()}
+                    difference={0}
+                    percent={0}
                 />
                 <Following array={following} />
                 <RecommendationHome MockData={MockData} />

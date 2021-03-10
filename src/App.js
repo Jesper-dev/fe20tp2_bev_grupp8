@@ -6,7 +6,9 @@ import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
-import PasswordForget from './components/PasswordForget';
+import PasswordForget from './components/password-forget/PasswordForget';
+//import ProfileNavbar from './components/profile-navbar/ProfileNavbar';
+
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
@@ -50,6 +52,21 @@ const App = () => {
                 <Route exact path={ROUTES.LANDING}>
                     <Landingpage />
                 </Route>
+{/*                 <Route exact path={ROUTES.PORTFOLIO}>
+                    <ProfileNavbar />
+                    <Profile />
+                </Route>
+                <Route exact path={ROUTES.POSTS}>
+                    <ProfileNavbar />
+                    <Profile />
+                </Route>
+                <Route exact path={ROUTES.LIKES}>
+                    <ProfileNavbar />
+                    <Profile />
+                </Route> */}
+
+
+
             </Switch>
         </Router>
     );

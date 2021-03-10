@@ -9,3 +9,6 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const DISCOVER = '/discover';
 export const SOCIAL = '/social';
 export const PROFILE = '/profile';
+export const POSTS = '/profile/posts';
+export const LIKES = '/profile/likes';
+export const PORTFOLIO = '/profile/portfolio';

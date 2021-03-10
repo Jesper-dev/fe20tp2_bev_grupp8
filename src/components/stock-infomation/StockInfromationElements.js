@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -45,5 +45,9 @@ export const ContentWrapper = styled.div`
         width: 100%;
         display: flex;
         justify-content: space-around;
+    }
+
+    .buttonWrapper > input {
+        width: 20%;
     }
 `;

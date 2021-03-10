@@ -18,6 +18,7 @@ export const PortOverviewWrapper = styled.div`
         color: var(--primary);
         margin: 0;
     }
+
     h1 {
         font-size: 1.2rem;
         color: var(--body-fifth);
