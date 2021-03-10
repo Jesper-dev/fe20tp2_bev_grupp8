@@ -5,7 +5,7 @@ import Discover from './components/discover/Discover';
 import Toolbar from './components//shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import SignUp from './components/signup/SignUp';
-import SignIn from './components/signin/SignIn';
+import SignIn from './components/signin/Signin';
 import PasswordForget from './components/PasswordForget';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';

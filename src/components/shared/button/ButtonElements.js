@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
 export const SignInAndOutBtn = styled.button`
-    padding: 16px 24px;
+    background-color: ${(props) => props.backgroundColor};
+    color: var(--body);
+    border-radius: 16px;
+    padding: 8px 72px;
 `;

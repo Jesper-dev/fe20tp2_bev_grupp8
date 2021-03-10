@@ -6,7 +6,26 @@ export const ContentWrapper = styled.div`
     flex-flow: nowrap column;
     align-items: center;
 
+    h2 {
+        color: var(--primary);
+    }
+
     > p {
-        color: red;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    div {
+        height: 15%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .money-svg {
+        width: 80%;
+        height: 50%;
     }
 `;
