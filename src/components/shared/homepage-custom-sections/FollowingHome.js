@@ -1,9 +1,10 @@
 import React from 'react';
-import StockCard from './card/stock-card/StockCard';
+import StockCard from '../card/stock-card/StockCard';
 
 const FollowingHome = ({ array }) => {
     return (
         <>
+            <h3>Following</h3>
             {array.map((item, index) => {
                 return (
                     <StockCard

@@ -2,6 +2,8 @@ import React from 'react';
 import StockCard from '../shared/card/stock-card/StockCard';
 import { ContentWrapper } from './HomeElements';
 import Recommendations from '../../api/recommendations/Recommendations';
+import Following from '../shared/homepage-custom-sections/FollowingHome';
+import RecommendationHome from '../shared/homepage-custom-sections/RecommendationHome';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
 import Mock from '../../api/Mock.json';
 import MockData from '../../api/MockData.json';
@@ -15,43 +17,21 @@ const Home = () => {
 
     let array = MockGetTickers.finance.result[0].quotes;
     console.log(array);
+
     return (
         <>
             <ContentWrapper>
                 <h2>PORTFOLIO</h2>
+
                 <PortfolioOverview
                     total={218249.0}
                     difference={20000}
                     percent={2.5}
                 />
-
-                {/* {MockData.finance.result[0].quotes.map((item, index) => {
-                    return (
-                        <StockCard
-                            stocksList={MockData.finance.result[0].quotes}
-                            key={index}
-                            name={item.symbol}
-                            cost={item.regularMarketPrice}
-                            percent={item.regularMarketChangePercent}
-                        />
-                    );
-                })} */}
-
-                {/* //TODO Gör om denna till en component */}
-
-                {following.map((item, index) => {
-                    return (
-                        <StockCard
-                            stocksList={following}
-                            key={index}
-                            name={item.symbol}
-                            cost={item.regularMarketPrice}
-                            percent={item.regularMarketChangePercent}
-                        />
-                    );
-                })}
+                <Following array={following} />
+                <RecommendationHome MockData={MockData} />
             </ContentWrapper>
-            {/*        <Recommendations /> */}
+            {/* <Recommendations /> */}
         </>
     );
 };
