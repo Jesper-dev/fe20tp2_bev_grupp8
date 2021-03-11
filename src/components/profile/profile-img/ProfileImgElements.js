@@ -1,16 +1,21 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-
-    .uploaded-img{
-         border-radius: 100%;
-         width: 120px;
-         height: auto;
+    div {
+        /*  display: inline-block;
+        position: relative; */
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        border-radius: 50%;
     }
-`
+    .uploaded-img {
+        width: auto;
+        height: 100%;
+    }
+`;
 
 export const ProfileImgElement = styled.img`
     width: 70px;
     height: 70px;
-`
-
+`;
