@@ -1,12 +1,12 @@
-import React from 'react'
-import { ProfileImgElement, UploadImg } from './ProfileImgElements'
+import React from 'react';
+import { ProfileImgElement, UploadImg } from './ProfileImgElements';
 
-const ProfileImg = () => {
+const ProfileImg = ({ img }) => {
     return (
         <>
-            <ProfileImgElement />
+            <ProfileImgElement src={img} />
         </>
-    )
-}
+    );
+};
 
-export default ProfileImg
+export default ProfileImg;

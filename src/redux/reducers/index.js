@@ -8,6 +8,7 @@ import ChosenCrypto from './ChosenCrypto';
 import SeeRecommendations from './SeeRecommendations';
 import SeeFollowing from './SeeFollowing';
 import SeeNews from './SeeNews';
+import ProfileImgReducer from './ProfileImgReducer';
 
 import { combineReducers } from 'redux';
 
@@ -22,6 +23,7 @@ const allReducers = combineReducers({
     SeeRecommendations,
     SeeFollowing,
     SeeNews,
+    ProfileImgReducer,
 });
 
 export default allReducers;

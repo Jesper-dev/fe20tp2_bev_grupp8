@@ -67,3 +67,9 @@ export const setSeeNews = (seeNews) => {
         payload: seeNews,
     };
 };
+export const setProfileImage = (image) => {
+    return {
+        type: 'PROFILEIMAGE',
+        payload: image,
+    };
+};

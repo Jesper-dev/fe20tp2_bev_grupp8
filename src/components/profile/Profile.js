@@ -10,7 +10,7 @@ import {
     BtnsWrapper,
 } from './ProfileElements';
 
-// import ProfileImg from './profile-img/ProfileImg';
+import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import NavbarProfile from './profile-navbar/ProfileNavbar';
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfilePosts from './profile-posts/ProfilePosts';
@@ -19,7 +19,11 @@ import SignOutButton from '../sign-out/SignOut';
 import { withAuthorization } from '../session'; //must be logged in to see content
 import ProfileSvg from '../svgs/ProfileSvg';
 
+import { useSelector } from 'react-redux';
+
 const Profile = () => {
+    const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
+
     const history = useHistory();
 
     const [navpath, setNavPath] = useState('portfolio');
@@ -33,8 +37,13 @@ const Profile = () => {
         <>
             <ContentWrapper>
                 <div>
-                    {/*  <ProfileImg /> */}
-                    <ProfileSvg className="profile-avatar-svg" />
+                    {ProfileImgReducer ? (
+                        <ProfileImg img={ProfileImgReducer} />
+                    ) : (
+                        <ProfileSvg className="profile-avatar-svg" />
+                    )}
+                    {/*     <ProfileImg />
+                    <ProfileSvg className="profile-avatar-svg" /> */}
                     <BtnsWrapper>
                         <SignOutButton />
                         <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>

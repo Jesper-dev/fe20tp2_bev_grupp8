@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-    button{
+    button {
         z-index: 99;
     }
     .uploaded-img {
@@ -13,6 +13,8 @@ export const ContentWrapper = styled.div`
 export const ProfileImgElement = styled.img`
     width: 70px;
     height: 70px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
 `;
 
 export const ImgWrapper = styled.div`
@@ -24,7 +26,9 @@ export const ImgWrapper = styled.div`
 `;
 
 export const CropperWrapper = styled.div`
-    width: auto;
-    height: 800px;
-    position: relative
-`
+    margin: 50 auto;
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+`;
