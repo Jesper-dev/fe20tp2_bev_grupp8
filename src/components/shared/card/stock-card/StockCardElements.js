@@ -11,7 +11,7 @@ export const CardWrapper = styled.div`
     justify-content: space-around;
 
     span {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: bold;
     }
 

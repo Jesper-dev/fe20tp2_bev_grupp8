@@ -7,6 +7,8 @@ import {
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import { ContentWrapper } from './CustomizeHomepageElements'
+
 const CustomizeHomepage = () => {
     const [checkedRec, setCheckedRec] = useState(true);
     const [checkedFollow, setCheckedFollow] = useState(true);
@@ -66,10 +68,10 @@ const CustomizeHomepage = () => {
         }
     };
     return (
-        <div className="customizeWrapper">
+        <ContentWrapper>
             <h3>Customize your homepage</h3>
             <div>
-                <label>Recommendations</label>
+                <label>Recommendations: </label>
                 <input
                     type="checkbox"
                     onChange={onChange}
@@ -79,7 +81,7 @@ const CustomizeHomepage = () => {
                 />
             </div>
             <div>
-                <label>Following</label>
+                <label>Following: </label>
                 <input
                     type="checkbox"
                     onChange={onChange}
@@ -89,7 +91,7 @@ const CustomizeHomepage = () => {
                 />
             </div>
             <div>
-                <label>News</label>
+                <label>News: </label>
                 <input
                     type="checkbox"
                     onChange={onChange}
@@ -98,7 +100,7 @@ const CustomizeHomepage = () => {
                     value="News"
                 />
             </div>
-        </div>
+        </ContentWrapper>
     );
 };
 

@@ -10,7 +10,7 @@ import {
     BtnsWrapper,
 } from './ProfileElements';
 
-import ProfileImg from './profile-img/ProfileImg';
+// import ProfileImg from './profile-img/ProfileImg';
 import NavbarProfile from './profile-navbar/ProfileNavbar';
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfilePosts from './profile-posts/ProfilePosts';

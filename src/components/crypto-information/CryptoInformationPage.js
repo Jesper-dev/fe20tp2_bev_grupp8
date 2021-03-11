@@ -50,16 +50,15 @@ const CryptoInformationPage = () => {
                         <div className="imgWrapper">
                             <img src={item.image} />
                         </div>
-                        <span>⭐</span>
-                        <label>
-                            <input
+                        <div className="followWrapper">
+                        <label> FOLLOW {/* <span>FOLLOW</span> */}</label>
+                        <input
                                 type="checkbox"
                                 onClick={onFollow}
                                 checked={checked}
                                 onChange={onChange}
                             />
-                            FOLLOW {/* <span>FOLLOW</span> */}
-                        </label>
+                        </div>
                         <p>Current Price: {item.current_price}$</p>
                         <p>
                             Total Volume: {item.total_volume.toLocaleString()}

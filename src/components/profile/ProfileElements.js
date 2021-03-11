@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const ContentWrapper = styled.div`
+
     div {
         display: flex;
         align-items: center;

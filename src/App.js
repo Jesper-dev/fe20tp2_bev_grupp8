@@ -46,7 +46,7 @@ const App = () => {
                     <StockInfoPage />
                     <Toolbar />
                 </Route>
-                <Route exact path="/info-crypto">
+                <Route exact path={ROUTES.INFO_CRYPTO}>
                     <CryptoInfoPage />
                     <Toolbar />
                 </Route>

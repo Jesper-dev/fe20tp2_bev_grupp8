@@ -150,16 +150,18 @@ const StockInformationPage = () => {
                             </button>
 
                         </div>
-                        <span>⭐</span>
+
+                        <div className="followWrapper">
                         <label>
-                            <input
+                            FOLLOW {/* <span>FOLLOW</span> */}
+                        </label>
+                        <input
                                 type="checkbox"
                                 onClick={onFollow}
                                 checked={checked}
                                 onChange={onChange}
                             />
-                            FOLLOW {/* <span>FOLLOW</span> */}
-                        </label>
+                        </div>
                         <p>{item.symbol}</p>
                         <p>
                             Market price:{' '}

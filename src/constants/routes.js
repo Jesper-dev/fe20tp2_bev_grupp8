@@ -13,3 +13,4 @@ export const POSTS = '/profile/posts';
 export const LIKES = '/profile/likes';
 export const PROFILE_SETTINGS = '/profile-settings';
 export const PORTFOLIO = '/profile';
+export const INFO_CRYPTO = '/info-crypto';

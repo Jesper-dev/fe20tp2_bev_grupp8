@@ -7,12 +7,7 @@ export const ContentWrapper = styled.div`
         text-align: center;
     }
 
-    .customizeWrapper {
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        padding: 8px;
-    }
+
 
     .customizeWrapper > div {
         margin: 8px;

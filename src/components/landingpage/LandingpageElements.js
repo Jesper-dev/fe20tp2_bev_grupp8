@@ -1,31 +1,83 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    height: 100%;
+export const NavBar = styled.nav`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+	align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #eee;
 
-    h2 {
-        margin: 0;
-        color: var(--primary);
-    }
-
-    > p {
-        font-weight: bold;
-        text-align: center;
-    }
-
-    div {
+    ul {
         display: flex;
-        flex-direction: column;
         gap: 1rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
     }
 
-    .money-svg {
-        width: auto;
-        height: 30%;
+    h1 {
+        color: var(--primary);
+        white-space: nowrap;
     }
+`;
+
+export const Banner = styled.section`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	padding: 2rem 1rem;
+
+	ul {
+		display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+		gap: 0.5rem;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	svg {
+		width: 256px;
+		height: 256px;
+	}
+
+	h2, p {
+		margin: 0;
+		text-align: center;
+        max-width: 32rem;
+	}
+
+	h2 {
+		font-size: 2.5rem;
+	}
+`;
+
+export const About = styled.section`
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	padding: 1rem;
+	background-color: var(--secondary);
+
+	div {
+		width: 12rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		border-radius: 0.25rem;
+		background-color: white;
+
+		svg {
+			width: 120px;
+			height: 120px;
+		}
+	}
 `;

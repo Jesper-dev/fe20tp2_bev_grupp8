@@ -62,4 +62,51 @@ export const ContentWrapper = styled.div`
         height: 150px;
         align-self: center;
     }
+
+    .followWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input[type="checkbox"] {
+        height: 24px;
+        width: 24px;
+        outline: none;
+        border-radius: 0.7rem;
+    }
+
+    input[type="checkbox"]:checked {
+        animation: checked 0.5s;
+    }
+
+    input[type="checkbox"]:not(:checked){
+        animation: unChecked 0.5s;
+    }
+
+    @keyframes checked {
+        0% {
+            transform: scale(0.75);
+
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes unChecked {
+        0% {
+            transform: scale(0.75);
+
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 `;

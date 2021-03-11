@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentWrapper } from './ProfileSettingsElements';
 
-import ProfileImgChoose from '../profile-img/ProfileChooseImg';
+import ProfileImgChoose from './profile-img/ProfileChooseImg';
 import CustomizeHomepage from './customize-homepage/CustomizeHomepage';
 
 const ProfileSettings = () => {
