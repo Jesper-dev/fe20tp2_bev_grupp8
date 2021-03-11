@@ -10,15 +10,17 @@ import MockData from '../../api/Mock/MockData.json';
 import MockGetTickers from '../../api/Mock/MockGetTickers.json';
 import News from '../shared/homepage-custom-sections/NewsCardSection';
 import MockNewsList from '../../api/Mock/MockNewsList.json';
+import { withAuthorization } from '../session'; //must be logged in to see content
 
 import { useSelector } from 'react-redux';
 
 const Home = () => {
     const stocksList = useSelector((state) => state.RecommendationReducer);
     const following = useSelector((state) => state.Following);
+    const followingCrypto = useSelector((state) => state.FollowingCrypto);
     const Currency = useSelector((state) => state.Currency);
 
-    let array = MockGetTickers.finance.result[0].quotes;
+    // let array = MockGetTickers.finance.result[0].quotes;
 
     return (
         <>
@@ -30,9 +32,9 @@ const Home = () => {
                     percent={0}
                 />
 
-                <News array={MockNewsList.items.result.slice(0, 1)}/>
+                <News array={MockNewsList.items.result.slice(0, 1)} />
 
-                <Following array={following} />
+                <Following array={following} cryptoList={followingCrypto} />
                 <RecommendationHome MockData={MockData} />
             </ContentWrapper>
             {/* <Recommendations /> */}
@@ -40,4 +42,6 @@ const Home = () => {
     );
 };
 
-export default Home;
+const condition = (authUser) => !!authUser; //if logged in is not true, send user to sign in page
+
+export default withAuthorization(condition)(Home); //check to see if you are signed in

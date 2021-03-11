@@ -43,12 +43,6 @@ const Profile = () => {
                     </BtnsWrapper>
                 </div>
                 <NavbarProfile />
-                {/* <Switch>
-
-        </Switch> */}
-                {/* <ProfilePosts />
-            <ProfilePortfolio />
-            <ProfileLikes /> */}
             </ContentWrapper>
         </>
     );

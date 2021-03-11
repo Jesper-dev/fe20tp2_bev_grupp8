@@ -26,6 +26,13 @@ export const setFollowing = (follow) => {
     };
 };
 
+export const setFollowingCrypto = (followCrypto) => {
+    return {
+        type: 'FOLLOWCRYPTO',
+        payload: followCrypto,
+    };
+};
+
 export const setCurrency = (currency) => {
     return {
         type: 'CURRENCY',
@@ -37,5 +44,26 @@ export const setStocks = (stocks) => {
     return {
         type: 'STOCKS',
         payload: stocks,
+    };
+};
+
+export const setSeeRecommendations = (seeRecommendations) => {
+    return {
+        type: 'SEERECOMMENDATIONS',
+        payload: seeRecommendations,
+    };
+};
+
+export const setSeeFollowing = (seeFollowing) => {
+    return {
+        type: 'SEEFOLLOWING',
+        payload: seeFollowing,
+    };
+};
+
+export const setSeeNews = (seeNews) => {
+    return {
+        type: 'SEENEWS',
+        payload: seeNews,
     };
 };
