@@ -1,73 +1,75 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
 
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     align-items: center;
-    padding: 8px;
-    border-bottom: 4px solid var(--secondary);
+    gap: 1rem;
+    padding: 1rem;
 
     h3 {
-        margin: 0%;
-        margin-top: 24px;
-        color: var(--secondary);
+        margin: 0;
+        font-size: 1.25rem;
         text-align: center;
     }
 
-    div{
-        margin: 16px;
+
+    /* Toggle container */
+    .tgl {
         display: flex;
         align-items: center;
-
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        max-width: 32rem;
     }
 
-    div > input {
-        height: 24px;
-        width: 24px;
-        margin-left: 16px;
-        outline: none;
-        border-radius: 0.7rem;
+    /* Hides default checkbox */
+    .checkbox {
+        display: none;
     }
 
-    div > label {
-        font-size: 1.3rem;
-    }
+    /* Styles the toggle button */
+    .toggle-btn {
+        display: block;
+        padding: 0.125rem;
+        border-radius: 1rem;
+        width: 3rem;
+        height: 1.5rem;
+        background-color: lightgrey;
+        cursor: pointer;
+        transition: background-color 250ms ease;
 
-    input[type="checkbox"]:checked {
-        animation: checked 0.5s;
-    }
-
-    input[type="checkbox"]:not(:checked){
-        animation: unChecked 0.5s;
-    }
-
-    @keyframes checked {
-        0% {
-            transform: scale(0.75);
-
+        &:active {
+            background-color: rgb(192, 192, 192);
         }
-        50% {
-            transform: scale(1.3);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
 
-    @keyframes unChecked {
-        0% {
-            transform: scale(0.75);
-
-        }
-        50% {
-            transform: scale(1.3);
-        }
-        100% {
-            transform: scale(1);
+        /* Styles the toggle indicator */
+        &::after {
+            position: relative;
+            display: block;
+            content: "";
+            left: 0;
+            border-radius: 50%;
+            width: 50%;
+            height: 100%;
+            background-color: white;
+            transition: left 250ms ease;
         }
     }
 
-`
+    /* Changes the toggle buttons background when checkbox is checked */
+    .checkbox:checked + .toggle-btn {
+        background-color: var(--primary);
 
+        &:active {
+            background-color: var(--primary-dark);
+        }
+    }
 
+    /* Moves toggle indicator when checkbox is checked */
+    .checkbox:checked + .toggle-btn:after {
+        left: 50%;
+    }
+`;

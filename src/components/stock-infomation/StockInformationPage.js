@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FirebaseContext } from '../firebase/index'
+import { AuthUserContext } from '../session/index';
+// import firebase from '../firebase/firebase'
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -12,16 +16,22 @@ let following = [];
 let holdingArray = [];
 
 const StockInformationPage = () => {
+    const [userData, setUserData] = useState(null)
+    const [uid, setUid] = useState(undefined)
     const [checked, setChecked] = useState(false);
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
-    const [holding, setHolding] = useState(0)
-    const [numOfStocks, setNumOfStocks] = useState(0)
+    const [holding, setHolding] = useState(0);
+    const [numOfStocks, setNumOfStocks] = useState(0);
     const dispatch = useDispatch();
     const chosenShare = useSelector((state) => state.ChosenShare);
     const followingArr = useSelector((state) => state.Following);
     const Currency = useSelector((state) => state.Currency);
-    const Stocks = useSelector((state) => state.Stocks)
+    const Stocks = useSelector((state) => state.Stocks);
+
+    const firebase = useContext(FirebaseContext)
+
+    let user = ''
 
     useEffect(() => {
         if (followingArr.includes(chosenShare[0])) {
@@ -29,20 +39,34 @@ const StockInformationPage = () => {
         } else {
             setChecked(false);
         }
-        holdingArray = []
-        checkHolding()
+        holdingArray = [];
+        checkHolding();
+
+
+        user = localStorage.getItem('authUser')
+
+        setUid(JSON.parse(user).uid)
+        axios
+            .get('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json')
+            .then((res) => setUserData(res.data))
+            .catch((err) => console.log(err));
+
+
     }, []);
 
+    console.log("uid is: ", uid)
+    console.log(userData)
+
     const checkHolding = () => {
-        if(Stocks.includes(chosenShare[0])) {
-            for(let i = 0; i < Stocks.length; i++){
-                if(Stocks[i].symbol === chosenShare[0].symbol) {
-                    holdingArray.push(i)
+        if (Stocks.includes(chosenShare[0])) {
+            for (let i = 0; i < Stocks.length; i++) {
+                if (Stocks[i].symbol === chosenShare[0].symbol) {
+                    holdingArray.push(i);
                 }
             }
-            setHolding(holdingArray.length)
+            setHolding(holdingArray.length);
         }
-    }
+    };
 
     const onFollow = () => {
         if (followingArr.includes(chosenShare[0])) {
@@ -63,57 +87,58 @@ const StockInformationPage = () => {
 
     //*Function for when we buy a share
     const onBuy = (numOfStocks) => {
-        if(buy === false) {
-            setBuy(true)
-            setSell(false)
+        if (buy === false) {
+            setBuy(true);
+            setSell(false);
         } else if (buy === true) {
-
-            let newCurrency = Currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            let newCurrency =
+                Currency - chosenShare[0].regularMarketPrice * numOfStocks;
             if (newCurrency < 0) {
-                console.log("Insufficient funds");
+                console.log('Insufficient funds');
                 return;
             }
             dispatch(setCurrency(newCurrency));
-            for(let i = 0; i < numOfStocks; i++) {
-                Stocks.push(chosenShare[0])
+            for (let i = 0; i < numOfStocks; i++) {
+                Stocks.push(chosenShare[0]);
             }
             dispatch(setStocks(Stocks));
-            setBuy(false)
-            setNumOfStocks(0)
+            setBuy(false);
+            setNumOfStocks(0);
+
+            axios.put('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json', newCurrency)
         }
-    }
+    };
 
     const onSell = (numOfStocks) => {
-        if(sell === false){
-            setSell(true)
-            setBuy(false)
-        } else if(sell === true){
-            if(numOfStocks > holding) {
-                console.log("You cant sell more than you have")
+        if (sell === false) {
+            setSell(true);
+            setBuy(false);
+        } else if (sell === true) {
+            if (numOfStocks > holding) {
+                console.log('You cant sell more than you have');
                 return;
             }
-            if(Stocks.includes(chosenShare[0])) {
-                for(let i = 0; i < numOfStocks; i++) {
-                    let newCurrency = Currency + chosenShare[0].regularMarketPrice * numOfStocks;
+            if (Stocks.includes(chosenShare[0])) {
+                for (let i = 0; i < numOfStocks; i++) {
+                    let newCurrency =
+                        Currency +
+                        chosenShare[0].regularMarketPrice * numOfStocks;
                     dispatch(setCurrency(newCurrency));
                     let symbol = chosenShare[0].symbol;
-                    let index = Stocks.findIndex(x => x.symbol === symbol)
-                    Stocks.splice(index, 1)
+                    let index = Stocks.findIndex((x) => x.symbol === symbol);
+                    Stocks.splice(index, 1);
                     dispatch(setStocks(Stocks));
                 }
             }
-            setSell(false)
+            setSell(false);
         }
-
-    }
-
+    };
 
     const onButtonClick = (e) => {
-
-        if(e.target.innerText === "BUY") {
-            onBuy(numOfStocks)
-        } else if(e.target.innerText === "SELL") {
-            onSell(numOfStocks)
+        if (e.target.innerText === 'BUY') {
+            onBuy(numOfStocks);
+        } else if (e.target.innerText === 'SELL') {
+            onSell(numOfStocks);
         }
     };
 
@@ -134,12 +159,20 @@ const StockInformationPage = () => {
 
                             <input
                                 type="number"
-                                style={buy ? {display: "block"} : {display: "none"}}
+                                style={
+                                    buy
+                                        ? { display: 'block' }
+                                        : { display: 'none' }
+                                }
                                 onChange={(e) => setNumOfStocks(e.target.value)}
                             />
-                             <input
+                            <input
                                 type="number"
-                                style={sell ? {display: "block"} : {display: "none"}}
+                                style={
+                                    sell
+                                        ? { display: 'block' }
+                                        : { display: 'none' }
+                                }
                                 onChange={(e) => setNumOfStocks(e.target.value)}
                             />
                             <button
@@ -148,14 +181,11 @@ const StockInformationPage = () => {
                             >
                                 SELL
                             </button>
-
                         </div>
 
                         <div className="followWrapper">
-                        <label>
-                            FOLLOW {/* <span>FOLLOW</span> */}
-                        </label>
-                        <input
+                            <label>FOLLOW {/* <span>FOLLOW</span> */}</label>
+                            <input
                                 type="checkbox"
                                 onClick={onFollow}
                                 checked={checked}

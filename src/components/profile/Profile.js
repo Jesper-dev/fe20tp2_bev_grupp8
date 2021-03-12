@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
+import axios from "axios"
 
 import { Switch, Route } from 'react-router-dom';
 
@@ -21,8 +22,12 @@ import ProfileSvg from '../svgs/ProfileSvg';
 
 import { useSelector } from 'react-redux';
 
+let user = ''
+
 const Profile = () => {
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
+    const [userData, setUserData] = useState(undefined)
+    const [username, setUsername] = useState(undefined)
 
     const history = useHistory();
 
@@ -33,6 +38,13 @@ const Profile = () => {
         history.push('/');
     };
 
+    useEffect(() => {
+        user = localStorage.getItem('authUser')
+
+        setUsername(JSON.parse(user).username)
+
+    }, []);
+
     return (
         <>
             <ContentWrapper>
@@ -42,12 +54,12 @@ const Profile = () => {
                     ) : (
                         <ProfileSvg className="profile-avatar-svg" />
                     )}
-                    {/*     <ProfileImg />
-                    <ProfileSvg className="profile-avatar-svg" /> */}
+                    <p>{username}</p>
+
                     <BtnsWrapper>
                         <SignOutButton />
                         <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                            <i class="fas fa-cog"></i> Profile Settings
+                            <i className="fas fa-user-edit"></i> Edit Profile
                         </ProfileSettingsBtn>
                     </BtnsWrapper>
                 </div>

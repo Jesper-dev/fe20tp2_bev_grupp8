@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { FirebaseContext } from '../../../firebase/context'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setProfileImage } from '../../../../redux/actions';
 
 import {
     ContentWrapper,
-    ProfileImgElement,
-    ImgWrapper,
-    CropWrapper,
+    ProfileSettingsImg,
     CropperWrapper,
 } from './ProfileImgElements';
+
+import ProfileSvg from '../../../svgs/ProfileSvg';
 
 import ImageCropper from './ProfileImgCropper';
 
 const ProfileChooseImg = () => {
     const dispatch = useDispatch();
+    const firebase = useContext(FirebaseContext)
+
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
     const [blob, setBlob] = useState(null);
@@ -63,6 +67,11 @@ const ProfileChooseImg = () => {
         //     .then(() => {
         //         // redirect user
         //     })
+        // firebase.user(authUser.user.uid).set({
+        //             image
+        //         });
+
+
         window.localStorage.setItem(
             'croppedAreaPixels',
             JSON.stringify(blobUrl)
@@ -74,26 +83,23 @@ const ProfileChooseImg = () => {
     return (
         <>
             <ContentWrapper>
-                {/*             <input
-                    type="file"
-                    accept="image/*"
-                    multiple="false"
-                    onChange={handleImageUpload}
-                />
-                <ImgWrapper>
-                    <img
-                        className="uploaded-img"
-                        src={img}
-                        ref={uploadedImage}
-                    />
-                </ImgWrapper> */}
-                <img src={ProfileImgReducer} />
+                {!ProfileImgReducer ? <ProfileSvg className="svg-avatar" /> :
+<ProfileSettingsImg src={ProfileImgReducer} />
+                }
+           {/*      <ProfileSettingsImg src={ProfileImgReducer} />
+                <ProfileSvg /> */}
+
                 <form onSubmit={handleSubmitImage}>
+                    <label for="file-upload" className="custom-file-upload">
+                   <i className="fas fa-cloud-upload-alt"></i> Upload Image
+                    </label>
                     <input
+                        id="file-upload"
                         type="file"
                         accept="image/*"
                         onChange={onInputChange}
                     />
+                     <button type="submit">Save Image</button>
                     {inputImg && (
                         <CropperWrapper>
                             <ImageCropper
@@ -102,7 +108,7 @@ const ProfileChooseImg = () => {
                             />
                         </CropperWrapper>
                     )}
-                    <button type="submit">Submit</button>
+
                 </form>
             </ContentWrapper>
         </>

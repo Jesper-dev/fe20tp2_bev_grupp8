@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const NavBar = styled.nav`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-around;
 	align-items: center;
     gap: 1rem;
     padding: 1rem;
@@ -30,6 +30,7 @@ export const Banner = styled.section`
 	justify-content: center;
 	gap: 1rem;
 	padding: 2rem 1rem;
+	max-height: 75vh;
 
 	ul {
 		display: flex;
@@ -49,7 +50,7 @@ export const Banner = styled.section`
 	h2, p {
 		margin: 0;
 		text-align: center;
-        max-width: 32rem;
+        max-width: 40rem;
 	}
 
 	h2 {

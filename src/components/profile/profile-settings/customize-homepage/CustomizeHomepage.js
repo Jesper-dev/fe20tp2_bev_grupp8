@@ -70,35 +70,44 @@ const CustomizeHomepage = () => {
     return (
         <ContentWrapper>
             <h3>Customize your homepage</h3>
-            <div>
-                <label>Recommendations: </label>
+            <div className="tgl">
+                <p>Show Recommended</p>
                 <input
                     type="checkbox"
+                    id="rec"
+                    className="checkbox"
                     onChange={onChange}
                     checked={checkedRec}
                     onClick={seeFunc}
                     value="Rec"
                 />
+                <label for="rec" className="toggle-btn"></label>
             </div>
-            <div>
-                <label>Following: </label>
+            <div className="tgl">
+                <p>Show Following</p>
                 <input
                     type="checkbox"
+                    id="follow"
+                    className="checkbox"
                     onChange={onChange}
                     checked={checkedFollow}
                     onClick={seeFunc}
                     value="Follow"
                 />
+                <label for="follow" className="toggle-btn"></label>
             </div>
-            <div>
-                <label>News: </label>
+            <div className="tgl">
+                <p>Show News</p>
                 <input
                     type="checkbox"
+                    id="news"
+                    className="checkbox"
                     onChange={onChange}
                     checked={checkedNews}
                     onClick={seeFunc}
                     value="News"
                 />
+                <label for="news" className="toggle-btn"></label>
             </div>
         </ContentWrapper>
     );
