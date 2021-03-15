@@ -8,8 +8,10 @@ import { useSelector } from 'react-redux';
 const SearchBar = () => {
     const dispatch = useDispatch()
     const users = useSelector((state) => state.Users)
+    let filteredUsers = useSelector((state) => state.FilteredUsers)
 
     const onFilterUsers = (e) => {
+        filteredUsers = [];
         const newArray = users.filter(user => user.username == e.target.value.trim())
         dispatch(filterUsers(newArray))
     }

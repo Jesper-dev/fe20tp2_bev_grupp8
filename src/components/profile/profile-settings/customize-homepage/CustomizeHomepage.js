@@ -25,23 +25,23 @@ const CustomizeHomepage = () => {
     }, []);
 
     const checkIfRec = () => {
-        if (SeeRecRedux == true) {
+        if (SeeRecRedux === true) {
             setCheckedRec(true);
-        } else if (SeeRecRedux == false) {
+        } else if (SeeRecRedux === false) {
             setCheckedRec(false);
         }
     };
 
     const checkIfFollow = () => {
-        if (SeeFollowingRedux == true) {
+        if (SeeFollowingRedux === true) {
             setCheckedFollow(true);
-        } else if (SeeFollowingRedux == false) {
+        } else if (SeeFollowingRedux === false) {
             setCheckedFollow(false);
         }
     };
 
     const checkIfNews = () => {
-        if (SeeNewsRedux == true) {
+        if (SeeNewsRedux === true) {
             setCheckedNews(true);
         } else if (SeeNewsRedux == false) {
             setCheckedNews(false);
@@ -49,21 +49,21 @@ const CustomizeHomepage = () => {
     };
 
     const seeFunc = (e) => {
-        if (e.target.value == 'Rec') {
+        if (e.target.value === 'Rec') {
             dispatch(setSeeRecommendations(!SeeRecRedux));
-        } else if (e.target.value == 'Follow') {
+        } else if (e.target.value === 'Follow') {
             dispatch(setSeeFollowing(!SeeFollowingRedux));
-        } else if (e.target.value == 'News') {
+        } else if (e.target.value === 'News') {
             dispatch(setSeeNews(!SeeNewsRedux));
         }
     };
 
     const onChange = (e) => {
-        if (e.target.value == 'Rec') {
+        if (e.target.value === 'Rec') {
             setCheckedRec(!checkedRec);
-        } else if (e.target.value == 'Follow') {
+        } else if (e.target.value === 'Follow') {
             setCheckedFollow(!checkedFollow);
-        } else if (e.target.value == 'News') {
+        } else if (e.target.value === 'News') {
             setCheckedNews(!checkedNews);
         }
     };

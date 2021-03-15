@@ -4,16 +4,24 @@ import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from './ProfileSaveCropImg';
 
+import { useDispatch } from 'react-redux';
+import { setProfileImage } from '../../../../redux/actions';
+
 const ProfileImgCropper = ({ getBlob, inputImg }) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
+
+    const dispatch = useDispatch()
 
     /* onCropComplete() will occur each time the user modifies the cropped area,
     which isn't ideal. A better implementation would be getting the blob
     only when the user hits the submit button, but this works for now  */
     const onCropComplete = async (_, croppedAreaPixels) => {
         const croppedImage = await getCroppedImg(inputImg, croppedAreaPixels);
-        getBlob(croppedImage);
+
+        dispatch(setProfileImage(croppedImage))
+
+    /*     getBlob(croppedImage); */
     };
 
     return (

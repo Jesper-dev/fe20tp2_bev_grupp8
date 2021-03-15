@@ -22,9 +22,8 @@ const ProfileChooseImg = () => {
     const dispatch = useDispatch();
     const firebase = useContext(FirebaseContext)
 
-
-
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
+    const profileImg = useSelector((state) => state.ProfileImgReducer)
 
     const [blob, setBlob] = useState(null);
     const [inputImg, setInputImg] = useState('');
@@ -55,6 +54,13 @@ const ProfileChooseImg = () => {
     };
 
 
+    function blobToFile(theBlob, fileName){
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+}
+
     const updateUser = (userId, imageUrl) => {
         firebase.db.ref('users/' + userId + "/picture").set({
           profile_pic: imageUrl
@@ -69,38 +75,32 @@ const ProfileChooseImg = () => {
        });
     }
 
-
-
-
     const user = JSON.parse(localStorage.getItem('authUser'))
-    console.log(user.username)
 
     const handleSubmitImage = (e) => {
         // upload blob to firebase 'images' folder with filename 'image'
         e.preventDefault();
-        getImage(user.uid)
 
-        setBlobUrl(URL.createObjectURL(blob));
+
+        /* getImage(user.uid) */
+
+
+/*         setBlobUrl(URL.createObjectURL(blob)); */
         setInputImg(null);
 
-        console.log(URL.createObjectURL(blob))
-        console.log(blob)
+    /*     console.log(URL.createObjectURL(blob)) */
 
-        dispatch(setProfileImage(URL.createObjectURL(blob)));
+     /*    let myFile = blobToFile(blob, "profile_picture.png"); */
 
-        // gs://grupp8-c364e.appspot.com/uid
+   /*      console.log(myFile)
+ */
+      /*   dispatch(setProfileImage(URL.createObjectURL(blob))); */
 
-        let blobFirebase = URL.createObjectURL(blob)
+    /*     let blobFirebase = URL.createObjectURL(blob) */
 
-        updateUser(user.uid, blobFirebase)
+        updateUser(user.uid, profileImg)
 
-
-    /*       window.localStorage.setItem(
-            'croppedAreaPixels',
-            JSON.stringify(blobUrl)
-        ); */
-
-        /*   myImage.src = objectURL; */
+    /*       myImage.src = objectURL; */
     };
 
 

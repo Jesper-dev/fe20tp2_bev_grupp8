@@ -29,9 +29,15 @@ export const getCroppedImg = async (imageSrc, crop) => {
         canvas.height
     )
 
-    return new Promise((resolve) => {
+    let jpegFile = canvas.toDataURL("image/jpeg");
+
+/*     console.log(jpegFile) */
+
+    return jpegFile
+
+/*     return new Promise((resolve) => {
         canvas.toBlob((blob) => {
             resolve(blob)
         }, 'image/jpeg')
-    })
+    }) */
 }

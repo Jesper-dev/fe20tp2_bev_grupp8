@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { SignUpLink } from '../sign-up/SignUp';
-import { PasswordForgetLink } from '../password-forget/PasswordForget';
+// import { SignUpLink } from '../sign-up/SignUp';
+// import { PasswordForgetLink } from '../password-forget/PasswordForget';
 import { ContentWrapper, SignLink } from './SignInElements';
 /* import { Link } from 'react-router-dom'; */
 

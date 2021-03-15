@@ -22,7 +22,7 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 import ProfileSvg from '../svgs/ProfileSvg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfileImage } from '../../redux/actions';
+import { setProfileImage, setUsers } from '../../redux/actions';
 
 let user = ''
 
@@ -32,6 +32,7 @@ const Profile = () => {
     const dispatch = useDispatch()
 
     const [image, setImage] = useState(null)
+    const [username, setUsername] = useState('')
 
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
@@ -47,11 +48,15 @@ const Profile = () => {
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-
+        // const theUserId = firebase.auth.currentUser.uid;
+        // console.log(`THE USER ID --> ${theUserId}`);
 
         const user = firebase.db.ref('users/' + userData.uid);
         user.on('value', (snapshot) => {
             const data = snapshot.val();
+            setUsername(data.username)
+            console.log(data);
+
 
             setImage(data.picture.profile_pic)
 
@@ -73,7 +78,7 @@ const Profile = () => {
                     ) : (
                         <ProfileSvg className="profile-avatar-svg" />
                     )}
-                    <p>{userData.username}</p>
+                    <p>{username}</p>
 
                     <BtnsWrapper>
                         <SignOutButton />

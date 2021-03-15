@@ -2,7 +2,7 @@ import React from 'react';
 import { NavBar, Banner, About } from './LandingpageElements';
 import { Button } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import MoneySvg from '../svgs/LandingSvg';
 import InvestSvg from '../svgs/InvestSvg';

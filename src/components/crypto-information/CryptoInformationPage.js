@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import LineChart from '../charts/InfopageLinechart';
+// import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { setFollowingCrypto } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -48,7 +48,7 @@ const CryptoInformationPage = () => {
                     <div key={index}>
                         <h1>{item.name}</h1>
                         <div className="imgWrapper">
-                            <img src={item.image} />
+                            <img src={item.image} alt='logo of the crypto'/>
                         </div>
                         <div className="followWrapper">
                         <label> FOLLOW {/* <span>FOLLOW</span> */}</label>

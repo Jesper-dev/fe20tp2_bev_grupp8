@@ -1,6 +1,8 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
+
 export const config = {
     apiKey: 'AIzaSyBUOsBYQY6ajo3YZ8pg-WWco8hXN9-AhCc',
     authDomain: 'grupp8-c364e.firebaseapp.com',

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios"
 // import { FirebaseContext } from '../firebase/context'
 import firebase from 'firebase'
+import UserCard from './UserCard'
 
 import SearchBar from '../shared/search-bar/SearchBar'
 import { UserList } from '../admin/admin'
 
-import { setUsers } from '../../redux/actions';
+import { filterUsers, setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -50,18 +51,14 @@ const SocialPage = () => {
 
         //TODO Gör så att bilden sparas i databasen. Få ut bilden och annat i UserWrapper, kanske göra en usercard component?
     }, [])
-    // console.log(withAuthorization.authUser)
 
     return (
 
         <>
             <SearchBar />
-            {filteredUsers.map((item) => {
+            {filteredUsers.map((item, index) => {
                 return (
-                    <UserWrapper key={item.username}>
-                        <p>Username: {item.username}</p>
-                        <p>Go to account</p>
-                    </UserWrapper>
+                    <UserCard key={index} img={item.picture.profile_pic} username={item.username}/>
                 )
             })}
         </>

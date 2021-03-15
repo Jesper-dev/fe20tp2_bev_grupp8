@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FirebaseContext } from '../firebase/index'
-import { AuthUserContext } from '../session/index';
+// import { FirebaseContext } from '../firebase/index'
+// import { AuthUserContext } from '../session/index';
 // import firebase from '../firebase/firebase'
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
@@ -29,7 +29,7 @@ const StockInformationPage = () => {
     const Currency = useSelector((state) => state.Currency);
     const Stocks = useSelector((state) => state.Stocks);
 
-    const firebase = useContext(FirebaseContext)
+    // const firebase = useContext(FirebaseContext)
 
     let user = ''
 
