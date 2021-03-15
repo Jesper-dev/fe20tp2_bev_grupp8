@@ -7,6 +7,7 @@ import StockCard from '../shared/card/stock-card/StockCard';
 import CryptoCard from '../shared/card/crypto-card/CryptoCard'
 import MockCrypto from "../../api/Mock/MockCrypto.json"
 
+import SearchBar from '../shared/search-bar/SearchBar'
 import { ContentWrapper, StockWrapper } from './DiscoverElements';
 import {ShowCryptoBtn} from "../shared/button/ButtonElements"
 
@@ -16,6 +17,7 @@ const Discover = () => {
 
     return (
         <>
+        <SearchBar />
             <ContentWrapper>
                 <div>
                     <h2>Stonks Region: {array[0].region} </h2>

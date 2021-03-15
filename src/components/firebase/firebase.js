@@ -1,7 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-
 export const config = {
     apiKey: 'AIzaSyBUOsBYQY6ajo3YZ8pg-WWco8hXN9-AhCc',
     authDomain: 'grupp8-c364e.firebaseapp.com',
@@ -20,6 +19,10 @@ class Firebase {
         this.serverValue = app.database.ServerValue;
         this.auth = app.auth();
         this.db = app.database();
+
+        this.state = {
+            users: [],
+        };
     }
 
     // *** Auth API ***
@@ -63,6 +66,22 @@ class Firebase {
                 fallback();
             }
         });
+
+        componentDidMount() {
+            // this.setState({ loading: true });
+            this.props.firebase.users().on('value', (snapshot) => {
+                const usersObject = snapshot.val();
+                console.log(usersObject);
+                const usersList = Object.keys(usersObject).map((key) => ({
+                    ...usersObject[key],
+                    uid: key,
+                }));
+                this.setState({
+                    users: usersList,
+                    loading: false,
+                });
+            });
+        }
 
     // *** User API ***
 

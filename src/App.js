@@ -22,6 +22,7 @@ import { withAuthentication } from './components/session';
 
 const App = () => {
     return (
+        <>
         <Router>
             <GlobalStyle />
             <Switch>
@@ -88,6 +89,7 @@ const App = () => {
 
             </Switch>
         </Router>
+        </>
     );
 };
 

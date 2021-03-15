@@ -67,9 +67,24 @@ export const setSeeNews = (seeNews) => {
         payload: seeNews,
     };
 };
+
 export const setProfileImage = (image) => {
     return {
         type: 'PROFILEIMAGE',
         payload: image,
+    };
+};
+
+export const setUsers = (users) => {
+    return {
+        type: 'USERS',
+        payload: users,
+    };
+};
+
+export const filterUsers = (filteredUsers) => {
+    return {
+        type: 'FILTEREDUSERS',
+        payload: filteredUsers,
     };
 };

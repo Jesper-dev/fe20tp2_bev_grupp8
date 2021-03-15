@@ -105,7 +105,7 @@ const StockInformationPage = () => {
             setBuy(false);
             setNumOfStocks(0);
 
-            axios.put('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json', newCurrency)
+            // axios.put('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json', newCurrency)
         }
     };
 

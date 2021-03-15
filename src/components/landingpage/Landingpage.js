@@ -15,10 +15,10 @@ const Landingpage = () => {
                 <h1>Let's Vest</h1>
                 <ul>
                     <li>
-                        <Button to={ROUTES.SIGN_IN} secondary>Sign In</Button>
+                        <Button to={ROUTES.SIGN_IN} secondary="true">Sign In</Button>
                     </li>
                     <li>
-                        <Button to={ROUTES.SIGN_UP} primary>Sign Up</Button>
+                        <Button to={ROUTES.SIGN_UP} primary="true">Sign Up</Button>
                     </li>
                 </ul>
             </NavBar>
@@ -28,10 +28,10 @@ const Landingpage = () => {
                 <MoneySvg/>
 				<ul>
 					<li>
-						<Button to={ROUTES.SIGN_UP} primary>Get Started</Button>
+						<Button to={ROUTES.SIGN_UP} primary="true">Get Started</Button>
 					</li>
 					<li>
-						<Button to={ROUTES.DISCOVER} secondary>Browse Stocks</Button>
+						<Button to={ROUTES.DISCOVER} secondary="true">Browse Stocks</Button>
 					</li>
 				</ul>
 			</Banner>

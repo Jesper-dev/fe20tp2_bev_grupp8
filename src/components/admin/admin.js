@@ -49,7 +49,7 @@ class AdminPage extends Component {
     }
 }
 
-const UserList = ({ users }) => (
+export const UserList = ({ users }) => (
     <ul>
         {users.map((user) => (
             <li key={user.uid}>
@@ -69,4 +69,4 @@ const UserList = ({ users }) => (
 
 const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
 
-export default withAuthorization(condition)(withFirebase(AdminPage));
+export default (withAuthorization(condition), withFirebase(AdminPage));

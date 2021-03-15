@@ -8,6 +8,8 @@ import { ContentWrapper, SignLink } from './SignInElements';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../../constants/routes';
 
+// import { withAuthorization } from "../session";
+
 const SignIn = () => (
     <div>
         <SignInForm />
@@ -92,5 +94,7 @@ class SignInFormBase extends Component {
 const SignInForm = withRouter(withFirebase(SignInFormBase));
 
 export default SignIn;
+// const condition = (authUser) => !!authUser;
+// export default withAuthorization(condition)(SignIn);
 
 export { SignInForm };
