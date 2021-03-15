@@ -65,9 +65,10 @@ export const ContentWrapper = styled.div`
 
         &::placeholder {
             opacity: 0;
+            transition: 0.35s ease-in-out;
         }
 
-        /* transition: all 1s ease-in-out; */
+        transition: width 0.75s ease-in-out;
 
         &:focus {
             width: 100%;
@@ -79,25 +80,23 @@ export const ContentWrapper = styled.div`
         &:focus::placeholder {
             opacity: 1;
             color: grey;
+            font-weight: 300;
         }
     }
 
     /* ::-webkit-search-cancel-button */
 
-    .input + svg {
+    .input ~ svg {
         position: absolute;
-        left: 0.375rem;
         bottom: 0.375rem;
+        left: 0.375rem;
         fill: #C8C8C8;
-        /* transition: 1s ease-in-out; */
+        transition: left 0.75s ease-in-out, fill 0.75s ease-in-out;
+        pointer-events: none;
     }
 
-    .input:focus + svg {
-        position: absolute;
-        /* left: calc(100% - 1.875rem); */
-        /* left: 90%; */
-        right: 0.375rem;
-        bottom: 0.375rem;
+    .input:focus ~ svg {
+        left: calc(100% - 1.875rem);
         fill: var(--third);
     }
 `
