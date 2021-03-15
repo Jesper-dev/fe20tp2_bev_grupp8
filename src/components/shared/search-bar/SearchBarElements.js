@@ -97,6 +97,8 @@ export const ContentWrapper = styled.div`
 
     .input:focus ~ svg {
         left: calc(100% - 1.875rem);
+        /* left: auto; */
+        /* right: 0.375rem; */
         fill: var(--third);
     }
 `

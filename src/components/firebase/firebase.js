@@ -19,6 +19,7 @@ class Firebase {
         this.serverValue = app.database.ServerValue;
         this.auth = app.auth();
         this.db = app.database();
+        this.storage = app.storage()
 
         this.state = {
             users: [],
@@ -101,6 +102,7 @@ class Firebase {
     settings = () => this.db.ref('settings');
 }
 
+/* const firebaseObj = { message, messages, doSignUp } */
 //     messagingSenderId: "898314042279",
 //     appId: "1:898314042279:web:29f56cb55bbc265c6e5482",
 //     measurementId: "G-S4L4L5B5RH"

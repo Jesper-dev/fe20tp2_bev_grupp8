@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import axios from "axios"
 
+import { FirebaseContext } from '../firebase/context'
 import { Switch, Route } from 'react-router-dom';
 
 import {
@@ -20,15 +21,20 @@ import SignOutButton from '../sign-out/SignOut';
 import { withAuthorization } from '../session'; //must be logged in to see content
 import ProfileSvg from '../svgs/ProfileSvg';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfileImage } from '../../redux/actions';
 
 let user = ''
 
 const Profile = () => {
-    const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
-    const [userData, setUserData] = useState(undefined)
-    const [username, setUsername] = useState(undefined)
 
+    const firebase = useContext(FirebaseContext)
+    const dispatch = useDispatch()
+
+    const [image, setImage] = useState(null)
+
+
+    const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
     const history = useHistory();
 
     const [navpath, setNavPath] = useState('portfolio');
@@ -38,10 +44,23 @@ const Profile = () => {
         history.push('/');
     };
 
-    useEffect(() => {
-        user = localStorage.getItem('authUser')
+    const userData = JSON.parse(localStorage.getItem('authUser'));
 
-        setUsername(JSON.parse(user).username)
+    useEffect(() => {
+
+
+        const user = firebase.db.ref('users/' + userData.uid);
+        user.on('value', (snapshot) => {
+            const data = snapshot.val();
+
+            setImage(data.picture.profile_pic)
+
+            let blobLink = data.picture.profile_pic;
+
+            console.log(blobLink)
+
+            dispatch(setProfileImage(blobLink))
+        });
 
     }, []);
 
@@ -54,7 +73,7 @@ const Profile = () => {
                     ) : (
                         <ProfileSvg className="profile-avatar-svg" />
                     )}
-                    <p>{username}</p>
+                    <p>{userData.username}</p>
 
                     <BtnsWrapper>
                         <SignOutButton />

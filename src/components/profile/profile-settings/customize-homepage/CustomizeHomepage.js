@@ -81,7 +81,7 @@ const CustomizeHomepage = () => {
                     onClick={seeFunc}
                     value="Rec"
                 />
-                <label for="rec" className="toggle-btn"></label>
+                <label htmlFor="rec" className="toggle-btn"></label>
             </div>
             <div className="tgl">
                 <p>Show Following</p>
@@ -94,7 +94,7 @@ const CustomizeHomepage = () => {
                     onClick={seeFunc}
                     value="Follow"
                 />
-                <label for="follow" className="toggle-btn"></label>
+                <label htmlFor="follow" className="toggle-btn"></label>
             </div>
             <div className="tgl">
                 <p>Show News</p>
@@ -107,7 +107,7 @@ const CustomizeHomepage = () => {
                     onClick={seeFunc}
                     value="News"
                 />
-                <label for="news" className="toggle-btn"></label>
+                <label htmlFor="news" className="toggle-btn"></label>
             </div>
         </ContentWrapper>
     );

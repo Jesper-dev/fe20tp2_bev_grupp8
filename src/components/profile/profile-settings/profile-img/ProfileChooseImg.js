@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../../../firebase/context'
-
+// import { withFirebase } from '../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProfileImage } from '../../../../redux/actions';
+
+import 'firebase/database'
+import axios from "axios"
 
 import {
     ContentWrapper,
@@ -18,6 +21,8 @@ import ImageCropper from './ProfileImgCropper';
 const ProfileChooseImg = () => {
     const dispatch = useDispatch();
     const firebase = useContext(FirebaseContext)
+
+
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
@@ -49,48 +54,68 @@ const ProfileChooseImg = () => {
         }
     };
 
+
+    const updateUser = (userId, imageUrl) => {
+        firebase.db.ref('users/' + userId + "/picture").set({
+          profile_pic: imageUrl
+        });
+    }
+
+    const getImage = (userId) => {
+        const myImg = firebase.db.ref('users/' + userId + '/picture');
+        myImg.on('value', (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+       });
+    }
+
+
+
+
+    const user = JSON.parse(localStorage.getItem('authUser'))
+    console.log(user.username)
+
     const handleSubmitImage = (e) => {
         // upload blob to firebase 'images' folder with filename 'image'
         e.preventDefault();
-        console.log(inputImg);
-        console.log(blob);
+        getImage(user.uid)
 
         setBlobUrl(URL.createObjectURL(blob));
         setInputImg(null);
+
+        console.log(URL.createObjectURL(blob))
+        console.log(blob)
+
         dispatch(setProfileImage(URL.createObjectURL(blob)));
 
-        // firebase
-        //     .storage()
-        //     .ref('images')
-        //     .child('image')
-        //     .put(blob, { contentType: blob.type })
-        //     .then(() => {
-        //         // redirect user
-        //     })
-        // firebase.user(authUser.user.uid).set({
-        //             image
-        //         });
+        // gs://grupp8-c364e.appspot.com/uid
+
+        let blobFirebase = URL.createObjectURL(blob)
+
+        updateUser(user.uid, blobFirebase)
 
 
-        window.localStorage.setItem(
+    /*       window.localStorage.setItem(
             'croppedAreaPixels',
             JSON.stringify(blobUrl)
-        );
+        ); */
 
         /*   myImage.src = objectURL; */
     };
+
+
 
     return (
         <>
             <ContentWrapper>
                 {!ProfileImgReducer ? <ProfileSvg className="svg-avatar" /> :
-<ProfileSettingsImg src={ProfileImgReducer} />
+            <ProfileSettingsImg src={ProfileImgReducer} />
                 }
            {/*      <ProfileSettingsImg src={ProfileImgReducer} />
                 <ProfileSvg /> */}
 
                 <form onSubmit={handleSubmitImage}>
-                    <label for="file-upload" className="custom-file-upload">
+                    <label htmlFor="file-upload" className="custom-file-upload">
                    <i className="fas fa-cloud-upload-alt"></i> Upload Image
                     </label>
                     <input

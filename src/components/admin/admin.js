@@ -63,10 +63,11 @@ export const UserList = ({ users }) => (
                     <strong>Username:</strong> {user.username}
                 </span>
             </li>
-        ))}{' '}
+        ))}
     </ul>
 );
 
 const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
 
 export default (withAuthorization(condition), withFirebase(AdminPage));
+//
