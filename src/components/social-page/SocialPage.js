@@ -4,6 +4,7 @@ import axios from "axios"
 import firebase from 'firebase'
 import UserCard from './UserCard'
 
+
 import SearchBar from '../shared/search-bar/SearchBar'
 import { UserList } from '../admin/admin'
 
@@ -16,7 +17,6 @@ import {UserWrapper} from './SocialPageElements'
 let usersArray = []
 const SocialPage = () => {
     const dispatch = useDispatch();
-    const users = useSelector((state) => state.Users)
     const filteredUsers = useSelector((state) => state.FilteredUsers)
     useEffect(() => {
         usersArray = []
@@ -29,27 +29,6 @@ const SocialPage = () => {
             }
             dispatch(setUsers(usersArray))
         });
-
-
-
-        // axios.get('https://grupp8-c364e-default-rtdb.firebaseio.com/users.json')
-        //     .then(res => {
-        //         for(const key in res.data) {
-        //             usersArray.push({...res.data[key]})
-        //         }
-        //     })
-        //     .catch(err => console.log(err))
-
-        //*Function: write to user in databse???
-        // function writeUserData(userId, name, email, imageUrl) {
-        //     firebase.database().ref('users/' + userId).set({
-        //       username: name,
-        //       email: email,
-        //       profile_picture : imageUrl
-        //     });
-        //   }
-
-        //TODO Gör så att bilden sparas i databasen. Få ut bilden och annat i UserWrapper, kanske göra en usercard component?
     }, [])
 
     return (

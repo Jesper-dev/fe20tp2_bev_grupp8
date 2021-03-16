@@ -55,15 +55,8 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setUsername(data.username)
-            console.log(data);
-
-
             setImage(data.picture.profile_pic)
-
             let blobLink = data.picture.profile_pic;
-
-            console.log(blobLink)
-
             dispatch(setProfileImage(blobLink))
         });
 

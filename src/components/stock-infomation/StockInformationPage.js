@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { FirebaseContext } from '../firebase/index'
+import 'firebase/database'
 // import { AuthUserContext } from '../session/index';
 // import firebase from '../firebase/firebase'
+import { FirebaseContext } from '../firebase/context'
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -17,21 +18,21 @@ let holdingArray = [];
 
 const StockInformationPage = () => {
     const [userData, setUserData] = useState(null)
-    const [uid, setUid] = useState(undefined)
     const [checked, setChecked] = useState(false);
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
     const [holding, setHolding] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
+    //*Redux stuff :)
     const dispatch = useDispatch();
     const chosenShare = useSelector((state) => state.ChosenShare);
     const followingArr = useSelector((state) => state.Following);
     const Currency = useSelector((state) => state.Currency);
     const Stocks = useSelector((state) => state.Stocks);
 
-    // const firebase = useContext(FirebaseContext)
+    const firebase = useContext(FirebaseContext)
 
-    let user = ''
+    const user = JSON.parse(localStorage.getItem('authUser'))
 
     useEffect(() => {
         if (followingArr.includes(chosenShare[0])) {
@@ -43,19 +44,14 @@ const StockInformationPage = () => {
         checkHolding();
 
 
-        user = localStorage.getItem('authUser')
-
-        setUid(JSON.parse(user).uid)
-        axios
-            .get('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json')
-            .then((res) => setUserData(res.data))
-            .catch((err) => console.log(err));
-
 
     }, []);
 
-    console.log("uid is: ", uid)
-    console.log(userData)
+    const updateUser = (userId) => {
+        firebase.db.ref('users/' + userId + "/followingStocks").set({
+            followingArr
+        });
+    }
 
     const checkHolding = () => {
         if (Stocks.includes(chosenShare[0])) {
@@ -75,10 +71,12 @@ const StockInformationPage = () => {
             let index = followingArr.findIndex((x) => x.symbol === name);
             followingArr.splice(index, 1);
             dispatch(setFollowing(followingArr));
+            updateUser(user.uid, followingArr)
         } else {
             following.push(chosenShare[0]);
             dispatch(setFollowing(following));
             setChecked(true);
+            updateUser(user.uid)
         }
     };
     const onChange = (e) => {
@@ -104,8 +102,6 @@ const StockInformationPage = () => {
             dispatch(setStocks(Stocks));
             setBuy(false);
             setNumOfStocks(0);
-
-            // axios.put('https://grupp8-c364e-default-rtdb.firebaseio.com/users/' + uid + '.json', newCurrency)
         }
     };
 
