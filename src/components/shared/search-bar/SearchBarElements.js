@@ -2,50 +2,11 @@ import styled from 'styled-components'
 
 export const ContentWrapper = styled.div`
 
-
-    /* form {
-        position: relative;
-        width: 100%;
-        height: 120px;
-        background-color: (--body);
-
-    }
-
-    input {
-        width: 36px;
-        height: 36px;
-
-
-        border-radius: 4px;
-        border: none;
-        background: #ededed;
-
-
-        transition: width 0.5s ease-in-out;
-
-
-        &:focus{
-            width: 80%;
-             outline: none;
-        }
-        &:focus::placeholder{
-            opacity: 0;
-        }
-    } */
-
     padding: 1rem;
 
-
-    .label {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        color: #383838;
-        font-family: inherit;
-        font-size: 0.875rem;
-        font-weight: 600;
-
+    .form {
         position: relative;
+		margin: 0;
     }
 
     .input {
@@ -56,39 +17,46 @@ export const ContentWrapper = styled.div`
         border-radius: 0.25rem;
         outline: none;
         background: none;
-        color: #383838;
+        color: transparent;
         font-family: inherit;
         font-size: 0.875rem;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 1rem;
         text-indent: 0.375rem;
+		transition: width 0.75s ease-in-out, border-color 0.5s ease-in-out, color 0.5s ease-in-out;
 
         &::placeholder {
             opacity: 0;
-            transition: 0.35s ease-in-out;
+			/* transition: opacity 0.25s ease-in-out;  */
         }
 
-        transition: width 0.75s ease-in-out;
+		&::-webkit-input-placeholder {
+			transition: opacity 0.25s ease-in-out; 
+		}
+
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
+
+		/* TODO: If focused && textContent !== null --> keep expanded */
 
         &:focus {
             width: 100%;
             padding-right: 2.25rem;
-            border: 1px solid var(--third);
-            border-radius: 4px;
+            border-color: var(--third);
+			color: #383838;
         }
 
         &:focus::placeholder {
-            opacity: 1;
+			opacity: 1;
             color: grey;
             font-weight: 300;
         }
     }
 
-    /* ::-webkit-search-cancel-button */
-
     .input ~ svg {
         position: absolute;
-        bottom: 0.375rem;
+        top: 0.375rem;
         left: 0.375rem;
         fill: #C8C8C8;
         transition: left 0.75s ease-in-out, fill 0.75s ease-in-out;
@@ -97,8 +65,8 @@ export const ContentWrapper = styled.div`
 
     .input:focus ~ svg {
         left: calc(100% - 1.875rem);
-        /* left: auto; */
-        /* right: 0.375rem; */
         fill: var(--third);
+		/* pointer-events: auto; */
+		/* cursor: pointer; */
     }
 `

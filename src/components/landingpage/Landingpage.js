@@ -9,6 +9,18 @@ import InvestSvg from '../svgs/InvestSvg';
 import ProfitsSvg from '../svgs/ProfitsSvg';
 
 const Landingpage = () => {
+	// temporary example
+	const styles = [
+		"display: inline-block;",
+		"padding: 0.75rem;",
+		"border: 0.125rem solid #5068F5;",
+		"border-radius: 0.2rem;",
+		"color: #5068F5;",
+		"font-size: 2rem;"
+	].join(" ");
+
+	console.log("%cLet's Vest!", styles);
+
     return (
         <div>
             <NavBar>
