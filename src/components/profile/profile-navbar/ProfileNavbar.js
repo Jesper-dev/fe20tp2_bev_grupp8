@@ -1,16 +1,16 @@
 import React from 'react'
 import { ProfileNavbarElement } from "./ProfileNavbarElements";
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import * as ROUTES from "../../../constants/routes";
-import SignOutButton from '../../sign-out/SignOut';
-import * as ROLES from '../../../constants/roles';
+// import SignOutButton from '../../sign-out/SignOut';
+// import * as ROLES from '../../../constants/roles';
 
 import { AuthUserContext } from '../../session';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 
 const ProfileNavbar = () => {
-    let { path, url } = useRouteMatch();
+/*     let { path, url } = useRouteMatch(); */
 
     return (
 

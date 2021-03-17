@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
-import axios from 'axios';
 import 'firebase/database'
 // import { AuthUserContext } from '../session/index';
 // import firebase from '../firebase/firebase'
@@ -13,11 +12,11 @@ import { useDispatch } from 'react-redux';
 
 import { ContentWrapper } from './StockInfromationElements';
 
-let following = [];
+/* let following = []; */
 let holdingArray = [];
 
 const StockInformationPage = () => {
-    const [userData, setUserData] = useState(null)
+    // const [userData, setUserData] = useState(null)
     const [checked, setChecked] = useState(false);
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
@@ -35,21 +34,23 @@ const StockInformationPage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'))
 
     useEffect(() => {
-        if (followingArr.includes(chosenShare[0])) {
-            setChecked(true);
-        } else {
-            setChecked(false);
-        }
+
+        followingArr.forEach(item => {
+            if(item.symbol === chosenShare[0].symbol)  {
+                setChecked(true)
+            } else if (!item.symbol === chosenShare[0].symbol)  {
+                setChecked(false)
+            }
+        });
+
+
         holdingArray = [];
         checkHolding();
-
-
-
     }, []);
 
-    const updateUser = (userId) => {
+    const updateUser = (userId, array) => {
         firebase.db.ref('users/' + userId + "/followingStocks").set({
-            followingArr
+            array
         });
     }
 
@@ -65,23 +66,39 @@ const StockInformationPage = () => {
     };
 
     const onFollow = () => {
-        if (followingArr.includes(chosenShare[0])) {
-            let name = chosenShare[0].symbol;
+        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
+        let followingDb;
+        stocks.on('value', (snapshot) => {
+            followingDb = snapshot.val();
+            if (followingDb === null) {
+                return;
+            }
+
+            // data.forEach(item => followingDb.push(item));
+        });
+        let name = chosenShare[0].symbol;
+
+        let index = followingDb.findIndex((x) => x.symbol === name);
+
+        if (index > -1) {
+            followingDb.splice(index, 1);
             setChecked(false);
-            let index = followingArr.findIndex((x) => x.symbol === name);
-            followingArr.splice(index, 1);
-            dispatch(setFollowing(followingArr));
-            updateUser(user.uid, followingArr)
         } else {
-            following.push(chosenShare[0]);
-            dispatch(setFollowing(following));
+            const followingObj = {
+                symbol: chosenShare[0].symbol,
+                regularMarketPrice: chosenShare[0].regularMarketPrice,
+                regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
+                shortName: chosenShare[0].shortName
+            }
+            followingDb.push(followingObj);
             setChecked(true);
-            updateUser(user.uid)
         }
+
+        updateUser(user.uid, followingDb)
+        dispatch(setFollowing(followingDb));
     };
-    const onChange = (e) => {
-        setChecked(!checked);
-    };
+
+    const onChange = () => setChecked(!checked);
 
     //*Function for when we buy a share
     const onBuy = (numOfStocks) => {
@@ -180,7 +197,7 @@ const StockInformationPage = () => {
                         </div>
 
                         <div className="followWrapper">
-                            <label>FOLLOW {/* <span>FOLLOW</span> */}</label>
+                            <label>Watch {/* <span>FOLLOW</span> */}</label>
                             <input
                                 type="checkbox"
                                 onClick={onFollow}

@@ -17,7 +17,7 @@ const FollowingHome = ({ array, cryptoList }) => {
                         : { display: 'none' }
                 }
             >
-                <h3>Following</h3>
+                <h3>Watching</h3>
                 <p>
                     {array.length === 0 && cryptoList.length === 0
                         ? 'You are not following any stocks or crypto currency at the moment! Use the discover page to find stocks and crypto currency of your interest'

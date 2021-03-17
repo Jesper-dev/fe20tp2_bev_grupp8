@@ -43,7 +43,7 @@ const CustomizeHomepage = () => {
     const checkIfNews = () => {
         if (SeeNewsRedux === true) {
             setCheckedNews(true);
-        } else if (SeeNewsRedux == false) {
+        } else if (SeeNewsRedux === false) {
             setCheckedNews(false);
         }
     };
@@ -70,6 +70,7 @@ const CustomizeHomepage = () => {
     return (
         <ContentWrapper>
             <h3>Customize your homepage</h3>
+            {/* NOTE: Change whole div to only a label with an input */}
             <div className="tgl">
                 <p>Show Recommended</p>
                 <input

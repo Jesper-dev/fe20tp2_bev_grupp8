@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { setFollowingCrypto } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 import { ContentWrapper } from './CryptoInformationPageElements';
+import { FirebaseContext } from '../firebase/context'
 
 let following = [];
 
@@ -16,6 +17,8 @@ const CryptoInformationPage = () => {
     const chosenCrypto = useSelector((state) => state.ChosenCrypto);
     const followingArr = useSelector((state) => state.FollowingCrypto);
 
+    const firebase = useContext(FirebaseContext)
+
     useEffect(() => {
         if (followingArr.includes(chosenCrypto[0])) {
             setChecked(true);
@@ -24,6 +27,14 @@ const CryptoInformationPage = () => {
         }
     }, []);
 
+    const user = JSON.parse(localStorage.getItem('authUser'))
+
+    const updateUser = (userId) => {
+        firebase.db.ref('users/' + userId + "/followingStocks").set({
+            followingArr
+        });
+    }
+
     const onFollow = () => {
         if (followingArr.includes(chosenCrypto[0])) {
             let name = chosenCrypto[0].symbol;
@@ -31,10 +42,12 @@ const CryptoInformationPage = () => {
             let index = followingArr.findIndex((x) => x.symbol === name);
             followingArr.splice(index, 1);
             dispatch(setFollowingCrypto(followingArr));
+            updateUser(user.uid)
         } else {
             following.push(chosenCrypto[0]);
             dispatch(setFollowingCrypto(following));
             setChecked(true);
+            updateUser(user.uid)
         }
     };
     const onChange = (e) => {

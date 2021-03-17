@@ -23,7 +23,7 @@ const CryptoCard = ({name, price, img, percent, cryptoList}) => {
     return (
         <>
             <CardWrapper>
-                <img src={img} />
+                <img src={img} alt='Icon of crypto' />
                 <span>{name}</span>
                 <span>{price.toLocaleString()}$</span>
                 <span>{percent.toFixed(2)}%</span>

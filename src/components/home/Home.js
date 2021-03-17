@@ -13,14 +13,14 @@ import MockNewsList from '../../api/Mock/MockNewsList.json';
 import { withAuthorization } from '../session'; //must be logged in to see content
 
 import { useSelector } from 'react-redux';
-import firebase from 'firebase'
+/* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context'
 import { setFollowing } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const Home = () => {
     // const stocksList = useSelector((state) => state.RecommendationReducer);
-    const following = useSelector((state) => state.Following);
+/*     const following = useSelector((state) => state.Following); */
     const followingCrypto = useSelector((state) => state.FollowingCrypto);
     const Currency = useSelector((state) => state.Currency);
     const firebase = useContext(FirebaseContext)
@@ -29,13 +29,13 @@ const Home = () => {
 
     // let array = MockGetTickers.finance.result[0].quotes;
     const user = JSON.parse(localStorage.getItem('authUser'))
-    let followingDb = []
-    let stocks = []
+    // let followingDb = []
+    // let stocks = []
     useEffect(() => {
-        followingDb = []
+        let followingDb = []
         let data;
         //* Gets a list of users in our database
-        stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/followingArr');
+        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
         if(stocks === null) {
             return;
         }
@@ -46,7 +46,6 @@ const Home = () => {
                 return;
             }
 
-            console.log(data)
             for(let i = 0; i < data; i++){
                 followingDb.push(data[i])
             }

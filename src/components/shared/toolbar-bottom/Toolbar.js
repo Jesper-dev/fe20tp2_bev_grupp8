@@ -2,9 +2,7 @@ import React from 'react';
 import { ToolbarElement } from './ToolbarElements';
 import { NavLink } from 'react-router-dom';
 
-import SignOutButton from '../../sign-out/SignOut';
 import * as ROUTES from '../../../constants/routes';
-import * as ROLES from '../../../constants/roles';
 
 import { AuthUserContext } from '../../session';
 

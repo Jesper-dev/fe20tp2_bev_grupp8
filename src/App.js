@@ -11,11 +11,10 @@ import PasswordForget from './components/password-forget/PasswordForget';
 import ProfileLikes from './components/profile/profile-likes/ProfileLikes';
 import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 import ProfilePosts from './components/profile/profile-posts/ProfilePosts';
-import ProfileNavbar from './components/profile/profile-navbar/ProfileNavbar';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
 
 import { createGlobalStyle } from 'styled-components';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';

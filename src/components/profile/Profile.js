@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import axios from "axios"
+// import axios from "axios"
 
 import { FirebaseContext } from '../firebase/context'
-import { Switch, Route } from 'react-router-dom';
+// import { Switch, Route } from 'react-router-dom';
 
 import {
     ContentWrapper,
@@ -14,36 +14,20 @@ import {
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import NavbarProfile from './profile-navbar/ProfileNavbar';
-import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
-import ProfilePosts from './profile-posts/ProfilePosts';
-import ProfileLikes from './profile-likes/ProfileLikes';
 import SignOutButton from '../sign-out/SignOut';
 import { withAuthorization } from '../session'; //must be logged in to see content
 import ProfileSvg from '../svgs/ProfileSvg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfileImage, setUsers } from '../../redux/actions';
+import { setProfileImage } from '../../redux/actions';
 
-let user = ''
 
 const Profile = () => {
-
     const firebase = useContext(FirebaseContext)
     const dispatch = useDispatch()
-
-    const [image, setImage] = useState(null)
     const [username, setUsername] = useState('')
 
-
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
-    const history = useHistory();
-
-    const [navpath, setNavPath] = useState('portfolio');
-
-    const redirect = () => {
-        console.log('REDIRECT ME');
-        history.push('/');
-    };
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
@@ -55,7 +39,8 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setUsername(data.username)
-            setImage(data.picture.profile_pic)
+            if (!data.picture) return
+            // setImage(data.picture.profile_pic)
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink))
         });

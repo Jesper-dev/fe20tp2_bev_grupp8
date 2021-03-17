@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios"
+import React, { useEffect } from 'react';
 // import { FirebaseContext } from '../firebase/context'
 import firebase from 'firebase'
 import UserCard from './UserCard'
 
-
+import SocialPost from './SocialPost';
 import SearchBar from '../shared/search-bar/SearchBar'
-import { UserList } from '../admin/admin'
 
-import { filterUsers, setUsers } from '../../redux/actions';
+import { setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { withAuthorization, AuthUserContext } from '../session/index';
-import {UserWrapper} from './SocialPageElements'
+import { withAuthorization } from '../session/index';
 let usersArray = []
 const SocialPage = () => {
     const dispatch = useDispatch();
@@ -29,7 +26,7 @@ const SocialPage = () => {
             }
             dispatch(setUsers(usersArray))
         });
-    }, [])
+    }, [dispatch])
 
     return (
 
@@ -37,9 +34,10 @@ const SocialPage = () => {
             <SearchBar />
             {filteredUsers.map((item, index) => {
                 return (
-                    <UserCard key={index} img={item.picture.profile_pic} username={item.username}/>
+                    <UserCard key={index} img={item.picture ? item.picture.profile_pic : "img"} username={item.username}/>
                 )
             })}
+            {/* <SocialPost /> */}
         </>
 
 

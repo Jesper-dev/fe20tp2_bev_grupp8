@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Line, Bar } from 'react-chartjs-2';
-
-import MockChartsAMZN from '../../api/Mock/MockChartsAMZN.json';
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+/*
+import MockChartsAMZN from '../../api/Mock/MockChartsAMZN.json'; */
 import MockChartsFB from '../../api/Mock/MockChartsFB.json';
 
 const InfopageLinechart = () => {
-    const [data, setData] = useState();
-    const [timestamps, setTimestamps] = useState([]);
+  /*   const [data, setData] = useState();
+    const [timestamps, setTimestamps] = useState([]); */
 
     let stockValue =
         MockChartsFB.chart.result[0].indicators.adjclose[0].adjclose;

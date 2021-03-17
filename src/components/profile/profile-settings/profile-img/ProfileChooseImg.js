@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../../../firebase/context'
-// import { withFirebase } from '../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { setProfileImage } from '../../../../redux/actions';
+import { useSelector } from 'react-redux';
 
 import 'firebase/database'
-import axios from "axios"
 
 import {
     ContentWrapper,
@@ -19,21 +16,12 @@ import ProfileSvg from '../../../svgs/ProfileSvg';
 import ImageCropper from './ProfileImgCropper';
 
 const ProfileChooseImg = () => {
-    const dispatch = useDispatch();
     const firebase = useContext(FirebaseContext)
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
     const profileImg = useSelector((state) => state.ProfileImgReducer)
 
-    const [blob, setBlob] = useState(null);
     const [inputImg, setInputImg] = useState('');
-
-    const [blobUrl, setBlobUrl] = useState(null);
-
-    const getBlob = (blob) => {
-        // pass blob up from the ImageCropper component
-        setBlob(blob);
-    };
 
     const onInputChange = (e) => {
         // convert image file to base64 string
@@ -99,7 +87,7 @@ const ProfileChooseImg = () => {
                     {inputImg && (
                         <CropperWrapper>
                             <ImageCropper
-                                getBlob={getBlob}
+                                // getBlob={getBlob}
                                 inputImg={inputImg}
                             />
                         </CropperWrapper>
