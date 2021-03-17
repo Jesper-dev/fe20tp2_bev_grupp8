@@ -63,7 +63,6 @@ export const ProfileSettingsImg = styled.img`
       margin: 15px auto;
       width: 150px;
       height: 150px;
-      border: 3px solid var(--secondary);
       border-radius: 50%;
 `;
 

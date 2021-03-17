@@ -15,12 +15,13 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context'
-import { setFollowing } from '../../redux/actions';
+import { setFollowing, setCurrency } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const Home = () => {
     // const stocksList = useSelector((state) => state.RecommendationReducer);
 /*     const following = useSelector((state) => state.Following); */
+    const [totalCurrency, setTotalCurrency] = useState(0)
     const followingCrypto = useSelector((state) => state.FollowingCrypto);
     const Currency = useSelector((state) => state.Currency);
     const firebase = useContext(FirebaseContext)
@@ -34,6 +35,7 @@ const Home = () => {
     useEffect(() => {
         let followingDb = []
         let data;
+        let currencyData;
         //* Gets a list of users in our database
         let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
         if(stocks === null) {
@@ -53,6 +55,16 @@ const Home = () => {
             setFollowingArr(followingDb)
             dispatch(setFollowing(followingDb));
         });
+
+        let totalCurrency = firebase.db.ref('users/' + user.uid + '/currency');
+        totalCurrency.on('value', (snapshot) => {
+            currencyData = snapshot.val()
+            if(currencyData == null) {
+                return;
+            }
+            setTotalCurrency(currencyData.currency)
+            dispatch(setCurrency(currencyData.currency))
+        })
     }, [])
 
     return (
@@ -60,7 +72,7 @@ const Home = () => {
             <ContentWrapper>
                 <h2>PORTFOLIO</h2>
                 <PortfolioOverview
-                    total={Currency.toLocaleString()}
+                    total={totalCurrency.toLocaleString()}
                     difference={0}
                     percent={0}
                 />

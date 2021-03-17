@@ -45,6 +45,8 @@ const Profile = () => {
             dispatch(setProfileImage(blobLink))
         });
 
+
+
     }, []);
 
     return (
@@ -59,7 +61,7 @@ const Profile = () => {
                     <p>{username}</p>
 
                     <BtnsWrapper>
-                        <SignOutButton />
+                        {/* <SignOutButton /> */}
                         <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
                             <i className="fas fa-user-edit"></i> Edit Profile
                         </ProfileSettingsBtn>

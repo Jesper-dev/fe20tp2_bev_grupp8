@@ -5,6 +5,7 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
     /*
     background-color: var(--body);
@@ -12,6 +13,9 @@ export const ContentWrapper = styled.div`
     box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 25%); */
 
     /*     padding: 8px; */
+    h3 {
+        text-align: center;
+    }
 
     p {
         text-align: center;

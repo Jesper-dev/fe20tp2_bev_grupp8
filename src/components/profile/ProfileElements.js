@@ -17,18 +17,18 @@ export const ContentWrapper = styled.div`
     }
 
     p {
-        font-size: 0.8rem;
-
+        font-size: 1.5rem;
     }
 `;
 
 export const ProfileSettingsBtn = styled(Link)`
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     color: var(--primary-dark);
     text-decoration: none;
 `;
 
 export const BtnsWrapper = styled.div`
+    height: 65px;
     width: 150px;
     display: flex;
     flex-direction: column;

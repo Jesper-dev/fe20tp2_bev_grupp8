@@ -15,8 +15,8 @@ import { useSelector } from 'react-redux';
 const Discover = () => {
     const [show, setShow] = useState(false)
     let array = MockGetTickers.finance.result[0].quotes;
-    const followingArray = useSelector((state) => state.Following)
-    const StocksArray = useSelector((state) => state.Stocks)
+    // const followingArray = useSelector((state) => state.Following)
+    // const StocksArray = useSelector((state) => state.Stocks)
 
     return (
         <>

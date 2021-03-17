@@ -11,8 +11,6 @@ import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 import { ContentWrapper } from './StockInfromationElements';
-
-/* let following = []; */
 let holdingArray = [];
 
 const StockInformationPage = () => {
@@ -49,8 +47,14 @@ const StockInformationPage = () => {
     }, []);
 
     const updateUser = (userId, array) => {
-        firebase.db.ref('users/' + userId + "/followingStocks").set({
+        firebase.db.ref('users/' + userId + '/followingStocks').set({
             array
+        });
+    }
+
+    const updateUserCurrency = (userId, currency) => {
+        firebase.db.ref('users/' + userId + "/currency").set({
+            currency
         });
     }
 
@@ -73,8 +77,6 @@ const StockInformationPage = () => {
             if (followingDb === null) {
                 return;
             }
-
-            // data.forEach(item => followingDb.push(item));
         });
         let name = chosenShare[0].symbol;
 
@@ -106,9 +108,8 @@ const StockInformationPage = () => {
             setBuy(true);
             setSell(false);
         } else if (buy === true) {
-            let newCurrency =
-                Currency - chosenShare[0].regularMarketPrice * numOfStocks;
-            if (newCurrency < 0) {
+            let newCurrency = Currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            if (newCurrency <= 0) {
                 console.log('Insufficient funds');
                 return;
             }
@@ -116,6 +117,7 @@ const StockInformationPage = () => {
             for (let i = 0; i < numOfStocks; i++) {
                 Stocks.push(chosenShare[0]);
             }
+            updateUserCurrency(user.uid, newCurrency)
             dispatch(setStocks(Stocks));
             setBuy(false);
             setNumOfStocks(0);
@@ -198,6 +200,7 @@ const StockInformationPage = () => {
 
                         <div className="followWrapper">
                             <label>Watch {/* <span>FOLLOW</span> */}</label>
+                            <i className="far fa-eye"></i>
                             <input
                                 type="checkbox"
                                 onClick={onFollow}

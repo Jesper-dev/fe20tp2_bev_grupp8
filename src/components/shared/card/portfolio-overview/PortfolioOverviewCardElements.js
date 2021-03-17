@@ -11,7 +11,7 @@ export const PortOverviewWrapper = styled.div`
     border-radius: 8px;
 
     /*     border: 1px solid var(--body-secondary); */
-    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 25%);
+    box-shadow: var(--box-shadow-cards);
 
     h6 {
         font-size: 0.9rem;

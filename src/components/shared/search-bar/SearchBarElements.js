@@ -7,6 +7,8 @@ export const ContentWrapper = styled.div`
     .form {
         position: relative;
 		margin: 0;
+        display: flex;
+        justify-content: flex-end;
     }
 
     .input {
@@ -31,19 +33,21 @@ export const ContentWrapper = styled.div`
         }
 
 		&::-webkit-input-placeholder {
-			transition: opacity 0.25s ease-in-out; 
+			transition: opacity 0.25s ease-in-out;
 		}
 
 		&::-webkit-search-cancel-button {
 			display: none;
 		}
 
-		/* TODO: If focused && textContent !== null --> keep expanded */
+		/* TODO:
+            fix search btn, you know focus/unfocus button action :)
+        */
 
-        &:focus {
+        &:focus, &.not-empty {
             width: 100%;
             padding-right: 2.25rem;
-            border-color: var(--third);
+            border-color: var(--secondary);
 			color: #383838;
         }
 
@@ -52,21 +56,27 @@ export const ContentWrapper = styled.div`
             color: grey;
             font-weight: 300;
         }
+
+        &:focus ~ button {
+            /* pointer-events: auto; */
+        }
     }
 
-    .input ~ svg {
+    .input ~ button {
         position: absolute;
-        top: 0.375rem;
-        left: 0.375rem;
-        fill: #C8C8C8;
-        transition: left 0.75s ease-in-out, fill 0.75s ease-in-out;
+        padding: 0;
+        border: none;
+        width: 2.25rem;
+        height: 2.25rem;
+        background: none;
         pointer-events: none;
-    }
 
-    .input:focus ~ svg {
-        left: calc(100% - 1.875rem);
-        fill: var(--third);
-		/* pointer-events: auto; */
-		/* cursor: pointer; */
+        & > svg {
+            fill: lightgrey;
+        }
+
+        &:focus > svg {
+            fill: var(--secondary);
+        }
     }
 `

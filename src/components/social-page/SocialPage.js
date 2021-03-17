@@ -6,7 +6,7 @@ import UserCard from './UserCard'
 import SocialPost from './SocialPost';
 import SearchBar from '../shared/search-bar/SearchBar'
 
-import { setUsers } from '../../redux/actions';
+import { filterUsers, setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,9 @@ let usersArray = []
 const SocialPage = () => {
     const dispatch = useDispatch();
     const filteredUsers = useSelector((state) => state.FilteredUsers)
+    const Currency = useSelector((state) => state.Currency);
     useEffect(() => {
+
         usersArray = []
         //* Gets a list of users in our database
         const users = firebase.database().ref('users');
@@ -26,18 +28,26 @@ const SocialPage = () => {
             }
             dispatch(setUsers(usersArray))
         });
+
+        console.log(filteredUsers)
+
     }, [dispatch])
 
     return (
 
         <>
             <SearchBar />
+            <SocialPost />
             {filteredUsers.map((item, index) => {
                 return (
-                    <UserCard key={index} img={item.picture ? item.picture.profile_pic : "img"} username={item.username}/>
+                    <UserCard key={index}
+                        img={item.picture ? item.picture.profile_pic : "img"}
+                        username={item.username}
+                        total={item.currency ? item.currency.currency : 20}
+                    />
                 )
             })}
-            {/* <SocialPost /> */}
+
         </>
 
 

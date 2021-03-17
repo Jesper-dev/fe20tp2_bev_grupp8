@@ -5,7 +5,8 @@ const ContentWrapper = styled.div`
     width: 80%;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 25%);
+    box-shadow: var(--box-shadow-cards);
+
 
 	h1 {
         font-size: 1.2rem;

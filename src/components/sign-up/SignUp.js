@@ -14,6 +14,29 @@ const SignUp = () => (
 
 const INITIAL_STATE = {
     username: '',
+    currency: {
+        currency: 100000
+    },
+    followingStocks: {
+        array: [
+            {
+                regularMarketChangePercent: 150,
+                regularMarketPrice: 250,
+                shortName: 'lets-vest',
+                symbol: 'LV'
+            }
+        ]
+    },
+    post: {
+        posts: [
+            {
+                content: "Let's Vest is the best website ever!",
+                username: "Let's Vest",
+                likes: 299,
+                timestamp: 736180964
+            }
+        ]
+    },
     email: '',
     passwordOne: '',
     passwordTwo: '',
@@ -27,7 +50,7 @@ class SignUpFormBase extends Component {
         this.state = { ...INITIAL_STATE };
     }
     onSubmit = (event) => {
-        const { username, email, passwordOne, isAdmin } = this.state;
+        const { username, email, passwordOne, isAdmin, currency, followingStocks, post } = this.state;
         const roles = {};
         if (isAdmin) {
             roles[ROLES.ADMIN] = ROLES.ADMIN;
@@ -40,6 +63,9 @@ class SignUpFormBase extends Component {
                     username,
                     email,
                     roles,
+                    currency,
+                    followingStocks,
+                    post
                 });
             })
             .then(() => {

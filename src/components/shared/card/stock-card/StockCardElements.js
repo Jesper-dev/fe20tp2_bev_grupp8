@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
-    border: 2px solid var(--primary);
     border-radius: 5px;
     background: var(--body);
+
+    box-shadow: var(--box-shadow-cards);
     width: 90vw;
     min-height: 38px;
     display: flex;
