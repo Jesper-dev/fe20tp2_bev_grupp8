@@ -10,7 +10,7 @@ import { FirebaseContext } from '../firebase/context';
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-import { ContentWrapper } from './StockInfromationElements';
+import { ContentWrapper, WatchStockButton } from './StockInfromationElements';
 let holdingArray = [];
 
 const StockInformationPage = () => {
@@ -168,14 +168,25 @@ const StockInformationPage = () => {
                     <div key={index}>
                         <h1>{item.shortName}</h1>
                         <div className="followWrapper">
-                            <label>watch </label>
-                            <i className="far fa-eye"></i>
-                            <input
+                            <label>watch</label>
+                            <WatchStockButton
+                                eyecolor={
+                                    checked
+                                        ? 'var(--secondary)'
+                                        : 'var(--body-fourth)'
+                                }
+                                onClick={onFollow}
+                                /* checked={checked} */
+                                onChange={onChange}
+                            >
+                                <i className="far fa-eye"></i>
+                            </WatchStockButton>
+                            {/*      <input
                                 type="checkbox"
                                 onClick={onFollow}
                                 checked={checked}
                                 onChange={onChange}
-                            />
+                            /> */}
                         </div>
                         <LineChart />
                         <div className="buttonWrapper">

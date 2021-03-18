@@ -63,6 +63,10 @@ export const ContentWrapper = styled.div`
         }
     }
 
+    label {
+        transition: all 1s ease-in-out;
+    }
+
     input[type='checkbox'] {
         height: 24px;
         width: 24px;
@@ -101,4 +105,13 @@ export const ContentWrapper = styled.div`
             transform: scale(1);
         }
     }
+`;
+
+export const WatchStockButton = styled.button`
+    transition: all 0.5s ease-in-out;
+    color: ${(props) => props.eyecolor};
+    /* color: red; */
+    font-size: 1.2rem;
+    padding: 0 !important;
+    border: none !important;
 `;
