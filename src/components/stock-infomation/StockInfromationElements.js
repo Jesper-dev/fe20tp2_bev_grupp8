@@ -14,9 +14,9 @@ export const ContentWrapper = styled.div`
     }
 
     p {
-        border: 2px solid var(--primary);
+        box-shadow: var(--box-shadow-cards);
         border-radius: 4px;
-        padding: 16px;
+        padding: 8px;
         margin: 8px;
         font-size: 1.1rem;
         display: flex;
@@ -49,34 +49,38 @@ export const ContentWrapper = styled.div`
 
     .buttonWrapper > input {
         width: 20%;
-
     }
 
     .followWrapper {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        color: var(--body-fourth);
+
+        .fa-eye {
+            padding-left: 4px;
+        }
     }
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
         height: 24px;
         width: 24px;
         outline: none;
         border-radius: 0.7rem;
     }
 
-    input[type="checkbox"]:checked {
+    input[type='checkbox']:checked {
         animation: checked 0.5s;
     }
 
-    input[type="checkbox"]:not(:checked){
+    input[type='checkbox']:not(:checked) {
         animation: unChecked 0.5s;
     }
 
     @keyframes checked {
         0% {
             transform: scale(0.75);
-
         }
         50% {
             transform: scale(1.3);
@@ -89,7 +93,6 @@ export const ContentWrapper = styled.div`
     @keyframes unChecked {
         0% {
             transform: scale(0.75);
-
         }
         50% {
             transform: scale(1.3);

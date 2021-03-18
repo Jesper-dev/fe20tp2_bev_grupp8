@@ -14,6 +14,14 @@ export const CardWrapper = styled.div`
     span {
         font-size: 0.9rem;
         font-weight: bold;
+
+        .fa-info-circle {
+            color: var(--body-fourth);
+        }
+    }
+
+    a:visited {
+        color: var(--body-fifth);
     }
 
     button {

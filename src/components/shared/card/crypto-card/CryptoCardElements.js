@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
-    border: 2px solid var(--primary);
-    border-radius: 5px;
+    /*    border: 2px solid var(--primary); */
+    box-shadow: var(--box-shadow-cards);
+    border-radius: 4px;
     background: var(--body);
     width: 90vw;
     min-height: 38px;
@@ -13,6 +14,14 @@ export const CardWrapper = styled.div`
     span {
         font-size: 0.9rem;
         font-weight: bold;
+
+        .fa-info-circle {
+            color: var(--body-fourth);
+        }
+    }
+
+    a:visited {
+        color: var(--body-fifth);
     }
 
     button {

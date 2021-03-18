@@ -9,6 +9,14 @@ export const ContentWrapper = styled.div`
     /*     margin: 8px; */
     margin-bottom: 56px;
 
+    h2 {
+        display: flex;
+
+        svg {
+            margin-left: 8px;
+        }
+    }
+
     div {
         margin-bottom: 8px;
     }

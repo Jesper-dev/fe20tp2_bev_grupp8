@@ -5,7 +5,7 @@ import MockChartsAMZN from '../../api/Mock/MockChartsAMZN.json'; */
 import MockChartsFB from '../../api/Mock/MockChartsFB.json';
 
 const InfopageLinechart = () => {
-  /*   const [data, setData] = useState();
+    /*   const [data, setData] = useState();
     const [timestamps, setTimestamps] = useState([]); */
 
     let stockValue =
@@ -45,13 +45,13 @@ const InfopageLinechart = () => {
                 fill: false,
                 lineTension: 0,
                 backgroundColor: 'black',
-                borderColor: 'red',
+                borderColor: '#3E80DE',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'red',
-                pointBackgroundColor: '#fff',
+                pointBorderColor: 'black',
+                pointBackgroundColor: '#5068F5',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
                 pointHoverBackgroundColor: 'rgba(220,220,220,1)',

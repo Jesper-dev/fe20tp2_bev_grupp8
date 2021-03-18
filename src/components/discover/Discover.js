@@ -1,29 +1,39 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 // import MockGetMoversEU from '../../api/Mock/MockGetMoversEU.json';
 // import MockGetMoversUS from '../../api/Mock/MockGetMoversUS.json';
 // import MockWatchList from '../../api/Mock/MockWatchList.json';
 import MockGetTickers from '../../api/Mock/MockGetTickers.json';
 import StockCard from '../shared/card/stock-card/StockCard';
-import CryptoCard from '../shared/card/crypto-card/CryptoCard'
-import MockCrypto from "../../api/Mock/MockCrypto.json"
+import CryptoCard from '../shared/card/crypto-card/CryptoCard';
+import MockCrypto from '../../api/Mock/MockCrypto.json';
 
-import SearchBar from '../shared/search-bar/SearchBar'
+import UsFlag from '../svgs/flags/America';
+
+import SearchBar from '../shared/search-bar/SearchBar';
 import { ContentWrapper } from './DiscoverElements';
-import {ShowCryptoBtn} from "../shared/button/ButtonElements"
+import { ShowCryptoBtn } from '../shared/button/ButtonElements';
 import { useSelector } from 'react-redux';
 
 const Discover = () => {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
     let array = MockGetTickers.finance.result[0].quotes;
     // const followingArray = useSelector((state) => state.Following)
     // const StocksArray = useSelector((state) => state.Stocks)
 
+    console.log(array[0].region);
+
+    const checkForFlag = () => {
+        if (array[0].region === 'US') return <UsFlag />;
+    };
+
+    let flag = checkForFlag();
+
     return (
         <>
-        <SearchBar />
+            <SearchBar />
             <ContentWrapper>
-                <div>
-                    <h2>Stonks Region: {array[0].region} </h2>
+                <div className="discover-header-region">
+                    <h2>Stonks Region: {flag}</h2>
                 </div>
                 {array.map((item, index) => {
                     return (
@@ -45,11 +55,29 @@ const Discover = () => {
                     );
                 })}
                 <h2>Crypto</h2>
-                <ShowCryptoBtn onClick={() => setShow(!show)}>{show ? 'Hide Crypto' : 'Show Crypto'}</ShowCryptoBtn>
+                <ShowCryptoBtn onClick={() => setShow(!show)}>
+                    {show ? 'Hide Crypto' : 'Show Crypto'}
+                </ShowCryptoBtn>
                 {MockCrypto.map((item, index) => {
-                    return <div style={show ? {display: "block"} : {display: "none"}} key={index}><CryptoCard  name={item.name} price={item.current_price} img={item.image} percent={item.ath_change_percentage} cryptoList={MockCrypto}/></div>
+                    return (
+                        <div
+                            style={
+                                show
+                                    ? { display: 'block' }
+                                    : { display: 'none' }
+                            }
+                            key={index}
+                        >
+                            <CryptoCard
+                                name={item.name}
+                                price={item.current_price}
+                                img={item.image}
+                                percent={item.ath_change_percentage}
+                                cryptoList={MockCrypto}
+                            />
+                        </div>
+                    );
                 })}
-
             </ContentWrapper>
         </>
     );

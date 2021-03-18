@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
-import 'firebase/database'
+import 'firebase/database';
 // import { AuthUserContext } from '../session/index';
 // import firebase from '../firebase/firebase'
-import { FirebaseContext } from '../firebase/context'
+import { FirebaseContext } from '../firebase/context';
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -27,20 +27,18 @@ const StockInformationPage = () => {
     const Currency = useSelector((state) => state.Currency);
     const Stocks = useSelector((state) => state.Stocks);
 
-    const firebase = useContext(FirebaseContext)
+    const firebase = useContext(FirebaseContext);
 
-    const user = JSON.parse(localStorage.getItem('authUser'))
+    const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-
-        followingArr.forEach(item => {
-            if(item.symbol === chosenShare[0].symbol)  {
-                setChecked(true)
-            } else if (!item.symbol === chosenShare[0].symbol)  {
-                setChecked(false)
+        followingArr.forEach((item) => {
+            if (item.symbol === chosenShare[0].symbol) {
+                setChecked(true);
+            } else if (!item.symbol === chosenShare[0].symbol) {
+                setChecked(false);
             }
         });
-
 
         holdingArray = [];
         checkHolding();
@@ -48,15 +46,15 @@ const StockInformationPage = () => {
 
     const updateUser = (userId, array) => {
         firebase.db.ref('users/' + userId + '/followingStocks').set({
-            array
+            array,
         });
-    }
+    };
 
     const updateUserCurrency = (userId, currency) => {
-        firebase.db.ref('users/' + userId + "/currency").set({
-            currency
+        firebase.db.ref('users/' + userId + '/currency').set({
+            currency,
         });
-    }
+    };
 
     const checkHolding = () => {
         if (Stocks.includes(chosenShare[0])) {
@@ -70,14 +68,18 @@ const StockInformationPage = () => {
     };
 
     const onFollow = () => {
-        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
+        let stocks = firebase.db.ref(
+            'users/' + user.uid + '/followingStocks/array'
+        );
         let followingDb;
         stocks.on('value', (snapshot) => {
             followingDb = snapshot.val();
-            if (followingDb === null) {
-                return;
-            }
         });
+
+        if (followingDb === null) {
+            return;
+        }
+
         let name = chosenShare[0].symbol;
 
         let index = followingDb.findIndex((x) => x.symbol === name);
@@ -89,14 +91,15 @@ const StockInformationPage = () => {
             const followingObj = {
                 symbol: chosenShare[0].symbol,
                 regularMarketPrice: chosenShare[0].regularMarketPrice,
-                regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
-                shortName: chosenShare[0].shortName
-            }
+                regularMarketChangePercent:
+                    chosenShare[0].regularMarketChangePercent,
+                shortName: chosenShare[0].shortName,
+            };
             followingDb.push(followingObj);
             setChecked(true);
         }
 
-        updateUser(user.uid, followingDb)
+        updateUser(user.uid, followingDb);
         dispatch(setFollowing(followingDb));
     };
 
@@ -108,7 +111,8 @@ const StockInformationPage = () => {
             setBuy(true);
             setSell(false);
         } else if (buy === true) {
-            let newCurrency = Currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            let newCurrency =
+                Currency - chosenShare[0].regularMarketPrice * numOfStocks;
             if (newCurrency <= 0) {
                 console.log('Insufficient funds');
                 return;
@@ -117,7 +121,7 @@ const StockInformationPage = () => {
             for (let i = 0; i < numOfStocks; i++) {
                 Stocks.push(chosenShare[0]);
             }
-            updateUserCurrency(user.uid, newCurrency)
+            updateUserCurrency(user.uid, newCurrency);
             dispatch(setStocks(Stocks));
             setBuy(false);
             setNumOfStocks(0);
@@ -163,6 +167,16 @@ const StockInformationPage = () => {
                 return (
                     <div key={index}>
                         <h1>{item.shortName}</h1>
+                        <div className="followWrapper">
+                            <label>watch </label>
+                            <i className="far fa-eye"></i>
+                            <input
+                                type="checkbox"
+                                onClick={onFollow}
+                                checked={checked}
+                                onChange={onChange}
+                            />
+                        </div>
                         <LineChart />
                         <div className="buttonWrapper">
                             <button
@@ -196,17 +210,6 @@ const StockInformationPage = () => {
                             >
                                 SELL
                             </button>
-                        </div>
-
-                        <div className="followWrapper">
-                            <label>Watch {/* <span>FOLLOW</span> */}</label>
-                            <i className="far fa-eye"></i>
-                            <input
-                                type="checkbox"
-                                onClick={onFollow}
-                                checked={checked}
-                                onChange={onChange}
-                            />
                         </div>
                         <p>{item.symbol}</p>
                         <p>

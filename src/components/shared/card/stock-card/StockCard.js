@@ -25,9 +25,17 @@ const StockCard = ({ name, cost, percent, fav, stocksList }) => {
             {/* <span>⭐</span> */}
             <span>{name}</span>
             <span>{cost ? cost.toFixed(2) : 20} $</span>
-            <span>{percent ? percent.toFixed(2) : 20}%</span>
+            <span
+                style={
+                    percent > 0 ? { color: '#58D7AC' } : { color: '#DD577D' }
+                }
+            >
+                {percent ? percent.toFixed(2) : 20}%
+            </span>
             <Link to="/info">
-                <span onClick={() => setChosenStockOption(name)}>info</span>
+                <span onClick={() => setChosenStockOption(name)}>
+                    <i class="fas fa-ellipsis-h"></i>
+                </span>
             </Link>
         </CardWrapper>
     );
