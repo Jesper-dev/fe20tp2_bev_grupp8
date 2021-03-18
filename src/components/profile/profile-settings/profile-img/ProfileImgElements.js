@@ -20,35 +20,34 @@ export const ContentWrapper = styled.div`
         border: none;
         border-radius: 0.2rem;
         width: 155px;
-           padding: 8px;
+        padding: 8px;
         background: var(--secondary);
         color: var(--body);
     }
 
-    input[type="file"] {
-    display: none;
-}
+    input[type='file'] {
+        display: none;
+    }
 
-.custom-file-upload {
-    color: var(--secondary);
-    border: 1px solid var(--secondary);
-    border-radius: 0.25rem;
-    display: inline-block;
-    text-align: center;
-    padding: 8px;
-    width: 155px;
-    cursor: pointer;
-}
+    .custom-file-upload {
+        color: var(--secondary);
+        border: 1px solid var(--secondary);
+        border-radius: 0.25rem;
+        display: inline-block;
+        text-align: center;
+        padding: 8px;
+        width: 155px;
+        cursor: pointer;
+    }
 
-.svg-avatar {
-      margin: 15px auto;
-      width: 150px;
-      height: 150px;
-     /*  border: 3px solid var(--secondary); */
-      fill: salmon;
-      border-radius: 50%;
-}
-
+    .svg-avatar {
+        margin: 15px auto;
+        width: 150px;
+        height: 150px;
+        /*  border: 3px solid var(--secondary); */
+        fill: salmon;
+        border-radius: 50%;
+    }
 `;
 
 export const ProfileImgElement = styled.img`
@@ -56,18 +55,18 @@ export const ProfileImgElement = styled.img`
     height: 70px;
     border-radius: 50%;
     margin: 8px;
-    border: 3px solid var(--primary);
+    /*     border: 3px solid var(--primary); */
 `;
 
 export const ProfileSettingsImg = styled.img`
-      margin: 15px auto;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+    margin: 15px auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
 `;
 
 export const CropperWrapper = styled.div`
-   /*  margin: 0 auto; */
+    /*  margin: 0 auto; */
     width: 230px;
     height: 230px;
     overflow: hidden;

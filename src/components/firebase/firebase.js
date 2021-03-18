@@ -21,7 +21,7 @@ class Firebase {
         this.serverValue = app.database.ServerValue;
         this.auth = app.auth();
         this.db = app.database();
-        this.storage = app.storage()
+        this.storage = app.storage();
 
         this.state = {
             users: [],
@@ -54,6 +54,8 @@ class Firebase {
                     .then((snapshot) => {
                         const dbUser = snapshot.val();
                         // default empty roles
+                        //Often bugs out? What does this even do?
+
                         if (!dbUser.roles) {
                             dbUser.roles = {};
                         }
@@ -70,21 +72,21 @@ class Firebase {
             }
         });
 
-        componentDidMount() {
-            // this.setState({ loading: true });
-            this.props.firebase.users().on('value', (snapshot) => {
-                const usersObject = snapshot.val();
-                console.log(usersObject);
-                const usersList = Object.keys(usersObject).map((key) => ({
-                    ...usersObject[key],
-                    uid: key,
-                }));
-                this.setState({
-                    users: usersList,
-                    loading: false,
-                });
+    componentDidMount() {
+        // this.setState({ loading: true });
+        this.props.firebase.users().on('value', (snapshot) => {
+            const usersObject = snapshot.val();
+            console.log(usersObject);
+            const usersList = Object.keys(usersObject).map((key) => ({
+                ...usersObject[key],
+                uid: key,
+            }));
+            this.setState({
+                users: usersList,
+                loading: false,
             });
-        }
+        });
+    }
 
     // *** User API ***
 

@@ -1,10 +1,9 @@
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 export const UserWrapper = styled.div`
     height: 75px;
 
-  /*   border: 1px solid var(--body-fourth); */
+    /*   border: 1px solid var(--body-fourth); */
     background: var(--body);
     box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 25%);
     margin: 8px;
@@ -20,14 +19,13 @@ export const UserWrapper = styled.div`
         margin: 4px;
     }
 
-    >div {
+    > div {
         display: flex;
         flex-flow: column nowrap;
         height: inherit;
         justify-content: space-around;
         align-items: center;
         width: 40%;
-
     }
 
     span {
@@ -39,6 +37,6 @@ export const UserWrapper = styled.div`
         height: 60px;
         margin: 4px;
         border-radius: 50%;
-        border: 2px solid var(--secondary);
+        /*         border: 2px solid var(--secondary); */
     }
-`
+`;
