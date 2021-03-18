@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    background-color: var (--body);
+export const ContentWrapper = styled.main`
     display: flex;
-    flex-flow: column nowrap;
-    gap: 2rem;
-    padding: 0.7rem;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 56px;
-
-    h2 {
-        margin: 0;
-        margin-top: 16px;
-    }
+    gap: 3.5rem;
+    padding: 1rem;
+    margin-bottom: 3.5rem;
+    background-color: var(--body-secondary);
 `;

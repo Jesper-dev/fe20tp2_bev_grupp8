@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 // import StockCard from '../shared/card/stock-card/StockCard';
 import { ContentWrapper } from './HomeElements';
 // import Recommendations from '../../api/recommendations/Recommendations';
@@ -14,63 +14,64 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 
 import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
-import { FirebaseContext } from '../firebase/context'
+import { FirebaseContext } from '../firebase/context';
 import { setFollowing, setCurrency } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const Home = () => {
     // const stocksList = useSelector((state) => state.RecommendationReducer);
-/*     const following = useSelector((state) => state.Following); */
-    const [totalCurrency, setTotalCurrency] = useState(0)
+    /*     const following = useSelector((state) => state.Following); */
+    const [totalCurrency, setTotalCurrency] = useState(0);
     const followingCrypto = useSelector((state) => state.FollowingCrypto);
     const Currency = useSelector((state) => state.Currency);
-    const firebase = useContext(FirebaseContext)
-    const [followingArr, setFollowingArr] = useState([])
-    const dispatch = useDispatch()
+    const firebase = useContext(FirebaseContext);
+    const [followingArr, setFollowingArr] = useState([]);
+    const dispatch = useDispatch();
 
     // let array = MockGetTickers.finance.result[0].quotes;
-    const user = JSON.parse(localStorage.getItem('authUser'))
+    const user = JSON.parse(localStorage.getItem('authUser'));
     // let followingDb = []
     // let stocks = []
     useEffect(() => {
-        let followingDb = []
+        let followingDb = [];
         let data;
         let currencyData;
         //* Gets a list of users in our database
-        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
-        if(stocks === null) {
+        let stocks = firebase.db.ref(
+            'users/' + user.uid + '/followingStocks/array'
+        );
+        if (stocks === null) {
             return;
         }
 
         stocks.on('value', (snapshot) => {
             data = snapshot.val();
-            if(data == null) {
+            if (data == null) {
                 return;
             }
 
-            for(let i = 0; i < data; i++){
-                followingDb.push(data[i])
+            for (let i = 0; i < data; i++) {
+                followingDb.push(data[i]);
             }
-            data.forEach(item => followingDb.push(item))
-            setFollowingArr(followingDb)
+            data.forEach((item) => followingDb.push(item));
+            setFollowingArr(followingDb);
             dispatch(setFollowing(followingDb));
         });
 
         let totalCurrency = firebase.db.ref('users/' + user.uid + '/currency');
         totalCurrency.on('value', (snapshot) => {
-            currencyData = snapshot.val()
-            if(currencyData == null) {
+            currencyData = snapshot.val();
+            if (currencyData == null) {
                 return;
             }
-            setTotalCurrency(currencyData.currency)
-            dispatch(setCurrency(currencyData.currency))
-        })
-    }, [])
+            setTotalCurrency(currencyData.currency);
+            dispatch(setCurrency(currencyData.currency));
+        });
+    }, []);
 
     return (
         <>
             <ContentWrapper>
-                <h2>PORTFOLIO</h2>
                 <PortfolioOverview
                     total={totalCurrency.toLocaleString()}
                     difference={0}

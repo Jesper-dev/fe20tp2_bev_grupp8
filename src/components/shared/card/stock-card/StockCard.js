@@ -34,7 +34,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList }) => {
             </span>
             <Link to="/info">
                 <span onClick={() => setChosenStockOption(name)}>
-                    <i className="fas fa-ellipsis-h"></i>
+                    <i className="fas fa-caret-right"></i>
                 </span>
             </Link>
         </CardWrapper>

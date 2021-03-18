@@ -32,7 +32,7 @@ class Firebase {
 
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
-        // this.auth.createUserWithEmailAndPasswordOrg(email, password);
+    // this.auth.createUserWithEmailAndPasswordOrg(email, password);
 
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
@@ -46,7 +46,9 @@ class Firebase {
 
     doPasswordUpdate = (password) =>
         this.auth.currentUser.updatePassword(password);
+
     // *** Merge Auth and DB User API *** //
+
     onAuthUserListener = (next, fallback) =>
         this.auth.onAuthStateChanged((authUser) => {
             if (authUser) {
@@ -55,8 +57,28 @@ class Firebase {
                     .then((snapshot) => {
                         const dbUser = snapshot.val();
                         // default empty roles
-                        //Often bugs out? What does this even do?
+                        if (dbUser == null) {
+                            this.admin(authUser.uid)
+                                .once('value')
+                                .then((snapshot) => {
+                                    const dbUser = snapshot.val();
+                                    /*       const dbUserKey = snapshot.key(); */
 
+                                    let id = authUser.uid;
+                                    let localOrg = dbUser;
+
+                                    console.log(localOrg);
+                                    /*            console.log(dbUserKey); */
+
+                                    authUser = {
+                                        uid: authUser.uid,
+                                        email: authUser.email,
+                                        localOrg,
+                                    };
+                                    next(authUser);
+                                    return;
+                                });
+                        }
                         // if (!dbUser.roles) {
                         //     dbUser.roles = {};
                         // }
@@ -77,7 +99,6 @@ class Firebase {
         // this.setState({ loading: true });
         this.props.firebase.users().on('value', (snapshot) => {
             const usersObject = snapshot.val();
-            console.log(usersObject);
             const usersList = Object.keys(usersObject).map((key) => ({
                 ...usersObject[key],
                 uid: key,
@@ -93,7 +114,10 @@ class Firebase {
 
     user = (uid) => this.db.ref(`users/${uid}`);
 
-    organization = (organization) => this.db.ref(`organizations/${organization}`)
+    admin = (uid, organization) => this.db.ref(`organizations/`);
+
+    organization = (organization) =>
+        this.db.ref(`organizations/${organization}`);
 
     users = () => this.db.ref('users');
 

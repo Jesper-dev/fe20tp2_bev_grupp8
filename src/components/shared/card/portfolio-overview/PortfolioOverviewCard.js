@@ -1,16 +1,31 @@
 import React from 'react';
 import { PortOverviewWrapper } from './PortfolioOverviewCardElements';
+import { ContentWrapper as AnotherWrapper } from '../../homepage-custom-sections/HomepageComponentsElements.js';
 
 const PortfolioOverviewCard = ({ total, difference, percent }) => {
     return (
-        <PortOverviewWrapper>
-            <h6>Total</h6>
-            <h1>{total} $</h1>
-            <p>
-                Return share <span>{difference} USD</span>{' '}
-                <span>({percent}%)</span>
-            </p>
-        </PortOverviewWrapper>
+        <AnotherWrapper>
+            <PortOverviewWrapper>
+                <header>
+                    <h1>
+                        My Wallet{' '}
+                        <span
+                            className="percent"
+                            style={
+                                percent > 0
+                                    ? { color: '#58D7AC' }
+                                    : { color: '#DD577D' }
+                            }
+                        >
+                            {percent}%
+                        </span>
+                    </h1>
+                    <p>
+                        Total: <span>{total}$</span>
+                    </p>
+                </header>
+            </PortOverviewWrapper>
+        </AnotherWrapper>
     );
 };
 

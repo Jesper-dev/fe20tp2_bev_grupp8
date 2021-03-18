@@ -1,28 +1,24 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    //height: 100vh;
+export const ContentWrapper = styled.main`
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    /*     margin: 8px; */
-    margin-bottom: 56px;
+    gap: 1.5rem;
+    padding: 1rem;
+    margin-bottom: 3.5rem;
+    background-color: var(--body-secondary);
+
+    h1 {
+        font-size: 1.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
     h2 {
-        display: flex;
-
-        svg {
-            margin-left: 8px;
-        }
+        text-align: center;
+        margin: 0;
+        margin-bottom: 0.75rem;
     }
-
-    div {
-        margin-bottom: 8px;
-    }
-`;
-
-export const StockWrapper = styled.div`
-    //height: 2vh;
-    // margin: 16px;
 `;

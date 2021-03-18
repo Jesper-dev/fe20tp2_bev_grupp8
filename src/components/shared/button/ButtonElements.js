@@ -17,23 +17,27 @@ export const Button = styled(Link)`
         box-shadow: 0 0 0 0.1875rem var(--third);
     }
 
-  ${props => props.primary && css`
-    background-color: var(--primary);
-    color: white;
-  `}
+    ${(props) =>
+        props.primary &&
+        css`
+            background-color: var(--primary);
+            color: white;
+        `}
 
-  ${props => props.secondary && css`
-    background-color: none;
-    color: var(--primary);
-    border-color: var(--primary);
-    transition: background-color 125ms linear, color 125ms linear;
+    ${(props) =>
+        props.secondary &&
+        css`
+            background-color: none;
+            color: var(--primary);
+            border-color: var(--primary);
+            transition: background-color 125ms linear, color 125ms linear;
 
-    &:hover {
-        background-color: var(--primary);
-        color: white;
-    }
-  `}
-`
+            &:hover {
+                background-color: var(--primary);
+                color: white;
+            }
+        `}
+`;
 
 export const ButtonPrimary = styled(Link)`
     display: inline-block;
@@ -54,11 +58,19 @@ export const ButtonPrimary = styled(Link)`
 `;
 
 export const ShowCryptoBtn = styled.button`
+    padding: 0.75rem 2rem;
+    border: 0.125rem solid var(--primary);
+    border-radius: 0.25rem;
+    margin: auto;
     background: none;
-    padding: 8px 16px;
-    border: 2px solid var(--primary);
-    border-radius: 20px;
-    outline: none;
-    margin: 8px;
+    color: var(--primary-dark);
+    font-family: inherit;
+    font-weight: 500;
     cursor: pointer;
-`
+    transition: background-color 100ms linear, color 100ms linear;
+
+    &:hover {
+        background-color: var(--primary);
+        color: var(--body);
+    }
+`;
