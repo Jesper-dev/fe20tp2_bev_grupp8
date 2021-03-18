@@ -29,8 +29,6 @@ const SocialPage = () => {
             dispatch(setUsers(usersArray))
         });
 
-        console.log(filteredUsers)
-
     }, [dispatch])
 
     return (

@@ -20,8 +20,6 @@ const Discover = () => {
     // const followingArray = useSelector((state) => state.Following)
     // const StocksArray = useSelector((state) => state.Stocks)
 
-    console.log(array[0].region);
-
     const checkForFlag = () => {
         if (array[0].region === 'US') return <UsFlag />;
     };

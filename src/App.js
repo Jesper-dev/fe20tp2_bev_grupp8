@@ -8,9 +8,9 @@ import CryptoInfoPage from './components/crypto-information/CryptoInformationPag
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
-import ProfileLikes from './components/profile/profile-likes/ProfileLikes';
+import ProfileWall from './components/profile/profile-wall/ProfileWall';
 import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
-import ProfilePosts from './components/profile/profile-posts/ProfilePosts';
+import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
 
 import { createGlobalStyle } from 'styled-components';
@@ -68,15 +68,15 @@ const App = () => {
                     <Toolbar />
 
                 </Route> */}
-                <Route exact path={ROUTES.POSTS}>
+                <Route exact path={ROUTES.DASHBOARD}>
                     <Profile />
-                    <ProfilePosts />
+                    <ProfileDashboard />
                     <Toolbar />
 
                 </Route>
-                <Route exact path={ROUTES.LIKES}>
+                <Route exact path={ROUTES.WALL}>
                     <Profile />
-                    <ProfileLikes />
+                    <ProfileWall />
                     <Toolbar />
                 </Route>
                 <Route exact path={ROUTES.PROFILE_SETTINGS}>

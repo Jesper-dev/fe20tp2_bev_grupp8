@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { FirebaseContext } from '../firebase/context'
 import firebase from 'firebase';
 import 'firebase/database';
+import { ContentWrapper }  from './SocialPostElements';
 import { withAuthorization } from '../session'; //must be logged in to see content
 
 const SocialPost = () => {
@@ -56,17 +57,18 @@ const handleSubmitPost = (e) => {
 }
 
     return(
-    <div>
+    <ContentWrapper>
         <h2>Post here!</h2>
         <form onSubmit={handleSubmitPost}>
             <input
+                placeholder="What's up?"
                 type="text"
                 value={postData}
                 onChange={onChangeText}
                 />
-                <button type="submit">Whats up?</button>
+                <button type="submit">Vest</button>
         </form>
-    </div>
+    </ContentWrapper>
     )
 }
 

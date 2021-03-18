@@ -14,6 +14,7 @@ const SignUp = () => (
 
 const INITIAL_STATE = {
     username: '',
+    organization: '',
     currency: {
         currency: 100000,
     },
@@ -63,6 +64,7 @@ class SignUpFormBase extends Component {
             followingStocks,
             post,
             picture,
+            organization
         } = this.state;
         const roles = {};
         if (isAdmin) {
@@ -72,6 +74,7 @@ class SignUpFormBase extends Component {
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then((authUser) => {
                 // Create a user in your Firebase realtime database
+                if(!isAdmin) {
                 return this.props.firebase.user(authUser.user.uid).set({
                     username,
                     email,
@@ -81,7 +84,20 @@ class SignUpFormBase extends Component {
                     post,
                     picture,
                 });
+            } else {
+                return this.props.firebase.organization(organization + '/users/' + authUser.user.uid).set({
+                    username,
+                    email,
+                    roles,
+                    currency,
+                    followingStocks,
+                    post,
+                    picture,
+                    organization
+                })
+            }
             })
+
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.HOME);
@@ -105,7 +121,8 @@ class SignUpFormBase extends Component {
             email,
             passwordOne,
             passwordTwo,
-            // isAdmin,
+            isAdmin,
+            organization,
             error,
         } = this.state;
 
@@ -160,15 +177,19 @@ class SignUpFormBase extends Component {
                             placeholder="Confirm password"
                         />
                     </label>
-                    {/*  <label>
-                        Admin:
+                     <label>
+
+                        Organization:
                         <input
                             name="isAdmin"
                             type="checkbox"
                             checked={isAdmin}
                             onChange={this.onChangeCheckbox}
                         />
-                    </label> */}
+                    </label>
+                    {isAdmin ? <label> name of organization <input name="organization" value={organization} onChange={this.onChange}/> </label> : '' }
+
+
                     <button disabled={isInvalid} type="submit">
                         Sign Up
                     </button>

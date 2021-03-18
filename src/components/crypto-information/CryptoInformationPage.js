@@ -42,12 +42,12 @@ const CryptoInformationPage = () => {
             let index = followingArr.findIndex((x) => x.symbol === name);
             followingArr.splice(index, 1);
             dispatch(setFollowingCrypto(followingArr));
-            updateUser(user.uid);
+            // updateUser(user.uid);
         } else {
             following.push(chosenCrypto[0]);
             dispatch(setFollowingCrypto(following));
             setChecked(true);
-            updateUser(user.uid);
+            // updateUser(user.uid);
         }
     };
     const onChange = (e) => {

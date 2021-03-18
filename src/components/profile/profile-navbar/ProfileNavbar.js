@@ -38,13 +38,13 @@ const NavigationAuth = () => (
                 </NavLink>
             </li>
             <li>
-                <NavLink to={ROUTES.POSTS}>
-                    Posts
+                <NavLink  to={ROUTES.WALL}>
+                    Wall
                 </NavLink>
             </li>
             <li>
-                <NavLink  to={ROUTES.LIKES}>
-                    Likes
+                <NavLink to={ROUTES.DASHBOARD}>
+                    Dashboard
                 </NavLink>
             </li>
         </ul>
@@ -62,12 +62,12 @@ const NavigationNonAuth = () => (
             </li>
             <li>
                 <NavLink to={ROUTES.SIGN_IN}>
-                    Posts
+                    Wall
                 </NavLink>
             </li>
             <li>
                 <NavLink to={ROUTES.SIGN_IN}>
-                    Likes
+                    Dashboard
                 </NavLink>
             </li>
         </ul>

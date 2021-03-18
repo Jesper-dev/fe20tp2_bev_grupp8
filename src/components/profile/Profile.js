@@ -44,9 +44,6 @@ const Profile = () => {
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink))
         });
-
-
-
     }, []);
 
     return (

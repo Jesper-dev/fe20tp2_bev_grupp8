@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProfileLikes = () => {
     return <div>
-         <h1>I'M the Likes!!</h1>
+         <h1>I'M the dashboard!!</h1>
     </div>;
 };
 

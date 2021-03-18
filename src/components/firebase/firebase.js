@@ -32,6 +32,7 @@ class Firebase {
 
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
+        // this.auth.createUserWithEmailAndPasswordOrg(email, password);
 
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
@@ -56,9 +57,9 @@ class Firebase {
                         // default empty roles
                         //Often bugs out? What does this even do?
 
-                        if (!dbUser.roles) {
-                            dbUser.roles = {};
-                        }
+                        // if (!dbUser.roles) {
+                        //     dbUser.roles = {};
+                        // }
                         // merge auth and db user
                         authUser = {
                             uid: authUser.uid,
@@ -91,6 +92,8 @@ class Firebase {
     // *** User API ***
 
     user = (uid) => this.db.ref(`users/${uid}`);
+
+    organization = (organization) => this.db.ref(`organizations/${organization}`)
 
     users = () => this.db.ref('users');
 
