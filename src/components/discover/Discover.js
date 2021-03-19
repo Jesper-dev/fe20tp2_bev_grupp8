@@ -11,8 +11,9 @@ import UsFlag from '../svgs/flags/America';
 
 import SearchBar from '../shared/search-bar/SearchBar';
 import { ContentWrapper } from './DiscoverElements';
+import { ContentWrapper as AnotherWrapper } from '../shared/homepage-custom-sections/HomepageComponentsElements';
 import { ShowCryptoBtn } from '../shared/button/ButtonElements';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const Discover = () => {
     const [show, setShow] = useState(false);
@@ -30,52 +31,60 @@ const Discover = () => {
         <>
             <SearchBar />
             <ContentWrapper>
-                <div className="discover-header-region">
-                    <h2>Stonks Region: {flag}</h2>
-                </div>
-                {array.map((item, index) => {
-                    return (
-                        <StockCard
-                            key={index}
-                            name={item.symbol ? item.symbol : item.shortName}
-                            percent={
-                                item.regularMarketChangePercent
-                                    ? item.regularMarketChangePercent
-                                    : 0
-                            }
-                            cost={
-                                item.regularMarketPrice
-                                    ? item.regularMarketPrice
-                                    : 0
-                            }
-                            stocksList={array}
-                        />
-                    );
-                })}
-                <h2>Crypto</h2>
-                <ShowCryptoBtn onClick={() => setShow(!show)}>
-                    {show ? 'Hide Crypto' : 'Show Crypto'}
-                </ShowCryptoBtn>
-                {MockCrypto.map((item, index) => {
-                    return (
-                        <div
-                            style={
-                                show
-                                    ? { display: 'block' }
-                                    : { display: 'none' }
-                            }
-                            key={index}
-                        >
-                            <CryptoCard
-                                name={item.name}
-                                price={item.current_price}
-                                img={item.image}
-                                percent={item.ath_change_percentage}
-                                cryptoList={MockCrypto}
+                <header>
+                    <h1>Stonks Region: {flag}</h1>
+                </header>
+                <AnotherWrapper>
+                    {array.map((item, index) => {
+                        return (
+                            <StockCard
+                                key={index}
+                                name={
+                                    item.symbol ? item.symbol : item.shortName
+                                }
+                                percent={
+                                    item.regularMarketChangePercent
+                                        ? item.regularMarketChangePercent
+                                        : 0
+                                }
+                                cost={
+                                    item.regularMarketPrice
+                                        ? item.regularMarketPrice
+                                        : 0
+                                }
+                                stocksList={array}
                             />
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </AnotherWrapper>
+                <AnotherWrapper>
+                    <h2>Cryptocurrencies</h2>
+                    <ShowCryptoBtn onClick={() => setShow(!show)}>
+                        {show
+                            ? 'Hide Cryptocurrencies'
+                            : 'Show Cryptocurrencies'}
+                    </ShowCryptoBtn>
+                    {MockCrypto.map((item, index) => {
+                        return (
+                            <div
+                                style={
+                                    show
+                                        ? { display: 'block' }
+                                        : { display: 'none' }
+                                }
+                                key={index}
+                            >
+                                <CryptoCard
+                                    name={item.name}
+                                    price={item.current_price}
+                                    img={item.image}
+                                    percent={item.ath_change_percentage}
+                                    cryptoList={MockCrypto}
+                                />
+                            </div>
+                        );
+                    })}
+                </AnotherWrapper>
             </ContentWrapper>
         </>
     );

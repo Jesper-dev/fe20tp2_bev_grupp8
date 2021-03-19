@@ -4,7 +4,7 @@ import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
-import CryptoInfoPage from './components/crypto-information/CryptoInformationPage'
+import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
@@ -22,82 +22,82 @@ import { withAuthentication } from './components/session';
 const App = () => {
     return (
         <>
-        <Router>
-            <GlobalStyle />
-            <Switch>
-                <Route exact path={ROUTES.HOME}>
-                    <Home />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.DISCOVER}>
-                    <Discover />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.SOCIAL}>
-                    <SocialPage />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.PROFILE}>
-                    <Profile />
-                    <ProfilePortfolio />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.INFO}>
-                    <StockInfoPage />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.INFO_CRYPTO}>
-                    <CryptoInfoPage />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.SIGN_IN}>
-                    <SignIn />
-                </Route>
-                <Route exact path={ROUTES.SIGN_UP}>
-                    <SignUp />
-                </Route>
-                <Route exact path={ROUTES.PASSWORD_FORGET}>
-                    <PasswordForget />
-                </Route>
-                <Route exact path={ROUTES.LANDING}>
-                    <Landingpage />
-                </Route>
-                {/*  <Route exact path={ROUTES.PORTFOLIO}>
+            <Router>
+                <GlobalStyle />
+                <Switch>
+                    <Route exact path={ROUTES.HOME}>
+                        <Home />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.DISCOVER}>
+                        <Discover />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.SOCIAL}>
+                        <SocialPage />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.PROFILE}>
+                        <Profile />
+                        <ProfilePortfolio />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.INFO}>
+                        <StockInfoPage />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.INFO_CRYPTO}>
+                        <CryptoInfoPage />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.SIGN_IN}>
+                        <SignIn />
+                    </Route>
+                    <Route exact path={ROUTES.SIGN_UP}>
+                        <SignUp />
+                    </Route>
+                    <Route exact path={ROUTES.PASSWORD_FORGET}>
+                        <PasswordForget />
+                    </Route>
+                    <Route exact path={ROUTES.LANDING}>
+                        <Landingpage />
+                    </Route>
+                    {/*  <Route exact path={ROUTES.PORTFOLIO}>
                     <Profile />
                     <ProfilePortfolio />
                     <Toolbar />
 
                 </Route> */}
-                <Route exact path={ROUTES.DASHBOARD}>
-                    <Profile />
-                    <ProfileDashboard />
-                    <Toolbar />
-
-                </Route>
-                <Route exact path={ROUTES.WALL}>
-                    <Profile />
-                    <ProfileWall />
-                    <Toolbar />
-                </Route>
-                <Route exact path={ROUTES.PROFILE_SETTINGS}>
-                    <ProfileSettings />
-                    <Toolbar />
-                </Route>
-
-
-
-            </Switch>
-        </Router>
+                    <Route exact path={ROUTES.DASHBOARD}>
+                        <Profile />
+                        <ProfileDashboard />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.WALL}>
+                        <Profile />
+                        <ProfileWall />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.PROFILE_SETTINGS}>
+                        <ProfileSettings />
+                        <Toolbar />
+                    </Route>
+                </Switch>
+            </Router>
         </>
     );
 };
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --primary: #5068F5;
+      //Darkblue-Purple-ish
+    --primary: #5068F5; 
+    //Lighter-darkblue
     --secondary: #3E80DE;
+    //Light-blue
     --third: #46C0FA;
 
+    //black
     --background-co: #000;
 
     /* --primary-dark: #6B076B; */
@@ -111,7 +111,7 @@ const GlobalStyle = createGlobalStyle`
 
     --box-shadow-focus: 0 0 0 0.125rem #90CAF9, 0 0 0 0.375rem #E3F2FD;
 
-    --box-shadow-cards: 0 1px 3px 1px rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19);
+    --box-shadow-cards: 1px 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.16);
 
 	--typefaces: "Inter", sans-serif;
   }

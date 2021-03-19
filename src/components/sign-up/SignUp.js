@@ -64,7 +64,7 @@ class SignUpFormBase extends Component {
             followingStocks,
             post,
             picture,
-            organization
+            organization,
         } = this.state;
         const roles = {};
         if (isAdmin) {
@@ -74,28 +74,43 @@ class SignUpFormBase extends Component {
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then((authUser) => {
                 // Create a user in your Firebase realtime database
-                if(!isAdmin) {
-                return this.props.firebase.user(authUser.user.uid).set({
-                    username,
-                    email,
-                    roles,
-                    currency,
-                    followingStocks,
-                    post,
-                    picture,
-                });
-            } else {
-                return this.props.firebase.organization(organization + '/users/' + authUser.user.uid).set({
-                    username,
-                    email,
-                    roles,
-                    currency,
-                    followingStocks,
-                    post,
-                    picture,
-                    organization
-                })
-            }
+                if (!isAdmin) {
+                    return this.props.firebase.user(authUser.user.uid).set({
+                        username,
+                        email,
+                        roles,
+                        currency,
+                        followingStocks,
+                        post,
+                        picture,
+                        organization,
+                    });
+                } else {
+                    this.props.firebase
+                        .organization(
+                            organization + '/users/' + authUser.user.uid
+                        )
+                        .set({
+                            username,
+                            email,
+                            roles,
+                            currency,
+                            followingStocks,
+                            post,
+                            picture,
+                            organization,
+                        });
+                    this.props.firebase.user(authUser.user.uid).set({
+                        username,
+                        email,
+                        roles,
+                        currency,
+                        followingStocks,
+                        post,
+                        picture,
+                        organization,
+                    });
+                }
             })
 
             .then(() => {
@@ -177,8 +192,7 @@ class SignUpFormBase extends Component {
                             placeholder="Confirm password"
                         />
                     </label>
-                     <label>
-
+                    <label>
                         Organization:
                         <input
                             name="isAdmin"
@@ -187,8 +201,19 @@ class SignUpFormBase extends Component {
                             onChange={this.onChangeCheckbox}
                         />
                     </label>
-                    {isAdmin ? <label> name of organization <input name="organization" value={organization} onChange={this.onChange}/> </label> : '' }
-
+                    {isAdmin ? (
+                        <label>
+                            {' '}
+                            name of organization{' '}
+                            <input
+                                name="organization"
+                                value={organization}
+                                onChange={this.onChange}
+                            />{' '}
+                        </label>
+                    ) : (
+                        ''
+                    )}
 
                     <button disabled={isInvalid} type="submit">
                         Sign Up

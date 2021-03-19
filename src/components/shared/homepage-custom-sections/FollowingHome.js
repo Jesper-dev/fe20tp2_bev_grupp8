@@ -18,11 +18,15 @@ const FollowingHome = ({ array, cryptoList }) => {
                 }
             >
                 <h3>Watching</h3>
-                <p>
-                    {array.length === 0 && cryptoList.length === 0
-                        ? 'You are not following any stocks or crypto currency at the moment! Use the discover page to find stocks and crypto currency of your interest'
-                        : ''}
-                </p>
+                {array.length === 0 && cryptoList.length === 0 ? (
+                    <p>
+                        You are not following any stocks or cryptocurrencies at
+                        the moment! Use the Discover page to find stocks and
+                        cryptocurrencies of your interest.
+                    </p>
+                ) : (
+                    ''
+                )}
                 {array.map((item, index) => {
                     return (
                         <StockCard

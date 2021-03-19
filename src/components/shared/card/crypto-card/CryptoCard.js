@@ -36,7 +36,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
                 </span>
                 <Link to="/info-crypto">
                     <span onClick={() => setChosenCryptoOption(name)}>
-                        <i className="fas fa-ellipsis-h"></i>
+                        <i className="fas fa-caret-right"></i>
                     </span>
                 </Link>
             </CardWrapper>

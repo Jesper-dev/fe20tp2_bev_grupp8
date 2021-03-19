@@ -1,33 +1,46 @@
 import styled from 'styled-components';
 
-export const CardWrapper = styled.div`
-    border-radius: 5px;
-    background: var(--body);
-
-    box-shadow: var(--box-shadow-cards);
-    width: 90vw;
-    min-height: 38px;
+export const CardWrapper = styled.article`
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    gap: 1rem;
+    padding: 0 1rem;
+    border-radius: 0.25rem;
+    box-shadow: var(--box-shadow-cards);
+    width: 100%;
+    min-height: 3rem;
+    background: var(--body);
 
-    span {
-        font-size: 0.9rem;
-        font-weight: bold;
-
-        .fa-info-circle {
-            color: var(--body-fourth);
-        }
+    & > span {
+        flex: 1;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        white-space: nowrap;
     }
 
-    a:visited {
-        color: var(--body-fifth);
-    }
-
-    button {
-        background: none;
-        border: 1px solid black;
-        padding: 8px;
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25rem;
+        border-radius: 50%;
         outline: none;
+        width: 2rem;
+        height: 2rem;
+        line-height: 0;
+        text-decoration: none;
+        user-select: none;
+        transition: background-color 125ms linear;
+
+        &:hover {
+            background-color: rgb(232, 232, 232, 0.5);
+        }
+
+        .fa-caret-right {
+            color: darkgrey;
+        }
     }
 `;
