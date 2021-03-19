@@ -55,11 +55,13 @@ export const ContentWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-
+        font-size: 1.3rem;
         color: var(--body-fourth);
 
         .fa-eye {
             padding-left: 4px;
+            font-size: 1.5rem;
+
         }
     }
 

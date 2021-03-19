@@ -1,6 +1,5 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FirebaseContext } from '../firebase/context';
-import firebase from 'firebase';
 import 'firebase/database';
 import { ContentWrapper } from './SocialPostElements';
 import { withAuthorization } from '../session'; //must be logged in to see content
@@ -56,7 +55,7 @@ const SocialPost = () => {
 
     return (
         <ContentWrapper>
-            <h2>Post here!</h2>
+            {/* <h2>Post here!</h2> */}
             <form onSubmit={handleSubmitPost}>
                 <textarea
                     placeholder="What's up?"
@@ -64,8 +63,9 @@ const SocialPost = () => {
                     value={postData}
                     onChange={onChangeText}
                 ></textarea>
-                <button type="submit">Vest</button>
+                <button type="submit">Post</button>
             </form>
+            {/* POSTS FROM PEOPLE YOU FOLLOW */}
         </ContentWrapper>
     );
 };

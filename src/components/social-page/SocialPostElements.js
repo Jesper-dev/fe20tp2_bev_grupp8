@@ -1,66 +1,30 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    //flex-basis: auto;
-    //flex-shrink: 0;
-    border: 1px solid black;
-    margin: 8px;
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
 
-    textarea[type='text'] {
-        box-sizing: border-box;
-        display: block;
-        font: inherit;
-        font-size: 1rem;
+    textarea {
+        padding: 0.75rem;
+        border: 0.1875rem solid lightgrey;
         outline: none;
+        background-color: var(body-secondary);
+        font: inherit;
         resize: none;
-        border: none;
-        margin: 8px;
-        //padding: 6px;
-        width: auto;
         height: 1.5rem;
-        //display: flex;
-        //flex-wrap: wrap;
-        background-color: var(--body-secondary);
+        transition: height 250ms ease-in-out;
 
         &::placeholder {
             color: var(--primary);
-            font-size: 1.2rem;
             opacity: 1;
         }
     }
 
-    p {
-        font-size: 1.6rem;
-    }
-
-    h2 {
-        text-align: center;
-        font-size: 1.2rem;
-        color: var(--primary);
-    }
-
-    img {
-        width: 100px;
-        height: 100px;
-    }
-
-    button {
-        //display: flex;
-        margin-left: auto;
-        //justify-content: flex-end;
-        padding: 12px;
-        background-color: var(--primary);
-        border: none;
-        border-radius: 5px;
-        margin: 8px;
-    }
-
     textarea:focus {
-        //fixit later need to expand it when focus
-        height: 8rem;
-        witdh: 8rem;
+        height: 12rem;
 
         button {
             //display: flex;
@@ -72,5 +36,17 @@ export const ContentWrapper = styled.div`
             border-radius: 5px;
             margin: 8px;
         }
+    }
+
+    button {
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.25rem;
+        margin: 0;
+        background-color: var(--primary);
+        color: white;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
     }
 `;

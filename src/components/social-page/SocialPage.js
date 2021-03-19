@@ -6,7 +6,7 @@ import UserCard from './UserCard'
 import SocialPost from './SocialPost';
 import SearchBar from '../shared/search-bar/SearchBar'
 
-import { filterUsers, setUsers } from '../../redux/actions';
+import { setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,6 @@ let usersArray = []
 const SocialPage = () => {
     const dispatch = useDispatch();
     const filteredUsers = useSelector((state) => state.FilteredUsers)
-    const Currency = useSelector((state) => state.Currency);
     useEffect(() => {
 
         usersArray = []

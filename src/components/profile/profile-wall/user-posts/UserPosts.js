@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FirebaseContext } from '../../../firebase/context';
 import UserPostsElement from './UserPostsElement';
+import UserPostCard from './UserPostCard'
 
-let usersArray = [];
+let usersPost = [];
+let data;
 const UserPosts = () => {
     const [userPost, setUserPost] = useState('');
 
@@ -11,47 +13,36 @@ const UserPosts = () => {
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        usersArray = [];
-        firebase.db.ref('users/' + userData.uid).on('value', (snapshot) => {
-            const data = snapshot.val();
-            //console.log(data);
+        usersPost = [];
+        firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
+            data = snapshot.val();
 
-            for (const key in data) {
-                usersArray.push({ ...data[key] });
-            }
-            setUserPost(usersArray);
+            setUserPost(data);
         });
     }, []);
-    console.log(userPost[5]);
+
+    const getDate = (number) => {
+        let date = new Date(number)
+        let day = date.toLocaleDateString();
+        return day;
+    }
     return (
         <UserPostsElement>
             <h2>Posts</h2>
-            <ul>
-                {userPost.post
-                    ? userPost.post.post.map((item) => {
-                          <li>{item}</li>;
-                      })
-                    : ''}
-            </ul>
-            {/* <PostList /> */}
+            {userPost ? userPost.map((item, index) => {
+                return (
+                    <UserPostCard
+                    key={index}
+                    username={item.username}
+                    content={item.content}
+                    timestamp={item.timestamp}
+                    likes={item.likes}
+                    />
+                )
+            }) : ''}
         </UserPostsElement>
     );
 };
 
-/* const PostList = () => (
-    <ul>
-        {data.posts
-            ? data.post.posts.map((item) => {
-                  <li>{item.content}</li>;
-              })
-            : ''}
-    </ul>
-); */
-
-// const PostItem = ({ data }) => (
-//     <li>
-//         <strong>{data}</strong>
-//     </li>
-// );
 
 export default UserPosts;

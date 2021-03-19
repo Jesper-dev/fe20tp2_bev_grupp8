@@ -47,6 +47,7 @@ const INITIAL_STATE = {
     passwordTwo: '',
     error: null,
     isAdmin: false,
+	loading: false
 };
 
 class SignUpFormBase extends Component {
@@ -55,6 +56,7 @@ class SignUpFormBase extends Component {
         this.state = { ...INITIAL_STATE };
     }
     onSubmit = (event) => {
+		this.setState({ loading: true });
         const {
             username,
             email,
@@ -118,7 +120,7 @@ class SignUpFormBase extends Component {
                 this.props.history.push(ROUTES.HOME);
             })
             .catch((error) => {
-                this.setState({ error });
+                this.setState({ error, loading: false });
             });
         event.preventDefault();
     };
@@ -149,9 +151,11 @@ class SignUpFormBase extends Component {
 
         return (
             <ContentWrapper>
-                <h1>B-E-V</h1>
-                <h3>Create your account</h3>
-                <form onSubmit={this.onSubmit}>
+                <h1>Let's Vest</h1>
+				{this.state.loading ? "Loading..." :
+				<>
+				<h3>Create your account</h3>
+				<form onSubmit={this.onSubmit}>
                     <label>
                         Username
                         <input
@@ -224,7 +228,7 @@ class SignUpFormBase extends Component {
                         Already have an account?{' '}
                         <Link to={ROUTES.SIGN_IN}>Sign in</Link>
                     </p>
-                </form>
+                </form></>}
             </ContentWrapper>
         );
     }

@@ -7,7 +7,7 @@ import { ContentWrapper } from './ProfilePortfolioElements';
 
 let newArray = [];
 const Possession = () => {
-    const Stocks = useSelector((state) => state.Stocks)
+    // const Stocks = useSelector((state) => state.Stocks)
     let array = MockGetTickers.finance.result[0].quotes;
 
     //*Kanske skapa en ny array som inte pushar in om det är två eller fler likadana utan plussar ihop pengar och sånt
@@ -20,7 +20,6 @@ const Possession = () => {
         //     }
 
         // }
-        console.log(Stocks)
     }, [])
 
 

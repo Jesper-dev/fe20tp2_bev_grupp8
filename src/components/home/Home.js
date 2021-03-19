@@ -23,7 +23,7 @@ const Home = () => {
     /*     const following = useSelector((state) => state.Following); */
     const [totalCurrency, setTotalCurrency] = useState(0);
     const followingCrypto = useSelector((state) => state.FollowingCrypto);
-    const Currency = useSelector((state) => state.Currency);
+    // const Currency = useSelector((state) => state.Currency);
     const firebase = useContext(FirebaseContext);
     const [followingArr, setFollowingArr] = useState([]);
     const dispatch = useDispatch();
