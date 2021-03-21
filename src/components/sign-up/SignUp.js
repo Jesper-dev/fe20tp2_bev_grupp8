@@ -62,6 +62,12 @@ class SignUpFormBase extends Component {
         super(props);
         this.state = { ...INITIAL_STATE };
     }
+
+
+    componentDidMount = () => {
+      /*   console.log('hello') */
+    }
+
     onSubmit = (event) => {
         this.setState({ loading: true });
         const {
@@ -263,11 +269,14 @@ class SignUpFormBase extends Component {
                                 <label>
                                     {' '}
                                     name of organization{' '}
-                                    <input
+                                    <select
                                         name="organization"
                                         value={organization}
                                         onChange={this.onChange}
-                                    />{' '}
+                                    >
+                                        {}
+
+                                    </select>
                                 </label>
                             ) : (
                                 ''

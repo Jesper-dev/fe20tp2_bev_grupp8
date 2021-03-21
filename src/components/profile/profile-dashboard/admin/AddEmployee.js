@@ -4,6 +4,7 @@ import { FirebaseContext } from '../../../firebase/context';
 const AddEmployee = () => {
     const [open, setOpen] = useState(false)
     const [emailValue, setEmailValue] = useState('')
+    const [employeeList, setEmployeeList] = useState([])
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -12,6 +13,7 @@ const AddEmployee = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(!emailValue)return
         addEmailToDb(emailValue)
     }
 
@@ -49,6 +51,7 @@ const AddEmployee = () => {
         organization.on('value', (snapshot) => {
             orgData = snapshot.val();
             if (!orgData) return;
+            setEmployeeList(orgData.emails.list)
         });
     }, [])
     
@@ -59,8 +62,23 @@ const AddEmployee = () => {
             ) : (
                 <p onClick={() => setOpen(!open)}>+</p>
             )}
-            <h3>List of employees:</h3>
-            <div className="emailWrapper"></div>
+            <h3>List of employees</h3>
+            <div className="emailWrapper">
+                {employeeList.map((item, i) => {
+                    return (
+                        <span
+                            style={
+                                i % 2 === 0
+                                    ? { background: 'var(--body-third)' }
+                                    : { background: 'var(--body)' }
+                            }
+                            key={i}
+                        >
+                            {item.email}
+                        </span>
+                    );
+                })}
+            </div>
             <form onSubmit={handleSubmit}>
                 <label>
                     Add employee email:

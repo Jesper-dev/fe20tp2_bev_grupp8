@@ -11,6 +11,7 @@ import SeeNews from './SeeNews';
 import ProfileImgReducer from './ProfileImgReducer';
 import Users from './Users'
 import FilteredUsers from './FilteredUsers'
+import OrganizationData from './OrganizationData'
 
 import { combineReducers } from 'redux';
 
@@ -27,7 +28,8 @@ const allReducers = combineReducers({
     SeeNews,
     ProfileImgReducer,
     Users,
-    FilteredUsers
+    FilteredUsers,
+    OrganizationData,
 });
 
 export default allReducers;

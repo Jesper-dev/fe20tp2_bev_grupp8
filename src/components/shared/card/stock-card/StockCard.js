@@ -27,7 +27,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList }) => {
             <span>{cost ? cost.toFixed(2) : 20} $</span>
             <span
                 style={
-                    percent > 0 ? { color: '#58D7AC' } : { color: '#DD577D' }
+                    percent > 0 ? { color: 'var(--lighter-green)' } : { color: 'var(--lighter-red)' }
                 }
             >
                 {percent ? percent.toFixed(2) : 20}%

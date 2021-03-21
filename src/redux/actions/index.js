@@ -81,6 +81,12 @@ export const setUsers = (users) => {
         payload: users,
     };
 };
+export const setOrganizationData = (data) => {
+    return {
+        type: 'ORGANIZATIONDATA',
+        payload: data,
+    };
+};
 
 export const filterUsers = (filteredUsers) => {
     return {
