@@ -57,6 +57,9 @@ const INITIAL_STATE = {
     loading: false,
 };
 
+let activeOrganizations;
+let activeOrganizationsName = [];
+
 class SignUpFormBase extends Component {
     constructor(props) {
         super(props);
@@ -66,6 +69,21 @@ class SignUpFormBase extends Component {
 
     componentDidMount = () => {
       /*   console.log('hello') */
+            const activeOrganizationsFirebase = this.props.firebase.db.ref('organizations/');
+
+    
+
+            activeOrganizationsFirebase.on('value', (snapshot) => {
+                activeOrganizations = snapshot.val();
+                if (!activeOrganizations) return;
+
+                   for (const key in activeOrganizations) {
+                       activeOrganizationsName.push({ key });
+                   }
+
+                console.log(activeOrganizationsName);
+            });
+      
     }
 
     onSubmit = (event) => {
@@ -240,7 +258,7 @@ class SignUpFormBase extends Component {
                                     checked={isAdmin}
                                     onChange={this.onChangeCheckbox}
                                 />
-                                Organization:
+                                create organization:
                             </label>
                             {isAdmin ? (
                                 <label>
@@ -257,7 +275,7 @@ class SignUpFormBase extends Component {
                             )}
 
                             <label>
-                                Part of an organization?
+                                Part of an organization
                                 <input
                                     name="partOfOrganization"
                                     type="checkbox"
@@ -268,14 +286,21 @@ class SignUpFormBase extends Component {
                             {partOfOrganization ? (
                                 <label>
                                     {' '}
-                                    name of organization{' '}
+                                    Which organization?{' '}
                                     <select
                                         name="organization"
                                         value={organization}
                                         onChange={this.onChange}
                                     >
-                                        {}
-
+                                        {activeOrganizationsName.map(
+                                            (item, i) => {
+                                                return (
+                                                    <option key={i}>
+                                                        {item.key}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
                                     </select>
                                 </label>
                             ) : (
