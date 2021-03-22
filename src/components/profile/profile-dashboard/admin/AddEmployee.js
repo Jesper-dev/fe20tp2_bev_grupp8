@@ -10,7 +10,7 @@ const AddEmployee = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     let orgData;
     let emails;
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!emailValue)return
@@ -21,7 +21,6 @@ const AddEmployee = () => {
         let emailList = [];
 
         const emailsData = firebase.db.ref('organizations/' + user.organization + '/emails/list');
-        console.log(emailsData)
         if (emailsData === null) {
             return;
         }
@@ -33,7 +32,7 @@ const AddEmployee = () => {
             //     return;
             // }
         });
-    
+
         const emailObj = {
             email: email
         };
@@ -45,7 +44,7 @@ const AddEmployee = () => {
         setEmailValue('')
     }
 
-    
+
     useEffect(() => {
         const organization = firebase.db.ref('organizations/' + user.organization);
         organization.on('value', (snapshot) => {
@@ -54,7 +53,7 @@ const AddEmployee = () => {
             setEmployeeList(orgData.emails.list)
         });
     }, [])
-    
+
     return (
         <AddEmailWrapper open={open}>
             {open ? (

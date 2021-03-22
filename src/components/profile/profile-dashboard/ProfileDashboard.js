@@ -55,10 +55,10 @@ const ProfileDashboard = () => {
 
             {admin || employee ? (
                 <h1>
-                    {!OrganizationData[0] ? '' : OrganizationData[0].organization}
+                    {!OrganizationData[0] ? '' : 'Organization: ' + OrganizationData[0].organization}
                 </h1>
             ) : (
-                <p>I'm Not ADMIN!</p>
+                <p>Not part of a organization</p>
             )}
         </>
     );

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
+    .side-by-side {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
     box-sizing: border-box;
     height: 100%;
     display: flex;

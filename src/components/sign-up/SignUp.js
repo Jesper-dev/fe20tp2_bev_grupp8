@@ -62,12 +62,12 @@ let activeOrganizations;
 let currentEmails;
 let activeOrganizationsName = [];
 
+
 class SignUpFormBase extends Component {
     constructor(props) {
         super(props);
         this.state = { ...INITIAL_STATE };
     }
-
 
     componentDidMount = () => {
       /*   console.log('hello') */
@@ -151,6 +151,7 @@ class SignUpFormBase extends Component {
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
+                    // https://grupp8-c364e-default-rtdb.firebaseio.com/organizations/Lets%20Vest/users
                     this.props.firebase
                         .organization(
                           isAdmin ? organization + '/users/' + authUser.user.uid : organizationname + '/users/' + authUser.user.uid
@@ -194,7 +195,23 @@ class SignUpFormBase extends Component {
         event.preventDefault();
     };
     onChange = (event) => {
+        if (/\s/.test(event.target.value)) {
+            // It has any kind of whitespace
+            // göra error
+            return
+        }
         this.setState({ [event.target.name]: event.target.value });
+
+
+        // function stringHasTheWhiteSpaceOrNot(value){
+        //     return value.indexOf(' ') >= 0;
+        //  }
+        //  var whiteSpace=stringHasTheWhiteSpaceOrNot("MyNameis John");
+        //     if(whiteSpace==true){
+        //        console.log("The string has whitespace");
+        //     } else {
+        //        console.log("The string does not have whitespace");
+        //  }
     };
 
     onChangeCheckbox = (event) => {
@@ -211,6 +228,8 @@ class SignUpFormBase extends Component {
         }
         this.setState({ [event.target.name]: event.target.checked });
     };
+
+
 
     render() {
         const {
@@ -280,19 +299,20 @@ class SignUpFormBase extends Component {
                                     placeholder="Confirm password"
                                 />
                             </label>
-                            <label>
+                            <label class="side-by-side">
+                                Create an organization
                                 <input
                                     name="isAdmin"
                                     type="checkbox"
                                     checked={isAdmin}
                                     onChange={this.onChangeCheckbox}
                                 />
-                                create organization:
                             </label>
                             {isAdmin ? (
+
                                 <label>
                                     {' '}
-                                    name of organization{' '}
+                                    Name of organization
                                     <input
                                         name="organization"
                                         value={organization}
@@ -303,7 +323,7 @@ class SignUpFormBase extends Component {
                                 ''
                             )}
 
-                            <label>
+                            <label class="side-by-side">
                                 Part of an organization
                                 <input
                                     name="partOfOrganization"

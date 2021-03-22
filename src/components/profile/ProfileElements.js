@@ -27,7 +27,7 @@ export const ProfileSettingsBtn = styled(Link)`
 `;
 
 export const BtnsWrapper = styled.div`
-    height: 65px;
+    /* height: 65px; */
     width: 150px;
     display: flex;
     flex-direction: column;

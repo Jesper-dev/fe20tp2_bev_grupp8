@@ -39,7 +39,7 @@ const UserPosts = () => {
                     likes={item.likes}
                     />
                 )
-            }) : ''}
+            }) : 'No posts, post something from Social page'}
         </UserPostsElement>
     );
 };
