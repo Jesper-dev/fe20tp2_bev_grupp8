@@ -105,6 +105,12 @@ class SignUpFormBase extends Component {
             let exists = false;
             const orgEmailList = this.props.firebase.db.ref('organizations/' + organizationname + '/emails/list' );
 
+            console.log(organizationname)
+
+      /*       this.setState({organization: organizationname}); */
+
+            console.log(organization)
+
             orgEmailList.on('value', (snapshot) => {
                 currentEmails = snapshot.val();
                 if (!currentEmails) return;
@@ -112,10 +118,6 @@ class SignUpFormBase extends Component {
                 for(let i = 0; i < currentEmails.length; i++){
                     if(currentEmails[i].email === email){
                         console.log("It exist")
-
-                        this.setState({ organization: organizationname });
-                        console.log(organizationname)
-                        console.log(organization)
                         exists = true;
                     } else {
                         console.log("It doesnt exist")
@@ -151,10 +153,10 @@ class SignUpFormBase extends Component {
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
-                    // https://grupp8-c364e-default-rtdb.firebaseio.com/organizations/Lets%20Vest/users
-                    this.props.firebase
+                    if(isAdmin) {
+                        this.props.firebase
                         .organization(
-                          isAdmin ? organization + '/users/' + authUser.user.uid : organizationname + '/users/' + authUser.user.uid
+                          organization + '/users/' + authUser.user.uid
                         )
                         .set({
                             username,
@@ -166,22 +168,46 @@ class SignUpFormBase extends Component {
                             picture,
                             organization
                         });
-                if(!partOfOrganization){
-                    this.props.firebase.organization(
-                        organization + '/emails'
-                    )
-                    .set({ list })
+                            this.props.firebase.organization(
+                                organization + '/emails'
+                            )
+                            .set({ list })
+                        this.props.firebase.user(authUser.user.uid).set({
+                            username,
+                            email,
+                            roles,
+                            currency,
+                            followingStocks,
+                            post,
+                            picture,
+                            organization,
+                        });
+                    } else {
+                    this.props.firebase
+                        .organization(
+                          organizationname + '/users/' + authUser.user.uid
+                        )
+                        .set({
+                            username,
+                            email,
+                            roles,
+                            currency,
+                            followingStocks,
+                            post,
+                            picture,
+                            organization: organizationname
+                        });
+                        this.props.firebase.user(authUser.user.uid).set({
+                            username,
+                            email,
+                            roles,
+                            currency,
+                            followingStocks,
+                            post,
+                            picture,
+                            organization: organizationname
+                        });
                     }
-                    this.props.firebase.user(authUser.user.uid).set({
-                        username,
-                        email,
-                        roles,
-                        currency,
-                        followingStocks,
-                        post,
-                        picture,
-                        organization,
-                    });
                 }
             })
 
@@ -200,6 +226,8 @@ class SignUpFormBase extends Component {
             // göra error
             return
         }
+
+        console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
     };
 
@@ -330,6 +358,7 @@ class SignUpFormBase extends Component {
                                         value={organizationname}
                                         onChange={this.onChange}
                                     >
+                                        <option>Select company...</option>
                                         {activeOrganizationsName.map(
                                             (item, i) => {
                                                 return (

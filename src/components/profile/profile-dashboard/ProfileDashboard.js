@@ -7,6 +7,8 @@ import { setOrganizationData } from '../../../redux/actions'
 
 import { FirebaseContext } from '../../firebase/context';
 
+import { Wrapper } from './ProfileDashboardElements'
+
 const ProfileDashboard = () => {
     const dispatch = useDispatch()
     const firebase = useContext(FirebaseContext);
@@ -41,7 +43,6 @@ const ProfileDashboard = () => {
             isAdmin.on('value', (snapshot) => {
             data = snapshot.val();
             if (!data) return;
-
             setAdmin(data.ADMIN === 'ADMIN' ? true : false);
             setEmployee(data.EMPLOYEE === 'EMPLOYEE' ? true : false);
         });
@@ -50,17 +51,17 @@ const ProfileDashboard = () => {
     }, []);
 
     return (
-        <>
+        <Wrapper>
             {admin ? <AddEmployee /> : ''}
 
             {admin || employee ? (
-                <h1>
-                    {!OrganizationData[0] ? '' : 'Organization: ' + OrganizationData[0].organization}
-                </h1>
+                <h2>
+                    {!OrganizationData[0] ? '' : OrganizationData[0].organization}
+                </h2>
             ) : (
                 <p>Not part of a organization</p>
             )}
-        </>
+        </Wrapper>
     );
 };
 
