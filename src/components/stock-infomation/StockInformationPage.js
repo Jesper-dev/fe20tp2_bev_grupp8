@@ -56,6 +56,12 @@ const StockInformationPage = () => {
         });
     };
 
+    const updateUserCurrencyOrg = (userId, currency) => {
+        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/currency').set({
+            currency,
+        });
+    };
+
     const checkHolding = () => {
         if (Stocks.includes(chosenShare[0])) {
             for (let i = 0; i < Stocks.length; i++) {
@@ -121,7 +127,10 @@ const StockInformationPage = () => {
             for (let i = 0; i < numOfStocks; i++) {
                 Stocks.push(chosenShare[0]);
             }
-            updateUserCurrency(user.uid, newCurrency);
+            let currencyFixed = newCurrency.toFixed(2)
+            let currencyNumber = parseInt(currencyFixed)
+            updateUserCurrency(user.uid, currencyNumber);
+            updateUserCurrencyOrg(user.uid, currencyNumber);
             dispatch(setStocks(Stocks));
             setBuy(false);
             setNumOfStocks(0);

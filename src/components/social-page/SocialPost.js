@@ -41,7 +41,8 @@ const SocialPost = () => {
         const postObj = {
             username: userData.username,
             content: postData,
-            likes: 0,
+            likeCount: 0,
+            liked: false,
             timestamp: date,
         };
 

@@ -5,9 +5,11 @@ import UserPostCard from './UserPostCard'
 
 let usersPost = [];
 let data;
+let liked = false;
+let likeCount;
 const UserPosts = () => {
     const [checkLiked, setCheckedLiked] = useState(false)
-
+    const [postIndex, setPostIndex] = useState(0)
     const [userPost, setUserPost] = useState('');
 
     const firebase = useContext(FirebaseContext);
@@ -18,7 +20,6 @@ const UserPosts = () => {
         usersPost = [];
         firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
             data = snapshot.val();
-
             setUserPost(data);
         });
     }, []);
@@ -29,46 +30,27 @@ const UserPosts = () => {
         return day;
     }
 
-    const newlikeKey = (userId, like) => {
+    const newlikeKey = (userId, liked, likeCount) => {
         console.log('Like');
-        firebase.db.ref('users/' + userId + '/post/posts').update({
-            like,
+        firebase.db.ref('users/' + userId + '/post/posts/' + postIndex).update({
+            liked,
+            likeCount,
         });
     };
 
-    console.log(checkLiked);
+    //const isLikeValid = (el) => el === userPost.timestamp;
 
-    const handleChange =  (e) => {
-        //add like to firebase
-        //e.preventDefault();
+    const handleChange = (e) => {
         setCheckedLiked(!checkLiked)
-        console.log(checkLiked);
-
-    /*    let likeArr = firebase.db.ref('users/' + userData.uid + '/post/posts');
-        let data;
-        if (likeArr === null) {
-            return;
-        } */
-
-        /* postsArr.on('value', (snapshot) => {
-            data = snapshot.val();
-            if (data == null) {
-                return;
-            }
-        }); */
-
-/*         const likesObj = {
-            likes: 0,
-        };
-
-        if (likesObj.likes) {
-            data.push(likesObj);
-            // newPostKey(userData.uid, data);
-
-            console.log(data);
-
-            setUserPost('');
-        } */
+        console.log(e.target.value)
+        let timestamp = e.target.value;
+        for(let i = 0; i < userPost.length; i++) {
+            console.log(userPost[i].timestamp)
+        }
+        let index = userPost.findIndex(x => x.timestamp == timestamp)
+        setPostIndex(index)
+        newlikeKey(userData.uid, checkLiked, 1)
+        //console.log(newlikeKey(likeCount));
     };
 
 
@@ -82,7 +64,8 @@ const UserPosts = () => {
                     username={item.username}
                     content={item.content}
                     timestamp={item.timestamp}
-                    likes={item.likes}
+                    likeCount={item.likeCount}
+                    liked={item.liked}
                     handleChange={handleChange}
                     />
                 )
@@ -90,6 +73,5 @@ const UserPosts = () => {
         </UserPostsElement>
     );
 };
-
 
 export default UserPosts;

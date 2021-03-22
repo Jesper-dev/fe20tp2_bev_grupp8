@@ -33,7 +33,8 @@ const INITIAL_STATE = {
             {
                 content: "Let's Vest is the best website ever!",
                 username: "Let's Vest",
-                likes: 299,
+                liked: false,
+                likeCount: 299,
                 timestamp: 736180964,
             },
         ],
@@ -316,7 +317,7 @@ class SignUpFormBase extends Component {
                                     placeholder="Confirm password"
                                 />
                             </label>
-                            <label class="side-by-side">
+                            <label className="side-by-side">
                                 Create an organization
                                 <input
                                     name="isAdmin"
@@ -340,7 +341,7 @@ class SignUpFormBase extends Component {
                                 ''
                             )}
 
-                            <label class="side-by-side">
+                            <label className="side-by-side">
                                 Part of an organization
                                 <input
                                     name="partOfOrganization"
