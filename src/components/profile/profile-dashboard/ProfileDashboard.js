@@ -16,45 +16,38 @@ const ProfileDashboard = () => {
 
     const [admin, setAdmin] = useState(false);
     const [employee, setEmployee] = useState(false);
-   
+
     let OrgData = [];
     let data = '';
     let OrgDataFirebase;
 
     useEffect(() => {
         const companyData = firebase.db.ref('organizations/' + user.organization + '/users');
-         companyData.on('value', (snapshot) => {
-             OrgDataFirebase = snapshot.val();
-             if (!OrgDataFirebase) return;
+        companyData.on('value', (snapshot) => {
+            OrgDataFirebase = snapshot.val();
+            if (!OrgDataFirebase) return;
 
             for (const key in OrgDataFirebase) {
                 OrgData.push({ ...OrgDataFirebase[key] });
             }
 
             dispatch(setOrganizationData(OrgData))
-            console.log(OrgData[0].organization)
-      /*       for (const [key, value] of Object.entries(OrgDataFirebase)) {
-                console.log(value.organization)
-            } */
-            
-         });
-        
+         /*       for (const [key, value] of Object.entries(OrgDataFirebase)) {
+                   console.log(value.organization)
+               } */
+        });
+
         const isAdmin = firebase.db.ref('users/' + user.uid + '/roles');
             isAdmin.on('value', (snapshot) => {
             data = snapshot.val();
-            if (!data) return;    
-            
+            if (!data) return;
+
             setAdmin(data.ADMIN === 'ADMIN' ? true : false);
             setEmployee(data.EMPLOYEE === 'EMPLOYEE' ? true : false);
         });
-        
-        
-    
+
+
     }, []);
-
-    console.log(OrganizationData[0].organization);
-
-    //TODO Kunna adda emails som ska ha tillång till organisationen
 
     return (
         <>
@@ -62,9 +55,7 @@ const ProfileDashboard = () => {
 
             {admin || employee ? (
                 <h1>
-                    {!OrganizationData[0].organization
-                        ? ''
-                        : OrganizationData[0].organization}
+                    {!OrganizationData[0] ? '' : OrganizationData[0].organization}
                 </h1>
             ) : (
                 <p>I'm Not ADMIN!</p>

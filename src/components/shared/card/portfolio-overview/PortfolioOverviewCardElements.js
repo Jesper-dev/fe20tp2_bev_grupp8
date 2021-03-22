@@ -15,5 +15,9 @@ export const PortOverviewWrapper = styled.div`
             font-size: 1rem;
             vertical-align: middle;
         }
+
+        .total {
+            font-weight: 500;
+        }
     }
 `;

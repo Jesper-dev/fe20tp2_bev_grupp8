@@ -1,6 +1,7 @@
 {
   "name": "fe20-tp2",
   "version": "0.1.0",
+  "license": "unlicensed",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

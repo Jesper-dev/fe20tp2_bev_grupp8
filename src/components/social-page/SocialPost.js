@@ -45,12 +45,14 @@ const SocialPost = () => {
             timestamp: date,
         };
 
-        data.push(postObj);
-        newPostKey(userData.uid, data);
+        if (postObj.content) {
+            data.push(postObj);
+            newPostKey(userData.uid, data);
 
-        console.log(data);
+            console.log(data);
 
-        setPostData('');
+            setPostData('');
+        }
     };
 
     return (

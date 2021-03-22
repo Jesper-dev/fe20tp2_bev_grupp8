@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 export const ContentWrapper = styled.div`
-
-    padding: 1rem;
+    width: 100%;
+    max-width: 40rem;
+    margin-bottom: 1rem;
 
     .form {
         position: relative;

@@ -20,7 +20,7 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
                             {percent}%
                         </span>
                     </h1>
-                    <p>
+                    <p className="total">
                         Total: <span>{total}$</span>
                     </p>
                 </header>

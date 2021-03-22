@@ -1,20 +1,25 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
+    width: 100%;
+    max-width: 40rem;
+
     form {
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
+        margin: 0;
     }
 
     textarea {
         padding: 0.75rem;
-        border: 0.1875rem solid lightgrey;
+        border: 0.125rem solid #ddd;
+        border-radius: 0.25rem;
         outline: none;
-        background-color: var(body-secondary);
+        background: none;
         font: inherit;
         resize: none;
-        height: 1.5rem;
+        height: 4rem;
         transition: height 250ms ease-in-out;
 
         &::placeholder {
@@ -48,5 +53,6 @@ export const ContentWrapper = styled.div`
         font-family: inherit;
         font-size: 1rem;
         font-weight: 500;
+        cursor: pointer;
     }
 `;

@@ -15,7 +15,7 @@ export const AddEmailWrapper = styled.div`
     box-shadow: var(--box-shadow-cards);
     margin: 8px;
 
-    width: ${({ open }) => (!open ? '35px' : '355px')};
+    width: ${({ open }) => (!open ? '35px' : '95%')};
     height: ${({ open }) => (!open ? '35px' : '300px')};
 
     /* transition: all 0.4s; */
@@ -38,6 +38,7 @@ export const AddEmailWrapper = styled.div`
         align-items: center;
         font-size: 1.8rem;
         margin: ${({ open }) => (!open ? '0' : '8px')};
+        cursor: pointer;
     }
 
     .emailWrapper {
@@ -105,8 +106,8 @@ export const AddEmailWrapper = styled.div`
 
         /* Maring is not best solution. Fixed this way since align center centers button relative to label height. */
         margin-top: 10px;
-        
-        
+
+
         padding: 8px;
         font-size: 1.1rem;
         outline: none;

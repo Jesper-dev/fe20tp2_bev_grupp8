@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { chosenShare } from '../../../../redux/actions';
 
+
 let chosenShareArray = [];
 
 const StockCard = ({ name, cost, percent, fav, stocksList }) => {

@@ -10,6 +10,8 @@ import { setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import { UserWrapper } from "./SocialPageElements"
+
 import { withAuthorization } from '../session/index';
 let usersArray = []
 const SocialPage = () => {
@@ -32,20 +34,19 @@ const SocialPage = () => {
 
     return (
 
-        <>
+        <UserWrapper>
             <SearchBar />
-            <SocialPost />
-            {filteredUsers.map((item, index) => {
+            {filteredUsers.length > 0 ? filteredUsers.map((item, index) => {
                 return (
-                    <UserCard key={index}
+                    <UserCard
+                        key={index}
                         img={item.picture ? item.picture.profile_pic : "img"}
                         username={item.username}
                         total={item.currency ? item.currency.currency : 20}
                     />
                 )
-            })}
-
-        </>
+            }) : <SocialPost />}
+        </UserWrapper>
 
 
     );

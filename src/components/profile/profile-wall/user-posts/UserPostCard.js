@@ -1,4 +1,5 @@
 import React from 'react'
+import UserPostCardWrapper from "./UserPostCardElement";
 
 const UserPostCard = ({username, content, timestamp, likes}) => {
     const getDate = (number) => {
@@ -7,12 +8,15 @@ const UserPostCard = ({username, content, timestamp, likes}) => {
         return day;
     }
     return (
-        <div>
-            <p>{username}</p>
-            <p>{content}</p>
-            <p>{getDate(timestamp)}</p>
-            <p><i className="fas fa-heart" style={{color: 'lightgrey'}}></i> {likes}</p>
-        </div>
+        <UserPostCardWrapper>
+            <p className="username">{username}</p>
+            <p className="content">{content}</p>
+            <p className="date">{getDate(timestamp)}</p>
+            <button>
+                <i className="fas fa-heart" style={{color: '#c8c8c8'}}></i>
+                <span className="likes">{likes}</span>
+            </button>
+        </UserPostCardWrapper>
     )
 
 }

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const ContentWrapper = styled.div`
-
     div {
         display: flex;
         align-items: center;
@@ -17,7 +16,7 @@ export const ContentWrapper = styled.div`
     }
 
     p {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
 `;
 

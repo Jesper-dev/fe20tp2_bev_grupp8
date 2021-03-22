@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const UserWrapper = styled.div`
     height: 75px;
+    width: 100%;
+    max-width: 40rem;
 
     /*   border: 1px solid var(--body-fourth); */
     background: var(--body);
@@ -21,7 +23,7 @@ export const UserWrapper = styled.div`
 
     > div {
         display: flex;
-        flex-flow: column nowrap;
+        /* flex-flow: column nowrap; */
         height: inherit;
         justify-content: space-around;
         align-items: center;
