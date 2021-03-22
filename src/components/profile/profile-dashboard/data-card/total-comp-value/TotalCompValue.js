@@ -52,7 +52,7 @@ const TotalCompValue = () => {
                                     : { color: '#DD577D' }
                             }
                         >
-                              50%
+                            50%
                         </span>
                     </h1>
                     <p className="total">

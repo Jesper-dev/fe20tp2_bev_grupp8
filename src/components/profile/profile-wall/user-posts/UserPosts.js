@@ -9,6 +9,7 @@ let liked = false;
 let likeCount;
 const UserPosts = () => {
     const [checkLiked, setCheckedLiked] = useState(false)
+    const [checkCount, setCheckCount] = useState('');
     const [postIndex, setPostIndex] = useState(0)
     const [userPost, setUserPost] = useState('');
 
@@ -31,7 +32,7 @@ const UserPosts = () => {
     }
 
     const newlikeKey = (userId, liked, likeCount) => {
-        console.log('Like');
+        //console.log('Like');
         firebase.db.ref('users/' + userId + '/post/posts/' + postIndex).update({
             liked,
             likeCount,

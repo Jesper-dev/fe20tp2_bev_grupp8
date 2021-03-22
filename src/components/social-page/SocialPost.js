@@ -36,14 +36,14 @@ const SocialPost = () => {
             }
         });
 
-        let date = Date.now();
+        // let date = Date.now();
 
         const postObj = {
             username: userData.username,
             content: postData,
             likeCount: 0,
             liked: false,
-            timestamp: date,
+            timestamp: Date.now(),
         };
 
         if (postObj.content) {

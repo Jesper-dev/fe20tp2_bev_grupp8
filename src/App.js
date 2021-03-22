@@ -91,7 +91,7 @@ const App = () => {
 const GlobalStyle = createGlobalStyle`
   :root {
       //Darkblue-Purple-ish
-    --primary: #5068F5; 
+    --primary: #5068F5;
     //Lighter-darkblue
     --secondary: #3E80DE;
     //Light-blue
