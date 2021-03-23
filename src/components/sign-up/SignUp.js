@@ -56,7 +56,8 @@ const INITIAL_STATE = {
     isAdmin: false,
     partOfOrganization: false,
     loading: false,
-    organizationname: ''
+    organizationname: '',
+    // likedPosts = []
 };
 
 let activeOrganizations;
@@ -99,7 +100,8 @@ class SignUpFormBase extends Component {
             organization,
             organizationname,
             partOfOrganization,
-            list
+            list,
+            // likedPosts
         } = this.state;
         //IF ENTERED EMAIL exists in Comp email
         if(partOfOrganization){
@@ -151,6 +153,7 @@ class SignUpFormBase extends Component {
                         post,
                         picture,
                         organization,
+                        // likedPosts
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
@@ -167,7 +170,8 @@ class SignUpFormBase extends Component {
                             followingStocks,
                             post,
                             picture,
-                            organization
+                            organization,
+                            // likedPosts
                         });
                             this.props.firebase.organization(
                                 organization + '/emails'
@@ -182,6 +186,7 @@ class SignUpFormBase extends Component {
                             post,
                             picture,
                             organization,
+                            // likedPosts
                         });
                     } else {
                     this.props.firebase
@@ -196,7 +201,8 @@ class SignUpFormBase extends Component {
                             followingStocks,
                             post,
                             picture,
-                            organization: organizationname
+                            organization: organizationname,
+                            // likedPosts
                         });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
@@ -206,7 +212,8 @@ class SignUpFormBase extends Component {
                             followingStocks,
                             post,
                             picture,
-                            organization: organizationname
+                            organization: organizationname,
+                            // likedPosts
                         });
                     }
                 }

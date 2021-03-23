@@ -24,7 +24,7 @@ const TotalCompValue = () => {
             for (const key in totalValue) {
                 orgData.push({ ...totalValue[key] });
             }
-        setOrgDataState(orgData)
+            setOrgDataState(orgData)
 
             for(let i = 0; i < orgData.length; i++){
                 let currency = orgData[i].currency.currency;
@@ -62,7 +62,7 @@ const TotalCompValue = () => {
 
                     {orgDataState.map((item, i) => {
                         return (
-                        <EmployeesValue>
+                        <EmployeesValue key={i}>
                             <p>{item.username}</p>
                             <span style={
                                 -1 > 0

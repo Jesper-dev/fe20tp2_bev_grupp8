@@ -103,6 +103,8 @@ const GlobalStyle = createGlobalStyle`
     /* --primary-dark: #6B076B; */
     --primary-dark: #344fe5;
 
+    --light-grey: #ccc;
+
     --body: #ffffff;
     --body-secondary: #f9f9f9;
     --body-third: #f2f2f2;

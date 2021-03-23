@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import AddEmployee from './admin/AddEmployee'
 import TotalCompValue from './data-card/total-comp-value/TotalCompValue'
+import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrganizationData } from '../../../redux/actions'
@@ -62,7 +63,8 @@ const ProfileDashboard = () => {
                 <p>Not part of a organization</p>
             )}
 
-             <TotalCompValue />
+            <TotalCompValue />
+            <MostFollowedStocks />
         </Wrapper>
     );
 };

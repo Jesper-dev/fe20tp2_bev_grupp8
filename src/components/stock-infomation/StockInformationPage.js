@@ -50,6 +50,12 @@ const StockInformationPage = () => {
         });
     };
 
+    const updateUserOrg = (userId, array) => {
+        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/followingStocks').set({
+            array,
+        });
+    };
+
     const updateUserCurrency = (userId, currency) => {
         firebase.db.ref('users/' + userId + '/currency').set({
             currency,
@@ -106,6 +112,7 @@ const StockInformationPage = () => {
         }
 
         updateUser(user.uid, followingDb);
+        updateUserOrg(user.uid, followingDb);
         dispatch(setFollowing(followingDb));
     };
 

@@ -1,78 +1,71 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FirebaseContext } from '../../../firebase/context';
+
 import UserPostsElement from './UserPostsElement';
 import UserPostCard from './UserPostCard'
 
-let usersPost = [];
-let data;
-let liked = false;
-let likeCount;
+
 const UserPosts = () => {
-    const [checkLiked, setCheckedLiked] = useState(false)
-    const [checkCount, setCheckCount] = useState('');
-    const [postIndex, setPostIndex] = useState(0)
-    const [userPost, setUserPost] = useState('');
+	const firebase = useContext(FirebaseContext);
 
-    const firebase = useContext(FirebaseContext);
+	const [userPost, setUserPost] = useState('');
+	const userData = JSON.parse(localStorage.getItem('authUser'));
 
-    const userData = JSON.parse(localStorage.getItem('authUser'));
+	useEffect(() => {
 
-    useEffect(() => {
-        usersPost = [];
-        firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
-            data = snapshot.val();
-            setUserPost(data);
-        });
-    }, []);
+		firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
+			let data = snapshot.val();
+			setUserPost(data);
+		});
+	}, []);
 
-    const getDate = (number) => {
-        let date = new Date(number)
-        let day = date.toLocaleDateString();
-        return day;
-    }
+	const updateData = (data) => {
+		let userId = firebase.auth.currentUser.uid;
 
-    const newlikeKey = (userId, liked, likeCount) => {
-        //console.log('Like');
-        firebase.db.ref('users/' + userId + '/post/posts/' + postIndex).update({
-            liked,
-            likeCount,
-        });
-    };
+		firebase.db.ref("users/" + userId + "/post/posts").set(
+			data
+		);
+	};
 
-    //const isLikeValid = (el) => el === userPost.timestamp;
+	const handleChange = (e) => {
+		let index = userPost.findIndex(item => item.timestamp == e.target.value);
 
-    const handleChange = (e) => {
-        setCheckedLiked(!checkLiked)
-        console.log(e.target.value)
-        let timestamp = e.target.value;
-        for(let i = 0; i < userPost.length; i++) {
-            console.log(userPost[i].timestamp)
-        }
-        let index = userPost.findIndex(x => x.timestamp == timestamp)
-        setPostIndex(index)
-        newlikeKey(userData.uid, checkLiked, 1)
-        //console.log(newlikeKey(likeCount));
-    };
+		if (userPost[index].liked) {
+			userPost[index].likeCount--;
+			userPost[index].liked = false;
+            // remove userPost[index] from likedArray
 
+		} else {
+			userPost[index].likeCount++;
+			userPost[index].liked = true;
+            // add userPost[index] to likedArray
+		}
 
-    return (
-        <UserPostsElement>
-            <h2>Posts</h2>
-            {userPost ? userPost.map((item, index) => {
-                return (
-                    <UserPostCard
-                    key={index}
-                    username={item.username}
-                    content={item.content}
-                    timestamp={item.timestamp}
-                    likeCount={item.likeCount}
-                    liked={item.liked}
-                    handleChange={handleChange}
-                    />
-                )
-            }) : 'No posts, post something from Social page'}
-        </UserPostsElement>
-    );
+		console.log(`ClickedPostContent: ${userPost[index].content}`)
+		console.log(`Liked: ${userPost[index].liked}`);
+		console.log(`LikeCount: ${userPost[index].likeCount}`);
+
+		updateData(userPost);
+	};
+
+	return (
+		<UserPostsElement>
+			<h2>Posts</h2>
+			{userPost ? userPost.map((item, index) => {
+				return (
+					<UserPostCard
+					key={index}
+					username={item.username}
+					content={item.content}
+					timestamp={item.timestamp}
+					liked={item.liked}
+					likeCount={item.likeCount}
+					handleChange={handleChange}
+					/>
+				)
+			}) : 'No posts, post something from Social page'}
+		</UserPostsElement>
+	);
 };
 
 export default UserPosts;
