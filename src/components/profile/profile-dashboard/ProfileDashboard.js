@@ -64,7 +64,7 @@ const ProfileDashboard = () => {
             )}
 
             <TotalCompValue />
-            <MostFollowedStocks />
+            <MostFollowedStocks orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization}/>
         </Wrapper>
     );
 };

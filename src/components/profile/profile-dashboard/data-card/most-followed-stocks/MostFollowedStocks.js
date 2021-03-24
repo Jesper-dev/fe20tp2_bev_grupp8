@@ -1,39 +1,45 @@
 import React, {useEffect, useContext, useState} from 'react'
+import { Bar, Pie, Chart } from 'react-chartjs-2';
 
 import { FirebaseContext } from '../../../../firebase/context';
 
-const MostFollowedStocks = () => {
+import { ContentWrapper } from './MostFollowedStocksElement'
+
+const MostFollowedStocks = ({orgName}) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext)
     const [orgDataState, setOrgDataState] = useState([])
   /*   const [maxElState, setMaxElState] = useState([]) */
     const [mostFollowedTopState, setMostFollowedTopState] = useState([])
+    const [stockLabelsState, setStockLabelsState] = useState([])
+    const [stockAmountState, setStockAmountState] = useState([])
 
     let orgFollowArray = [];
-    let sortedArray = []
-    let orgData = []
-    let mostFollowedTop = []
-    let maxElState = []
+    // let sortedArray = [];
+    let orgData = [];
+    let mostFollowedTop = [];
+    let maxElState = [];
+    let stockAmount = [];
+    let stockLabels = [];
 
-
-  const findMostFrequent = (arr) => {
+    const findMostFrequent = (arr) => {
       return arr
-         .reduce((acc, cur, ind, arr) => {
-              if (arr.indexOf(cur) === ind) {
+        .reduce((acc, cur, ind, arr) => {
+            if (arr.indexOf(cur) === ind) {
                 return [...acc, [cur, 1]];
-              } else {
+            } else {
                   acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
                     cur,
                     acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
                 ];
                 maxElState = acc
                 return acc;
-              }
-          }, [])
-          .sort((a, b) => b[1] - a[1])
-          .filter((cur, ind, arr) => cur[1] === arr[0][1])
-          .map((cur) => cur[0]);
-        }
+            }
+        }, [])
+        .sort((a, b) => b[1] - a[1])
+        .filter((cur, ind, arr) => cur[1] === arr[0][1])
+        .map((cur) => cur[0]);
+    }
 
     useEffect(() => {
         const orgFollowedStocks = firebase.db.ref('organizations/' + user.organization + '/users');
@@ -67,25 +73,56 @@ const MostFollowedStocks = () => {
 
     const makeFinalArr = (arr) => {
         arr.forEach((item) => {
-            const obj = {
+            stockAmount.push(item[1])
+            stockLabels.push(item[0])
+            setStockAmountState(stockAmount)
+            setStockLabelsState(stockLabels)
+            const objFull = {
                 name: item[0],
                 count: item[1]
             }
-            mostFollowedTop.push(obj)
+            mostFollowedTop.push(objFull)
+            
         })
         setMostFollowedTopState(mostFollowedTop)
     }
+
+    let data = {
+        labels: stockLabelsState,
+        datasets: [
+            {
+                label: 'My First Dataset',
+                data: stockAmountState,
+                backgroundColor: [
+                    '#3e95cd',
+                    '#8e5ea2',
+                    '#3cba9f',
+                    '#e8c3b9',
+                    '#c45850',
+                    '#3DAD9C',
+                    '#4BFADF',
+                    '#F964FA',
+                    '#FADF7C',
+                    '#AD34AD',
+                ],
+                hoverOffset: 4,
+            },
+        ],
+    };
+
     return (
-        <div>
-            <h3>Most Followed Stocks</h3>
-            {mostFollowedTopState.map((item, index) => {
-                return (
-                    <p key={index}>
-                        {item.name} - {item.count} times
-                    </p>
-                );
-            })}
-        </div>
+        <ContentWrapper>
+            <h4>{orgName} Mosts Followed Stocks</h4>
+            <Pie
+                data={data}
+                options={{
+                    maintainAspectRatio: false,
+                  /*   legend: {
+                        display: false,
+                    }, */
+                }}
+            />
+        </ContentWrapper>
     );
 }
 

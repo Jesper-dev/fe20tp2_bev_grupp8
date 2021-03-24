@@ -193,17 +193,10 @@ const StockInformationPage = () => {
                                         : 'var(--body-fourth)'
                                 }
                                 onClick={onFollow}
-                                /* checked={checked} */
                                 onChange={onChange}
                             >
                                 <i className="far fa-eye"></i>
                             </WatchStockButton>
-                            {/*      <input
-                                type="checkbox"
-                                onClick={onFollow}
-                                checked={checked}
-                                onChange={onChange}
-                            /> */}
                         </div>
                         <LineChart />
                         <div className="buttonWrapper">
