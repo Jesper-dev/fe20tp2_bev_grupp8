@@ -6,10 +6,46 @@ const MostFollowedStocks = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext)
     const [orgDataState, setOrgDataState] = useState([])
+  /*   const [maxElState, setMaxElState] = useState([]) */
+    const [mostFollowedTopState, setMostFollowedTopState] = useState([])
 
     let orgFollowArray = [];
     let sortedArray = []
     let orgData = []
+    let mostFollowedTop = []
+    let maxElState = []
+
+
+  const findMostFrequent = (arr) => {
+      return arr
+         .reduce((acc, cur, ind, arr) => {
+              if (arr.indexOf(cur) === ind) {
+                return [...acc, [cur, 1]];
+              } else {
+                  acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
+                    cur,
+                    acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
+                ];
+                maxElState = acc
+                return acc;
+              }
+          }, [])
+          .sort((a, b) => b[1] - a[1])
+          .filter((cur, ind, arr) => cur[1] === arr[0][1])
+          .map((cur) => cur[0]);
+        }
+
+    useEffect(() => {
+        const orgFollowedStocks = firebase.db.ref('organizations/' + user.organization + '/users');
+            orgFollowedStocks.on('value', (snapshot) => {
+            const followedStocks = snapshot.val();
+            if (!followedStocks) return;
+            for (const key in followedStocks) {
+                orgData.push({ ...followedStocks[key] });
+            }
+            makeArray(orgData);
+        });
+    }, [])
 
     //*This makes the array with all the stocks being followed in the organization
     const makeArray = (arr) => {
@@ -25,76 +61,32 @@ const MostFollowedStocks = () => {
             }
         }
         setOrgDataState(orgFollowArray)
-        sortArray(orgDataState)
+        findMostFrequent(orgFollowArray)
+        makeFinalArr(maxElState)
     }
 
-    //*This sorts the array that was made into the top three followed stocks (the three stocks that have the most follows)
-    const sortArray = (arr) => {
-        let j = 0;
-        let i = 0;
-        //*This while loop checks if arr[x] is equal to arr[y]
-        while(j < arr.length) {
-            if(arr[j] == arr[i]){
-                if(arr[i] == undefined){
-                    console.log("Det är undefined")
-                    i += 1;
-                } else {
-                    console.log(arr[j] + ' ' + arr[i] + " Det är lika")
-
-                    sortedArray.push(arr[i])
-                    i += 1;
-                }
-            } else if(arr[j] !== arr[i]) {
-                if(arr[i] == undefined){
-                    console.log("Det är undefined")
-                    i += 1;
-                } else {
-                    console.log(arr[j] + ' ' + arr[i] + " Det är inte lika")
-                    i += 1;
-                }
+    const makeFinalArr = (arr) => {
+        arr.forEach((item) => {
+            const obj = {
+                name: item[0],
+                count: item[1]
             }
-
-            if(arr[i] == undefined) {
-                j += 1;
-                i = 0;
-            }
-        }
+            mostFollowedTop.push(obj)
+        })
+        setMostFollowedTopState(mostFollowedTop)
     }
-
-    //*Vi kanske inte ens måste göra allting över, kanske räcker med någonting annat
-    useEffect(() => {
-        const runThis = async () => {
-            const orgFollowedStocks = firebase.db.ref('organizations/' + user.organization + '/users');
-            await orgFollowedStocks.on('value', (snapshot) => {
-                const followedStocks = snapshot.val();
-                if (!followedStocks) return;
-                console.log("Efter return")
-                for (const key in followedStocks) {
-                    orgData.push({ ...followedStocks[key] });
-                }
-                //TODO Kolla hur mycket en viss value finns orgData, så att man får fram top tre
-            });
-
-        }
-        runThis()
-
-        console.log("Hit kommer vi")
-        makeArray(orgData)
-        return () => {
-            console.log("Vafan")
-        }
-    }, [])
-
-
-
     return (
         <div>
             <h3>Most Followed Stocks</h3>
-            {orgDataState.map((item, index) => {
-                return <p key={index}>{item}</p>
+            {mostFollowedTopState.map((item, index) => {
+                return (
+                    <p key={index}>
+                        {item.name} - {item.count} times
+                    </p>
+                );
             })}
         </div>
-    )
+    );
 }
 
 export default MostFollowedStocks
