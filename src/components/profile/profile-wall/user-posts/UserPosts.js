@@ -80,7 +80,7 @@ const UserPosts = () => {
 					handleChange={handleChange}
 					/>
 				)
-			}) : 'No posts, post something from Social page'}
+			}) : 'No posts, post something from the Social page'}
 		</UserPostsElement>
 	);
 };

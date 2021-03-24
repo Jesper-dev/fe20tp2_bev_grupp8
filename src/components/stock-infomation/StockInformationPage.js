@@ -20,6 +20,7 @@ const StockInformationPage = () => {
     const [sell, setSell] = useState(false);
     const [holding, setHolding] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
+    const [clickedStock, setClickedStock] = useState({});
     //*Redux stuff :)
     const dispatch = useDispatch();
     const chosenShare = useSelector((state) => state.ChosenShare);
@@ -82,32 +83,35 @@ const StockInformationPage = () => {
         });
     };
 
+    //*Checks the holding of your stock
     const checkHolding = () => {
-        if (Stocks.includes(chosenShare[0])) {
-            for (let i = 0; i < Stocks.length; i++) {
-                if (Stocks[i].symbol === chosenShare[0].symbol) {
-                    holdingArray.push(i);
-                }
+        let dataDB;
+        let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
+        possessionDb.on('value', (snapshot) => {
+            dataDB = snapshot.val()
+        })
+        if(dataDB == undefined) return
+        for(let i = 0; i < dataDB.length; i++){
+            if(dataDB[i].symbol === chosenShare[0].symbol){
+                setClickedStock(dataDB[i])
             }
-            setHolding(holdingArray.length);
         }
-    };
 
+
+    };
+    console.log(clickedStock)
+    //*When you follow a stock
     const onFollow = () => {
         let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
         let followingDb;
         stocks.on('value', (snapshot) => {
             followingDb = snapshot.val();
         });
-
         if (followingDb === null) {
             return;
         }
-
         let name = chosenShare[0].symbol;
-
         let index = followingDb.findIndex((x) => x.symbol === name);
-
         if (index > -1) {
             followingDb.splice(index, 1);
             setChecked(false);
@@ -115,8 +119,7 @@ const StockInformationPage = () => {
             const followingObj = {
                 symbol: chosenShare[0].symbol,
                 regularMarketPrice: chosenShare[0].regularMarketPrice,
-                regularMarketChangePercent:
-                    chosenShare[0].regularMarketChangePercent,
+                regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
                 shortName: chosenShare[0].shortName,
             };
             followingDb.push(followingObj);
@@ -132,7 +135,7 @@ const StockInformationPage = () => {
 
     const onChange = () => setChecked(!checked);
 
-    //*Function for when we buy a share
+    //*When we buy a stock
     const onBuy = (numOfStocks) => {
         if (buy === false) {
             setBuy(true);
@@ -171,12 +174,12 @@ const StockInformationPage = () => {
                 updateUserPossesionOrg(user.uid, array)
                 updateUserCurrencyOrg(user.uid, currencyNumber);
             }
-            // dispatch(setStocks(Stocks));
             setNumOfStocks(0);
             setBuy(false);
         }
     };
 
+    //*When we sell a stock
     const onSell = (numOfStocks) => {
         if (sell === false) {
             setSell(true);
@@ -264,29 +267,31 @@ const StockInformationPage = () => {
                                 SELL
                             </button>
                         </div>
-                        <p>{item.symbol}</p>
-                        <p>
-                            Market price:{' '}
-                            {item.regularMarketPrice
-                                ? item.regularMarketPrice
-                                : 200}{' '}
-                            $
-                        </p>
-                        <p>
-                            Reg market change:{' '}
-                            {item.regularMarketChange
-                                ? item.regularMarketChange.toFixed(2)
-                                : 200}
-                            %
-                        </p>
-                        <p>
-                            Market change percent:{' '}
-                            {item.regularMarketChangePercent
-                                ? item.regularMarketChangePercent.toFixed(2)
-                                : 2}
-                            %
-                        </p>
-                        <p>Your holding in this share is: {holding}</p>
+                        <div className="informationContainer">
+                            <p>{item.symbol}</p>
+                            <p>
+                                Market price:{' '}
+                                {item.regularMarketPrice
+                                    ? item.regularMarketPrice
+                                    : 200}{' '}
+                                $
+                            </p>
+                            <p>
+                                Reg market change:{' '}
+                                {item.regularMarketChange
+                                    ? item.regularMarketChange.toFixed(2)
+                                    : 200}
+                             %
+                            </p>
+                            <p>
+                                Market change percent:{' '}
+                             {item.regularMarketChangePercent
+                                    ? item.regularMarketChangePercent.toFixed(2)
+                                    : 2}
+                                %
+                            </p>
+                            <p>Your holding in this share is: {clickedStock.amount ? clickedStock.amount : 0}</p>
+                        </div>
                     </div>
                 );
             })}

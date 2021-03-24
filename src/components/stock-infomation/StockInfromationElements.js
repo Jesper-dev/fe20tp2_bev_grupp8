@@ -13,14 +13,17 @@ export const ContentWrapper = styled.div`
         margin: 8px;
     }
 
-    p {
-        box-shadow: var(--box-shadow-cards);
-        border-radius: 4px;
-        padding: 8px;
-        margin: 8px;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
+    .informationContainer {
+        margin-bottom: 56px;
+        p {
+            box-shadow: var(--box-shadow-cards);
+            border-radius: 4px;
+            padding: 8px;
+            margin: 8px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
     }
 
     button {
