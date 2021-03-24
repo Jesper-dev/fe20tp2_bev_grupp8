@@ -13,6 +13,7 @@ const MostFollowedStocks = ({orgName}) => {
     const [mostFollowedTopState, setMostFollowedTopState] = useState([])
     const [stockLabelsState, setStockLabelsState] = useState([])
     const [stockAmountState, setStockAmountState] = useState([])
+    const [showBar, setShowBar] = useState(false)
 
     let orgFollowArray = [];
     // let sortedArray = [];
@@ -91,7 +92,7 @@ const MostFollowedStocks = ({orgName}) => {
         labels: stockLabelsState,
         datasets: [
             {
-                label: 'My First Dataset',
+                label: 'Most followed stocks',
                 data: stockAmountState,
                 backgroundColor: [
                     '#3e95cd',
@@ -113,15 +114,33 @@ const MostFollowedStocks = ({orgName}) => {
     return (
         <ContentWrapper>
             <h4>{orgName} Mosts Followed Stocks</h4>
-            <Pie
-                data={data}
-                options={{
-                    maintainAspectRatio: false,
-                  /*   legend: {
-                        display: false,
-                    }, */
-                }}
-            />
+            <button onClick={() => setShowBar(!showBar)}>
+                
+                {showBar
+                    ? <i class="fas fa-chart-pie"></i>
+                    : <i class="far fa-chart-bar"></i>}
+            </button>
+            {showBar ? (
+                <Bar
+                    data={data}
+                    options={{
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false,
+                        },
+                    }}
+                />
+            ) : (
+                <Pie
+                    data={data}
+                    options={{
+                        maintainAspectRatio: false,
+                        /*   legend: {
+                    display: false,
+                }, */
+                    }}
+                />
+            )}
         </ContentWrapper>
     );
 }
