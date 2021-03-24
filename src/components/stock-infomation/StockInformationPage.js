@@ -11,7 +11,6 @@ import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 import { ContentWrapper, WatchStockButton } from './StockInfromationElements';
-let holdingArray = [];
 
 const StockInformationPage = () => {
     // const [userData, setUserData] = useState(null)
@@ -43,7 +42,6 @@ const StockInformationPage = () => {
             }
         });
 
-        holdingArray = [];
         checkHolding();
     }, []);
 
@@ -90,16 +88,14 @@ const StockInformationPage = () => {
         possessionDb.on('value', (snapshot) => {
             dataDB = snapshot.val()
         })
-        if(dataDB == undefined) return
+        if(dataDB === undefined) return
         for(let i = 0; i < dataDB.length; i++){
             if(dataDB[i].symbol === chosenShare[0].symbol){
                 setClickedStock(dataDB[i])
+                setHolding(dataDB[i].amount)
             }
         }
-
-
     };
-    console.log(clickedStock)
     //*When you follow a stock
     const onFollow = () => {
         let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
@@ -185,7 +181,7 @@ const StockInformationPage = () => {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
-            if (numOfStocks > holding) {
+            if (numOfStocks > holding || numOfStocks <= -1) {
                 console.log('You cant sell more than you have');
                 return;
             }

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AddEmployee from './admin/AddEmployee'
 import TotalCompValue from './data-card/total-comp-value/TotalCompValue'
 import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks'
+import BoughtStocks from './data-card/bought-stocks/BoughtStocks'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrganizationData } from '../../../redux/actions'
@@ -52,6 +53,8 @@ const ProfileDashboard = () => {
 
     }, []);
 
+    //*Kanske skicka ned olika arrayer som props ned till components och inte kalla på de i components själva
+
     return (
         <Wrapper>
             {admin ? <AddEmployee /> : ''}
@@ -65,6 +68,7 @@ const ProfileDashboard = () => {
 
             <TotalCompValue />
             <MostFollowedStocks orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization}/>
+            <BoughtStocks />
         </Wrapper>
     );
 };

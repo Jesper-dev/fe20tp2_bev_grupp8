@@ -13,6 +13,7 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
+	usernameTaken: false,
     username: '',
     organization: '',
     currency: {
@@ -115,6 +116,23 @@ class SignUpFormBase extends Component {
         super(props);
         this.state = { ...INITIAL_STATE };
     }
+
+	checkUsernameTaken = (str) => {
+		this.setState({ usernameTaken: false });
+
+		const usersRef = this.props.firebase.users();
+		// const usersRef = this.props.firebase.db.ref('users/');
+
+		// usersRef.startAt(null, str).endAt(null, str).on("value", () => {
+		// 		console.log("Username already in use!");
+		// 		this.setState({ usernameTaken: true });
+		// });
+
+		usersRef.orderByChild("username").equalTo(str).on("child_added", () => {
+			console.log("Username already in use!");
+			this.setState({ usernameTaken: true });
+		});
+	}
 
     componentDidMount = () => {
       /*   console.log('hello') */
@@ -297,8 +315,9 @@ class SignUpFormBase extends Component {
             return
         }
 
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
+		this.checkUsernameTaken(event.target.value);
     };
 
     onChangeCheckbox = (event) => {
@@ -335,7 +354,7 @@ class SignUpFormBase extends Component {
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
             email === '' ||
-            username === '';
+            username === '' || this.state.usernameTaken;
 
         return (
             <ContentWrapper>

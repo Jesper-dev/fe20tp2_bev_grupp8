@@ -83,7 +83,7 @@ const MostFollowedStocks = ({orgName}) => {
                 count: item[1]
             }
             mostFollowedTop.push(objFull)
-            
+
         })
         setMostFollowedTopState(mostFollowedTop)
     }
@@ -115,10 +115,10 @@ const MostFollowedStocks = ({orgName}) => {
         <ContentWrapper>
             <h4>{orgName} Mosts Followed Stocks</h4>
             <button onClick={() => setShowBar(!showBar)}>
-                
+
                 {showBar
-                    ? <i class="fas fa-chart-pie"></i>
-                    : <i class="far fa-chart-bar"></i>}
+                    ? <i className="fas fa-chart-pie"></i>
+                    : <i className="far fa-chart-bar"></i>}
             </button>
             {showBar ? (
                 <Bar
