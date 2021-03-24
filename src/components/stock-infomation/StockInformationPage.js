@@ -33,6 +33,7 @@ const StockInformationPage = () => {
 
     useEffect(() => {
         followingArr.forEach((item) => {
+            if(!item) return
             if (item.symbol === chosenShare[0].symbol) {
                 setChecked(true);
             } else if (!item.symbol === chosenShare[0].symbol) {
