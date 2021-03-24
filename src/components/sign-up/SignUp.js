@@ -28,6 +28,36 @@ const INITIAL_STATE = {
             },
         ],
     },
+    followingCrypto: {
+        array: [
+            {
+                price_change_percentage_24h: 150,
+                current_price: 250,
+                name: 'lets-vest-CrY',
+                image: 'LV-CrY',
+            },
+        ],
+    },
+    possessionStocks: {
+        array: [
+            {
+                regularMarketPrice: 250,
+                shortName: 'lets-vest',
+                symbol: 'LV',
+                amount: 1,
+            },
+        ],
+    },
+    possessionCrypto: {
+        array: [
+            {
+                current_price: 250,
+                name: 'lets-vest-CrY',
+                image: 'LV-CrY',
+                amount: 1,
+            },
+        ],
+    },
     post: {
         posts: [
             {
@@ -47,7 +77,7 @@ const INITIAL_STATE = {
 
     list: [
         {
-            email: 'letsvest@vest.com'
+            email: 'letsvest@vest.com',
         },
     ],
     passwordOne: '',
@@ -95,6 +125,9 @@ class SignUpFormBase extends Component {
             isAdmin,
             currency,
             followingStocks,
+            followingCrypto,
+            possessionStocks,
+            possessionCrypto,
             post,
             picture,
             organization,
@@ -150,6 +183,9 @@ class SignUpFormBase extends Component {
                         roles,
                         currency,
                         followingStocks,
+                        followingCrypto,
+                        possessionStocks,
+                        possessionCrypto,
                         post,
                         picture,
                         organization,
@@ -168,6 +204,9 @@ class SignUpFormBase extends Component {
                             roles,
                             currency,
                             followingStocks,
+                            followingCrypto,
+                            possessionStocks,
+                            possessionCrypto,
                             post,
                             picture,
                             organization,
@@ -183,6 +222,9 @@ class SignUpFormBase extends Component {
                             roles,
                             currency,
                             followingStocks,
+                            followingCrypto,
+                            possessionStocks,
+                            possessionCrypto,
                             post,
                             picture,
                             organization,
@@ -199,6 +241,9 @@ class SignUpFormBase extends Component {
                             roles,
                             currency,
                             followingStocks,
+                            followingCrypto,
+                            possessionStocks,
+                            possessionCrypto,
                             post,
                             picture,
                             organization: organizationname,
@@ -210,6 +255,9 @@ class SignUpFormBase extends Component {
                             roles,
                             currency,
                             followingStocks,
+                            followingCrypto,
+                            possessionStocks,
+                            possessionCrypto,
                             post,
                             picture,
                             organization: organizationname,
