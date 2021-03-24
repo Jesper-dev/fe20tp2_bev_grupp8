@@ -7,7 +7,6 @@ const ProfileWall = () => {
 
     return <div>
         <UserPosts/>
-        <h1>Liked posts</h1>
         <LikedPosts/>
     </div>;
 };

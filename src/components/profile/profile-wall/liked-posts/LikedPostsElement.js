@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const LikedPostsElement = styled.section`
-	background: red;
+	background: white;
 	height: 50vh;
 	margin-bottom: 56px;
 `;

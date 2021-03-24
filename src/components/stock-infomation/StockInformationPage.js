@@ -33,7 +33,7 @@ const StockInformationPage = () => {
 
     useEffect(() => {
         followingArr.forEach((item) => {
-            if(!item) return
+            if(!item || !item.symbol) return
             if (item.symbol === chosenShare[0].symbol) {
                 setChecked(true);
             } else if (!item.symbol === chosenShare[0].symbol) {
@@ -61,6 +61,22 @@ const StockInformationPage = () => {
         firebase.db.ref('users/' + userId + '/currency').set({
             currency,
         });
+    };
+
+    const updateUserPossesion = (userId, obj) => {
+        // let array = []
+        let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
+        possessionDb.on('value', (snapshot) => {
+            let array = snapshot.val()
+            console.log(typeof array)
+            
+            // array.push(obj)
+        })
+
+        // firebase.db.ref('users/' + userId + '/possessionStocks/').set({
+        //     array,
+        // });
+        
     };
 
     const updateUserCurrencyOrg = (userId, currency) => {
@@ -132,13 +148,24 @@ const StockInformationPage = () => {
                 return;
             }
             dispatch(setCurrency(newCurrency));
-            for (let i = 0; i < numOfStocks; i++) {
-                Stocks.push(chosenShare[0]);
-            }
+            // for (let i = 0; i < numOfStocks; i++) {
+            //     Stocks.push(chosenShare[0]);
+            // }
+            chosenShare[0].amount = numOfStocks
             let currencyFixed = newCurrency.toFixed(2)
             let currencyNumber = parseInt(currencyFixed)
             updateUserCurrency(user.uid, currencyNumber);
             updateUserCurrencyOrg(user.uid, currencyNumber);
+            const stockObj = {
+                name: chosenShare[0].shortName,
+                symbol: chosenShare[0].symbol,
+                price: chosenShare[0].regularMarketPrice.toLocaleString(),
+                amount: numOfStocks,
+                region: chosenShare[0].region,
+                regMarketChangePercent: chosenShare[0].regularMarketChangePercent.toFixed(2)
+            }
+           
+            updateUserPossesion(user.uid, stockObj)
             dispatch(setStocks(Stocks));
             setBuy(false);
             setNumOfStocks(0);
