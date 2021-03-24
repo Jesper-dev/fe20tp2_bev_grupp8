@@ -22,7 +22,11 @@ const UserPosts = () => {
 
 		firebase.db.ref('users/' + userData.uid + '/likedPosts').on('value', (snapshot) => {
 			let data = snapshot.val();
-			setLikedPosts(data);
+			if (data == null) {
+				setLikedPosts([])
+			} else {
+				setLikedPosts(data);
+			}
 		});
 	}, []);
 

@@ -32,6 +32,7 @@ const StockInformationPage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
+        if(!followingArr) return
         followingArr.forEach((item) => {
             if(!item || !item.symbol) return
             if (item.symbol === chosenShare[0].symbol) {
@@ -63,20 +64,16 @@ const StockInformationPage = () => {
         });
     };
 
-    const updateUserPossesion = (userId, obj) => {
-        // let array = []
-        let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
-        possessionDb.on('value', (snapshot) => {
-            let array = snapshot.val()
-            console.log(typeof array)
-            
-            // array.push(obj)
-        })
+    const updateUserPossesion = (userId, array) => {
+        firebase.db.ref('users/' + userId + '/possessionStocks').set({
+            array,
+        });
+    };
 
-        // firebase.db.ref('users/' + userId + '/possessionStocks/').set({
-        //     array,
-        // });
-        
+    const updateUserPossesionOrg = (userId, array) => {
+        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/possessionStocks').set({
+            array,
+        });
     };
 
     const updateUserCurrencyOrg = (userId, currency) => {
@@ -97,9 +94,7 @@ const StockInformationPage = () => {
     };
 
     const onFollow = () => {
-        let stocks = firebase.db.ref(
-            'users/' + user.uid + '/followingStocks/array'
-        );
+        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
         let followingDb;
         stocks.on('value', (snapshot) => {
             followingDb = snapshot.val();
@@ -129,7 +124,9 @@ const StockInformationPage = () => {
         }
 
         updateUser(user.uid, followingDb);
-        updateUserOrg(user.uid, followingDb);
+        if(user.organization){
+            updateUserOrg(user.uid, followingDb);
+        }
         dispatch(setFollowing(followingDb));
     };
 
@@ -140,7 +137,14 @@ const StockInformationPage = () => {
         if (buy === false) {
             setBuy(true);
             setSell(false);
-        } else if (buy === true) {
+        } else if (buy === true && numOfStocks !== 0) {
+            let array;
+            let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
+            possessionDb.on('value', (snapshot) => {
+                array = snapshot.val()
+            })
+
+            if(array == null) return
             let newCurrency =
                 Currency - chosenShare[0].regularMarketPrice * numOfStocks;
             if (newCurrency <= 0) {
@@ -148,27 +152,28 @@ const StockInformationPage = () => {
                 return;
             }
             dispatch(setCurrency(newCurrency));
-            // for (let i = 0; i < numOfStocks; i++) {
-            //     Stocks.push(chosenShare[0]);
-            // }
-            chosenShare[0].amount = numOfStocks
             let currencyFixed = newCurrency.toFixed(2)
             let currencyNumber = parseInt(currencyFixed)
-            updateUserCurrency(user.uid, currencyNumber);
-            updateUserCurrencyOrg(user.uid, currencyNumber);
+
             const stockObj = {
-                name: chosenShare[0].shortName,
-                symbol: chosenShare[0].symbol,
-                price: chosenShare[0].regularMarketPrice.toLocaleString(),
+                name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
+                symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
+                price: chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice.toLocaleString() : '',
                 amount: numOfStocks,
-                region: chosenShare[0].region,
-                regMarketChangePercent: chosenShare[0].regularMarketChangePercent.toFixed(2)
+                region: chosenShare[0].region ? chosenShare[0].region : '',
+                regMarketChangePercent:  chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent.toFixed(2) : ''
             }
-           
-            updateUserPossesion(user.uid, stockObj)
-            dispatch(setStocks(Stocks));
-            setBuy(false);
+
+            array.push(stockObj)
+            updateUserPossesion(user.uid, array)
+            updateUserCurrency(user.uid, currencyNumber);
+            if(user.organization){
+                updateUserPossesionOrg(user.uid, array)
+                updateUserCurrencyOrg(user.uid, currencyNumber);
+            }
+            // dispatch(setStocks(Stocks));
             setNumOfStocks(0);
+            setBuy(false);
         }
     };
 

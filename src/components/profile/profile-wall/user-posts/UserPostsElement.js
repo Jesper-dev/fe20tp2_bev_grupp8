@@ -3,7 +3,6 @@ import styled from "styled-components"
 const UserPostElement = styled.section`
 	max-width: 40rem;
 	margin: auto;
-    height: 60vh;
 	overflow: auto;
 	padding: 1rem;
 
