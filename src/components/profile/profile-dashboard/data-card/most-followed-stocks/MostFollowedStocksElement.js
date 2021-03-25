@@ -5,6 +5,7 @@ export const ContentWrapper = styled.div`
     text-align: center;
     margin-bottom: 56px;
     border-radius: 0.5rem;
+    background: var(--body);
     box-shadow: var(--box-shadow-cards);
 
     button {

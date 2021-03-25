@@ -7,7 +7,7 @@ import { chosenShare } from '../../../../redux/actions';
 
 let chosenShareArray = [];
 
-const StockCard = ({ name, cost, percent, fav, stocksList }) => {
+const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
     const dispatch = useDispatch();
     const setChosenStockOption = (name) => {
         let filterName = name.trim();
@@ -24,8 +24,10 @@ const StockCard = ({ name, cost, percent, fav, stocksList }) => {
     return (
         <CardWrapper id={name}>
             {/* <span>⭐</span> */}
+            {!amount ? '' : <span>{amount} <i className="fas fa-piggy-bank" style={{ color: 'pink'}}></i></span>}
             <span>{name}</span>
             <span>{cost ? cost.toFixed(2) : 20} $</span>
+            
             <span
                 style={
                     percent > 0 ? { color: 'var(--lighter-green)' } : { color: 'var(--lighter-red)' }
