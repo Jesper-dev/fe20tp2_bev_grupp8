@@ -21,37 +21,36 @@ const BoughtStocks = () => {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
             setOrgDataListState(orgDataArr)
-            console.log(orgDataArr)
 
-                    makeBoughtArray(orgDataArr)
+            // makeBoughtArray(orgDataArr)
         });
 
     }, [])
     //TODO Ska sätta alla köpta stocks i en array
-    const makeBoughtArray = (arr) => {
-        console.log(arr)
+    // const makeBoughtArray = (arr) => {
+    //     console.log(arr)
 
-        let i = 0;
-        for(let j = 0; j < arr.length; i++){
+    //     let i = 0;
+    //     for(let j = 0; j < arr.length; i++){
 
-            if(arr[i].possessionStocks) {
-                const boughtObj = {
-                    name: arr[j].possessionStocks.array[i].name,
-                    amount: arr[j].possessionStocks.array[i].amount
-                }
-                array.push(boughtObj)
-                i++
-            }
-            if(arr[i].possessionStocks && arr[j].possessionStocks.array === undefined){
-                i = 0;
-                j++
-            }
-        }
+    //         if(arr[i].possessionStocks) {
+    //             const boughtObj = {
+    //                 name: arr[j].possessionStocks.array[i].name,
+    //                 amount: arr[j].possessionStocks.array[i].amount
+    //             }
+    //             array.push(boughtObj)
+    //             i++
+    //         }
+    //         if(arr[i].possessionStocks && arr[j].possessionStocks.array === undefined){
+    //             i = 0;
+    //             j++
+    //         }
+    //     }
 
 
-        setOrgBoughtData(array)
-    }
-    console.log(orgBoughtData)
+    //     setOrgBoughtData(array)
+    // }
+    // console.log(orgBoughtData)
     return (
         <ContentWrapper>
             <h1>Bought Stocks Here</h1>

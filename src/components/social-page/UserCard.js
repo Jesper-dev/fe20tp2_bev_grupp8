@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  Link,
-  useParams
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import * as ROUTES from '../../constants/routes';
 
@@ -16,7 +13,7 @@ const UserCard = ({img, username, total}) => {
                 <span>{username}</span>
                 <span>{total ? total.toLocaleString() : 0}$</span>
             </div>
-            <Link to= {`${ROUTES.USER}/${username}`}>
+            <Link to={`/user/${username}`}>
                 Show user
             </Link>
             {/* <p onClick={() => console.log("I was just clicked, ouch")}><i className="fas fa-door-open"></i></p> */}

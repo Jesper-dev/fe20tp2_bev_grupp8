@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import axios from "axios"
 import { Line } from 'react-chartjs-2';
 
-import { ContentWrapper } from './CryptoChartElements'
+import { ContentWrapper, InLineDiv } from './CryptoChartElements'
 
-const CryptoChart = ({ id }) => {
+const CryptoChart = ({ id, img, name}) => {
     const [cryptoInfo, setCryptoInfo] = useState([])
     const [labelsSate, setLabelState] = useState([])
     const [priceSate, setPriceState] = useState([])
@@ -12,7 +12,6 @@ const CryptoChart = ({ id }) => {
     let labels = []
     let prices = []
     useEffect(() => {
-        console.log("Hello")
         const weekAgo = Date.now() - 604800000
         const today = Date.now().valueOf()
 
@@ -20,7 +19,6 @@ const CryptoChart = ({ id }) => {
         const unixTimeWeek = Math.floor(weekAgo / 1000)
 
         getCryptoInfo(unixTimeWeek, unixTime)
-
 
         return () => {
             setCryptoInfo([])
@@ -36,7 +34,6 @@ const CryptoChart = ({ id }) => {
         }
         setLabelState(labels)
         setPriceState(prices)
-        console.log('Jag körs createArr')
     }
 
     const getCryptoInfo = (unixTimeWeek, unixTime) => {
@@ -73,16 +70,19 @@ const CryptoChart = ({ id }) => {
     };
     return (
         <ContentWrapper>
-            <h1>Chart here</h1>
+            <InLineDiv>
+                <h1>{name}</h1>
+                <img src={img} />
+            </InLineDiv>
             <Line
                 data={chartData}
                 options={{
-
                     legend: {
                         display: false,
                     },
                 }}
             />
+            <div></div>
         </ContentWrapper>
     )
 }

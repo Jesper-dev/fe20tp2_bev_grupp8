@@ -38,7 +38,6 @@ const App = () => {
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.USER}>
-                        <h1>HEEEEELO</h1>
                         <UserInfoCard />
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>

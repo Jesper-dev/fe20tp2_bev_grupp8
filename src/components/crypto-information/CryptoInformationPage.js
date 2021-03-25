@@ -26,6 +26,7 @@ const CryptoInformationPage = () => {
 
 
     useEffect(() => {
+        console.log(chosenCrypto[0])
         if (followingArr.includes(chosenCrypto[0])) {
             setChecked(true);
         } else {
@@ -62,14 +63,18 @@ const CryptoInformationPage = () => {
 
     return (
         <ContentWrapper>
-            <CryptoChart id={chosenCrypto[0] ? chosenCrypto[0].id : 'bitcoin'} />
+            <CryptoChart
+                id={chosenCrypto[0] ? chosenCrypto[0].id : 'bitcoin'}
+                img={chosenCrypto[0] ? chosenCrypto[0].image : ''}
+                name={chosenCrypto[0] ? chosenCrypto[0].name : ''}
+            />
             {chosenCrypto.map((item, index) => {
                 return (
                     <div key={index}>
-                        <h1>{item.name}</h1>
+                        {/* <h1>{item.name}</h1>
                         <div className="imgWrapper">
                             <img src={item.image} alt="logo of the crypto" />
-                        </div>
+                        </div> */}
                         <div className="followWrapper">
                             <label> FOLLOW </label>
                             <input
@@ -79,7 +84,7 @@ const CryptoInformationPage = () => {
                                 onChange={onChange}
                             />
                         </div>
-                        <p>Current Price: {item.current_price}$</p>
+                        <p>Current Price: {item.current_price.toLocaleString()}$</p>
                         <p>
                             Total Volume: {item.total_volume.toLocaleString()}
                         </p>
