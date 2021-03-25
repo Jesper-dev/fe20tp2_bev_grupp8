@@ -36,11 +36,11 @@ const Possession = () => {
             // }
          console.log(possessionData.possessionStocks.array)
          setStocksPossesionState(possessionData.possessionStocks.array)
-         
+
         });
     }, [])
 
-
+    console.log(stocksPossesionState)
     //*Displaya den arrayen här istället
 
     return (

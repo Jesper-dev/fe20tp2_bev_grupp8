@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 // import MockGetMoversEU from '../../api/Mock/MockGetMoversEU.json';
 // import MockGetMoversUS from '../../api/Mock/MockGetMoversUS.json';
 // import MockWatchList from '../../api/Mock/MockWatchList.json';
@@ -17,6 +18,7 @@ import { ShowCryptoBtn } from '../shared/button/ButtonElements';
 
 const Discover = () => {
     const [show, setShow] = useState(false);
+    const [cryptoApi, setCryptoApi] = useState([])
     let array = MockGetTickers.finance.result[0].quotes;
     // const followingArray = useSelector((state) => state.Following)
     // const StocksArray = useSelector((state) => state.Stocks)
@@ -26,6 +28,19 @@ const Discover = () => {
     };
 
     let flag = checkForFlag();
+
+    useEffect(() => {
+        const getCryptoInfo = async () => {
+            await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+            .then(res => setCryptoApi(res.data))
+            .catch(err => console.log(err))
+        }
+        getCryptoInfo()
+
+        return () => {
+            setCryptoApi([])
+        }
+    }, [])
 
     return (
         <>
@@ -64,7 +79,7 @@ const Discover = () => {
                             ? 'Hide Cryptocurrencies'
                             : 'Show Cryptocurrencies'}
                     </ShowCryptoBtn>
-                    {MockCrypto.map((item, index) => {
+                    {cryptoApi.map((item, index) => {
                         return (
                             <div
                                 style={
@@ -78,7 +93,7 @@ const Discover = () => {
                                     name={item.name}
                                     price={item.current_price}
                                     img={item.image}
-                                    percent={item.ath_change_percentage}
+                                    percent={item.price_change_percentage_24h}
                                     cryptoList={MockCrypto}
                                 />
                             </div>

@@ -154,11 +154,12 @@ const StockInformationPage = () => {
             let currencyFixed = newCurrency.toFixed(2)
             let currencyNumber = parseInt(currencyFixed)
 
+            let amountOfStocks = parseInt(numOfStocks)
             const stockObj = {
                 name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
                 symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
-                price: chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice.toLocaleString() : '',
-                amount: numOfStocks,
+                price: chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice.toFixed(2) : '',
+                amount: amountOfStocks,
                 region: chosenShare[0].region ? chosenShare[0].region : '',
                 regMarketChangePercent:  chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent.toFixed(2) : ''
             }

@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import { NavBar, Banner, About } from './LandingpageElements';
 import { Button } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';
+import FirebaseContext from "../firebase/context"
 // import { Link } from 'react-router-dom';
 
 import MoneySvg from '../svgs/LandingSvg';
@@ -9,6 +10,8 @@ import InvestSvg from '../svgs/InvestSvg';
 import ProfitsSvg from '../svgs/ProfitsSvg';
 
 const Landingpage = () => {
+	const firebase = useContext(FirebaseContext);
+
 	useEffect(() => {
 		// temporary console.log example
 		const styles = [
@@ -29,10 +32,10 @@ const Landingpage = () => {
                 <h1>Let's Vest</h1>
                 <ul>
                     <li>
-                        <Button to={ROUTES.SIGN_IN} secondary="true">Sign In</Button>
+						{firebase.auth.currentUser ? <Button to={ROUTES.PROFILE} primary="true">Profile</Button> : <Button to={ROUTES.SIGN_IN} secondary="true">Sign In</Button>}
                     </li>
                     <li>
-                        <Button to={ROUTES.SIGN_UP} primary="true">Sign Up</Button>
+						{firebase.auth.currentUser ? "" : <Button to={ROUTES.SIGN_UP} primary="true">Sign Up</Button>}
                     </li>
                 </ul>
             </NavBar>
@@ -42,7 +45,7 @@ const Landingpage = () => {
                 <MoneySvg/>
 				<ul>
 					<li>
-						<Button to={ROUTES.SIGN_UP} primary="true">Get Started</Button>
+						{firebase.auth.currentUser ? "" : <Button to={ROUTES.SIGN_UP} primary="true">Get started</Button>}
 					</li>
 					<li>
 						<Button to={ROUTES.DISCOVER} secondary="true">Browse Stocks</Button>

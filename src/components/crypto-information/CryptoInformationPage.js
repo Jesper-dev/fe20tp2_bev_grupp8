@@ -3,6 +3,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
 
+import CryptoChart from './crypto-chart/CryptoChart'
+
+import axios from 'axios'
+
 import { setFollowingCrypto } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
@@ -18,6 +22,8 @@ const CryptoInformationPage = () => {
     const followingArr = useSelector((state) => state.FollowingCrypto);
 
     const firebase = useContext(FirebaseContext);
+
+
 
     useEffect(() => {
         if (followingArr.includes(chosenCrypto[0])) {
@@ -56,6 +62,7 @@ const CryptoInformationPage = () => {
 
     return (
         <ContentWrapper>
+            <CryptoChart id={chosenCrypto[0] ? chosenCrypto[0].id : 'bitcoin'} />
             {chosenCrypto.map((item, index) => {
                 return (
                     <div key={index}>
@@ -64,7 +71,7 @@ const CryptoInformationPage = () => {
                             <img src={item.image} alt="logo of the crypto" />
                         </div>
                         <div className="followWrapper">
-                            <label> FOLLOW {/* <span>FOLLOW</span> */}</label>
+                            <label> FOLLOW </label>
                             <input
                                 type="checkbox"
                                 onClick={onFollow}

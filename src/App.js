@@ -12,7 +12,7 @@ import ProfileWall from './components/profile/profile-wall/ProfileWall';
 import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
-
+import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
@@ -36,6 +36,10 @@ const App = () => {
                     <Route exact path={ROUTES.SOCIAL}>
                         <SocialPage />
                         <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.USER}>
+                        <h1>HEEEEELO</h1>
+                        <UserInfoCard />
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>
                         <Profile />

@@ -14,3 +14,4 @@ export const WALL = '/profile/wall';
 export const PROFILE_SETTINGS = '/profile-settings';
 export const PORTFOLIO = '/profile';
 export const INFO_CRYPTO = '/info-crypto';
+export const USER = '/user/:id';

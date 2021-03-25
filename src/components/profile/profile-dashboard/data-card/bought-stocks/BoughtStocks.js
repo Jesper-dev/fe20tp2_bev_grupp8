@@ -9,8 +9,10 @@ const BoughtStocks = () => {
     const firebase = useContext(FirebaseContext)
     const [orgDataListState, setOrgDataListState] = useState([])
     const [orgBoughtData, setOrgBoughtData] = useState([])
+    let array = []
     useEffect(() => {
         let orgDataArr = []
+
         let orgData = firebase.db.ref('organizations/' + user.organization + '/users');
         orgData.on('value', (snapshot) => {
             const boughtStocks = snapshot.val();
@@ -19,25 +21,34 @@ const BoughtStocks = () => {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
             setOrgDataListState(orgDataArr)
-            makeBoughtArray(orgDataListState)
+            console.log(orgDataArr)
+
+                    makeBoughtArray(orgDataArr)
         });
 
     }, [])
     //TODO Ska sätta alla köpta stocks i en array
     const makeBoughtArray = (arr) => {
-        let array = []
-        arr.forEach((item) => {
-            if(item.possessionStocks) {
-                if(item.possessionStocks.array.amount){
-                    const boughtObj = {
-                        name: item.possessionStocks.array.name,
-                        amount: item.possessionStocks.array.amount
-                    }
-                    array.push(boughtObj)
-                }
+        console.log(arr)
 
+        let i = 0;
+        for(let j = 0; j < arr.length; i++){
+
+            if(arr[i].possessionStocks) {
+                const boughtObj = {
+                    name: arr[j].possessionStocks.array[i].name,
+                    amount: arr[j].possessionStocks.array[i].amount
+                }
+                array.push(boughtObj)
+                i++
             }
-        })
+            if(arr[i].possessionStocks && arr[j].possessionStocks.array === undefined){
+                i = 0;
+                j++
+            }
+        }
+
+
         setOrgBoughtData(array)
     }
     console.log(orgBoughtData)
