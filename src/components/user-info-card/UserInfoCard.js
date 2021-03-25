@@ -6,10 +6,14 @@ const UserInfoCard = () => {
 	const { id } = useParams();
 
 	const firebase = useContext(FirebaseContext);
-	const usersRef = firebase.users();
-	usersRef.orderByChild("username").equalTo(id).on("child_added", (snapshot) => {
-	  console.log(snapshot.val());
-	});
+	const [user, setUser] = useState();
+
+	useEffect(() => {
+		const usersRef = firebase.users();
+		usersRef.orderByChild("username").equalTo(id).on("child_added", (snapshot) => {
+			console.log(snapshot.val());
+		  });
+		}, []);
 
 	return(
 		<h1>{id}</h1>
