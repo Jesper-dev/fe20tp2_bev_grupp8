@@ -19,5 +19,9 @@ export const PortOverviewWrapper = styled.div`
         .total {
             font-weight: 500;
         }
+
+        .fa-wallet{
+            color: var(--secondary);
+        }
     }
 `;

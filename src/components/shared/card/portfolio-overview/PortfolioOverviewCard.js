@@ -8,7 +8,7 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
             <PortOverviewWrapper>
                 <header>
                     <h1>
-                        My Wallet{' '}
+                         <i className="fas fa-wallet"></i> My Wallet{' '}
                         <span
                             className="percent"
                             style={

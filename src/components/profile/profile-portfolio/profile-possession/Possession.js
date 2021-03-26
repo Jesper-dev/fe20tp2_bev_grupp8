@@ -6,7 +6,6 @@ import { ContentWrapper } from '../ProfilePortfolioElements';
 import { FirebaseContext } from '../../../firebase/context';
 
 
-let newArray = [];
 const Possession = () => {
     // const Stocks = useSelector((state) => state.Stocks)
     let array = MockGetTickers.finance.result[0].quotes;
@@ -15,17 +14,8 @@ const Possession = () => {
 
     const [stocksPossesionState, setStocksPossesionState] = useState([])
 
-    //*Kanske skapa en ny array som inte pushar in om det är två eller fler likadana utan plussar ihop pengar och sånt
 
     useEffect(() => {
-        // for(let i = 0; i < Stocks.length; i++){
-        //     if(Stocks[i].name == Stocks[i + 1].name) {
-        //         console.log("lol")
-        //     } else {
-        //         newArray.push(Stocks[i])
-        //     }
-
-        // }
 
         let userPossesionFirebase = firebase.db.ref('users/' + user.uid);
         userPossesionFirebase.on('value', (snapshot) => {
@@ -54,7 +44,7 @@ const Possession = () => {
                     cost={
                         item.price * item.amount
                     }
-                    stocksList={array}/>
+                    stocksList={stocksPossesionState}/>
                 )})}
         </ContentWrapper>
     )

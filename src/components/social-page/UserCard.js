@@ -9,14 +9,14 @@ const UserCard = ({img, username, total}) => {
     return (
         <UserWrapper>
             <img src={img} alt='Profilepic'/>
+
             <div>
-                <span>{username}</span>
+                <span className="username">{username}</span>
                 <span>{total ? total.toLocaleString() : 0}$</span>
             </div>
             <Link to={`/user/${username}`}>
-                Show user
+                <i class="fas fa-user"></i>
             </Link>
-            {/* <p onClick={() => console.log("I was just clicked, ouch")}><i className="fas fa-door-open"></i></p> */}
         </UserWrapper>
     )
 }

@@ -50,7 +50,6 @@ const CryptoChart = ({ id, img, name}) => {
                 fill: true,
                 lineTension: 0,
                 backgroundColor: 'rgba(88, 215, 172, 0.5)',
-             /*    backgroundColor: 'red', */
                 borderColor: '#58D7AC',
                 borderCapStyle: 'butt',
                 borderDash: [],

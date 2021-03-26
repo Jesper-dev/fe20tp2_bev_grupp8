@@ -34,15 +34,21 @@ const StockInformationPage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        if(!followingArr) return
-        followingArr.forEach((item) => {
-            if(!item || !item.symbol) return
-            if (item.symbol === chosenShare[0].symbol) {
-                setChecked(true);
-            } else if (!item.symbol === chosenShare[0].symbol) {
-                setChecked(false);
-            }
-        });
+        let followingDB = firebase.db.ref('users/' + user.uid + '/followingStocks/array')
+        followingDB.on('value', (snapshot) => {
+            const data = snapshot.val()
+            console.log(data)
+
+            if(!data) return;
+            data.forEach((item) => {
+                // if(!item || !item.symbol) return
+                if (item.symbol === chosenShare[0].symbol) {
+                    setChecked(true);
+                } else if (!item.symbol === chosenShare[0].symbol) {
+                    setChecked(false);
+                }
+            });
+        })
 
         checkHolding();
     }, []);
@@ -257,7 +263,7 @@ const StockInformationPage = () => {
             {chosenShare.map((item, index) => {
                 return (
                     <div key={index}>
-                        <h1>{item.shortName}</h1>
+                        <h1>{item.shortName ? item.shortName : item.name}</h1>
                         <div className="followWrapper">
                             <label>watch</label>
                             <WatchStockButton

@@ -10,4 +10,5 @@ export const BackButtonElement = styled.button`
     background: none;
     color: var(--lighter-red);
     font-size: 1.6rem;
+    cursor: pointer;
 `

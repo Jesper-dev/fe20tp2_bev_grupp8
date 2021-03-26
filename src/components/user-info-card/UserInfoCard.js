@@ -14,13 +14,17 @@ const UserInfoCard = () => {
 		const usersRef = firebase.users();
 		usersRef.orderByChild("username").equalTo(id).on("child_added", (snapshot) => {
 			console.log(snapshot.val());
+			setUserData(snapshot.val());
 		  });
-		}, []);
+	}, []);
 
 	return(
 		<>
-		<Backbutton />
-		<h1>{id}</h1>
+			<Backbutton />
+			<h1>{id}</h1>
+			{userData == null ? <p>Loading...</p> : <>
+			<p>HIII</p>
+			</>}
 		</>
 	);
 };
