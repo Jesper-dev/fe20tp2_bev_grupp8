@@ -27,13 +27,13 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
             {!amount ? '' : <span>{amount} <i className="fas fa-piggy-bank" style={{ color: 'pink'}}></i></span>}
             <span>{name}</span>
             <span>{cost ? cost.toFixed(2) : 20} $</span>
-            
+
             <span
                 style={
                     percent > 0 ? { color: 'var(--lighter-green)' } : { color: 'var(--lighter-red)' }
                 }
             >
-                {percent ? percent.toFixed(2) : 20}%
+                {percent ? percent.toFixed(2) : 0}%
             </span>
             <Link to="/info">
                 <span onClick={() => setChosenStockOption(name)}>

@@ -20,6 +20,7 @@ const StockInformationPage = () => {
     const [holding, setHolding] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
     const [clickedStock, setClickedStock] = useState({});
+    const [stockIncludes, setStockIncludes] = useState(false)
     //*Redux stuff :)
     const dispatch = useDispatch();
     const chosenShare = useSelector((state) => state.ChosenShare);
@@ -134,6 +135,8 @@ const StockInformationPage = () => {
     //*When we buy a stock
     //TODO Check if the stock has been bought before and therefore already exist in the array / DB,
     //TODO If true, only add amount on the same stock.
+    let stockIncludesVar = false
+
     const onBuy = (numOfStocks) => {
         if (buy === false) {
             setBuy(true);
@@ -149,36 +152,69 @@ const StockInformationPage = () => {
             let newCurrency =
                 Currency - chosenShare[0].regularMarketPrice * numOfStocks;
             if (newCurrency <= 0) {
-                console.log('Insufficient funds');
+                alert('Insufficient funds')
                 return;
             }
+            checkIfStockIncludes(array, chosenShare[0].symbol, numOfStocks)
+
             dispatch(setCurrency(newCurrency));
             let currencyFixed = newCurrency.toFixed(2)
             let currencyNumber = parseInt(currencyFixed)
 
-            let amountOfStocks = parseInt(numOfStocks)
-            let percent = parseInt(chosenShare[0].regularMarketChangePercent)
-            let price = parseInt(chosenShare[0].regularMarketPrice)
-            const stockObj = {
-                name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
-                symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
-                price: price,
-                amount: amountOfStocks,
-                region: chosenShare[0].region,
-                regMarketChangePercent: percent
+            updateUserCurrency(user.uid, currencyNumber);
+            console.log(stockIncludes)
+            if(stockIncludesVar == false ){
+                console.log('Hit kommer vi, false')
+                let amountOfStocks = parseInt(numOfStocks)
+                let percent = parseInt(chosenShare[0].regularMarketChangePercent)
+                let price = parseInt(chosenShare[0].regularMarketPrice)
+                const stockObj = {
+                    name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
+                    symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
+                    price: price,
+                    amount: amountOfStocks,
+                    region: chosenShare[0].region,
+                    regMarketChangePercent: percent
+                }
+                array.push(stockObj)
+                updateUserPossesion(user.uid, array)
+                if(user.organization){
+                    updateUserPossesionOrg(user.uid, array)
+                    updateUserCurrencyOrg(user.uid, currencyNumber);
+                }
+            } else if(stockIncludesVar == true) {
+                console.log("Hit kommer vi, true")
+                updateUserPossesion(user.uid, array)
+                if(user.organization){
+                    updateUserPossesionOrg(user.uid, array)
+                    updateUserCurrencyOrg(user.uid, currencyNumber);
+                }
             }
 
-            array.push(stockObj)
-            updateUserPossesion(user.uid, array)
-            updateUserCurrency(user.uid, currencyNumber);
-            if(user.organization){
-                updateUserPossesionOrg(user.uid, array)
-                updateUserCurrencyOrg(user.uid, currencyNumber);
-            }
             setNumOfStocks(0);
             setBuy(false);
+            setStockIncludes(false)
         }
     };
+
+    const checkIfStockIncludes = (arr, symbol, num) => {
+        stockIncludesVar = false;
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i].symbol == symbol) {
+                stockIncludesVar = true
+                let index = arr.findIndex(x => x.symbol == symbol)
+                console.log(index)
+                let number = parseInt(num)
+                let newNumber = arr[index].amount += number
+                arr[index].amount = newNumber
+                i = arr.length;
+                return;
+            } else {
+                stockIncludesVar = false
+            }
+            console.log(stockIncludes)
+        }
+    }
 
     //*When we sell a stock
     const onSell = (numOfStocks) => {

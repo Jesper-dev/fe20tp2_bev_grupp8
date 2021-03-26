@@ -34,17 +34,12 @@ const Possession = () => {
             // for (const key in possessionData) {
             //     orgDataArr.push({ ...possessionData[key] });
             // }
-         console.log(possessionData.possessionStocks.array)
          setStocksPossesionState(possessionData.possessionStocks.array)
 
         });
     }, [])
 
-    console.log(stocksPossesionState)
-    //*Displaya den arrayen här istället
-
     return (
-        //*Either we have what one cost, or the total value of the stock you bought
         <ContentWrapper>
             <h3>Possession</h3>
             {stocksPossesionState.map((item, index) => {
