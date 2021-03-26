@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { chosenCrypto } from '../../../../redux/actions';
 
@@ -9,8 +9,10 @@ let chosenCryptoArray = [];
 
 const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     const dispatch = useDispatch();
+    let history = useHistory();
 
     const setChosenCryptoOption = (name) => {
+        history.push("/info-crypto");
         let filterName = name.trim();
         chosenCryptoArray = cryptoList.filter(function (item) {
             return item.name === filterName;
@@ -19,11 +21,13 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
         dispatch(chosenCrypto(chosenCryptoArray));
     };
 
+    let newName = name.substring(0, 3)
+
     return (
         <>
-            <CardWrapper>
+            <CardWrapper onClick={() => setChosenCryptoOption(name)}>
                 <img src={img} alt="Icon of crypto" />
-                <span>{name}</span>
+                <span>{newName + '...'}</span>
                 <span>{price.toLocaleString()}$</span>
                 <span
                     style={
@@ -35,7 +39,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
                     {percent.toFixed(2)}%
                 </span>
                 <Link to="/info-crypto">
-                    <span onClick={() => setChosenCryptoOption(name)}>
+                    <span>
                         <i className="fas fa-caret-right"></i>
                     </span>
                 </Link>

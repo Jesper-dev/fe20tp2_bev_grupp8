@@ -59,16 +59,20 @@ const ProfileDashboard = () => {
         <Wrapper>
             {admin ? <AddEmployee /> : ''}
             {admin || employee ? (
+                <>
                 <h2>
                     {!OrganizationData[0] ? '' : OrganizationData[0].organization}
                 </h2>
+                 <TotalCompValue />
+                 <MostFollowedStocks orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization}/>
+                 <BoughtStocks />
+                 </>
             ) : (
-                <p>Not part of a organization</p>
+                <>
+                <h2>Not part of a organization</h2>
+                <span className="join-today">Join today...</span>
+                </>
             )}
-
-            <TotalCompValue />
-            <MostFollowedStocks orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization}/>
-            <BoughtStocks />
         </Wrapper>
     );
 };

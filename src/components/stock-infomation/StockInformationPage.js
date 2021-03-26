@@ -169,7 +169,6 @@ const StockInformationPage = () => {
             let currencyNumber = parseInt(currencyFixed)
 
             updateUserCurrency(user.uid, currencyNumber);
-            console.log(stockIncludes)
             if(stockIncludesVar == false ){
                 console.log('Hit kommer vi, false')
                 let amountOfStocks = parseInt(numOfStocks)
@@ -197,7 +196,7 @@ const StockInformationPage = () => {
                     updateUserCurrencyOrg(user.uid, currencyNumber);
                 }
             }
-
+            checkHolding()
             setNumOfStocks(0);
             setBuy(false);
             setStockIncludes(false)
@@ -223,28 +222,68 @@ const StockInformationPage = () => {
         }
     }
 
+    const sellStockFB = (arr, symbol, num) => {
+        console.log("Jag körs")
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i].symbol == symbol) {
+                let index = arr.findIndex(x => x.symbol == symbol)
+                let number = parseInt(num)
+                let newNumber = arr[index].amount -= number
+                if(newNumber <= 0){
+                    arr.splice(index, 1)
+                } else {
+                    arr[index].amount = newNumber
+                }
+
+                // i = arr.length;
+                return;
+            }
+        }
+    }
+
+
+    const SnapshotFirebase = (direction) => {
+            let dataDB;
+            let possessionDb = firebase.db.ref('users/' + user.uid + direction);
+            possessionDb.on('value', (snapshot) => {
+                dataDB = snapshot.val()
+            })
+        return dataDB;
+    }
+
     //*When we sell a stock
     const onSell = (numOfStocks) => {
         if (sell === false) {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
+            let snapshot = SnapshotFirebase('/possessionStocks/array')
+            let currency = SnapshotFirebase('/currency/currency')
+
             if (numOfStocks > holding || numOfStocks <= -1) {
                 console.log('You cant sell more than you have');
                 return;
             }
-            if (Stocks.includes(chosenShare[0])) {
-                for (let i = 0; i < numOfStocks; i++) {
-                    let newCurrency =
-                        Currency +
-                        chosenShare[0].regularMarketPrice * numOfStocks;
-                    dispatch(setCurrency(newCurrency));
-                    let symbol = chosenShare[0].symbol;
-                    let index = Stocks.findIndex((x) => x.symbol === symbol);
-                    Stocks.splice(index, 1);
-                    dispatch(setStocks(Stocks));
+                let newCurrency;
+
+                    // dispatch(setCurrency(newCurrency));
+
+                    // let symbol = chosenShare[0].symbol;
+                    // let index = Stocks.findIndex((x) => x.symbol === symbol);
+                    // Stocks.splice(index, 1);
+                    // dispatch(setStocks(Stocks));
+
+                newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
+
+                sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
+                updateUserCurrency(user.uid, newCurrency);
+                updateUserPossesion(user.uid, snapshot)
+                if(user.organization){
+                    updateUserPossesionOrg(user.uid, snapshot)
+                    updateUserCurrencyOrg(user.uid, newCurrency);
                 }
-            }
+
+            checkHolding()
             setSell(false);
         }
     };
@@ -335,7 +374,7 @@ const StockInformationPage = () => {
                                     : 2}
                                 %
                             </p>
-                            <p>Your holding in this share is: {clickedStock.amount ? clickedStock.amount : 0}</p>
+                            <p className="holds-in-share">Your holding in this share is: {clickedStock.amount ? clickedStock.amount : 0}</p>
                         </div>
                     </div>
                 );

@@ -15,7 +15,7 @@ const UserCard = ({img, username, total}) => {
                 <span>{total ? total.toLocaleString() : 0}$</span>
             </div>
             <Link to={`/user/${username}`}>
-                <i class="fas fa-user"></i>
+                <i className="fas fa-user"></i>
             </Link>
         </UserWrapper>
     )

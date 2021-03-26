@@ -14,6 +14,10 @@ export const ContentWrapper = styled.div`
     }
 
     .informationContainer {
+transition: all 1s ease-in-out;
+        .holds-in-share{
+
+        }
         margin-bottom: 56px;
         p {
             box-shadow: var(--box-shadow-cards);
@@ -23,6 +27,8 @@ export const ContentWrapper = styled.div`
             font-size: 1.1rem;
             display: flex;
             align-items: center;
+
+       /*      transition: all 1s ease-in-out; */
         }
     }
 
