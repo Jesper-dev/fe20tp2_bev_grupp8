@@ -10,8 +10,6 @@ let chosenShareArray = [];
 const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
     const dispatch = useDispatch();
     let history = useHistory();
-
-    console.log(stocksList)
     const setChosenStockOption = (name) => {
         history.push("/info");
         let filterName = name.trim();

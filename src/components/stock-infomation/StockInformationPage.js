@@ -89,6 +89,20 @@ const StockInformationPage = () => {
         });
     };
 
+    //*Maybe works? Maybe not...
+    const updateUserDB = (userId, value, directory, org) => {
+        if(org){
+            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + directory).set({
+                value,
+            });
+        } else {
+            firebase.db.ref('users/' + userId + directory).set({
+                value,
+            });
+        }
+
+    }
+
     //*Checks the holding of your stock
     const checkHolding = () => {
         let dataDB;

@@ -14,7 +14,7 @@ export const ContentWrapper = styled.div`
     }
 
     .informationContainer {
-transition: all 1s ease-in-out;
+
         .holds-in-share{
 
         }
@@ -27,8 +27,6 @@ transition: all 1s ease-in-out;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
-
-       /*      transition: all 1s ease-in-out; */
         }
     }
 
