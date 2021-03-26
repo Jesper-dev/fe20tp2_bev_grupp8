@@ -26,7 +26,6 @@ const CryptoInformationPage = () => {
 
 
     useEffect(() => {
-        console.log(chosenCrypto[0])
         if (followingArr.includes(chosenCrypto[0])) {
             setChecked(true);
         } else {

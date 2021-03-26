@@ -47,16 +47,17 @@ const CryptoChart = ({ id, img, name}) => {
         labels: labelsSate, //data for X-axis
         datasets: [
             {
-                fill: false,
+                fill: true,
                 lineTension: 0,
-                backgroundColor: 'black',
-                borderColor: '#3E80DE',
+                backgroundColor: 'rgba(88, 215, 172, 0.5)',
+             /*    backgroundColor: 'red', */
+                borderColor: '#58D7AC',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'black',
-                pointBackgroundColor: '#5068F5',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: '#58D7AC',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
                 pointHoverBackgroundColor: 'rgba(220,220,220,1)',

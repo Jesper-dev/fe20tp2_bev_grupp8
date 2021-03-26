@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import 'firebase/database';
 // import { AuthUserContext } from '../session/index';
 // import firebase from '../firebase/firebase'
-import { FirebaseContext } from '../firebase/context';
+import { FirebaseContext } from '../firebase/context'
+import BackButton from '../shared/button/back-button/BackButton'
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -252,6 +253,7 @@ const StockInformationPage = () => {
 
     return (
         <ContentWrapper>
+            <BackButton />
             {chosenShare.map((item, index) => {
                 return (
                     <div key={index}>

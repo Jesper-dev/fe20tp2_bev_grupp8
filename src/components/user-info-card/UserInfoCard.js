@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { FirebaseContext } from '../firebase/context';
 
+import Backbutton from '../shared/button/back-button/BackButton'
+
 const UserInfoCard = () => {
 	const { id } = useParams();
 
@@ -16,7 +18,10 @@ const UserInfoCard = () => {
 		}, []);
 
 	return(
+		<>
+		<Backbutton />
 		<h1>{id}</h1>
+		</>
 	);
 };
 
