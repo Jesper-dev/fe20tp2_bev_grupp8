@@ -44,6 +44,7 @@ const Possession = () => {
     //*Displaya den arrayen här istället
 
     return (
+        //*Either we have what one cost, or the total value of the stock you bought
         <ContentWrapper>
             <h3>Possession</h3>
             {stocksPossesionState.map((item, index) => {
@@ -53,14 +54,10 @@ const Possession = () => {
                     amount={item.amount}
                     name={item.symbol ? item.symbol : item.shortName}
                     percent={
-                        item.regularMarketChangePercent
-                            ? item.regularMarketChangePercent
-                            : 0
+                        item.regMarketChangePercent
                     }
                     cost={
-                        item.regularMarketPrice
-                            ? item.regularMarketPrice
-                            : 0
+                        item.price * item.amount
                     }
                     stocksList={array}/>
                 )})}

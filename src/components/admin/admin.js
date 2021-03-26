@@ -62,10 +62,19 @@ export const UserList = ({ users }) => (
                 <span>
                     <strong>Username:</strong> {user.username}
                 </span>
+{/*                 <Link to={`${ROUTES.ADMIN}/${user.uid}`}>
+                    Details
+                </Link> */}
             </li>
         ))}
     </ul>
 );
+
+/* const UserItem = ({ match }) => (
+    <div>
+        <h2>User ({match.params.id})</h2>
+    </div>
+    ); */
 
 const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
 

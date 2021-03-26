@@ -6,7 +6,7 @@ const UserInfoCard = () => {
 	const { id } = useParams();
 
 	const firebase = useContext(FirebaseContext);
-	const [user, setUser] = useState();
+	const [userData, setUserData] = useState();
 
 	useEffect(() => {
 		const usersRef = firebase.users();

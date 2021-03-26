@@ -132,6 +132,8 @@ const StockInformationPage = () => {
     const onChange = () => setChecked(!checked);
 
     //*When we buy a stock
+    //TODO Check if the stock has been bought before and therefore already exist in the array / DB,
+    //TODO If true, only add amount on the same stock.
     const onBuy = (numOfStocks) => {
         if (buy === false) {
             setBuy(true);
@@ -155,13 +157,15 @@ const StockInformationPage = () => {
             let currencyNumber = parseInt(currencyFixed)
 
             let amountOfStocks = parseInt(numOfStocks)
+            let percent = parseInt(chosenShare[0].regularMarketChangePercent)
+            let price = parseInt(chosenShare[0].regularMarketPrice)
             const stockObj = {
                 name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
                 symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
-                price: chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice.toFixed(2) : '',
+                price: price,
                 amount: amountOfStocks,
-                region: chosenShare[0].region ? chosenShare[0].region : '',
-                regMarketChangePercent:  chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent.toFixed(2) : ''
+                region: chosenShare[0].region,
+                regMarketChangePercent: percent
             }
 
             array.push(stockObj)

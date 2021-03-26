@@ -21,7 +21,7 @@ const BoughtStocks = () => {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
             setOrgDataListState(orgDataArr)
-
+            console.log(orgDataListState)
             // makeBoughtArray(orgDataArr)
         });
 
