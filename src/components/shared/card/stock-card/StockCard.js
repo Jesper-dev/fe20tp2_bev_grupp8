@@ -13,9 +13,11 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
     const setChosenStockOption = (name) => {
         history.push("/info");
         let filterName = name.trim();
-        chosenShareArray = stocksList.filter(function (item) {
-            return item.symbol === filterName;
-        });
+            chosenShareArray = stocksList.filter(function (item) {
+                return item.symbol === filterName;
+            });
+
+        console.log(chosenShareArray)
         dispatch(chosenShare(chosenShareArray));
     };
 

@@ -29,6 +29,7 @@ const Possession = () => {
         });
     }, [])
 
+
     return (
         <ContentWrapper>
             <h3>Possession</h3>
@@ -44,7 +45,8 @@ const Possession = () => {
                     cost={
                         item.price * item.amount
                     }
-                    stocksList={stocksPossesionState}/>
+                    stocksList={stocksPossesionState}
+                    />
                 )})}
         </ContentWrapper>
     )

@@ -68,7 +68,7 @@ const TotalCompValue = () => {
                                 -1 > 0
                                     ? { color: '#58D7AC' }
                                     : { color: '#DD577D' }
-                            }>{item.currency.currency}$</span>
+                            }>{item.currency.currency.toFixed(2)}$</span>
                         </EmployeesValue>
                         )
                     })}

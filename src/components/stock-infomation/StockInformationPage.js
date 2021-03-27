@@ -168,10 +168,18 @@ const StockInformationPage = () => {
             possessionDb.on('value', (snapshot) => {
                 array = snapshot.val()
             })
+            let currency = SnapshotFirebase('/currency/currency')
 
             if(array == null) return
-            let newCurrency =
-                Currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            let newCurrency;
+            if(chosenShare[0].regularMarketPrice) {
+                newCurrency =
+                currency - chosenShare[0].regularMarketPrice * numOfStocks;
+            } else if(chosenShare[0].price) {
+                newCurrency =
+                currency - chosenShare[0].price * numOfStocks;
+            }
+
             if (newCurrency <= 0) {
                 alert('Insufficient funds')
                 return;
@@ -186,10 +194,10 @@ const StockInformationPage = () => {
             if(stockIncludesVar == false ){
                 console.log('Hit kommer vi, false')
                 let amountOfStocks = parseInt(numOfStocks)
-                let percent = parseInt(chosenShare[0].regularMarketChangePercent)
-                let price = parseInt(chosenShare[0].regularMarketPrice)
+                let percent = parseInt(chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent : chosenShare[0].regMarketChangePercent)
+                let price = parseInt(chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice : chosenShare[0].price)
                 const stockObj = {
-                    name: chosenShare[0].shortName ? chosenShare[0].shortName : '',
+                    name: chosenShare[0].shortName ? chosenShare[0].shortName : chosenShare[0].name,
                     symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
                     price: price,
                     amount: amountOfStocks,
@@ -278,16 +286,13 @@ const StockInformationPage = () => {
                 console.log('You cant sell more than you have');
                 return;
             }
+
                 let newCurrency;
-
-                    // dispatch(setCurrency(newCurrency));
-
-                    // let symbol = chosenShare[0].symbol;
-                    // let index = Stocks.findIndex((x) => x.symbol === symbol);
-                    // Stocks.splice(index, 1);
-                    // dispatch(setStocks(Stocks));
-
-                newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
+                if(chosenShare[0].regularMarketPrice) {
+                    newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
+                } else if(chosenShare[0].price) {
+                    newCurrency = currency + chosenShare[0].price * numOfStocks;
+                }
 
                 sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
                 updateUserCurrency(user.uid, newCurrency);
@@ -318,7 +323,7 @@ const StockInformationPage = () => {
                     <div key={index}>
                         <h1>{item.shortName ? item.shortName : item.name}</h1>
                         <div className="followWrapper">
-                            <label>watch</label>
+                            {!checked ? <label>watch</label> : '' }
                             <WatchStockButton
                                 eyecolor={
                                     checked

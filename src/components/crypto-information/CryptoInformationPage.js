@@ -75,7 +75,7 @@ const CryptoInformationPage = () => {
                             <img src={item.image} alt="logo of the crypto" />
                         </div> */}
                         <div className="followWrapper">
-                            <label> FOLLOW </label>
+                            <label> watch </label>
                             <input
                                 type="checkbox"
                                 onClick={onFollow}

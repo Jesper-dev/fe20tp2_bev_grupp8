@@ -59,8 +59,8 @@ export const ContentWrapper = styled.div`
     }
 
     img {
-        width: 150px;
-        height: 150px;
+        width: 60px;
+        height: 60px;
         align-self: center;
     }
 

@@ -62,12 +62,12 @@ export const ContentWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
+        font-size: 1rem;
         color: var(--body-fourth);
 
         .fa-eye {
             padding-left: 4px;
-            font-size: 1.5rem;
+            font-size: 1.1rem;
 
         }
     }
@@ -120,7 +120,7 @@ export const WatchStockButton = styled.button`
     transition: all 0.5s ease-in-out;
     color: ${(props) => props.eyecolor};
     /* color: red; */
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     padding: 0 !important;
     border: none !important;
 `;
