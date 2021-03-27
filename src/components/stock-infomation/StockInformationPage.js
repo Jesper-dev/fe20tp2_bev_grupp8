@@ -63,7 +63,6 @@ const StockInformationPage = () => {
                 currency,
             });
         }
-
     };
 
     const updateUserDB = (userId, array, directory, org) => {

@@ -23,14 +23,22 @@ const CryptoInformationPage = () => {
 
     const firebase = useContext(FirebaseContext);
 
-
-
     useEffect(() => {
-        if (followingArr.includes(chosenCrypto[0])) {
-            setChecked(true);
-        } else {
-            setChecked(false);
-        }
+        let followingDB = firebase.db.ref('users/' + user.uid + '/followingCrypto/array')
+        followingDB.on('value', (snapshot) => {
+            const data = snapshot.val()
+            console.log(data)
+
+            if(!data) return;
+            data.forEach((item) => {
+                // if(!item || !item.symbol) return
+                if (item.symbol === chosenCrypto[0].symbol) {
+                    setChecked(true);
+                } else if (!item.symbol === chosenCrypto[0].symbol) {
+                    setChecked(false);
+                }
+            });
+        })
     }, []);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -41,20 +49,51 @@ const CryptoInformationPage = () => {
         });
     };
 
-    const onFollow = () => {
-        if (followingArr.includes(chosenCrypto[0])) {
-            let name = chosenCrypto[0].symbol;
-            setChecked(false);
-            let index = followingArr.findIndex((x) => x.symbol === name);
-            followingArr.splice(index, 1);
-            dispatch(setFollowingCrypto(followingArr));
-            // updateUser(user.uid);
+    const updateUserDB = (userId, array, directory, org) => {
+        if(org == true){
+            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + directory).set({
+                array,
+            });
         } else {
-            following.push(chosenCrypto[0]);
-            dispatch(setFollowingCrypto(following));
-            setChecked(true);
-            // updateUser(user.uid);
+            firebase.db.ref('users/' + userId + directory).set({
+                array,
+            });
         }
+
+    }
+
+    const onFollow = () => {
+        let cryptos = firebase.db.ref('users/' + user.uid + '/followingCrypto/array');
+        let followingDb;
+        cryptos.on('value', (snapshot) => {
+            followingDb = snapshot.val();
+        });
+        if (followingDb === null) {
+            return;
+        }
+        let name = chosenCrypto[0].symbol;
+        let index = followingDb.findIndex((x) => x.symbol === name);
+        if (index > -1) {
+            followingDb.splice(index, 1);
+            setChecked(false);
+        } else {
+            const followingObj = {
+                symbol: chosenCrypto[0].symbol,
+                regularMarketPrice: chosenCrypto[0].current_price,
+                regularMarketChangePercent: chosenCrypto[0].price_change_percentage_24h,
+                shortName: chosenCrypto[0].name,
+                image: chosenCrypto[0].image
+            };
+            followingDb.push(followingObj);
+            setChecked(true);
+        }
+        updateUserDB(user.uid, followingDb, '/followingCrypto', false)
+        if(user.organization) {
+            updateUserDB(user.uid, followingDb, '/followingCrypto', true)
+        }
+        dispatch(setFollowingCrypto(followingDb));
+        setChecked(true);
+
     };
     const onChange = (e) => {
         setChecked(!checked);

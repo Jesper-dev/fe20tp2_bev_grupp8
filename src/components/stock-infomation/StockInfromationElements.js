@@ -10,8 +10,12 @@ export const ContentWrapper = styled.div`
 
     h1 {
         text-align: center;
-        margin: 8px;
+        margin: 32px 8px 8px 8px;
         font-size: 1.4rem;
+    }
+
+    .chartjs-render-monitor{
+        width: 35vw;
     }
 
     .informationContainer {

@@ -26,7 +26,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     return (
         <>
             <CardWrapper onClick={() => setChosenCryptoOption(name)}>
-                <img src={img} alt="Icon of crypto" />
+                <img src={img ? img : ''} alt="Icon of crypto" />
                 <span>{newName + '...'}</span>
                 <span>{price.toLocaleString()}$</span>
                 <span

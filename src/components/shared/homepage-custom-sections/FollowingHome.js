@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 
 const FollowingHome = ({ array, cryptoList }) => {
     const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
+    console.log(cryptoList)
+
+    console.log(array)
     return (
         <>
             <ContentWrapper
@@ -44,9 +47,9 @@ const FollowingHome = ({ array, cryptoList }) => {
                             cryptoList={MockCrypto}
                             key={index}
                             img={item.image}
-                            name={item.name}
-                            price={item.current_price}
-                            percent={item.price_change_percentage_24h}
+                            name={item.shortName}
+                            price={item.regularMarketPrice}
+                            percent={item.regularMarketChangePercent}
                         />
                     );
                 })}

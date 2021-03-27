@@ -54,8 +54,8 @@ const InfopageLinechart = () => {
                 pointBackgroundColor: '#58D7AC',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(220,220,220,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBackgroundColor: 'white',
+                pointHoverBorderColor: '#58D7AC',
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
@@ -67,6 +67,7 @@ const InfopageLinechart = () => {
     return (
         <>
             <Line
+            style={{ width: '500px'}}
                 data={chartData}
                 options={{
                     /* maintainAspectRatio: false, */

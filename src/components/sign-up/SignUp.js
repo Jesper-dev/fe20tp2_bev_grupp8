@@ -32,9 +32,9 @@ const INITIAL_STATE = {
     followingCrypto: {
         array: [
             {
-                price_change_percentage_24h: 150,
-                current_price: 250,
-                name: 'lets-vest-CrY',
+                regularMarketChangePercent: 150,
+                regularMarketPrice: 250,
+                shortName: 'lets-vest-CrY',
                 image: 'LV-CrY',
             },
         ],

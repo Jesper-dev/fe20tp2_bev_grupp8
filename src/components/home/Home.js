@@ -26,15 +26,17 @@ const Home = () => {
     // const Currency = useSelector((state) => state.Currency);
     const firebase = useContext(FirebaseContext);
     const [followingArr, setFollowingArr] = useState([]);
+    const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
     const dispatch = useDispatch();
 
     // let array = MockGetTickers.finance.result[0].quotes;
     const user = JSON.parse(localStorage.getItem('authUser'));
-    // let followingDb = []
-    // let stocks = []
+
     useEffect(() => {
         let followingDb = [];
+        let followingDbCrypto = [];
         let data;
+        let dataCrypto;
         let currencyData;
         //* Gets a list of users in our database
         let stocks = firebase.db.ref(
@@ -58,6 +60,27 @@ const Home = () => {
             dispatch(setFollowing(followingDb));
         });
 
+        let cryptos = firebase.db.ref( 'users/' + user.uid + '/followingCrypto/array');
+
+        if (cryptos === null) {
+            return;
+        }
+
+        cryptos.on('value', (snapshot) => {
+            dataCrypto = snapshot.val();
+            console.log(dataCrypto)
+            if (dataCrypto == null) {
+                return;
+            }
+
+            for (let i = 0; i < dataCrypto; i++) {
+                followingDbCrypto.push(dataCrypto[i]);
+            }
+            dataCrypto.forEach((item) => followingDbCrypto.push(item));
+            setFollowingArrCrypto(followingDbCrypto);
+            // dispatch(setFollowing(followingDbCrypto));
+        });
+
         let totalCurrency = firebase.db.ref('users/' + user.uid + '/currency');
         totalCurrency.on('value', (snapshot) => {
             currencyData = snapshot.val();
@@ -68,6 +91,8 @@ const Home = () => {
             dispatch(setCurrency(currencyData.currency));
         });
     }, []);
+
+    console.log(followingArrCrypto)
 
     return (
         <>
@@ -80,8 +105,8 @@ const Home = () => {
 
                 <News array={MockNewsList.items.result.slice(0, 1)} />
 
-                <Following array={followingArr} cryptoList={followingCrypto} />
-                <RecommendationHome MockData={MockData} />
+                <Following array={followingArr} cryptoList={followingArrCrypto} />
+                <RecommendationHome MockData={MockData}  />
             </ContentWrapper>
             {/* <Recommendations /> */}
         </>
