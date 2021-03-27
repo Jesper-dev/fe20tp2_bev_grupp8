@@ -11,6 +11,7 @@ export const ContentWrapper = styled.div`
     h1 {
         text-align: center;
         margin: 8px;
+        font-size: 1.4rem;
     }
 
     .informationContainer {
@@ -30,8 +31,8 @@ export const ContentWrapper = styled.div`
         }
     }
 
-    button {
-        padding: 0.75rem 1rem;
+    .buy-sell-btn {
+        padding: 0.75rem 0.75rem;
         background: none;
         border: 2px solid black;
         outline: none;
@@ -58,16 +59,15 @@ export const ContentWrapper = styled.div`
         width: 20%;
     }
 
-    .followWrapper {
+    .chart-topbar-wrapper {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         font-size: 1rem;
         color: var(--body-fourth);
 
         .fa-eye {
             padding-left: 4px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
 
         }
     }
@@ -119,8 +119,9 @@ export const ContentWrapper = styled.div`
 export const WatchStockButton = styled.button`
     transition: all 0.5s ease-in-out;
     color: ${(props) => props.eyecolor};
-    /* color: red; */
-    font-size: 0.8rem;
-    padding: 0 !important;
-    border: none !important;
+    background: none;
+    border: none;
+    outline: none;
+    margin-right: 18px;
+
 `;

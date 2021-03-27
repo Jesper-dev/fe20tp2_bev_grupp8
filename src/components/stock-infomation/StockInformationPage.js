@@ -53,51 +53,27 @@ const StockInformationPage = () => {
         checkHolding();
     }, []);
 
-    const updateUser = (userId, array) => {
-        firebase.db.ref('users/' + userId + '/followingStocks').set({
-            array,
-        });
+    const updateUserCurrency = (userId, currency, org) => {
+        if(org == true) {
+            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/currency').set({
+                currency,
+            });
+        } else {
+            firebase.db.ref('users/' + userId + '/currency').set({
+                currency,
+            });
+        }
+
     };
 
-    const updateUserOrg = (userId, array) => {
-        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/followingStocks').set({
-            array,
-        });
-    };
-
-    const updateUserCurrency = (userId, currency) => {
-        firebase.db.ref('users/' + userId + '/currency').set({
-            currency,
-        });
-    };
-
-    const updateUserPossesion = (userId, array) => {
-        firebase.db.ref('users/' + userId + '/possessionStocks').set({
-            array,
-        });
-    };
-
-    const updateUserPossesionOrg = (userId, array) => {
-        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/possessionStocks').set({
-            array,
-        });
-    };
-
-    const updateUserCurrencyOrg = (userId, currency) => {
-        firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/currency').set({
-            currency,
-        });
-    };
-
-    //*Maybe works? Maybe not...
-    const updateUserDB = (userId, value, directory, org) => {
-        if(org){
+    const updateUserDB = (userId, array, directory, org) => {
+        if(org == true){
             firebase.db.ref('organizations/' + user.organization + '/users/' + userId + directory).set({
-                value,
+                array,
             });
         } else {
             firebase.db.ref('users/' + userId + directory).set({
-                value,
+                array,
             });
         }
 
@@ -144,9 +120,9 @@ const StockInformationPage = () => {
             setChecked(true);
         }
 
-        updateUser(user.uid, followingDb);
+        updateUserDB(user.uid, followingDb, '/followingStocks', false)
         if(user.organization){
-            updateUserOrg(user.uid, followingDb);
+            updateUserDB(user.uid, followingDb, '/followingStocks', true)
         }
         dispatch(setFollowing(followingDb));
     };
@@ -190,9 +166,8 @@ const StockInformationPage = () => {
             let currencyFixed = newCurrency.toFixed(2)
             let currencyNumber = parseInt(currencyFixed)
 
-            updateUserCurrency(user.uid, currencyNumber);
+            updateUserCurrency(user.uid, currencyNumber, false);
             if(stockIncludesVar == false ){
-                console.log('Hit kommer vi, false')
                 let amountOfStocks = parseInt(numOfStocks)
                 let percent = parseInt(chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent : chosenShare[0].regMarketChangePercent)
                 let price = parseInt(chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice : chosenShare[0].price)
@@ -204,18 +179,18 @@ const StockInformationPage = () => {
                     region: chosenShare[0].region,
                     regMarketChangePercent: percent
                 }
+
                 array.push(stockObj)
-                updateUserPossesion(user.uid, array)
+                updateUserDB(user.uid, array, '/possessionStocks', false )
                 if(user.organization){
-                    updateUserPossesionOrg(user.uid, array)
-                    updateUserCurrencyOrg(user.uid, currencyNumber);
+                    updateUserDB(user.uid, array, '/possessionStocks', true )
+                    updateUserCurrency(user.uid, currencyNumber, true);
                 }
             } else if(stockIncludesVar == true) {
-                console.log("Hit kommer vi, true")
-                updateUserPossesion(user.uid, array)
+                updateUserDB(user.uid, array, '/possessionStocks', false )
                 if(user.organization){
-                    updateUserPossesionOrg(user.uid, array)
-                    updateUserCurrencyOrg(user.uid, currencyNumber);
+                    updateUserDB(user.uid, array, '/possessionStocks', true )
+                    updateUserCurrency(user.uid, currencyNumber, true);
                 }
             }
             checkHolding()
@@ -245,7 +220,6 @@ const StockInformationPage = () => {
     }
 
     const sellStockFB = (arr, symbol, num) => {
-        console.log("Jag körs")
         for(let i = 0; i < arr.length; i++){
             if(arr[i].symbol == symbol) {
                 let index = arr.findIndex(x => x.symbol == symbol)
@@ -256,8 +230,6 @@ const StockInformationPage = () => {
                 } else {
                     arr[index].amount = newNumber
                 }
-
-                // i = arr.length;
                 return;
             }
         }
@@ -295,11 +267,11 @@ const StockInformationPage = () => {
                 }
 
                 sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
-                updateUserCurrency(user.uid, newCurrency);
-                updateUserPossesion(user.uid, snapshot)
+                updateUserCurrency(user.uid, newCurrency, false);
+                updateUserDB(user.uid, snapshot, '/possessionStocks', false )
                 if(user.organization){
-                    updateUserPossesionOrg(user.uid, snapshot)
-                    updateUserCurrencyOrg(user.uid, newCurrency);
+                    updateUserDB(user.uid, snapshot, '/possessionStocks', true )
+                    updateUserCurrency(user.uid, newCurrency, true);
                 }
 
             checkHolding()
@@ -322,8 +294,7 @@ const StockInformationPage = () => {
                 return (
                     <div key={index}>
                         <h1>{item.shortName ? item.shortName : item.name}</h1>
-                        <div className="followWrapper">
-                            {!checked ? <label>watch</label> : '' }
+                        <div className="chart-topbar-wrapper">
                             <WatchStockButton
                                 eyecolor={
                                     checked
@@ -335,10 +306,12 @@ const StockInformationPage = () => {
                             >
                                 <i className="far fa-eye"></i>
                             </WatchStockButton>
-                        </div>
+                            </div>
+
                         <LineChart />
                         <div className="buttonWrapper">
                             <button
+                                className="buy-sell-btn"
                                 style={{ backgroundColor: 'green' }}
                                 onClick={onButtonClick}
                             >
@@ -364,6 +337,7 @@ const StockInformationPage = () => {
                                 onChange={(e) => setNumOfStocks(e.target.value)}
                             />
                             <button
+                                className="buy-sell-btn"
                                 style={{ backgroundColor: 'red' }}
                                 onClick={onButtonClick}
                             >
