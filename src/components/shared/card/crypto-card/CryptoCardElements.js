@@ -13,7 +13,12 @@ export const CardWrapper = styled.article`
     min-height: 3rem;
     background: var(--body);
 
-    & > span {
+    .lv-coin {
+        height: 30px;
+        width: 30px;
+    }
+    
+     & > span {
         flex: 1;
         font-size: 1rem;
         font-weight: 600;
@@ -47,5 +52,9 @@ export const CardWrapper = styled.article`
     img {
         width: 1.75rem;
         height: 1.75rem;
+    }
+
+    h1 {
+        font-size: 0.8rem;
     }
 `;

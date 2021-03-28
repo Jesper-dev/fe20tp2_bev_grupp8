@@ -97,31 +97,27 @@ const CryptoInformationPage = () => {
     };
     const onChange = (e) => {
         setChecked(!checked);
+        console.log('i run')
     };
 
     return (
         <ContentWrapper>
+            
             <CryptoChart
                 id={chosenCrypto[0] ? chosenCrypto[0].id : 'bitcoin'}
                 img={chosenCrypto[0] ? chosenCrypto[0].image : ''}
                 name={chosenCrypto[0] ? chosenCrypto[0].name : ''}
+                onFollow={onFollow}
+                onChange={onChange}
+                checked={checked}
             />
             {chosenCrypto.map((item, index) => {
                 return (
-                    <div key={index}>
+                    <div className="information-wrapper" key={index}>
                         {/* <h1>{item.name}</h1>
                         <div className="imgWrapper">
                             <img src={item.image} alt="logo of the crypto" />
                         </div> */}
-                        <div className="followWrapper">
-                            <label> watch </label>
-                            <input
-                                type="checkbox"
-                                onClick={onFollow}
-                                checked={checked}
-                                onChange={onChange}
-                            />
-                        </div>
                         <p>Current Price: {item.current_price.toLocaleString()}$</p>
                         <p>
                             Total Volume: {item.total_volume.toLocaleString()}

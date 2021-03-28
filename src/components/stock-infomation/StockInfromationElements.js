@@ -69,11 +69,6 @@ export const ContentWrapper = styled.div`
         font-size: 1rem;
         color: var(--body-fourth);
 
-        .fa-eye {
-            padding-left: 4px;
-            font-size: 1.2rem;
-
-        }
     }
 
     label {
@@ -127,5 +122,10 @@ export const WatchStockButton = styled.button`
     border: none;
     outline: none;
     margin-right: 18px;
-
+    cursor: pointer;
+    
+    .fa-eye {
+        padding-left: 4px;
+        font-size: 1.2rem;
+    }
 `;

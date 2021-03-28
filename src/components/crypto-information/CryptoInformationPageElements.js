@@ -5,9 +5,14 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: var(--body);
+    background-color: var(--body-secondary);
     margin-bottom: 56px;
 
+    .information-wrapper{
+        width: 90vw;
+        max-width: 700px;
+    } 
+    
     h1 {
         text-align: center;
         margin: 8px;
@@ -23,7 +28,7 @@ export const ContentWrapper = styled.div`
         display: flex;
         align-items: center;
     }
-
+/* 
     button {
         padding: 0.75rem 1rem;
         background: none;
@@ -32,7 +37,7 @@ export const ContentWrapper = styled.div`
         border-radius: 0.25rem;
         cursor: pointer;
         font-family: inherit;
-    }
+    } */
 
     button:focus {
         box-shadow: var(--box-shadow-focus);
@@ -62,12 +67,6 @@ export const ContentWrapper = styled.div`
         width: 60px;
         height: 60px;
         align-self: center;
-    }
-
-    .followWrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
     input[type='checkbox'] {

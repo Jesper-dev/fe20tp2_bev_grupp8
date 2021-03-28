@@ -5,6 +5,8 @@ import { chosenCrypto } from '../../../../redux/actions';
 
 import { CardWrapper } from './CryptoCardElements';
 
+import Coin from '../../../svgs/Coin'
+
 let chosenCryptoArray = [];
 
 const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
@@ -26,7 +28,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     return (
         <>
             <CardWrapper onClick={() => setChosenCryptoOption(name)}>
-                {img === "LV-CrY" ? <h1>{img}</h1> : <img src={img ? img : ''} alt="Icon of crypto" /> }
+                {img === "LV-CrY" ? <Coin className="lv-coin" /> : <img src={img ? img : ''} alt="Icon of crypto" /> }
                 <span>{newName + '...'}</span>
                 <span>{price.toLocaleString()}$</span>
                 <span
