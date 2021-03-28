@@ -21,6 +21,11 @@ export const NavBar = styled.nav`
         color: var(--primary);
         white-space: nowrap;
     }
+
+	.logo-lets{
+		height: 60px;
+		width: 300px;
+	}
 `;
 
 export const Banner = styled.section`

@@ -6,6 +6,11 @@ export const ContentWrapper = styled.div`
         justify-content: space-between;
     }
 
+    .logo-lets {
+        width: 550px;
+
+    }
+
     box-sizing: border-box;
     height: 100%;
     display: flex;

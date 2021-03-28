@@ -6,6 +6,8 @@ import { ContentWrapper } from './SignUpElements';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
+import LogoLets from '../svgs/LogoLets'
+
 const SignUp = () => (
     <div>
         <SignUpForm />
@@ -358,7 +360,8 @@ class SignUpFormBase extends Component {
 
         return (
             <ContentWrapper>
-                <h1>Let's Vest</h1>
+            {/*     <h1>Let's Vest</h1> */}
+                <LogoLets className="logo-lets" />
                 {this.state.loading ? (
                     'Loading...'
                 ) : (

@@ -15,6 +15,11 @@ export const ContentWrapper = styled.div`
         color: var(--primary);
     }
 
+    .logo-lets{
+        width: 550px;
+        margin-bottom: 45px;
+    }
+
     form {
         display: flex;
         flex-direction: column;

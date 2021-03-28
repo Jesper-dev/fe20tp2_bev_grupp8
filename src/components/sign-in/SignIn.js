@@ -8,6 +8,8 @@ import { ContentWrapper, SignLink } from './SignInElements';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../../constants/routes';
 
+import LogoLets from '../svgs/LogoLets'
+
 // import { withAuthorization } from "../session";
 
 const SignIn = () => (
@@ -56,7 +58,8 @@ class SignInFormBase extends Component {
 
         return (
             <ContentWrapper>
-                <h1>Let's Vest</h1>
+           {/*      <h1>Let's Vest</h1> */}
+                <LogoLets className="logo-lets" />
 				{this.state.loading ? "Loading..." :
 				                <form onSubmit={this.onSubmit}>
 								<label>
