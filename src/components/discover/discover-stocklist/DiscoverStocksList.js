@@ -6,7 +6,7 @@ import MockGetTickers from '../../../api/Mock/MockGetTickers.json';
 import StockCard from '../../shared/card/stock-card/StockCard'
 import UsFlag from '../../svgs/flags/America';
 
-import { ContentWrapper } from './DiscoverStocksListElements'
+import { StockListElement } from './DiscoverStocksListElements'
 
 const DiscoverStocksList = () => {
     
@@ -20,11 +20,8 @@ const DiscoverStocksList = () => {
 
 
     return (
-        <ContentWrapper>
-            <header>
-                <h1>stockmarket - region: {flag}</h1>
-                
-            </header>
+        <StockListElement>
+            <h1>Stockmarket {flag}</h1>
             {array.map((item, index) => {
                 return (
                     <StockCard
@@ -44,7 +41,7 @@ const DiscoverStocksList = () => {
                     />
                 );
             })}
-        </ContentWrapper>
+        </StockListElement>
     );
 }
 

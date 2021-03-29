@@ -1,11 +1,11 @@
-import React,{ useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import MockCrypto from '../../../api/Mock/MockCrypto.json';
 
 import CryptoCard from '../../shared/card/crypto-card/CryptoCard';
 
-import { ContentWrapper } from './DiscoverCryptoListElements'
+import { CryptoListElement } from './DiscoverCryptoListElements'
 
 const DiscoverCryptoList = () => {
         const [cryptoApi, setCryptoApi] = useState([]);
@@ -26,25 +26,21 @@ const DiscoverCryptoList = () => {
             };
         }, []);
     return (
-        <>
-            <ContentWrapper>
-                <header>
-                    <h1>cryptocurrency</h1>
-                </header>
-                {cryptoApi.map((item, index) => {
-                    return (
-                        <CryptoCard
-                            key={index}
-                            name={item.name}
-                            price={item.current_price}
-                            img={item.image}
-                            percent={item.price_change_percentage_24h}
-                            cryptoList={MockCrypto}
-                        />
-                    );
-                })}
-            </ContentWrapper>
-        </>
+        <CryptoListElement>
+            <h1>Cryptocurrencies</h1>
+            {cryptoApi.length ? cryptoApi.map((item, index) => {
+                return (
+                    <CryptoCard
+                        key={index}
+                        name={item.name}
+                        price={item.current_price}
+                        img={item.image}
+                        percent={item.price_change_percentage_24h}
+                        cryptoList={MockCrypto}
+                    />
+                );
+            }) : <p>Loading...</p>}
+        </CryptoListElement>
     );
 
 }

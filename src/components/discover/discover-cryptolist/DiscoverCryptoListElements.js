@@ -1,31 +1,25 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.main`
+export const CryptoListElement = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+    margin: auto;
+    width: 100%;
+    max-width: 40rem;
 
-    max-width: 750px;
-    margin: 0 auto;
-    gap: 1.5rem;
-    padding: 1rem;
-    margin-bottom: 3.5rem;
-    background-color: var(--body-secondary);
 
     h1 {
-        font-size: 1.75rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        font-size: 1.75rem;
+        margin: 2rem 0 0 0;
+        transition: font-size 250ms linear;
 
-        @media screen and (max-width: 400px) {
-            font-size: 1.3rem;
+        @media screen and (max-width: 480px) {
+            font-size: 1.25rem;
         }
-    }
-
-    h2 {
-        text-align: center;
-        margin: 0;
-        margin-bottom: 0.75rem;
     }
 `;

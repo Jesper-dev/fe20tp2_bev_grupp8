@@ -2,8 +2,9 @@ import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
-import DiscoverCryptoList from './components/discover/discover-cryptolist/DiscoverCryptoList'
-import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
+
+// import DiscoverCryptoList from './components/discover/discover-cryptolist/DiscoverCryptoList'
+// import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
 
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import NavbarLeft from './components/shared/navbar-left/NavbarLeft'
@@ -42,13 +43,13 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.DISCOVER_STOCKS}>
                         <Discover />
-                        <DiscoverStocksList />
+                        {/* <DiscoverStocksList /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.DISCOVER_CRYPTO}>
                         <Discover />
-                        <DiscoverCryptoList />
+                        {/* <DiscoverCryptoList /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>

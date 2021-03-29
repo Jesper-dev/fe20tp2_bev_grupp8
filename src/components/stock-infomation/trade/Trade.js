@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
-import { ContentWrapper } from '../../shared/search-bar/SearchBarElements';
+import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
 
 const Trade = () => {
 
@@ -221,7 +221,7 @@ const Trade = () => {
 
     console.log(userData)
     return (
-        <ContentWrapper>
+        <SearchBarElement>
             {/* <p>{userData ? userData : ''}</p> */}
        {/*      <span>Wallet { userData }</span> */}
             <input type="number" />
@@ -259,7 +259,7 @@ const Trade = () => {
                     SELL
                 </button>
             </div>
-        </ContentWrapper>
+        </SearchBarElement>
     );
 }
 

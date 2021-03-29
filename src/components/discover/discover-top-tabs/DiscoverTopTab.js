@@ -2,20 +2,16 @@ import React from 'react' //changed! removed useState
 import { NavLink } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 
-import { TabWrapper } from './DiscoverTopTabElements';
+import { TabBarElement } from './DiscoverTopTabElements';
 
 const DiscoverTopTab = () => {
-    // const [checked, setChecked] = useState(false)
-
-    // const onClick = () => setChecked(!checked);
-
     return (
-        <TabWrapper>
+        <TabBarElement>
             <ul>
                 <li>
                     <NavLink exact to={ROUTES.DISCOVER}>
                         <i className="fas fa-search-dollar"></i>
-                        Discovery
+                        Discover
                     </NavLink>
                 </li>
                 <li>
@@ -31,25 +27,7 @@ const DiscoverTopTab = () => {
                     </NavLink>
                 </li>
             </ul>
-
-{/*
-            <nav>
-                <a>
-                    <i className="fas fa-search-dollar"></i>
-                    <b> Disc</b>
-                </a>
-                <a onClick={onClick}>
-                    <i className="fas fa-chart-line"></i>
-                    <b> ST</b>
-                </a>
-                <a onClick={onClick}>
-                    <i className="fab fa-btc"></i>
-                    <b> CRY</b>
-                </a>
-                <span></span>
-            </nav>
-*/}
-        </TabWrapper>
+        </TabBarElement>
     );
 }
 
