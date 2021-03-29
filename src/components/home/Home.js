@@ -12,7 +12,7 @@ import News from '../shared/homepage-custom-sections/NewsCardSection';
 import MockNewsList from '../../api/Mock/MockNewsList.json';
 import { withAuthorization } from '../session'; //must be logged in to see content
 
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context';
 import { setFollowing, setCurrency } from '../../redux/actions';
@@ -22,7 +22,7 @@ const Home = () => {
     // const stocksList = useSelector((state) => state.RecommendationReducer);
     /*     const following = useSelector((state) => state.Following); */
     const [totalCurrency, setTotalCurrency] = useState(0);
-    const followingCrypto = useSelector((state) => state.FollowingCrypto);
+    //const followingCrypto = useSelector((state) => state.FollowingCrypto); //remove?
     // const Currency = useSelector((state) => state.Currency);
     const firebase = useContext(FirebaseContext);
     const [followingArr, setFollowingArr] = useState([]);
@@ -81,18 +81,15 @@ const Home = () => {
             // dispatch(setFollowing(followingDbCrypto));
         });
 
-        let totalCurrency = firebase.db.ref('users/' + user.uid + '/currency');
-        totalCurrency.on('value', (snapshot) => {
+        firebase.user(user.uid).child('/currency').on('value', (snapshot) => {
             currencyData = snapshot.val();
             if (currencyData == null) {
                 return;
             }
-            setTotalCurrency(currencyData.currency);
-            dispatch(setCurrency(currencyData.currency));
-        });
+            setTotalCurrency(currencyData);
+            dispatch(setCurrency(currencyData)); //behöver
+        })
     }, []);
-
-    console.log(followingArrCrypto)
 
     return (
         <>

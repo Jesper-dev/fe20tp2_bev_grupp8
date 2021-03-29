@@ -6,7 +6,9 @@ import DiscoverCryptoList from './components/discover/discover-cryptolist/Discov
 import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
 
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
+import NavbarLeft from './components/shared/navbar-left/NavbarLeft'
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
+import Trade from './components/stock-infomation/trade/Trade'
 import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
@@ -30,40 +32,54 @@ const App = () => {
                 <Switch>
                     <Route exact path={ROUTES.HOME}>
                         <Home />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.DISCOVER}>
                         <Discover />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.DISCOVER_STOCKS}>
                         <Discover />
                         <DiscoverStocksList />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.DISCOVER_CRYPTO}>
                         <Discover />
                         <DiscoverCryptoList />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SOCIAL}>
                         <SocialPage />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.USER}>
                         <UserInfoCard />
+                        <NavbarLeft />
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>
                         <Profile />
                         <ProfilePortfolio />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.INFO}>
                         <StockInfoPage />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.TRADE}>
+                        <Trade />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.INFO_CRYPTO}>
                         <CryptoInfoPage />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SIGN_IN}>
@@ -87,15 +103,18 @@ const App = () => {
                     <Route exact path={ROUTES.DASHBOARD}>
                         <Profile />
                         <ProfileDashboard />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.WALL}>
                         <Profile />
                         <ProfileWall />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS}>
                         <ProfileSettings />
+                        <NavbarLeft />
                         <Toolbar />
                     </Route>
                 </Switch>
@@ -113,6 +132,8 @@ const GlobalStyle = createGlobalStyle`
     //Light-blue
     --third: #46C0FA;
 
+    //Light blue
+    --light-blue: #e3ecfc;
     //black
     --background-co: #000;
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useContext, useState} from 'react'
 
-import { Bar, Pie, Chart } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2'; //changed!
 
 import { FirebaseContext } from '../../../../firebase/context';
 
@@ -52,7 +52,7 @@ const MostFollowedCrypto = ({orgName}) => {
             }
             makeArray(orgData);
         });
-    }, [])
+    }, []);
 
      //*This makes the array with all the stocks being followed in the organization
      const makeArray = (arr) => {

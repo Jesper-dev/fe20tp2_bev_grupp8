@@ -52,7 +52,7 @@ const AddEmployee = () => {
             if (!orgData) return;
             setEmployeeList(orgData.emails.list)
         });
-    }, [])
+    },[] ) //varning!
 
     return (
         <AddEmailWrapper open={open}>

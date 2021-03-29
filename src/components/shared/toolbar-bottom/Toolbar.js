@@ -23,7 +23,6 @@ const Toolbar = ({ authUser }) => {
 
 // authUser.roles[ROLES.ADMIN]
 const NavigationAuth = () => (
-    <div>
         <ToolbarElement>
             <ul>
                 <li>
@@ -48,7 +47,6 @@ const NavigationAuth = () => (
                 </li>
             </ul>
         </ToolbarElement>
-    </div>
 );
 const NavigationNonAuth = () => (
     <ToolbarElement>

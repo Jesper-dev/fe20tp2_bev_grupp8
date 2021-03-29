@@ -67,7 +67,6 @@ const InfopageLinechart = () => {
     return (
         <>
             <Line
-            style={{ width: '500px'}}
                 data={chartData}
                 options={{
                     /* maintainAspectRatio: false, */

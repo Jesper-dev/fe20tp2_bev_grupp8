@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import CryptoChart from './crypto-chart/CryptoChart'
 
-import axios from 'axios' // remove?
+//import axios from 'axios' // remove?
 
 import { setFollowingCrypto } from '../../redux/actions';
 import { useDispatch } from 'react-redux';

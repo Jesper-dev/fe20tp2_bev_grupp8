@@ -25,4 +25,8 @@ export const ContentWrapper = styled.main`
         margin: 0;
         margin-bottom: 0.75rem;
     }
+
+    @media screen and (min-width: 1024px) {
+        margin-left: 14rem;
+    }
 `;

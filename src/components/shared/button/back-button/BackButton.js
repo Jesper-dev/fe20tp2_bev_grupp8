@@ -8,7 +8,7 @@ const BackButton = () => {
     }
     return (
         <BackButtonElement onClick={backPrevPage}>
-            <i class="fas fa-arrow-left"></i>
+            <i className="fas fa-arrow-left"></i>
         </BackButtonElement>
     )
 }

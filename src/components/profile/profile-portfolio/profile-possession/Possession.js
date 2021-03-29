@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState } from 'react'
-import {useSelector} from "react-redux"
+//import {useSelector} from "react-redux"
 import StockCard from '../../../shared/card/stock-card/StockCard'
 import MockGetTickers from '../../../../api/Mock/MockGetTickers.json';
 import { ContentWrapper } from '../ProfilePortfolioElements';

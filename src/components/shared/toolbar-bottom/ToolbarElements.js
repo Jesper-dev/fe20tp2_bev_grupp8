@@ -35,4 +35,9 @@ export const ToolbarElement = styled.nav`
     .active {
         background-color: var(--primary-dark);
     }
+
+    @media screen and (min-width: 1026px) {
+        display: none;
+  
+    }
 `;

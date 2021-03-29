@@ -1,12 +1,24 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const ContentWrapper = styled.div`
-    div {
+export const ContentWrapper = styled.main`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 3.5rem;
+    background-color: var(--body-secondary);
+
+    @media screen and (min-width: 1024px) {
+        margin-left: 14rem;
+    }
+
+    header {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        /* padding: 0 1rem; */
+        flex-direction: column;
+        width: 100%;
+        max-width: 40rem;
     }
 
     .profile-avatar-svg {

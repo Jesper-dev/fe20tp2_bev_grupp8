@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react' //changed! removed useState
 import { NavLink } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 

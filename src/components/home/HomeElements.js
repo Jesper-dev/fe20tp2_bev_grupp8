@@ -8,4 +8,8 @@ export const ContentWrapper = styled.main`
     padding: 1rem;
     margin-bottom: 3.5rem;
     background-color: var(--body-secondary);
+
+    @media screen and (min-width: 1024px) {
+        margin-left: 14rem;
+    }
 `;

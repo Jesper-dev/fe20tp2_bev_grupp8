@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'
 
 export const ContentWrapper = styled.div`
     /* height: 100vh; */
@@ -15,7 +16,7 @@ export const ContentWrapper = styled.div`
     }
 
     .chartjs-render-monitor {
-        width: 35vw;
+        width: 10vw;
     }
 
     .informationContainer {
@@ -33,43 +34,44 @@ export const ContentWrapper = styled.div`
         }
     }
 
-    .buy-sell-btn {
-        padding: 0.75rem 0.75rem;
-        background: none;
-        border: 2px solid black;
-        outline: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        font-family: inherit;
-    }
-
-    button:focus {
-        box-shadow: var(--box-shadow-focus);
-    }
-
-    button:not(:focus-visible) {
-        box-shadow: none;
-    }
-
-    .buttonWrapper {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-    }
-
     .buttonWrapper > input {
         width: 20%;
     }
 
-    .stockinfo-map-wrapper{
+    .stockinfo-map-wrapper {
         width: 100%;
     }
-    
-     .chart-topbar-wrapper {
+
+    .chart-topbar-wrapper {
         display: flex;
         justify-content: flex-end;
         font-size: 1rem;
         color: var(--body-fourth);
+
+  /*       .buy-sell-btn {
+            padding: 0.5rem 1.25rem;
+            background: none;
+            border: 0.125rem solid transparent;
+            outline: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+        }
+
+        button:focus {
+            box-shadow: var(--box-shadow-focus);
+        }
+
+        button:not(:focus-visible) {
+            box-shadow: none;
+        }
+
+        .buttonWrapper {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        } */
     }
 
     label {
@@ -128,5 +130,38 @@ export const WatchStockButton = styled.button`
     .fa-eye {
         padding-left: 4px;
         font-size: 1.2rem;
+    }
+`;
+
+
+export const TradeBtns = styled(Link)`
+    text-decoration: none;
+    padding: 0.25rem 1rem;
+    color: var(--secondary);
+    background: none;
+    border: 0.125rem solid var(--secondary);
+    outline: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 400;
+    font-family: inherit;
+    margin-left: 15px;
+
+    a:focus {
+        box-shadow: var(--box-shadow-focus);
+    }
+
+    a:not(:focus-visible) {
+        box-shadow: none;
+    }
+
+    .buttonWrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    a:visited {
+        text-decoration: none;
     }
 `;

@@ -18,9 +18,7 @@ const INITIAL_STATE = {
 	usernameTaken: false,
     username: '',
     organization: '',
-    currency: {
-        currency: 100000,
-    },
+    currency: 100000,
     followingStocks: {
         array: [
             {

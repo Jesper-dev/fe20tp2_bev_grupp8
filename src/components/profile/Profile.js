@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-// import axios from "axios"
-
 import { FirebaseContext } from '../firebase/context'
-// import { Switch, Route } from 'react-router-dom';
 
 import {
     ContentWrapper,
@@ -49,22 +45,21 @@ const Profile = () => {
     return (
         <>
             <ContentWrapper>
-                <div>
-                    {ProfileImgReducer ? (
-                        <ProfileImg img={ProfileImgReducer} />
-                    ) : (
-                        <ProfileSvg className="profile-avatar-svg" />
-                    )}
-                    <p>{username}</p>
+                <header>
+                            {ProfileImgReducer ? (
+                                <ProfileImg img={ProfileImgReducer} />
+                            ) : (
+                                <ProfileSvg className="profile-avatar-svg" />
+                            )}
+                            <p>{username}</p>
 
-                    <BtnsWrapper>
-                        {/* <SignOutButton /> */}
-                        <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                            <i className="fas fa-user-edit"></i> Edit Profile
-                        </ProfileSettingsBtn>
-                    </BtnsWrapper>
-                </div>
+                            <BtnsWrapper>
+                                <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
+                                    <i className="fas fa-user-edit"></i> Edit Profile
+                                </ProfileSettingsBtn>
+                            </BtnsWrapper>
                 <NavbarProfile />
+                </header>
             </ContentWrapper>
         </>
     );

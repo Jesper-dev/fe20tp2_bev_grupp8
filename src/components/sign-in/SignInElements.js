@@ -16,16 +16,15 @@ export const ContentWrapper = styled.div`
     }
 
     .logo-lets {
-        width: 550px;
+        width: 440px;
         margin-bottom: 45px;
+        transition: width 250ms ease-out, height 250ms ease-out;
 
         @media screen and (max-width: 768px) {
-            width: 450px;
-            height: 120px;
+            width: 360px;
         }
         @media screen and (max-width: 460px) {
-            width: 280px;
-            min-height: 65px;
+            width: 256px;
             margin-bottom: 0;
         }
     }
