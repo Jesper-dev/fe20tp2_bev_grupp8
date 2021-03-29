@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import CryptoChart from './crypto-chart/CryptoChart'
 
-import axios from 'axios'
+import axios from 'axios' // remove?
 
 import { setFollowingCrypto } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -13,27 +13,52 @@ import { useDispatch } from 'react-redux';
 import { ContentWrapper } from './CryptoInformationPageElements';
 import { FirebaseContext } from '../firebase/context';
 
-let following = [];
+//let following = []; // remove?
 
 const CryptoInformationPage = () => {
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(false);//remove?
     const dispatch = useDispatch();
     const chosenCrypto = useSelector((state) => state.ChosenCrypto);
-    const followingArr = useSelector((state) => state.FollowingCrypto);
+    const followingArr = useSelector((state) => state.FollowingCrypto); //remove?
 
     const firebase = useContext(FirebaseContext);
+// check out https://stackoverflow.com/a/60029676/12683933
+// use the unsubscribe pattern
+/*
+users : { jfdslkfjdslkjf: {
+    followingCrypto: {
+        'uni': {
+            regularMarketPrice: 34
+        },
+        'flow': {
+            regularMarketPrice: 29
+        }
+    }
+}}
+se sid 141&142 i boken firebasepdf
 
-    useEffect(() => {
+*/
+
+
+useEffect(() => {
+        /*
         let followingDB = firebase.db.ref('users/' + user.uid + '/followingCrypto/array')
         followingDB.on('value', (snapshot) => {
+           */
+          firebase.user(user.uid).child('/followingCrypto/array').on('value', (snapshot) => {
+           
             const data = snapshot.val()
             console.log(data)
 
             if(!data) return;
+
+
+            //re-write this function
             data.forEach((item) => {
                 // if(!item || !item.symbol) return
                 if (item.symbol === chosenCrypto[0].symbol) {
                     setChecked(true);
+                    return
                 } else if (!item.symbol === chosenCrypto[0].symbol) {
                     setChecked(false);
                 }
@@ -43,26 +68,20 @@ const CryptoInformationPage = () => {
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
-    const updateUser = (userId) => {
-        firebase.db.ref('users/' + userId + '/followingStocks').set({
-            followingArr,
-        });
-    };
-
     const updateUserDB = (userId, array, directory, org) => {
-        if(org == true){
-            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + directory).set({
-                array,
-            });
+        if(org === true){ //changed! == to ===
+            firebase.organization(user.organization).child(`${userId}/${directory}`).set({
+                array
+            })
         } else {
-            firebase.db.ref('users/' + userId + directory).set({
-                array,
-            });
+            firebase.user(userId).child(`${directory}`).set({
+                array
+            })
         }
 
     }
 
-    const onFollow = () => {
+    const onFollow = () => { //todo: fix
         let cryptos = firebase.db.ref('users/' + user.uid + '/followingCrypto/array');
         let followingDb;
         cryptos.on('value', (snapshot) => {
@@ -95,9 +114,10 @@ const CryptoInformationPage = () => {
         setChecked(true);
 
     };
-    const onChange = (e) => {
-        setChecked(!checked);
-        console.log('i run')
+    const onChange = () => {
+        // https://stackoverflow.com/a/55826376/12683933
+        //setChecked(!checked);
+        setChecked(prevState => !prevState); //changed!
     };
 
     return (
@@ -108,8 +128,8 @@ const CryptoInformationPage = () => {
                 img={chosenCrypto[0] ? chosenCrypto[0].image : ''}
                 name={chosenCrypto[0] ? chosenCrypto[0].name : ''}
                 onFollow={onFollow}
-                onChange={onChange}
-                checked={checked}
+                /* onChange={onChange}
+                checked={checked} */
             />
             {chosenCrypto.map((item, index) => {
                 return (

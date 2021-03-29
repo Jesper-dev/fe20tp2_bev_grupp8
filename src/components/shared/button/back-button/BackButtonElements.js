@@ -11,5 +11,11 @@ export const BackButtonElement = styled.button`
     color: var(--body-fifht);
     font-size: 1.6rem;
     cursor: pointer;
+    transition: transform 125ms linear;
+
+    @media screen and (min-width: 768px) {
+        display: none;
+        //transform: scale(0);
+    }
 
 `

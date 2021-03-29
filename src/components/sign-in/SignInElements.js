@@ -15,9 +15,19 @@ export const ContentWrapper = styled.div`
         color: var(--primary);
     }
 
-    .logo-lets{
+    .logo-lets {
         width: 550px;
         margin-bottom: 45px;
+
+        @media screen and (max-width: 768px) {
+            width: 450px;
+            height: 120px;
+        }
+        @media screen and (max-width: 460px) {
+            width: 280px;
+            min-height: 65px;
+            margin-bottom: 0;
+        }
     }
 
     form {

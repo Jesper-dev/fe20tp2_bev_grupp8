@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import AddEmployee from './admin/AddEmployee'
 import TotalCompValue from './data-card/total-comp-value/TotalCompValue'
 import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks'
-import BoughtStocks from './data-card/bought-stocks/BoughtStocks'
+import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto'
+//import BoughtStocks from './data-card/bought-stocks/BoughtStocks' //remove?
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrganizationData } from '../../../redux/actions'
@@ -29,7 +30,7 @@ const ProfileDashboard = () => {
     useEffect(() => {
         const companyData = firebase.db.ref('organizations/' + user.organization + '/users');
         companyData.on('value', (snapshot) => {
-            OrgDataFirebase = snapshot.val();
+            OrgDataFirebase = snapshot.val(); //varning!
             if (!OrgDataFirebase) return;
 
             for (const key in OrgDataFirebase) {
@@ -65,7 +66,8 @@ const ProfileDashboard = () => {
                 </h2>
                  <TotalCompValue />
                  <MostFollowedStocks orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization}/>
-                 <BoughtStocks />
+                 {/* <BoughtStocks /> */}
+                 <MostFollowedCrypto orgName={!OrganizationData[0] ? '' : OrganizationData[0].organization} />
                  </>
             ) : (
                 <>

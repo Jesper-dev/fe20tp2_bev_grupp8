@@ -2,6 +2,9 @@ import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
+import DiscoverCryptoList from './components/discover/discover-cryptolist/DiscoverCryptoList'
+import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
+
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
@@ -31,6 +34,16 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.DISCOVER}>
                         <Discover />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.DISCOVER_STOCKS}>
+                        <Discover />
+                        <DiscoverStocksList />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.DISCOVER_CRYPTO}>
+                        <Discover />
+                        <DiscoverCryptoList />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SOCIAL}>
@@ -137,9 +150,9 @@ const GlobalStyle = createGlobalStyle`
     p {
         margin: 0;
     }
-  h1 {
-    margin: 0;
-  }
+    h1 {
+        margin: 0;
+    }
 `;
 
 export default withAuthentication(App);

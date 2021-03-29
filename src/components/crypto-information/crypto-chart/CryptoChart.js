@@ -12,7 +12,7 @@ import { WatchStockButton } from '../../stock-infomation/StockInfromationElement
 
 const CryptoChart = ({ id, img, name, onFollow }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const [cryptoInfo, setCryptoInfo] = useState([])
+    const [cryptoInfo, setCryptoInfo] = useState([]) //remove?
     const [labelsSate, setLabelState] = useState([])
     const [priceSate, setPriceState] = useState([])
 
@@ -21,12 +21,9 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
 
     const firebase = useContext(FirebaseContext);
 
-/* 
-    console.log(checked) */
-
     const onChange = () => {
+        // ??
         setChecked(!checked);
-
     }
 
     let labels = []
@@ -67,7 +64,7 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
     }, [])
 
     const createArr = async (arr) => {
-        if(arr.length == 0) return
+        if(arr.length === 0) return
 
         for(let i = 0; i < arr.prices.length; i++){
             labels.push(new Date(arr.prices[i][0]).toDateString().slice(4,10))
@@ -112,7 +109,7 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
     return (
         <ContentWrapper>
             <InLineDiv>
-                <img src={img} />
+                <img src={img} alt='Logo of crypto'/>
                 <h1>{name}</h1>
             </InLineDiv>
             <div className="chart-topbar-wrapper">

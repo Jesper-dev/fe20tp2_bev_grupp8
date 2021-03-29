@@ -8,8 +8,8 @@ const AddEmployee = () => {
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
-    let orgData;
-    let emails;
+    let orgData; //remove?
+    //let emails; //remove?
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +18,7 @@ const AddEmployee = () => {
     }
 
     const addEmailToDb = (email) => {
-        let emailList = [];
+        //let emailList = []; //remove?
 
         const emailsData = firebase.db.ref('organizations/' + user.organization + '/emails/list');
         if (emailsData === null) {

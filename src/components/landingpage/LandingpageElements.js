@@ -4,7 +4,7 @@ export const NavBar = styled.nav`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-	align-items: center;
+    align-items: center;
     gap: 1rem;
     padding: 1rem;
     background-color: #eee;
@@ -22,10 +22,15 @@ export const NavBar = styled.nav`
         white-space: nowrap;
     }
 
-	.logo-lets{
-		height: 60px;
-		width: 300px;
-	}
+    .logo-lets {
+        height: 60px;
+        width: 300px;
+
+/*         @media screen and (min-width: 400px) {
+            height: 60px;
+            width: 180px;
+        } */
+    }
 `;
 
 export const Banner = styled.section`

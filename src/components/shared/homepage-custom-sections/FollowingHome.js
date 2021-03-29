@@ -8,9 +8,6 @@ import { useSelector } from 'react-redux';
 
 const FollowingHome = ({ array, cryptoList }) => {
     const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
-    console.log(cryptoList)
-
-    console.log(array)
     return (
         <>
             <ContentWrapper

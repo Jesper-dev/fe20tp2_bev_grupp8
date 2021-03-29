@@ -34,14 +34,10 @@ const StockInformationPage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        let followingDB = firebase.db.ref('users/' + user.uid + '/followingStocks/array')
-        followingDB.on('value', (snapshot) => {
+        firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
             const data = snapshot.val()
-            console.log(data)
-
             if(!data) return;
             data.forEach((item) => {
-                // if(!item || !item.symbol) return
                 if (item.symbol === chosenShare[0].symbol) {
                     setChecked(true);
                 } else if (!item.symbol === chosenShare[0].symbol) {
@@ -49,121 +45,138 @@ const StockInformationPage = () => {
                 }
             });
         })
-
         checkHolding();
+
+        return () => {
+            // unsubscribe()
+        }
     }, []);
 
     const updateUserCurrency = (userId, currency, org) => {
         if(org == true) {
-            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + '/currency').set({
-                currency,
-            });
+            firebase.organization(user.organization).child(`${userId}/currency`).update({
+                currency
+            })
         } else {
-            firebase.db.ref('users/' + userId + '/currency').set({
-                currency,
-            });
+            firebase.user(userId).child(`/currency`).update({
+                currency
+            })
         }
     };
 
     const updateUserDB = (userId, array, directory, org) => {
         if(org == true){
-            firebase.db.ref('organizations/' + user.organization + '/users/' + userId + directory).set({
-                array,
-            });
+            firebase.organization(user.organization).child(`${userId}/${directory}`).set({
+                array
+            })
         } else {
-            firebase.db.ref('users/' + userId + directory).set({
-                array,
-            });
+            firebase.user(userId).child(`/${directory}`).set({
+                array
+            })
         }
-
     }
 
     //*Checks the holding of your stock
     const checkHolding = () => {
         let dataDB;
-        let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
-        possessionDb.on('value', (snapshot) => {
+        firebase.user(user.uid).child('/possessionStocks/array').on('value', (snapshot) => {
             dataDB = snapshot.val()
-        })
-        if(dataDB === undefined) return
-        for(let i = 0; i < dataDB.length; i++){
-            if(dataDB[i].symbol === chosenShare[0].symbol){
-                setClickedStock(dataDB[i])
-                setHolding(dataDB[i].amount)
+            if(dataDB === undefined) return
+            for(let i = 0; i < dataDB.length; i++){
+                if(dataDB[i].symbol === chosenShare[0].symbol){
+                    setClickedStock(dataDB[i])
+                    setHolding(dataDB[i].amount)
+                }
             }
-        }
+        })
     };
     //*When you follow a stock
     const onFollow = () => {
-        let stocks = firebase.db.ref('users/' + user.uid + '/followingStocks/array');
-        let followingDb;
-        stocks.on('value', (snapshot) => {
-            followingDb = snapshot.val();
-        });
-        if (followingDb === null) {
-            return;
-        }
-        let name = chosenShare[0].symbol;
-        let index = followingDb.findIndex((x) => x.symbol === name);
-        if (index > -1) {
-            followingDb.splice(index, 1);
-            setChecked(false);
-        } else {
-            const followingObj = {
-                symbol: chosenShare[0].symbol,
-                regularMarketPrice: chosenShare[0].regularMarketPrice,
-                regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
-                shortName: chosenShare[0].shortName,
-            };
-            followingDb.push(followingObj);
-            setChecked(true);
-        }
+        firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
+            const followingDb = snapshot.val();
 
-        updateUserDB(user.uid, followingDb, '/followingStocks', false)
-        if(user.organization){
-            updateUserDB(user.uid, followingDb, '/followingStocks', true)
-        }
-        dispatch(setFollowing(followingDb));
+            if (followingDb === null) {
+                return;
+            }
+            let name = chosenShare[0].symbol;
+            let index = followingDb.findIndex((x) => x.symbol === name);
+            if (index > -1) {
+                followingDb.splice(index, 1);
+                setChecked(false);
+            } else {
+                const followingObj = {
+                    symbol: chosenShare[0].symbol,
+                    regularMarketPrice: chosenShare[0].regularMarketPrice,
+                    regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
+                    shortName: chosenShare[0].shortName,
+                };
+                followingDb.push(followingObj);
+                setChecked(true);
+            }
+    
+            updateUserDB(user.uid, followingDb, '/followingStocks', false)
+            if(user.organization){
+                updateUserDB(user.uid, followingDb, '/followingStocks', true)
+            }
+            dispatch(setFollowing(followingDb));
+        })
     };
 
     const onChange = () => setChecked(!checked);
 
-    //*When we buy a stock
-    //TODO Check if the stock has been bought before and therefore already exist in the array / DB,
-    //TODO If true, only add amount on the same stock.
-    let stockIncludesVar = false
+    // const addToRecentlyBought = ({objc}) => {
+    //     // let array;
+    //     // let recentlyBought = firebase.db.ref('organizations/' + user.organization + '/recentlyBought/');
+    //     // recentlyBought.on('value', (snapshot) => {
+    //     //     array = snapshot.val()
+    //     //     console.log(array)
+    //     // })
+    //     firebase.db.ref('organizations/' + user.organization + '/recentlyBought').update({
+    //         objc,
+    //     });
+    // }
 
+    //*When we buy a stock
+    let stockIncludesVar = false
     const onBuy = (numOfStocks) => {
         if (buy === false) {
             setBuy(true);
             setSell(false);
         } else if (buy === true && numOfStocks !== 0) {
             let array;
-            let possessionDb = firebase.db.ref('users/' + user.uid + '/possessionStocks/array');
-            possessionDb.on('value', (snapshot) => {
+            firebase.user(user.uid).child('/possessionStocks/array').on('value', (snapshot) => {
                 array = snapshot.val()
             })
-            let currency = SnapshotFirebase('/currency/currency')
+            let currency = snapshotFirebase('/currency/currency')
+            // firebase.user(user.uid).child('/currency/currency').on('value', (snapshot) => {
+            //     currency = snapshot.val()
+            // })
+            
 
-            if(array == null) return
-            let newCurrency;
-            if(chosenShare[0].regularMarketPrice) {
-                newCurrency =
-                currency - chosenShare[0].regularMarketPrice * numOfStocks;
-            } else if(chosenShare[0].price) {
-                newCurrency =
-                currency - chosenShare[0].price * numOfStocks;
-            }
+                if(array == null) return
+                let newCurrency;
+                if(chosenShare[0].regularMarketPrice) {
+                    newCurrency =
+                    currency - chosenShare[0].regularMarketPrice * numOfStocks;
+                } else if(chosenShare[0].price) {
+                    newCurrency =
+                    currency - chosenShare[0].price * numOfStocks;
+                }
 
-            if (newCurrency <= 0) {
-                alert('Insufficient funds')
-                return;
-            }
-            checkIfStockIncludes(array, chosenShare[0].symbol, numOfStocks)
+                if (newCurrency <= 0) {
+                    alert('Insufficient funds')
+                    return;
+                }
+                checkIfStockIncludes(array, chosenShare[0].symbol, numOfStocks)
 
-            dispatch(setCurrency(newCurrency));
-            let currencyFixed = newCurrency.toFixed(2)
-            let currencyNumber = parseInt(currencyFixed)
+                dispatch(setCurrency(newCurrency));
+                let currencyFixed = newCurrency.toFixed(2)
+                let currencyNumber = parseInt(currencyFixed)
+                const recentlyBoughtObjc = {
+                    amount: numOfStocks,
+                    symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
+                    user: user.username
+                }
 
             updateUserCurrency(user.uid, currencyNumber, false);
             if(stockIncludesVar == false ){
@@ -178,7 +191,6 @@ const StockInformationPage = () => {
                     region: chosenShare[0].region,
                     regMarketChangePercent: percent
                 }
-
                 array.push(stockObj)
                 updateUserDB(user.uid, array, '/possessionStocks', false )
                 if(user.organization){
@@ -192,10 +204,14 @@ const StockInformationPage = () => {
                     updateUserCurrency(user.uid, currencyNumber, true);
                 }
             }
-            checkHolding()
+
+            
+            // addToRecentlyBought(recentlyBoughtObjc)
+            // checkHolding()
             setNumOfStocks(0);
             setBuy(false);
             setStockIncludes(false)
+            
         }
     };
 
@@ -235,12 +251,12 @@ const StockInformationPage = () => {
     }
 
 
-    const SnapshotFirebase = (direction) => {
-            let dataDB;
-            let possessionDb = firebase.db.ref('users/' + user.uid + direction);
-            possessionDb.on('value', (snapshot) => {
-                dataDB = snapshot.val()
-            })
+    const snapshotFirebase = (directory) => {
+        let dataDB;
+        firebase.user(user.uid).child(directory).on('value', (snapshot) => {
+            dataDB = snapshot.val()
+            
+        })
         return dataDB;
     }
 
@@ -250,8 +266,8 @@ const StockInformationPage = () => {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
-            let snapshot = SnapshotFirebase('/possessionStocks/array')
-            let currency = SnapshotFirebase('/currency/currency')
+            let snapshot = snapshotFirebase('/possessionStocks/array')
+            let currency = snapshotFirebase('/currency/currency')
 
             if (numOfStocks > holding || numOfStocks <= -1) {
                 console.log('You cant sell more than you have');
@@ -264,7 +280,6 @@ const StockInformationPage = () => {
                 } else if(chosenShare[0].price) {
                     newCurrency = currency + chosenShare[0].price * numOfStocks;
                 }
-
                 sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
                 updateUserCurrency(user.uid, newCurrency, false);
                 updateUserDB(user.uid, snapshot, '/possessionStocks', false )
@@ -272,8 +287,7 @@ const StockInformationPage = () => {
                     updateUserDB(user.uid, snapshot, '/possessionStocks', true )
                     updateUserCurrency(user.uid, newCurrency, true);
                 }
-
-            checkHolding()
+            // checkHolding()
             setSell(false);
         }
     };
@@ -291,7 +305,7 @@ const StockInformationPage = () => {
             <BackButton />
             {chosenShare.map((item, index) => {
                 return (
-                    <div key={index}>
+                    <div className="stockinfo-map-wrapper" key={index}>
                         <h1>{item.shortName ? item.shortName : item.name}</h1>
                         <div className="chart-topbar-wrapper">
                             <WatchStockButton

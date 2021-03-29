@@ -4,10 +4,14 @@ export const ContentWrapper = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
+    max-width: 750px;
+
     gap: 1.5rem;
     padding: 1rem;
     margin-bottom: 3.5rem;
     background-color: var(--body-secondary);
+
 
     h1 {
         font-size: 1.75rem;

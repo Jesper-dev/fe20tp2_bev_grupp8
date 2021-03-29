@@ -64,7 +64,7 @@ class Firebase {
                                     const dbUser = snapshot.val();
                                     /*       const dbUserKey = snapshot.key(); */
 
-                                    let id = authUser.uid;
+                                    //let id = authUser.uid;
                                     let localOrg = dbUser;
 
                                     console.log(localOrg);

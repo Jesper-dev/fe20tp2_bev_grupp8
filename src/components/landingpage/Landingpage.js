@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext} from 'react';
 import { NavBar, Banner, About } from './LandingpageElements';
 import { Button } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';

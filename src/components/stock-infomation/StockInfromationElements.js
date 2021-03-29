@@ -14,14 +14,12 @@ export const ContentWrapper = styled.div`
         font-size: 1.4rem;
     }
 
-    .chartjs-render-monitor{
+    .chartjs-render-monitor {
         width: 35vw;
     }
 
     .informationContainer {
-
-        .holds-in-share{
-
+        .holds-in-share {
         }
         margin-bottom: 56px;
         p {
@@ -63,12 +61,15 @@ export const ContentWrapper = styled.div`
         width: 20%;
     }
 
-    .chart-topbar-wrapper {
+    .stockinfo-map-wrapper{
+        width: 100%;
+    }
+    
+     .chart-topbar-wrapper {
         display: flex;
         justify-content: flex-end;
         font-size: 1rem;
         color: var(--body-fourth);
-
     }
 
     label {

@@ -14,7 +14,7 @@ import {
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import NavbarProfile from './profile-navbar/ProfileNavbar';
-import SignOutButton from '../sign-out/SignOut';
+//import SignOutButton from '../sign-out/SignOut';
 import { withAuthorization } from '../session'; //must be logged in to see content
 import ProfileSvg from '../svgs/ProfileSvg';
 
@@ -44,7 +44,7 @@ const Profile = () => {
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink))
         });
-    }, []);
+    }, []); //varning!
 
     return (
         <>
