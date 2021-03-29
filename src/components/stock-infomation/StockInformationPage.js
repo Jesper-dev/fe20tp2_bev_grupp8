@@ -108,11 +108,7 @@ const StockInformationPage = () => {
 
     const onChange = () => setChecked(!checked);
 
-    const addToRecentlyBought = (objc) => {
-        firebase.organization(user.organization).child('/recentlyBought/').update({
-            objc
-        })
-    }
+
 
     return (
         <ContentWrapper>
