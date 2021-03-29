@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export const ProfileNavbarElement = styled.nav`
     background: #e3ecfc;
     border-radius: 2.5rem;
+    margin: auto;
     width: 100%;
     max-width: 28rem;
     height: 2.5rem;

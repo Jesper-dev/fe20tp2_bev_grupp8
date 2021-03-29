@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../firebase/context'
+import { withAuthorization } from '../session';
 
-import {
-    ContentWrapper,
-    ProfileSettingsBtn,
-    BtnsWrapper,
-} from './ProfileElements';
+import { ContentWrapper, ProfileSettingsBtn } from './ProfileElements';
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
-import NavbarProfile from './profile-navbar/ProfileNavbar';
-//import SignOutButton from '../sign-out/SignOut';
-import { withAuthorization } from '../session'; //must be logged in to see content
 import ProfileSvg from '../svgs/ProfileSvg';
+import NavbarProfile from './profile-navbar/ProfileNavbar';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfileImage } from '../../redux/actions';
@@ -31,7 +26,7 @@ const Profile = () => {
         // const theUserId = firebase.auth.currentUser.uid;
         // console.log(`THE USER ID --> ${theUserId}`);
 
-        const user = firebase.db.ref('users/' + userData.uid);
+        const user = firebase.user(userData.uid);
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setUsername(data.username)
@@ -46,18 +41,20 @@ const Profile = () => {
         <>
             <ContentWrapper>
                 <header>
+                    <section>
+                        <div className="user-info">
                             {ProfileImgReducer ? (
                                 <ProfileImg img={ProfileImgReducer} />
                             ) : (
                                 <ProfileSvg className="profile-avatar-svg" />
                             )}
-                            <p>{username}</p>
-
-                            <BtnsWrapper>
-                                <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                                    <i className="fas fa-user-edit"></i> Edit Profile
-                                </ProfileSettingsBtn>
-                            </BtnsWrapper>
+                            <span>{username}</span>
+                        </div>
+                        <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
+                            <i className="fas fa-user-edit"></i>
+                            Edit Profile
+                        </ProfileSettingsBtn>
+                    </section>
                 <NavbarProfile />
                 </header>
             </ContentWrapper>

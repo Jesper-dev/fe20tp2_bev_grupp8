@@ -7,6 +7,7 @@ import { ContentWrapper } from '../../shared/search-bar/SearchBarElements';
 const Trade = () => {
 
     const user = JSON.parse(localStorage.getItem('authUser'));
+
     const [sell, setSell] = useState(false);
     const [numOfStocks, setNumOfStocks] = useState(0);
     const [clickedStock, setClickedStock] = useState({});
@@ -14,56 +15,79 @@ const Trade = () => {
     const [buy, setBuy] = useState(false);
     const [holding, setHolding] = useState(0);
 
+    const [userData, setUserData] = useState({})
+    /* let userDataVariable = {} */
+
+
     const chosenShare = useSelector((state) => state.ChosenShare);
     const firebase = useContext(FirebaseContext);
 
+    useEffect(() => {
+            firebase.user(user.uid).on('value', (snapshot) => {
+                const data = snapshot.val()
+                if(!data) return;
+                setUserData(data)
+
+                console.log(userData.currency)
+                // console.log(data)
+                // if (typeof data === "undefined" || data === null) {
+                //     setUserData({})
+                // } else {
+                //     setUserData(data)
+                // }
+            })
+
+
+    }, [])
+
+
+/*     console.log(userData.currency.currency) */
+
     const onButtonClick = (e) => {
         console.log("Hej")
-        if (e.target.innerText === 'BUY') {
+        if (e.target.innerText == 'BUY') {
             console.log("Inner text is buy")
             onBuy(numOfStocks);
-        } else if (e.target.innerText === 'SELL') {
+        } else if (e.target.innerText == 'SELL') {
             onSell(numOfStocks);
         }
     };
 
     //*Checks if clicked stock has been bought before and if true display how many
-    const checkHolding = async () => {
-        await firebase.user(user.uid).child('/possessionStocks/array').on('value', (snapshot) => {
-            let dataDB = snapshot.val()
-            if(dataDB == undefined) return;
-            dataDB.forEach(item => {
-                if (item.symbol === chosenShare[0].symbol) {
-                    setClickedStock(item);
-                }
-            });
-            // for(let i = 0; i < dataDB.length; i++){
-            //     if(dataDB[i].symbol === chosenShare[0].symbol){
-            //         setClickedStock(dataDB[i])
-            //     }
-            // }
-        })
-    };
+    // const checkHolding = async () => {
+    //     await firebase.user(user.uid).child('/possessionStocks/array').on('value', (snapshot) => {
+    //         let dataDB = snapshot.val()
+    //         if(dataDB == undefined) return;
+    //         dataDB.forEach(item => {
+    //             if (item.symbol === chosenShare[0].symbol) {
+    //                 setHolding(item.amount)
+    //                 // setClickedStock(item);
+    //             }
+    //         });
+    //     })
+    // };
 
-    const updateUserCurrency = (buy, currencylol, currency2, number ) => {
-        let calcCurrency = 0;
+    const addToRecentlyBought = (objc) => {
+        firebase.organization(user.organization).child('/recentlyBought/').update({
+            objc
+        })
+    }
+
+    const updateUserCurrency = (buy, currency1, currency2, number ) => {
+        let currency = 0;
         let num = parseInt(number)
         if(buy === true) {
-            calcCurrency = currencylol - currency2.toFixed(2) * num;
+            currency = currency1 - currency2.toFixed(2) * num;
         }
 
-        // const currency = {
-        //     currency: calcCurrency
-        // }
-
-        firebase.user(user.uid).update({
-            currency: calcCurrency
+        firebase.user(user.uid).child('/currency').set({
+            currency
         })
     }
 
     let stockIncludesVar = false
     const onBuy = (numOfStocks) => {
-       
+
         if (buy === false) {
             setBuy(true);
             setSell(false);
@@ -71,18 +95,10 @@ const Trade = () => {
             firebase.user(user.uid).on('value', (snapshot) => {
                 let data = snapshot.val()
                 if(data == null) return
-                let currency = data.currency.currency;
-                updateUserCurrency(true, currency, 20, 1)
+                let currency = data.currency;
+                updateUserCurrency(true, currency, chosenShare[0].regularMarketPrice, numOfStocks)
                 console.log('Userdata :', data)
             })
-            
-            // if(chosenShare[0].regularMarketPrice) {
-            //     newCurrency =
-            //     currency - chosenShare[0].regularMarketPrice * numOfStocks;
-            // } else if(chosenShare[0].price) {
-            //     newCurrency =
-            //     currency - chosenShare[0].price * numOfStocks;
-            // }
 
             // if (newCurrency <= 0) {
             //     alert('Insufficient funds')
@@ -93,7 +109,7 @@ const Trade = () => {
             // dispatch(setCurrency(newCurrency));
             // let currencyFixed = newCurrency.toFixed(2)
             // let currencyNumber = parseInt(currencyFixed)
-            
+
 
             // updateUserCurrency(user.uid, currencyNumber, false);
             // if(stockIncludesVar == false ){
@@ -166,7 +182,7 @@ const Trade = () => {
             // checkHolding()
             setSell(false);
         } */
-    
+
     };
 
     const sellStockFB = (arr, symbol, num) => {
@@ -202,10 +218,13 @@ const Trade = () => {
             }
         }
     }
+
+    console.log(userData)
     return (
         <ContentWrapper>
-            <span>Wallet 58555$</span>
-            <input />
+            {/* <p>{userData ? userData : ''}</p> */}
+       {/*      <span>Wallet { userData }</span> */}
+            <input type="number" />
             <div className="buttonWrapper">
                 <button
                     className="buy-sell-btn"
@@ -226,7 +245,7 @@ const Trade = () => {
                 <input
                     type="number"
                     style={sell ? { display: 'block' } : { display: 'none' }}
-                    onChange={(e) => setNumOfStocks(e.target.value)}
+                    onChange={(e) => console.log(e.target.value)}
                 />
                 <button
                     className="buy-sell-btn"

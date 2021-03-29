@@ -33,7 +33,7 @@ const StockInformationPage = () => {
         firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
             const data = snapshot.val()
             if(!data) return
-        
+
 
             data.forEach((item) => {
                 if (item.symbol === chosenShare[0].symbol) {
@@ -74,7 +74,7 @@ const StockInformationPage = () => {
     }
 
     //*Checks the holding of your stock
-    
+
     //*When you follow a stock
     const onFollow = () => {
         firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
@@ -97,7 +97,7 @@ const StockInformationPage = () => {
                 followingDb.push(followingObj);
                 setChecked(true);
             }
-    
+
             updateUserDB(user.uid, followingDb, '/followingStocks', false)
             if(user.organization){
                 updateUserDB(user.uid, followingDb, '/followingStocks', true)
@@ -113,9 +113,6 @@ const StockInformationPage = () => {
             objc
         })
     }
-
-    
-
 
     return (
         <ContentWrapper>

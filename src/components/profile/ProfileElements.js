@@ -17,30 +17,50 @@ export const ContentWrapper = styled.main`
     header {
         display: flex;
         flex-direction: column;
+        gap: 2rem;
+        padding: 1rem;
         width: 100%;
         max-width: 40rem;
     }
 
-    .profile-avatar-svg {
-        height: 70px;
-        width: 70px;
-        fill: salmon;
-    }
+    section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    p {
-        font-size: 1.1rem;
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            img {
+                margin: 0;
+                width: 4rem;
+                height: 4rem;
+            }
+
+            span {
+                font-size: 1.25rem;
+                font-weight: 500;
+            }
+        }
     }
 `;
 
 export const ProfileSettingsBtn = styled(Link)`
-    font-size: 1.1rem;
+    display: inline-block;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.25rem;
     color: var(--primary-dark);
     text-decoration: none;
-`;
+    transition: background-color 125ms linear;
 
-export const BtnsWrapper = styled.div`
-    /* height: 65px; */
-    width: 150px;
-    display: flex;
-    flex-direction: column;
+    &:hover {
+        background-color: #e8e8e8;
+    }
+
+    i {
+        margin-right: 0.25rem;
+        vertical-align: top;
+    }
 `;

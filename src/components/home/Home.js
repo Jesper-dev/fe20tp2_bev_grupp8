@@ -33,7 +33,7 @@ const Home = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        let followingDb = []; 
+        let followingDb = [];
         let followingDbCrypto = [];
         let data;
         let dataCrypto;
@@ -86,7 +86,7 @@ const Home = () => {
             if (currencyData == null) {
                 return;
             }
-            setTotalCurrency(currencyData);
+            setTotalCurrency(currencyData.currency);
             dispatch(setCurrency(currencyData)); //behöver
         })
     }, []);

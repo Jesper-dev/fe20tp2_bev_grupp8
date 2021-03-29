@@ -20,7 +20,7 @@ const LikedPosts = () => {
 
 		firebase.db.ref('users/' + userData.uid + '/likedPosts').on('value', (snapshot) => {
 			let data = snapshot.val();
-			if (data == null) {
+			if (typeof data === "undefined" || data === null) {
 				setLikedPosts([])
 			} else {
 				setLikedPosts(data);
@@ -42,12 +42,11 @@ const LikedPosts = () => {
 
 	const handleChange = (e) => {
 		let index = userPost.findIndex(item => item.timestamp == e.target.value);
-
 		if (userPost[index].liked) {
 			userPost[index].likeCount--;
 			userPost[index].liked = false;
             // remove userPost[index] from likedArray
-			let likeIndex = likedPosts.findIndex(item => item.timestamp == e.target.value);
+			let likeIndex = likedPosts.findIndex(item => item.timestamp === e.target.value);
 			likedPosts.splice(likeIndex, 1);
 		} else {
 			userPost[index].likeCount++;
