@@ -26,21 +26,10 @@ export const ContentWrapper = styled.div`
             color: var(--primary);
             opacity: 1;
         }
-    }
 
-    textarea:focus {
-        height: 12rem;
-
-        button {
-            //display: flex;
-            margin-left: auto;
-            //justify-content: flex-end;
-            padding: 12px;
-            background-color: var(--primary);
-            border: none;
-            border-radius: 5px;
-            margin: 8px;
-        }
+		&:focus, &.not-empty {
+			height: 12rem;
+		}
     }
 
     button {

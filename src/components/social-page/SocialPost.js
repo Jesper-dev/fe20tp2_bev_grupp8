@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { FirebaseContext } from '../firebase/context';
-import 'firebase/database';
 import { ContentWrapper } from './SocialPostElements';
-import { withAuthorization } from '../session'; //must be logged in to see content
+// import 'firebase/database';
+// import { withAuthorization } from '../session';
 
 const SocialPost = () => {
     const firebase = useContext(FirebaseContext);
@@ -10,33 +10,38 @@ const SocialPost = () => {
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
-    const onChangeText = (event) => {
-        setPostData(event.target.value);
+    const onChangeText = (evt) => {
+        setPostData(evt.target.value);
+
+		if (evt.target.value.length > 0) {
+			evt.target.classList.add('not-empty');
+		} else {
+			evt.target.classList.remove('not-empty');
+		}
     };
 
-    const newPostKey = (userId, posts) => {
-        console.log('Hejsan');
-        firebase.db.ref('users/' + userId + '/post').set({
+    const updateData = (posts) => {
+        firebase.user(`${userData.uid}/post`).set({
             posts,
         });
     };
 
     const handleSubmitPost = (e) => {
         e.preventDefault();
-        let postsArr = firebase.db.ref('users/' + userData.uid + '/post/posts');
-        let data;
-        if (postsArr === null) {
-            return;
-        }
 
-        postsArr.on('value', (snapshot) => {
-            data = snapshot.val();
-            if (data == null) {
+		const userPostsObj = firebase.user(`${userData.uid}/post/posts`);
+        if (userPostsObj == null) {
+			return;
+        }
+		
+		let userPostsArr;
+
+        userPostsObj.on('value', (snapshot) => {
+            userPostsArr = snapshot.val();
+            if (userPostsArr == null) {
                 return;
             }
         });
-
-        // let date = Date.now();
 
         const postObj = {
             username: userData.username,
@@ -47,18 +52,16 @@ const SocialPost = () => {
         };
 
         if (postObj.content) {
-            data.push(postObj);
-            newPostKey(userData.uid, data);
-
-            console.log(data);
+            userPostsArr.push(postObj);
+            updateData(userPostsArr);
 
             setPostData('');
+			document.querySelector("textarea").classList.remove('not-empty');
         }
     };
 
     return (
         <ContentWrapper>
-            {/* <h2>Post here!</h2> */}
             <form onSubmit={handleSubmitPost}>
                 <textarea
                     placeholder="What's up?"
