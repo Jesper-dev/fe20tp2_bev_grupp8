@@ -75,6 +75,8 @@ const Trade = () => {
         let num = parseInt(number);
         if (buy === true) {
             calcCurrency = currency1 - currency2.toFixed(2) * num;
+        } else if (buy === false) {
+            calcCurrency = currency1 + currency2.toFixed(2) * num;
         }
 
         console.log(currency1, currency2, num);
@@ -155,34 +157,42 @@ const Trade = () => {
 
     //*When we sell a stock
     const onSell = (numOfStocks) => {
-        /*   if (sell === false) {
+        if (sell === false) {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
-            let snapshot = snapshotFirebase('/possessionStocks/array')
-            let currency = snapshotFirebase('/currency')
+            if (userData == null) return;
+            let currency = userData.currency.currency;
+            updateUserCurrency(
+                true,
+                currency,
+                chosenShare[0].regularMarketPrice,
+                numOfStocks
+            );
+            // let snapshot = snapshotFirebase('/possessionStocks/array')
+            // let currency = snapshotFirebase('/currency')
 
-            if (numOfStocks > holding || numOfStocks <= -1) {
-                console.log('You cant sell more than you have');
-                return;
-            }
+            // if (numOfStocks > holding || numOfStocks <= -1) {
+            //     console.log('You cant sell more than you have');
+            //     return;
+            // }
 
-            let newCurrency;
-            if(chosenShare[0].regularMarketPrice) {
-                newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
-            } else if(chosenShare[0].price) {
-                newCurrency = currency + chosenShare[0].price * numOfStocks;
-            }
-            sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
-            updateUserCurrency(user.uid, newCurrency, false);
-            updateUserDB(user.uid, snapshot, '/possessionStocks', false )
-            if(user.organization){
-                updateUserDB(user.uid, snapshot, '/possessionStocks', true )
-                updateUserCurrency(user.uid, newCurrency, true);
-            }
-            // checkHolding()
-            setSell(false);
-        } */
+            // let newCurrency;
+            // if(chosenShare[0].regularMarketPrice) {
+            //     newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
+            // } else if(chosenShare[0].price) {
+            //     newCurrency = currency + chosenShare[0].price * numOfStocks;
+            // }
+            // sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
+            // updateUserCurrency(user.uid, newCurrency, false);
+            // updateUserDB(user.uid, snapshot, '/possessionStocks', false )
+            // if(user.organization){
+            //     updateUserDB(user.uid, snapshot, '/possessionStocks', true )
+            //     updateUserCurrency(user.uid, newCurrency, true);
+            // }
+            // // checkHolding()
+            // setSell(false);
+        }
     };
 
     const sellStockFB = (arr, symbol, num) => {
