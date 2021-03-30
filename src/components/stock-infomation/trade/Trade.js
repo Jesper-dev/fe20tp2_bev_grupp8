@@ -7,11 +7,13 @@ import { ContentWrapper } from './TradeElements';
 
 const Trade = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
+    let stockIncludes;
 
     const [sell, setSell] = useState(false);
     const [numOfStocks, setNumOfStocks] = useState(0);
     const [clickedStock, setClickedStock] = useState({});
-    const [stockIncludes, setStockIncludes] = useState(false);
+    const [includedStock, setIncludedStock] = useState({});
+    // const [includes, setIncludes] = useState(false);
     const [buy, setBuy] = useState(false);
     const [holding, setHolding] = useState(0);
 
@@ -25,22 +27,13 @@ const Trade = () => {
         firebase.user(user.uid).on('value', (snapshot) => {
             const data = snapshot.val();
             if (!data) return;
-            console.log(data);
             setUserData(data);
-
-            // console.log(data)
-            // if (typeof data === "undefined" || data === null) {
-            //     setUserData({})
-            // } else {
-            //     setUserData(data)
-            // }
         });
-    }, []);
+        checkHolding();
+    }, [numOfStocks]);
 
     const onButtonClick = (e) => {
-        console.log('Hej');
         if (e.target.innerText == 'BUY') {
-            console.log('Inner text is buy');
             onBuy(numOfStocks);
         } else if (e.target.innerText == 'SELL') {
             onSell(numOfStocks);
@@ -48,25 +41,39 @@ const Trade = () => {
     };
 
     //*Checks if clicked stock has been bought before and if true display how many
-    // const checkHolding = async () => {
-    //     await firebase.user(user.uid).child('/possessionStocks/array').on('value', (snapshot) => {
-    //         let dataDB = snapshot.val()
-    //         if(dataDB == undefined) return;
-    //         dataDB.forEach(item => {
-    //             if (item.symbol === chosenShare[0].symbol) {
-    //                 setHolding(item.amount)
-    //                 // setClickedStock(item);
-    //             }
-    //         });
-    //     })
-    // };
+    const checkHolding = async () => {
+        await firebase
+            .user(user.uid)
+            .child('/possessionStocks')
+            .on('value', (snapshot) => {
+                let dataDB = snapshot.val();
+                if (dataDB == undefined) return;
+                let stocks = [];
+                for (const key in dataDB) {
+                    stocks.push({ ...dataDB[key] });
+                }
+                stocks.forEach((item) => {
+                    if (item.symbol == chosenShare[0].symbol) {
+                        setHolding(item.amount);
+                        // setClickedStock(item);
+                    }
+                });
+            });
+    };
 
-    const addToRecentlyBought = (objc) => {
+    const addToRecentlyBought = (symbol, name, amountOfStocks, price, user) => {
+        let amountNum = parseInt(amountOfStocks);
         firebase
             .organization(user.organization)
-            .child('/recentlyBought/')
+            .child('/recentlyBought')
             .update({
-                objc,
+                [symbol]: {
+                    name,
+                    amount: amountNum,
+                    price,
+                    symbol,
+                    user,
+                },
             });
     };
 
@@ -88,24 +95,76 @@ const Trade = () => {
         firebase.user(user.uid).child('/currency').set({
             currency,
         });
-        setNumOfStocks(0);
     };
 
-    const updateUserPossession = (symbol, name, amount, price) => {
-        let amountNum = parseInt(amount);
-        firebase
-            .user(user.uid)
-            .child('/possessionStocks')
-            .update({
-                [symbol]: {
-                    name,
-                    amount: amountNum,
-                    price,
-                },
-            });
+    const checkIfStockIncludes = (symbol) => {
+        let data = userData.possessionStocks;
+        let stocks = [];
+        for (const key in data) {
+            stocks.push({ ...data[key] });
+        }
+        for (let i = 0; i < stocks.length; i++) {
+            if (stocks[i].symbol == symbol) {
+                console.log('Den finns');
+                stockIncludes = true;
+                setIncludedStock(stocks[i]);
+                return;
+            } else {
+                console.log('Den finns inte');
+                stockIncludes = false;
+            }
+        }
     };
 
-    let stockIncludesVar = false;
+    const updateUserPossession = (buy, symbol, name, amountOfStocks, price) => {
+        checkIfStockIncludes(symbol);
+        let amountNum = parseInt(amountOfStocks);
+        if (buy == true) {
+            if (stockIncludes == true) {
+                let existingAmount = parseInt(includedStock.amount);
+                let resAmount = parseInt(existingAmount + amountNum);
+                firebase
+                    .user(user.uid)
+                    .child(`/possessionStocks/${symbol}/`)
+                    .update({
+                        amount: resAmount,
+                    });
+            } else {
+                firebase
+                    .user(user.uid)
+                    .child('/possessionStocks')
+                    .update({
+                        [symbol]: {
+                            name,
+                            amount: amountNum,
+                            price,
+                            symbol,
+                        },
+                    });
+            }
+        } else {
+            if (numOfStocks > holding || numOfStocks <= -1) {
+                console.log('You cant sell more than you have');
+                return;
+            }
+            let existingAmount = parseInt(includedStock.amount);
+            let resAmount = parseInt(existingAmount - amountNum);
+
+            if (resAmount <= 0) {
+                firebase
+                    .user(user.uid)
+                    .child(`/possessionStocks/${symbol}`)
+                    .remove();
+            } else {
+                firebase
+                    .user(user.uid)
+                    .child(`/possessionStocks/${symbol}`)
+                    .update({
+                        amount: resAmount,
+                    });
+            }
+        }
+    };
     const onBuy = (numOfStocks) => {
         if (buy === false) {
             setBuy(true);
@@ -120,13 +179,20 @@ const Trade = () => {
                 numOfStocks
             );
             updateUserPossession(
+                true,
                 chosenShare[0].symbol,
                 chosenShare[0].shortName,
                 numOfStocks,
                 chosenShare[0].regularMarketPrice
             );
-
-            // checkIfStockIncludes(array, chosenShare[0].symbol, numOfStocks)
+            addToRecentlyBought(
+                chosenShare[0].symbol,
+                chosenShare[0].shortName,
+                numOfStocks,
+                chosenShare[0].regularMarketPrice,
+                user.username
+            );
+            setNumOfStocks(0);
 
             // dispatch(setCurrency(newCurrency));
             // let currencyFixed = newCurrency.toFixed(2)
@@ -158,12 +224,6 @@ const Trade = () => {
             //     }
             // }
 
-            // const recentlyBoughtObjc = {
-            //     amount: numOfStocks,
-            //     symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
-            //     user: user.username
-            // }
-
             // // addToRecentlyBought(recentlyBoughtObjc)
             // // checkHolding()
             // setNumOfStocks(0);
@@ -187,10 +247,14 @@ const Trade = () => {
                 numOfStocks
             );
 
-            // if (numOfStocks > holding || numOfStocks <= -1) {
-            //     console.log('You cant sell more than you have');
-            //     return;
-            // }
+            updateUserPossession(
+                false,
+                chosenShare[0].symbol,
+                chosenShare[0].shortName,
+                numOfStocks,
+                chosenShare[0].regularMarketPrice
+            );
+            setNumOfStocks(0);
 
             // let newCurrency;
             // if(chosenShare[0].regularMarketPrice) {
@@ -222,24 +286,6 @@ const Trade = () => {
                     arr[index].amount = newNumber;
                 }
                 return;
-            }
-        }
-    };
-
-    const checkIfStockIncludes = (arr, symbol, num) => {
-        stockIncludesVar = false;
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].symbol == symbol) {
-                stockIncludesVar = true;
-                let index = arr.findIndex((x) => x.symbol == symbol);
-                console.log(index);
-                let number = parseInt(num);
-                let newNumber = (arr[index].amount += number);
-                arr[index].amount = newNumber;
-                i = arr.length;
-                return;
-            } else {
-                stockIncludesVar = false;
             }
         }
     };
@@ -288,6 +334,7 @@ const Trade = () => {
                     SELL
                 </button>
             </div>
+            <p>Your holding in this share is: {holding}</p>
         </ContentWrapper>
     );
 };
