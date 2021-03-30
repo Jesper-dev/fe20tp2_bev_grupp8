@@ -252,36 +252,6 @@ const Trade = () => {
             );
             setNumOfStocks(0);
             setBuy(false);
-
-            // dispatch(setCurrency(newCurrency));
-            // let currencyFixed = newCurrency.toFixed(2)
-            // let currencyNumber = parseInt(currencyFixed)
-
-            // if(stockIncludesVar == false ){
-            //     let amountOfStocks = parseInt(numOfStocks)
-            //     let percent = parseInt(chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent : chosenShare[0].regMarketChangePercent)
-            //     let price = parseInt(chosenShare[0].regularMarketPrice ? chosenShare[0].regularMarketPrice : chosenShare[0].price)
-            //     const stockObj = {
-            //         name: chosenShare[0].shortName ? chosenShare[0].shortName : chosenShare[0].name,
-            //         symbol: chosenShare[0].symbol ? chosenShare[0].symbol : '',
-            //         price: price,
-            //         amount: amountOfStocks,
-            //         region: chosenShare[0].region,
-            //         regMarketChangePercent: percent
-            //     }
-            //     array.push(stockObj)
-            //     updateUserDB(user.uid, array, '/possessionStocks', false )
-            // if(user.organization){
-            //     updateUserDB(user.uid, array, '/possessionStocks', true )
-            //     updateUserCurrency(user.uid, currencyNumber, true);
-            // }
-            // } else if(stockIncludesVar == true) {
-            //     updateUserDB(user.uid, array, '/possessionStocks', false )
-            //     if(user.organization){
-            //         updateUserDB(user.uid, array, '/possessionStocks', true )
-            //         updateUserCurrency(user.uid, currencyNumber, true);
-            //     }
-            // }
         }
     };
 
@@ -309,36 +279,6 @@ const Trade = () => {
             );
             setNumOfStocks(0);
             setSell(false);
-
-            // let newCurrency;
-            // if(chosenShare[0].regularMarketPrice) {
-            //     newCurrency = currency + chosenShare[0].regularMarketPrice * numOfStocks;
-            // } else if(chosenShare[0].price) {
-            //     newCurrency = currency + chosenShare[0].price * numOfStocks;
-            // }
-            // sellStockFB(snapshot, chosenShare[0].symbol, numOfStocks)
-            // updateUserCurrency(user.uid, newCurrency, false);
-            // updateUserDB(user.uid, snapshot, '/possessionStocks', false )
-            // if(user.organization){
-            //     updateUserDB(user.uid, snapshot, '/possessionStocks', true )
-            //     updateUserCurrency(user.uid, newCurrency, true);
-            // }
-        }
-    };
-
-    const sellStockFB = (arr, symbol, num) => {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].symbol == symbol) {
-                let index = arr.findIndex((x) => x.symbol == symbol);
-                let number = parseInt(num);
-                let newNumber = (arr[index].amount -= number);
-                if (newNumber <= 0) {
-                    arr.splice(index, 1);
-                } else {
-                    arr[index].amount = newNumber;
-                }
-                return;
-            }
         }
     };
 
@@ -352,15 +292,9 @@ const Trade = () => {
                 <label>How many would you like to trade?</label>
                 <input
                     type="number"
-                    // style={buy ? { display: 'block' } : { display: 'none' }}
                     onChange={(e) => setNumOfStocks(e.target.value)}
                     value={numOfStocks}
                 />
-                {/* <input
-                    type="number"
-                    style={sell ? { display: 'block' } : { display: 'none' }}
-                    onChange={(e) => console.log(e.target.value)}
-                /> */}
             </div>
             <div className="buttonWrapper">
                 <button

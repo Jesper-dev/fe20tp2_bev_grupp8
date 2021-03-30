@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import LineChart from '../charts/InfopageLinechart';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
-import { FirebaseContext } from '../firebase/context'
-import BackButton from '../shared/button/back-button/BackButton'
+import { FirebaseContext } from '../firebase/context';
+import BackButton from '../shared/button/back-button/BackButton';
 
 import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -30,85 +30,100 @@ const StockInformationPage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
-            const data = snapshot.val()
-            if(!data) return
+        firebase
+            .user(user.uid)
+            .child('/followingStocks/array')
+            .on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
 
-
-            data.forEach((item) => {
-                if (item.symbol === chosenShare[0].symbol) {
-                    setChecked(true);
-                } else if (!item.symbol === chosenShare[0].symbol) {
-                    setChecked(false);
-                }
+                data.forEach((item) => {
+                    if (item.symbol === chosenShare[0].symbol) {
+                        setChecked(true);
+                    } else if (!item.symbol === chosenShare[0].symbol) {
+                        setChecked(false);
+                    }
+                });
             });
-        })
 
         return () => {
             // unsubscribe()
-        }
+        };
     }, []);
 
     const updateUserCurrency = (userId, currency, org) => {
-        if(org == true) {
-            firebase.organization(user.organization).child(`${userId}/currency`).update({
-                currency
-            })
+        if (org == true) {
+            firebase
+                .organization(user.organization)
+                .child(`${userId}/currency`)
+                .update({
+                    currency,
+                });
         } else {
             firebase.user(userId).child(`/currency`).update({
-                currency
-            })
+                currency,
+            });
         }
     };
 
     const updateUserDB = (userId, array, directory, org) => {
-        if(org == true){
-            firebase.organization(user.organization).child(`${userId}/${directory}`).set({
-                array
-            })
+        if (org == true) {
+            firebase
+                .organization(user.organization)
+                .child(`${userId}/${directory}`)
+                .set({
+                    array,
+                });
         } else {
             firebase.user(userId).child(`/${directory}`).set({
-                array
-            })
+                array,
+            });
         }
-    }
+    };
 
     //*Checks the holding of your stock
 
     //*When you follow a stock
     const onFollow = () => {
-        firebase.user(user.uid).child('/followingStocks/array').on('value', (snapshot) => {
-            const followingDb = snapshot.val();
-            if (followingDb === null) {
-                return;
-            }
-            let name = chosenShare[0].symbol;
-            let index = followingDb.findIndex((x) => x.symbol === name);
-            if (index > -1) {
-                followingDb.splice(index, 1);
-                setChecked(false);
-            } else {
-                const followingObj = {
-                    symbol: chosenShare[0].symbol,
-                    regularMarketPrice: chosenShare[0].regularMarketPrice,
-                    regularMarketChangePercent: chosenShare[0].regularMarketChangePercent,
-                    shortName: chosenShare[0].shortName,
-                };
-                followingDb.push(followingObj);
-                setChecked(true);
-            }
+        firebase
+            .user(user.uid)
+            .child('/followingStocks/array')
+            .on('value', (snapshot) => {
+                const followingDb = snapshot.val();
+                if (followingDb === null) {
+                    return;
+                }
+                let name = chosenShare[0].symbol;
+                let index = followingDb.findIndex((x) => x.symbol === name);
+                if (index > -1) {
+                    followingDb.splice(index, 1);
+                    setChecked(false);
+                } else {
+                    const followingObj = {
+                        symbol: chosenShare[0].symbol,
+                        regularMarketPrice: chosenShare[0].regularMarketPrice,
+                        regularMarketChangePercent:
+                            chosenShare[0].regularMarketChangePercent,
+                        shortName: chosenShare[0].shortName,
+                    };
+                    followingDb.push(followingObj);
+                    setChecked(true);
+                }
 
-            updateUserDB(user.uid, followingDb, '/followingStocks', false)
-            if(user.organization){
-                updateUserDB(user.uid, followingDb, '/followingStocks', true)
-            }
-            dispatch(setFollowing(followingDb));
-        })
+                updateUserDB(user.uid, followingDb, '/followingStocks', false);
+                if (user.organization) {
+                    updateUserDB(
+                        user.uid,
+                        followingDb,
+                        '/followingStocks',
+                        true
+                    );
+                }
+                dispatch(setFollowing(followingDb));
+            });
     };
 
     const onChange = () => setChecked(!checked);
-
-
 
     return (
         <ContentWrapper>
@@ -118,8 +133,7 @@ const StockInformationPage = () => {
                     <div className="stockinfo-map-wrapper" key={index}>
                         <h1>{item.shortName ? item.shortName : item.name}</h1>
                         <div className="chart-topbar-wrapper">
-                            <TradeBtns to="/trade">BUY</TradeBtns>
-                            <TradeBtns to="/trade">SELL</TradeBtns>
+                            <TradeBtns to="/trade">TRADE</TradeBtns>
                             <WatchStockButton
                                 eyecolor={
                                     checked
