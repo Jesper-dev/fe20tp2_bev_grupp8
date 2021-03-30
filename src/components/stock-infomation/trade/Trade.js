@@ -67,12 +67,13 @@ const Trade = () => {
         amountOfStocks,
         price,
         user,
-        percent
+        percent,
+        org
     ) => {
         let amountNum = parseInt(amountOfStocks);
         firebase
-            .organization('Lets_Vest_AB')
-            .child(`/recentlyBought/`)
+            .organization(org)
+            .child('/recentlyBought')
             .set({
                 [symbol]: {
                     name,
@@ -248,7 +249,8 @@ const Trade = () => {
                 numOfStocks,
                 chosenShare[0].regularMarketPrice,
                 user.username,
-                chosenShare[0].regularMarketChangePercent
+                chosenShare[0].regularMarketChangePercent,
+                user.organization
             );
             setNumOfStocks(0);
             setBuy(false);

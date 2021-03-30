@@ -1,19 +1,19 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, { useEffect, useContext, useState } from 'react';
 
 import { Bar, Pie } from 'react-chartjs-2'; //changed!
 
 import { FirebaseContext } from '../../../../firebase/context';
 
-import { ContentWrapper } from './MostFollowedCryptoElements'
+import { ContentWrapper } from './MostFollowedCryptoElements';
 
-const MostFollowedCrypto = ({orgName}) => {
+const MostFollowedCrypto = ({ orgName }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const firebase = useContext(FirebaseContext)
-    const [orgDataState, setOrgDataState] = useState([])
-    const [mostFollowedTopState, setMostFollowedTopState] = useState([])
-    const [stockLabelsState, setStockLabelsState] = useState([])
-    const [stockAmountState, setStockAmountState] = useState([])
-    const [showBar, setShowBar] = useState(false)
+    const firebase = useContext(FirebaseContext);
+    const [orgDataState, setOrgDataState] = useState([]);
+    const [mostFollowedTopState, setMostFollowedTopState] = useState([]);
+    const [stockLabelsState, setStockLabelsState] = useState([]);
+    const [stockAmountState, setStockAmountState] = useState([]);
+    const [showBar, setShowBar] = useState(false);
 
     let orgFollowArray = [];
     // let sortedArray = [];
@@ -25,68 +25,69 @@ const MostFollowedCrypto = ({orgName}) => {
 
     const findMostFrequent = (arr) => {
         return arr
-          .reduce((acc, cur, ind, arr) => {
-              if (arr.indexOf(cur) === ind) {
-                  return [...acc, [cur, 1]];
-              } else {
+            .reduce((acc, cur, ind, arr) => {
+                if (arr.indexOf(cur) === ind) {
+                    return [...acc, [cur, 1]];
+                } else {
                     acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
-                      cur,
-                      acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
-                  ];
-                  maxElState = acc
-                  return acc;
-              }
-          }, [])
-          .sort((a, b) => b[1] - a[1])
-          .filter((cur, ind, arr) => cur[1] === arr[0][1])
-          .map((cur) => cur[0]);
-      }
+                        cur,
+                        acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
+                    ];
+                    maxElState = acc;
+                    return acc;
+                }
+            }, [])
+            .sort((a, b) => b[1] - a[1])
+            .filter((cur, ind, arr) => cur[1] === arr[0][1])
+            .map((cur) => cur[0]);
+    };
 
     useEffect(() => {
-        const orgFollowedCryptos = firebase.db.ref('organizations/' + user.organization + '/users');
-        orgFollowedCryptos.on('value', (snapshot) => {
-            const followedCryptos = snapshot.val();
-            if (!followedCryptos) return;
-            for (const key in followedCryptos) {
-                orgData.push({ ...followedCryptos[key] });
-            }
-            makeArray(orgData);
-        });
+        firebase
+            .organization(user.organization)
+            .child('/users')
+            .on('value', (snapshot) => {
+                const followedCryptos = snapshot.val();
+                if (!followedCryptos) return;
+                for (const key in followedCryptos) {
+                    orgData.push({ ...followedCryptos[key] });
+                }
+                makeArray(orgData);
+            });
     }, []);
 
-     //*This makes the array with all the stocks being followed in the organization
-     const makeArray = (arr) => {
+    //*This makes the array with all the stocks being followed in the organization
+    const makeArray = (arr) => {
         let j = 0;
         let i = 0;
-        while(j < arr.length) {
-            if(arr[j].followingCrypto.array[i] === undefined){
+        while (j < arr.length) {
+            if (arr[j].followingCrypto.array[i] === undefined) {
                 i = 0;
-                j++
+                j++;
             } else {
-                orgFollowArray.push(arr[j].followingCrypto.array[i].symbol)
+                orgFollowArray.push(arr[j].followingCrypto.array[i].symbol);
                 i++;
             }
         }
-        setOrgDataState(orgFollowArray)
-        findMostFrequent(orgFollowArray)
-        makeFinalArr(maxElState)
-    }
+        setOrgDataState(orgFollowArray);
+        findMostFrequent(orgFollowArray);
+        makeFinalArr(maxElState);
+    };
 
     const makeFinalArr = (arr) => {
         arr.forEach((item) => {
-            stockAmount.push(item[1])
-            stockLabels.push(item[0])
-            setStockAmountState(stockAmount)
-            setStockLabelsState(stockLabels)
+            stockAmount.push(item[1]);
+            stockLabels.push(item[0]);
+            setStockAmountState(stockAmount);
+            setStockLabelsState(stockLabels);
             const objFull = {
                 name: item[0],
-                count: item[1]
-            }
-            mostFollowedTop.push(objFull)
-
-        })
-        setMostFollowedTopState(mostFollowedTop)
-    }
+                count: item[1],
+            };
+            mostFollowedTop.push(objFull);
+        });
+        setMostFollowedTopState(mostFollowedTop);
+    };
 
     let data = {
         labels: stockLabelsState,
@@ -115,9 +116,11 @@ const MostFollowedCrypto = ({orgName}) => {
         <ContentWrapper>
             <h4>{orgName} Mosts Followed Cryptos</h4>
             <button onClick={() => setShowBar(!showBar)}>
-                {showBar
-                    ? <i className="fas fa-chart-pie"></i>
-                    : <i className="far fa-chart-bar"></i>}
+                {showBar ? (
+                    <i className="fas fa-chart-pie"></i>
+                ) : (
+                    <i className="far fa-chart-bar"></i>
+                )}
             </button>
             {showBar ? (
                 <Bar
@@ -141,7 +144,7 @@ const MostFollowedCrypto = ({orgName}) => {
                 />
             )}
         </ContentWrapper>
-    )
-}
+    );
+};
 
-export default MostFollowedCrypto
+export default MostFollowedCrypto;

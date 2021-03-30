@@ -1,47 +1,47 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, { useEffect, useContext, useState } from 'react';
 
 import { FirebaseContext } from '../../../../firebase/context';
 
-import { ContentWrapper, EmployeesValue } from './TotalCompValueElements'
+import { ContentWrapper, EmployeesValue } from './TotalCompValueElements';
 
 const TotalCompValue = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const firebase = useContext(FirebaseContext)
-    const [totalOrgCurrency, setTotalOrgCurrency] = useState(0)
-    const [orgDataState, setOrgDataState] = useState([])
+    const firebase = useContext(FirebaseContext);
+    const [totalOrgCurrency, setTotalOrgCurrency] = useState(0);
+    const [orgDataState, setOrgDataState] = useState([]);
 
-    let totalValue = []
-    let orgData = []
+    let totalValue = [];
+    let orgData = [];
     let totalCurrency = 0;
 
     useEffect(() => {
         totalCurrency = 0;
-        const orgValueFirebase = firebase.db.ref('organizations/' + user.organization + '/users');
-        orgValueFirebase.on('value', (snapshot) => {
-            totalValue = snapshot.val();
-            if (!totalValue) return;
+        firebase
+            .organization(user.organization)
+            .child('/users')
+            .on('value', (snapshot) => {
+                totalValue = snapshot.val();
+                if (!totalValue) return;
 
-            for (const key in totalValue) {
-                orgData.push({ ...totalValue[key] });
-            }
-            setOrgDataState(orgData)
+                for (const key in totalValue) {
+                    orgData.push({ ...totalValue[key] });
+                }
+                setOrgDataState(orgData);
 
-            for(let i = 0; i < orgData.length; i++){
-                let currency = orgData[i].currency.currency;
-                totalCurrency += currency;
-            }
+                for (let i = 0; i < orgData.length; i++) {
+                    let currency = orgData[i].currency.currency;
+                    totalCurrency += currency;
+                }
 
-            let newInt = parseInt(totalCurrency)
-            setTotalOrgCurrency(newInt)
-
-        });
-    }, [])
-
+                let newInt = parseInt(totalCurrency);
+                setTotalOrgCurrency(newInt);
+            });
+    }, []);
 
     return (
         <ContentWrapper>
-             <header>
-                 <div className="total-wrapper">
+            <header>
+                <div className="total-wrapper">
                     <h1>
                         Comp. Wallet{' '}
                         <span
@@ -60,22 +60,25 @@ const TotalCompValue = () => {
                     </p>
                 </div>
 
-                    {orgDataState.map((item, i) => {
-                        return (
+                {orgDataState.map((item, i) => {
+                    return (
                         <EmployeesValue key={i}>
                             <p>{item.username}</p>
-                            <span style={
-                                -1 > 0
-                                    ? { color: '#58D7AC' }
-                                    : { color: '#DD577D' }
-                            }>{item.currency.currency.toFixed(2)}$</span>
+                            <span
+                                style={
+                                    -1 > 0
+                                        ? { color: '#58D7AC' }
+                                        : { color: '#DD577D' }
+                                }
+                            >
+                                {item.currency.currency.toFixed(2)}$
+                            </span>
                         </EmployeesValue>
-                        )
-                    })}
-
-                </header>
+                    );
+                })}
+            </header>
         </ContentWrapper>
-    )
-}
+    );
+};
 
-export default TotalCompValue
+export default TotalCompValue;

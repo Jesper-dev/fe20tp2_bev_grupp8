@@ -31,7 +31,7 @@ const RecentlyBought = () => {
                 <p>{dataDB.user}</p>
                 <p>{dataDB.symbol}</p>
                 <p>Amount: {dataDB.amount}</p>
-                <p>{dataDB.price * dataDB.amount}</p>
+                <p>{dataDB.price * dataDB.amount}$</p>
             </div>
         </ContentWrapper>
     );
