@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-// import { FirebaseContext } from '../firebase/context'
-import firebase from 'firebase'
+import React, { useEffect, useContext } from 'react';
+import { FirebaseContext } from '../firebase/context'
+// import firebase from 'firebase'
 import UserCard from './UserCard'
 
 import SocialPost from './SocialPost';
@@ -17,11 +17,12 @@ let usersArray = []
 const SocialPage = () => {
     const dispatch = useDispatch();
     const filteredUsers = useSelector((state) => state.FilteredUsers)
+	const firebase = useContext(FirebaseContext);
     useEffect(() => {
 
         usersArray = []
         //* Gets a list of users in our database
-        const users = firebase.database().ref('users');
+        const users = firebase.users();
         users.on('value', (snapshot) => {
             const data = snapshot.val();
             for (const key in data) {
