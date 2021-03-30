@@ -47,31 +47,6 @@ export const ContentWrapper = styled.div`
         justify-content: flex-end;
         font-size: 1rem;
         color: var(--body-fourth);
-
-  /*       .buy-sell-btn {
-            padding: 0.5rem 1.25rem;
-            background: none;
-            border: 0.125rem solid transparent;
-            outline: none;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-weight: 500;
-            font-family: inherit;
-        }
-
-        button:focus {
-            box-shadow: var(--box-shadow-focus);
-        }
-
-        button:not(:focus-visible) {
-            box-shadow: none;
-        }
-
-        .buttonWrapper {
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-        } */
     }
 
     label {
@@ -126,7 +101,7 @@ export const WatchStockButton = styled.button`
     outline: none;
     margin-right: 18px;
     cursor: pointer;
-    
+
     .fa-eye {
         padding-left: 4px;
         font-size: 1.2rem;

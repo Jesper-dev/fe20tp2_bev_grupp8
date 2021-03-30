@@ -75,8 +75,8 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.TRADE}>
                         <Trade />
-                        <NavbarLeft />
-                        <Toolbar />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.INFO_CRYPTO}>
                         <CryptoInfoPage />

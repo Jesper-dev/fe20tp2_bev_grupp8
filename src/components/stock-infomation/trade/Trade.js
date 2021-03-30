@@ -1,52 +1,46 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
-import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
+// import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
+import { ContentWrapper } from './TradeElements';
 
 const Trade = () => {
-
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     const [sell, setSell] = useState(false);
     const [numOfStocks, setNumOfStocks] = useState(0);
     const [clickedStock, setClickedStock] = useState({});
-    const [stockIncludes, setStockIncludes] = useState(false)
+    const [stockIncludes, setStockIncludes] = useState(false);
     const [buy, setBuy] = useState(false);
     const [holding, setHolding] = useState(0);
 
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState({});
     /* let userDataVariable = {} */
-
 
     const chosenShare = useSelector((state) => state.ChosenShare);
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-            firebase.user(user.uid).on('value', (snapshot) => {
-                const data = snapshot.val()
-                if(!data) return;
-                setUserData(data)
+        firebase.user(user.uid).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (!data) return;
+            console.log(data);
+            setUserData(data);
 
-                console.log(userData.currency)
-                // console.log(data)
-                // if (typeof data === "undefined" || data === null) {
-                //     setUserData({})
-                // } else {
-                //     setUserData(data)
-                // }
-            })
-
-
-    }, [])
-
-
-/*     console.log(userData.currency.currency) */
+            // console.log(data)
+            // if (typeof data === "undefined" || data === null) {
+            //     setUserData({})
+            // } else {
+            //     setUserData(data)
+            // }
+        });
+    }, []);
 
     const onButtonClick = (e) => {
-        console.log("Hej")
+        console.log('Hej');
         if (e.target.innerText == 'BUY') {
-            console.log("Inner text is buy")
+            console.log('Inner text is buy');
             onBuy(numOfStocks);
         } else if (e.target.innerText == 'SELL') {
             onSell(numOfStocks);
@@ -68,37 +62,45 @@ const Trade = () => {
     // };
 
     const addToRecentlyBought = (objc) => {
-        firebase.organization(user.organization).child('/recentlyBought/').update({
-            objc
-        })
-    }
+        firebase
+            .organization(user.organization)
+            .child('/recentlyBought/')
+            .update({
+                objc,
+            });
+    };
 
-    const updateUserCurrency = (buy, currency1, currency2, number ) => {
-        let currency = 0;
-        let num = parseInt(number)
-        if(buy === true) {
-            currency = currency1 - currency2.toFixed(2) * num;
+    const updateUserCurrency = (buy, currency1, currency2, number) => {
+        let calcCurrency = 0;
+        let num = parseInt(number);
+        if (buy === true) {
+            calcCurrency = currency1 - currency2.toFixed(2) * num;
         }
 
+        console.log(currency1, currency2, num);
+
+        let currencyFixed = calcCurrency.toFixed(2);
+        let currency = parseInt(currencyFixed);
         firebase.user(user.uid).child('/currency').set({
-            currency
-        })
-    }
+            currency,
+        });
+        return;
+    };
 
-    let stockIncludesVar = false
+    let stockIncludesVar = false;
     const onBuy = (numOfStocks) => {
-
         if (buy === false) {
             setBuy(true);
             setSell(false);
         } else if (buy === true) {
-            firebase.user(user.uid).on('value', (snapshot) => {
-                let data = snapshot.val()
-                if(data == null) return
-                let currency = data.currency;
-                updateUserCurrency(true, currency, chosenShare[0].regularMarketPrice, numOfStocks)
-                console.log('Userdata :', data)
-            })
+            if (userData == null) return;
+            let currency = userData.currency.currency;
+            updateUserCurrency(
+                true,
+                currency,
+                chosenShare[0].regularMarketPrice,
+                numOfStocks
+            );
 
             // if (newCurrency <= 0) {
             //     alert('Insufficient funds')
@@ -109,7 +111,6 @@ const Trade = () => {
             // dispatch(setCurrency(newCurrency));
             // let currencyFixed = newCurrency.toFixed(2)
             // let currencyNumber = parseInt(currencyFixed)
-
 
             // updateUserCurrency(user.uid, currencyNumber, false);
             // if(stockIncludesVar == false ){
@@ -154,7 +155,7 @@ const Trade = () => {
 
     //*When we sell a stock
     const onSell = (numOfStocks) => {
-      /*   if (sell === false) {
+        /*   if (sell === false) {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
@@ -182,49 +183,61 @@ const Trade = () => {
             // checkHolding()
             setSell(false);
         } */
-
     };
 
     const sellStockFB = (arr, symbol, num) => {
-        for(let i = 0; i < arr.length; i++){
-            if(arr[i].symbol == symbol) {
-                let index = arr.findIndex(x => x.symbol == symbol)
-                let number = parseInt(num)
-                let newNumber = arr[index].amount -= number
-                if(newNumber <= 0){
-                    arr.splice(index, 1)
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].symbol == symbol) {
+                let index = arr.findIndex((x) => x.symbol == symbol);
+                let number = parseInt(num);
+                let newNumber = (arr[index].amount -= number);
+                if (newNumber <= 0) {
+                    arr.splice(index, 1);
                 } else {
-                    arr[index].amount = newNumber
+                    arr[index].amount = newNumber;
                 }
                 return;
             }
         }
-    }
+    };
 
     const checkIfStockIncludes = (arr, symbol, num) => {
         stockIncludesVar = false;
-        for(let i = 0; i < arr.length; i++){
-            if(arr[i].symbol == symbol) {
-                stockIncludesVar = true
-                let index = arr.findIndex(x => x.symbol == symbol)
-                console.log(index)
-                let number = parseInt(num)
-                let newNumber = arr[index].amount += number
-                arr[index].amount = newNumber
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].symbol == symbol) {
+                stockIncludesVar = true;
+                let index = arr.findIndex((x) => x.symbol == symbol);
+                console.log(index);
+                let number = parseInt(num);
+                let newNumber = (arr[index].amount += number);
+                arr[index].amount = newNumber;
                 i = arr.length;
                 return;
             } else {
-                stockIncludesVar = false
+                stockIncludesVar = false;
             }
         }
-    }
+    };
 
-    console.log(userData)
+    console.log(userData);
     return (
-        <SearchBarElement>
+        <ContentWrapper>
             {/* <p>{userData ? userData : ''}</p> */}
-       {/*      <span>Wallet { userData }</span> */}
-            <input type="number" />
+            {/*      <span>Wallet { userData }</span> */}
+            {/* <input type="number" /> */}
+            <div className="amountWrapper">
+                <label>How many would you like to trade?</label>
+                <input
+                    type="number"
+                    // style={buy ? { display: 'block' } : { display: 'none' }}
+                    onChange={(e) => setNumOfStocks(e.target.value)}
+                />
+                {/* <input
+                    type="number"
+                    style={sell ? { display: 'block' } : { display: 'none' }}
+                    onChange={(e) => console.log(e.target.value)}
+                /> */}
+            </div>
             <div className="buttonWrapper">
                 <button
                     className="buy-sell-btn"
@@ -237,16 +250,6 @@ const Trade = () => {
                     BUY
                 </button>
 
-                <input
-                    type="number"
-                    style={buy ? { display: 'block' } : { display: 'none' }}
-                    onChange={(e) => setNumOfStocks(e.target.value)}
-                />
-                <input
-                    type="number"
-                    style={sell ? { display: 'block' } : { display: 'none' }}
-                    onChange={(e) => console.log(e.target.value)}
-                />
                 <button
                     className="buy-sell-btn"
                     style={{
@@ -259,8 +262,8 @@ const Trade = () => {
                     SELL
                 </button>
             </div>
-        </SearchBarElement>
+        </ContentWrapper>
     );
-}
+};
 
-export default Trade
+export default Trade;
