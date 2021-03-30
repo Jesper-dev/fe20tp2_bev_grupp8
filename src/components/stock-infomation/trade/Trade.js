@@ -61,18 +61,26 @@ const Trade = () => {
             });
     };
 
-    const addToRecentlyBought = (symbol, name, amountOfStocks, price, user) => {
+    const addToRecentlyBought = (
+        symbol,
+        name,
+        amountOfStocks,
+        price,
+        user,
+        percent
+    ) => {
         let amountNum = parseInt(amountOfStocks);
         firebase
-            .organization(user.organization)
-            .child('/recentlyBought')
-            .update({
+            .organization('Lets_Vest_AB')
+            .child(`/recentlyBought/`)
+            .set({
                 [symbol]: {
                     name,
                     amount: amountNum,
                     price,
                     symbol,
                     user,
+                    percent,
                 },
             });
     };
@@ -132,10 +140,19 @@ const Trade = () => {
                 let resAmount = parseInt(existingAmount + amountNum);
                 firebase
                     .user(user.uid)
-                    .child(`/possessionStocks/${symbol}/`)
+                    .child(`/possessionStocks/${symbol}`)
                     .update({
                         amount: resAmount,
                     });
+
+                if (user.organization) {
+                    firebase
+                        .organization(user.organization)
+                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .update({
+                            amount: resAmount,
+                        });
+                }
             } else {
                 firebase
                     .user(user.uid)
@@ -149,6 +166,20 @@ const Trade = () => {
                             percent,
                         },
                     });
+                if (user.organization) {
+                    firebase
+                        .organization(user.organization)
+                        .child(`/users/${user.uid}/possessionStocks`)
+                        .update({
+                            [symbol]: {
+                                name,
+                                amount: amountNum,
+                                price,
+                                symbol,
+                                percent,
+                            },
+                        });
+                }
             }
         } else {
             if (numOfStocks > holding || numOfStocks <= -1) {
@@ -164,6 +195,13 @@ const Trade = () => {
                     .user(user.uid)
                     .child(`/possessionStocks/${symbol}`)
                     .remove();
+
+                if (user.organization) {
+                    firebase
+                        .organization(user.organization)
+                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .remove();
+                }
             } else {
                 firebase
                     .user(user.uid)
@@ -171,6 +209,15 @@ const Trade = () => {
                     .update({
                         amount: resAmount,
                     });
+
+                if (user.organization) {
+                    firebase
+                        .organization(user.organization)
+                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .update({
+                            amount: resAmount,
+                        });
+                }
             }
         }
     };
@@ -200,10 +247,11 @@ const Trade = () => {
                 chosenShare[0].shortName,
                 numOfStocks,
                 chosenShare[0].regularMarketPrice,
-                chosenShare[0].regularMarketChangePercent,
-                user.username
+                user.username,
+                chosenShare[0].regularMarketChangePercent
             );
             setNumOfStocks(0);
+            setBuy(false);
 
             // dispatch(setCurrency(newCurrency));
             // let currencyFixed = newCurrency.toFixed(2)
@@ -234,12 +282,6 @@ const Trade = () => {
             //         updateUserCurrency(user.uid, currencyNumber, true);
             //     }
             // }
-
-            // // addToRecentlyBought(recentlyBoughtObjc)
-            // // checkHolding()
-            // setNumOfStocks(0);
-            // setBuy(false);
-            // setStockIncludes(false)
         }
     };
 
@@ -266,6 +308,7 @@ const Trade = () => {
                 chosenShare[0].regularMarketPrice
             );
             setNumOfStocks(0);
+            setSell(false);
 
             // let newCurrency;
             // if(chosenShare[0].regularMarketPrice) {
@@ -280,8 +323,6 @@ const Trade = () => {
             //     updateUserDB(user.uid, snapshot, '/possessionStocks', true )
             //     updateUserCurrency(user.uid, newCurrency, true);
             // }
-            // // checkHolding()
-            // setSell(false);
         }
     };
 
