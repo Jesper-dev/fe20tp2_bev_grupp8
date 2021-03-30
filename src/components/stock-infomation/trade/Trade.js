@@ -75,18 +75,34 @@ const Trade = () => {
         let num = parseInt(number);
         if (buy === true) {
             calcCurrency = currency1 - currency2.toFixed(2) * num;
+            if (calcCurrency <= 0) {
+                alert('Insufficient funds');
+                return;
+            }
         } else if (buy === false) {
             calcCurrency = currency1 + currency2.toFixed(2) * num;
         }
-
-        console.log(currency1, currency2, num);
 
         let currencyFixed = calcCurrency.toFixed(2);
         let currency = parseInt(currencyFixed);
         firebase.user(user.uid).child('/currency').set({
             currency,
         });
-        return;
+        setNumOfStocks(0);
+    };
+
+    const updateUserPossession = (symbol, name, amount, price) => {
+        let amountNum = parseInt(amount);
+        firebase
+            .user(user.uid)
+            .child('/possessionStocks')
+            .update({
+                [symbol]: {
+                    name,
+                    amount: amountNum,
+                    price,
+                },
+            });
     };
 
     let stockIncludesVar = false;
@@ -103,18 +119,19 @@ const Trade = () => {
                 chosenShare[0].regularMarketPrice,
                 numOfStocks
             );
+            updateUserPossession(
+                chosenShare[0].symbol,
+                chosenShare[0].shortName,
+                numOfStocks,
+                chosenShare[0].regularMarketPrice
+            );
 
-            // if (newCurrency <= 0) {
-            //     alert('Insufficient funds')
-            //     return;
-            // }
             // checkIfStockIncludes(array, chosenShare[0].symbol, numOfStocks)
 
             // dispatch(setCurrency(newCurrency));
             // let currencyFixed = newCurrency.toFixed(2)
             // let currencyNumber = parseInt(currencyFixed)
 
-            // updateUserCurrency(user.uid, currencyNumber, false);
             // if(stockIncludesVar == false ){
             //     let amountOfStocks = parseInt(numOfStocks)
             //     let percent = parseInt(chosenShare[0].regularMarketChangePercent ? chosenShare[0].regularMarketChangePercent : chosenShare[0].regMarketChangePercent)
@@ -164,13 +181,11 @@ const Trade = () => {
             if (userData == null) return;
             let currency = userData.currency.currency;
             updateUserCurrency(
-                true,
+                false,
                 currency,
                 chosenShare[0].regularMarketPrice,
                 numOfStocks
             );
-            // let snapshot = snapshotFirebase('/possessionStocks/array')
-            // let currency = snapshotFirebase('/currency')
 
             // if (numOfStocks > holding || numOfStocks <= -1) {
             //     console.log('You cant sell more than you have');
@@ -241,6 +256,7 @@ const Trade = () => {
                     type="number"
                     // style={buy ? { display: 'block' } : { display: 'none' }}
                     onChange={(e) => setNumOfStocks(e.target.value)}
+                    value={numOfStocks}
                 />
                 {/* <input
                     type="number"
