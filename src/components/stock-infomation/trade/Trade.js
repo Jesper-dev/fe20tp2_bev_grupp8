@@ -116,7 +116,14 @@ const Trade = () => {
         }
     };
 
-    const updateUserPossession = (buy, symbol, name, amountOfStocks, price) => {
+    const updateUserPossession = (
+        buy,
+        symbol,
+        name,
+        amountOfStocks,
+        price,
+        percent
+    ) => {
         checkIfStockIncludes(symbol);
         let amountNum = parseInt(amountOfStocks);
         if (buy == true) {
@@ -139,6 +146,7 @@ const Trade = () => {
                             amount: amountNum,
                             price,
                             symbol,
+                            percent,
                         },
                     });
             }
@@ -151,6 +159,7 @@ const Trade = () => {
             let resAmount = parseInt(existingAmount - amountNum);
 
             if (resAmount <= 0) {
+                setHolding(0);
                 firebase
                     .user(user.uid)
                     .child(`/possessionStocks/${symbol}`)
@@ -183,13 +192,15 @@ const Trade = () => {
                 chosenShare[0].symbol,
                 chosenShare[0].shortName,
                 numOfStocks,
-                chosenShare[0].regularMarketPrice
+                chosenShare[0].regularMarketPrice,
+                chosenShare[0].regularMarketChangePercent
             );
             addToRecentlyBought(
                 chosenShare[0].symbol,
                 chosenShare[0].shortName,
                 numOfStocks,
                 chosenShare[0].regularMarketPrice,
+                chosenShare[0].regularMarketChangePercent,
                 user.username
             );
             setNumOfStocks(0);
