@@ -23,45 +23,28 @@ const MostFollowedStocks = ({ orgName }) => {
     let stockAmount = [];
     let stockLabels = [];
 
-    // const findMostFrequent = (arr) => {
-    //     return arr
-    //         .reduce((acc, cur, ind, arr) => {
-    //             if (arr.indexOf(cur) === ind) {
-    //                 console.log('hej')
-    //                 return [...acc, [cur, 1]];
-    //             } else {
-    //                 acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
-    //                     cur,
-    //                     acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
-    //                 ];
-    //                 console.log('Hejsan')
-    //                 maxElState = acc;
-    //                 return acc;
-    //             }
-    //         }, [])
-    //         .sort((a, b) => b[1] - a[1])
-    //         .filter((cur, ind, arr) => cur[1] === arr[0][1])
-    //         .map((cur) => cur[0]);
-    // };
+    const findMostFrequent = (arr) => {
+        return arr
+            .reduce((acc, cur, ind, arr) => {
+                if (arr.indexOf(cur) === ind) {
+                    console.log('hej')
+                    return [...acc, [cur, 1]];
+                } else {
+                    acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
+                        cur,
+                        acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
+                    ];
+                    console.log('Hejsan')
+                    maxElState = acc;
+                    return acc;
+                }
+            }, [])
+            .sort((a, b) => b[1] - a[1])
+            .filter((cur, ind, arr) => cur[1] === arr[0][1])
+            .map((cur) => cur[0]);
+    };
 
-    function foo(arr) {
-    var a = [],
-    b = [],
-    prev;
 
-    arr.sort();
-    for (var i = 0; i < arr.length; i++) {
-     if (arr[i] !== prev) {
-         a.push(arr[i]);
-        b.push(1);
-     } else {
-         b[b.length - 1]++;
-     }
-     prev = arr[i];
-    }
-
-    return [a, b];
-}
 
     // function findMostFrequest(arr) {
     //     let compare = "";
@@ -115,9 +98,7 @@ const MostFollowedStocks = ({ orgName }) => {
         // findMostFrequest(orgFollowArray);
         makeFinalArr(maxElState);
 
-        let thisisarr = foo(orgFollowArray)
 
-        console.log(thisisarr)
     };
 
 

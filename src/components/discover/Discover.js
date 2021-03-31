@@ -17,6 +17,23 @@ import { ContentWrapper, HeaderWrapper, MainWrapper } from './DiscoverElements';
 // import { useSelector } from 'react-redux';
 
 const Discover = () => {
+    const tabs = [
+		{
+			label: 'Discover',
+			icon: <i className="fas fa-search-dollar"></i>,
+			link: ROUTES.DISCOVER
+		},
+		{
+			label: "Stocks",
+			icon: <i className="fas fa-chart-line"></i>,
+			link: ROUTES.DISCOVER_STOCKS
+		},
+		{
+			label: "Crypto",
+			icon: <i className="fab fa-btc"></i>,
+			link: ROUTES.DISCOVER_CRYPTO
+		}
+	];
     return (
         <ContentWrapper>
             <HeaderWrapper>

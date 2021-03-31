@@ -73,9 +73,7 @@ const MostFollowedCrypto = ({ orgName }) => {
                 i++;
             }
         }
-        console.log(orgFollowArray)
         setOrgDataState(orgFollowArray);
-        console.log(orgFollowArray)
         findMostFrequent(orgFollowArray);
         makeFinalArr(maxElState);
 

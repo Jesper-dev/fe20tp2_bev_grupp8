@@ -56,7 +56,7 @@ useEffect(() => {
         setDidMount(false);
     };
 }, [didMount, id]);
-//, checkIfFollowed, id checkIfFollowed,
+//, checkIfFollowed, id  //changed! checkedIfFollowed loop it forever
 
 
 const checkIfFollowed = useCallback((cryptoList) => {
