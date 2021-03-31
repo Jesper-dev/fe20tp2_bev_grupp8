@@ -1,40 +1,36 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const ContentWrapper = styled.main`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+export const ContentWrapper = styled.div`
     padding: 1rem;
     margin-bottom: 3.5rem;
-    background-color: var(--body-secondary);
+    margin-left: calc(100vw - 100%); // https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
 
     @media screen and (min-width: 1024px) {
         margin-left: 14rem;
     }
+`;
 
-    header {
+export const HeaderWrapper = styled.header`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    & > section {
         display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        padding: 1rem;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         max-width: 40rem;
-    }
 
-    section {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .user-info {
+        & > div {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap:0.75rem;
 
             img {
-                margin: 0;
+                margin: 0%;
                 width: 4rem;
                 height: 4rem;
             }
@@ -46,6 +42,57 @@ export const ContentWrapper = styled.main`
         }
     }
 `;
+
+export const MainWrapper = styled.main`
+    display: flex;
+    flex-direction: column;
+`;
+
+// export const ContentWrapper = styled.main`
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     gap: 1rem;
+//     padding: 1rem;
+//     margin-bottom: 3.5rem;
+//     background-color: var(--body-secondary);
+
+//     @media screen and (min-width: 1024px) {
+//         margin-left: 14rem;
+//     }
+
+//     header {
+//         display: flex;
+//         flex-direction: column;
+//         gap: 2rem;
+//         padding: 1rem;
+//         width: 100%;
+//         max-width: 40rem;
+//     }
+
+//     section {
+//         display: flex;
+//         align-items: center;
+//         justify-content: space-between;
+
+//         .user-info {
+//             display: flex;
+//             align-items: center;
+//             gap: 0.75rem;
+
+//             img {
+//                 margin: 0;
+//                 width: 4rem;
+//                 height: 4rem;
+//             }
+
+//             span {
+//                 font-size: 1.25rem;
+//                 font-weight: 500;
+//             }
+//         }
+//     }
+// `;
 
 export const ProfileSettingsBtn = styled(Link)`
     display: inline-block;

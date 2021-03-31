@@ -100,9 +100,9 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    <Route exact path={ROUTES.WALL}>
+                    <Route exact path={ROUTES.PROFILE_WALL}>
                         <Profile />
-                        <ProfileWall />
+                        {/* <ProfileWall /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>

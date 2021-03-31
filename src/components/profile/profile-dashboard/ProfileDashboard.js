@@ -67,7 +67,7 @@ const ProfileDashboard = () => {
                             ? ''
                             : OrganizationData[0].organization}
                     </h2>
-                    {/* <TotalCompValue /> */}
+                    <TotalCompValue />
                     <MostFollowedStocks
                         orgName={
                             !OrganizationData[0]

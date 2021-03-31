@@ -71,7 +71,7 @@ const TotalCompValue = () => {
                                         : { color: '#DD577D' }
                                 }
                             >
-                                {item.currency.currency.toFixed(2)}$
+                                {item.currency.currency}$
                             </span>
                         </EmployeesValue>
                     );

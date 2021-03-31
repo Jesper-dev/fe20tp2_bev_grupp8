@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import * as ROUTES from '../../constants/routes';
+import { Route } from 'react-router';
+import * as ROUTES from '../../constants/routes'
+
+import ProfileWall from './profile-wall/ProfileWall';
+
 import { FirebaseContext } from '../firebase/context'
 import { withAuthorization } from '../session';
 
-import { ContentWrapper, ProfileSettingsBtn } from './ProfileElements';
+import { ContentWrapper, HeaderWrapper, MainWrapper, ProfileSettingsBtn } from './ProfileElements';
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import ProfileSvg from '../svgs/ProfileSvg';
-import NavbarProfile from './profile-navbar/ProfileNavbar';
+import NavbarProfile from './profile-top-tabs/ProfileTopTabs';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfileImage } from '../../redux/actions';
@@ -38,27 +42,32 @@ const Profile = () => {
     }, []); //varning!
 
     return (
-        <>
-            <ContentWrapper>
-                <header>
-                    <section>
-                        <div className="user-info">
-                            {ProfileImgReducer ? (
-                                <ProfileImg img={ProfileImgReducer} />
-                            ) : (
-                                <ProfileSvg className="profile-avatar-svg" />
-                            )}
-                            <span>{username}</span>
-                        </div>
+        <ContentWrapper>
+            <HeaderWrapper>
+                <section>
+                    <div>
+                        {ProfileImgReducer ? (
+                                    <ProfileImg img={ProfileImgReducer} />
+                                ) : (
+                                    <ProfileSvg className="profile-avatar-svg" />
+                                )}
+                                <span>{username}</span>
+                    </div>
                         <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
                             <i className="fas fa-user-edit"></i>
                             Edit Profile
                         </ProfileSettingsBtn>
-                    </section>
+                </section>
                 <NavbarProfile />
-                </header>
-            </ContentWrapper>
-        </>
+            </HeaderWrapper>
+            <MainWrapper>
+                <Route
+                    exact
+                    path={ROUTES.PROFILE_WALL}
+                    component={ProfileWall}
+                />
+            </MainWrapper>
+        </ContentWrapper>
     );
 };
 const condition = (authUser) => !!authUser; //if logged in is not true, send user to sign in page

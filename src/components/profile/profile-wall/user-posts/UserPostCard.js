@@ -4,9 +4,9 @@ import UserPostCardWrapper from "./UserPostCardElement";
 const UserPostCard = ({username, content, timestamp, liked, likeCount, handleChange}) => {
     return (
         <UserPostCardWrapper>
-            <p className="username">{username}</p>
-            <p className="content">{content}</p>
-            <p className="date">{new Date(timestamp).toLocaleDateString()}</p>
+            <h2>{username}</h2>
+            <p>{content}</p>
+            <time>{new Date(timestamp).toLocaleDateString()}</time>
             <div>
                 <label>
                     <input

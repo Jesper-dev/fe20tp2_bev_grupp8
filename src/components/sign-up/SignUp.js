@@ -18,7 +18,9 @@ const INITIAL_STATE = {
 	usernameTaken: false,
     username: '',
     organization: '',
-    currency: 100000,
+    currency: {
+        currency: 100000
+    },
     followingStocks: {
         array: [
             {
@@ -40,24 +42,22 @@ const INITIAL_STATE = {
         ],
     },
     possessionStocks: {
-        array: [
-            {
-                regularMarketPrice: 250,
-                shortName: 'lets-vest',
-                symbol: 'LV',
-                amount: 1,
-            },
-        ],
+        'LV': {
+            regularMarketPrice: 250,
+            shortName: 'lets-vest',
+            symbol: 'LV',
+            amount: 1,
+        },
+
     },
     possessionCrypto: {
-        array: [
-            {
-                current_price: 250,
-                name: 'lets-vest-CrY',
-                image: 'LV-CrY',
-                amount: 1,
-            },
-        ],
+        'LVCry': {
+            current_price: 250,
+            name: 'lets-vest-CrY',
+            image: 'LV-CrY',
+            amount: 1,
+        },
+
     },
     post: {
         posts: [

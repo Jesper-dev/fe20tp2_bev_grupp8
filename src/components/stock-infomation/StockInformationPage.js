@@ -30,6 +30,7 @@ const StockInformationPage = () => {
     const [stockData, setStockData] = useState({})
     const [loading, setLoading] = useState(true);
     const [didMount, setDidMount] = useState(false);
+    const [stockIncludes, setStockIncludes] = useState(false)
 
     const firebase = useContext(FirebaseContext);
     const { id } = useParams();
@@ -59,30 +60,30 @@ const StockInformationPage = () => {
           console.error(error);
       }); */
 
-      //*Kan behöva await på respone också :P
-
-        const options = {
-          method: 'GET',
-          url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary',
-          params: { symbol: id, region: 'US' },
-          headers: {
-              'x-rapidapi-key':
-                  '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
-              'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
-          },
-      };
+    //     const options = {
+    //       method: 'GET',
+    //       url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary',
+    //       params: { symbol: id, region: 'US' },
+    //       headers: {
+    //           'x-rapidapi-key':
+    //               '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
+    //           'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
+    //       },
+    //   };
 
 
-      (async () => {
-        await axios.request(options)
-        .then((response) => {
-            setStockData(response.data);
-            setLoading(false);
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
-      })()
+    //   (async () => {
+    //     await axios.request(options)
+    //     .then((response) => {
+    //         setStockData(response.data);
+    //         setLoading(false);
+    //     })
+    //     .catch(function (error) {
+    //         console.error(error);
+    //     });
+    //   })()
+
+    setLoading(false);
 
        //*Gets the data for following stocks
     firebase
@@ -99,6 +100,7 @@ const StockInformationPage = () => {
                 //         setChecked(false);
                 //     }
                 // });
+
          });
 
          return () => {
@@ -106,77 +108,56 @@ const StockInformationPage = () => {
           };
     }, [didMount]);
 
-    // const updateUserCurrency = (userId, currency, org) => {
-    //     if (org == true) {
-    //         firebase
-    //             .organization(user.organization)
-    //             .child(`${userId}/currency`)
-    //             .update({
-    //                 currency,
-    //             });
-    //     } else {
-    //         firebase.user(userId).child(`/currency`).update({
-    //             currency,
-    //         });
-    //     }
-    // };
+    const checkIfFollowed = () => {
+        let stocks = []
+        firebase.user(user.uid).child('/followingStocks').once('value', (snapshot) => {
+            const data = snapshot.val()
 
-    const updateUserDB = (userId, array, directory, org) => {
-        if (org == true) {
-            firebase
-                .organization(user.organization)
-                .child(`${userId}/${directory}`)
-                .set({
-                    array,
-                });
-        } else {
-            firebase.user(userId).child(`/${directory}`).set({
-                array,
-            });
-        }
-    };
-
-    //*Checks the holding of your stock
+            for (const key in data) {
+                stocks.push({ ...data[key] });
+            }
+            console.log(stocks)
+            stocks.forEach((item) => {
+                if(item.symbol === 'test') {
+                    setStockIncludes(true)
+                    return;
+                } else {
+                    setStockIncludes(false)
+                }
+            })
+        })
+    }
 
     //*When you follow a stock
     const onFollow = () => {
-        firebase
-            .user(user.uid)
-            .child('/followingStocks/array')
-            .on('value', (snapshot) => {
-                const followingDb = snapshot.val();
-                if (followingDb === null) {
-                    return;
-                }
-                let name = chosenShare[0].symbol;
-                let index = followingDb.findIndex((x) => x.symbol === name);
-                if (index > -1) {
-                    followingDb.splice(index, 1);
-                    setChecked(false);
-                } else {
-                    const followingObj = {
-                        symbol: chosenShare[0].symbol,
-                        regularMarketPrice: chosenShare[0].regularMarketPrice,
-                        regularMarketChangePercent:
-                            chosenShare[0].regularMarketChangePercent,
-                        shortName: chosenShare[0].shortName,
-                    };
-                    followingDb.push(followingObj);
-                    setChecked(true);
-                }
+        console.log("hej")
+        checkIfFollowed()
 
-                updateUserDB(user.uid, followingDb, '/followingStocks', false);
-                if (user.organization) {
-                    updateUserDB(
-                        user.uid,
-                        followingDb,
-                        '/followingStocks',
-                        true
-                    );
+        if(stockIncludes === true) {
+            firebase.user(user.uid).child('/followingStocks/test').remove()
+        } else {
+            firebase.user(user.uid).child('/followingStocks').update({
+                test: {
+                    symbol: 'test',
+                    regularMarketPrice: 20,
+                    regularMarketChangePercent: 20,
+                    shortName: 'test',
                 }
-                dispatch(setFollowing(followingDb));
-            });
-    };
+            })
+        }
+        // firebase.user(user.uid).child('/followingStocks').update({
+        //     [stockData.symbol]: {
+        //         symbol: stockData.symbol,
+        //         regularMarketPrice: chosenShare[0].regularMarketPrice,
+        //         regularMarketChangePercent: stockData.price.regularMarketChangePercent.fmt,
+        //         shortName: stockData.quoteType.shortName ? stockData.quoteType.shortName : stockData.quoteType.longName,
+        //     }
+        // })
+
+
+    }
+
+
 
     const onChange = () => setChecked(!checked);
 
@@ -189,11 +170,11 @@ const StockInformationPage = () => {
             <ContentWrapper>
             <BackButton />
                     <div className="stockinfo-map-wrapper">
-                        <h1>
+                        {/* <h1>
                             {stockData.quoteType.shortName
                                 ? stockData.quoteType.shortName
                                 : stockData.quoteType.longName}
-                        </h1>
+                        </h1> */}
                         <div className="chart-topbar-wrapper">
                             <TradeBtns to="/trade">TRADE</TradeBtns>
                             <WatchStockButton
@@ -212,7 +193,7 @@ const StockInformationPage = () => {
                         <LineChart />
 
                         <div className="informationContainer">
-                            <p>{stockData.symbol}</p>
+                            {/* <p>{stockData.symbol}</p> */}
                       {/*       <p>
                                 Market price:{' '}
                                 {item.regularMarketPrice
@@ -227,7 +208,7 @@ const StockInformationPage = () => {
                                     : 200}
                                 %
                             </p> */}
-                            <p>
+                            {/* <p>
                                 Market change percent:{' '}
                                 {stockData.price.regularMarketChangePercent.raw
                                     ? stockData.price.regularMarketChangePercent.fmt
@@ -235,14 +216,14 @@ const StockInformationPage = () => {
                             </p>
                             <p>
                                 {stockData.summaryProfile.longBusinessSummary}
-                            </p>
+                            </p> */}
                                 {/*  <p className="holds-in-share">Your holding in this share is: {clickedStock.amount ? clickedStock.amount : 0}</p> */}
                         </div>
                     </div>
-    
+
         </ContentWrapper>
         )}
-        
+
         </>
         // <ContentWrapper>
         //     <BackButton />
@@ -296,7 +277,7 @@ const StockInformationPage = () => {
         //         );
         //     })}
         // </ContentWrapper>
-        
+
     );
 };
 

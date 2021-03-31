@@ -24,13 +24,13 @@ const Trade = () => {
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-        firebase.user(user.uid).on('value', (snapshot) => {
+        firebase.user(user.uid).once('value', (snapshot) => {
             const data = snapshot.val();
             if (!data) return;
             setUserData(data);
         });
         checkHolding();
-    }, [numOfStocks]);
+    }, [buy]);
 
     const onButtonClick = (e) => {
         if (e.target.innerText == 'BUY') {

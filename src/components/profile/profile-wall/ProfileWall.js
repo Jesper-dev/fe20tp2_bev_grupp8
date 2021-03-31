@@ -5,10 +5,12 @@ import LikedPosts from "./liked-posts/LikedPosts";
 
 const ProfileWall = () => {
 
-    return <div>
+    return(
+    <>
         <UserPosts/>
         <LikedPosts/>
-    </div>;
+    </>
+    );
 };
 
 export default ProfileWall;

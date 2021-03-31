@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProfileNavbarElement } from "./ProfileNavbarElements";
+import { TabBarElement } from "./ProfileTopTabsElements";
 import { NavLink } from 'react-router-dom';
 import * as ROUTES from "../../../constants/routes";
 // import SignOutButton from '../../sign-out/SignOut';
@@ -30,7 +30,7 @@ const ProfileNavbar = () => {
 
 const NavigationAuth = () => (
     <>
-    <ProfileNavbarElement>
+    <TabBarElement>
         <ul>
             <li>
                 <NavLink exact to={ROUTES.PORTFOLIO}>
@@ -38,7 +38,7 @@ const NavigationAuth = () => (
                 </NavLink>
             </li>
             <li>
-                <NavLink  to={ROUTES.WALL}>
+                <NavLink  to={ROUTES.PROFILE_WALL}>
                     Wall
                 </NavLink>
             </li>
@@ -48,12 +48,12 @@ const NavigationAuth = () => (
                 </NavLink>
             </li>
         </ul>
-    </ProfileNavbarElement>
+    </TabBarElement>
     </>
 );
 
 const NavigationNonAuth = () => (
-    <ProfileNavbarElement>
+    <TabBarElement>
         <ul>
             <li>
                 <NavLink to={ROUTES.SIGN_IN}>
@@ -71,7 +71,7 @@ const NavigationNonAuth = () => (
                 </NavLink>
             </li>
         </ul>
-    </ProfileNavbarElement>
+    </TabBarElement>
 );
 
 export default ProfileNavbar

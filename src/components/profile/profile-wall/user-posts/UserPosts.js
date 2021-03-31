@@ -67,7 +67,7 @@ const UserPosts = () => {
 
 	return (
 		<UserPostsElement>
-			<h2>Posts</h2>
+			<h1>Posts</h1>
 			{userPost ? userPost.map((item, index) => {
 				return (
 					<UserPostCard

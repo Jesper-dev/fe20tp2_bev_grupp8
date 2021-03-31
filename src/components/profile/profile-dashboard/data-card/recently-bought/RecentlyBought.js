@@ -22,8 +22,6 @@ const RecentlyBought = () => {
             });
     }, []);
 
-    console.log(dataDB);
-
     return (
         <ContentWrapper>
             <h4>Recently Bought Stock</h4>
