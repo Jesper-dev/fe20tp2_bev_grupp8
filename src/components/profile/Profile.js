@@ -10,10 +10,10 @@ import { FirebaseContext } from '../firebase/context'
 import { withAuthorization } from '../session';
 
 import { ContentWrapper, HeaderWrapper, MainWrapper, ProfileSettingsBtn } from './ProfileElements';
+import TabBar from "../shared/tab-bar/TabBar";
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import ProfileSvg from '../svgs/ProfileSvg';
-import NavbarProfile from './profile-top-tabs/ProfileTopTabs';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfileImage } from '../../redux/actions';
@@ -43,6 +43,21 @@ const Profile = () => {
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
+	const tabs = [
+		{
+			label: "Portfolio",
+			link: ROUTES.PROFILE
+		},
+		{
+			label: "Wall",
+			link: ROUTES.PROFILE_WALL
+		},
+		{
+			label: "Dashboard",
+			link: ROUTES.PROFILE_DASHBOARD
+		}
+	];
+
     return (
         <ContentWrapper>
             <HeaderWrapper>
@@ -60,7 +75,7 @@ const Profile = () => {
                             Edit Profile
                         </ProfileSettingsBtn>
                 </section>
-                <NavbarProfile />
+				<TabBar tabs={tabs}/>
             </HeaderWrapper>
             <MainWrapper>
                 <Route

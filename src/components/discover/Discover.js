@@ -1,25 +1,27 @@
-import React from 'react'; //changed! useState and useEffect removed
-import { Route } from 'react-router';
-import * as ROUTES from '../../constants/routes';
-import DiscoverStocksList from './discover-stocklist/DiscoverStocksList';
-import DiscoverCryptoList from './discover-cryptolist/DiscoverCryptoList';
-
-//import axios from 'axios' //remove?
+// import axios from 'axios'
 // import MockGetMoversEU from '../../api/Mock/MockGetMoversEU.json';
 // import MockGetMoversUS from '../../api/Mock/MockGetMoversUS.json';
 // import MockWatchList from '../../api/Mock/MockWatchList.json';
-
-import SearchBar from '../shared/search-bar/SearchBar';
-import DiscoverTopTab from './discover-top-tabs/DiscoverTopTab';
-import { ContentWrapper, HeaderWrapper, MainWrapper } from './DiscoverElements';
-//import { ContentWrapper as AnotherWrapper } from '../shared/homepage-custom-sections/HomepageComponentsElements'; //remove?
-//import { ShowCryptoBtn } from '../shared/button/ButtonElements'; //remove?
 // import { useSelector } from 'react-redux';
 
+import React from 'react';
+import { Route } from 'react-router';
+
+import * as ROUTES from '../../constants/routes';
+
+import DiscoverStocksList from './discover-stocklist/DiscoverStocksList';
+import DiscoverCryptoList from './discover-cryptolist/DiscoverCryptoList';
+
+import { HeaderWrapper, MainWrapper } from './DiscoverElements';
+
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
+import SearchBar from '../shared/search-bar/SearchBar';
+import TabBar from "../shared/tab-bar/TabBar";
+
 const Discover = () => {
-    const tabs = [
+	const tabs = [
 		{
-			label: 'Discover',
+			label: "Discover",
 			icon: <i className="fas fa-search-dollar"></i>,
 			link: ROUTES.DISCOVER
 		},
@@ -34,11 +36,12 @@ const Discover = () => {
 			link: ROUTES.DISCOVER_CRYPTO
 		}
 	];
+
     return (
         <ContentWrapper>
             <HeaderWrapper>
                 <SearchBar />
-                <DiscoverTopTab />
+				<TabBar tabs={tabs}/>
             </HeaderWrapper>
             <MainWrapper>
                 <Route
@@ -57,10 +60,3 @@ const Discover = () => {
 };
 
 export default Discover;
-
-// {/* <Route exact path={ROUTES.DISCOVER_STOCKS}>
-// <Discover />
-// {/*  <DiscoverStocksList /> */}
-// <NavbarLeft />
-// <Toolbar />
-// </Route> */}
