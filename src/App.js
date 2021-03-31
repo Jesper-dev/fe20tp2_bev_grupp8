@@ -36,20 +36,8 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    <Route exact path={ROUTES.DISCOVER}>
+                    <Route path={ROUTES.DISCOVER}>
                         <Discover />
-                        <NavbarLeft />
-                        <Toolbar />
-                    </Route>
-                    <Route exact path={ROUTES.DISCOVER_STOCKS}>
-                        <Discover />
-                        {/* <DiscoverStocksList /> */}
-                        <NavbarLeft />
-                        <Toolbar />
-                    </Route>
-                    <Route exact path={ROUTES.DISCOVER_CRYPTO}>
-                        <Discover />
-                        {/* <DiscoverCryptoList /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
@@ -68,11 +56,16 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    <Route exact path={ROUTES.INFO}>
+                    <Route exact path={ROUTES.INFO_STOCK}>
                         <StockInfoPage />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    {/*    <Route exact path={ROUTES.INFO}>
+                        <StockInfoPage />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route> */}
                     <Route exact path={ROUTES.TRADE}>
                         <Trade />
                         {/* <NavbarLeft />

@@ -16,7 +16,7 @@ export const ContentWrapper = styled.div`
     }
 
     .chartjs-render-monitor {
-        width: 10vw;
+        width: 100%;
     }
 
     .informationContainer {
@@ -39,6 +39,7 @@ export const ContentWrapper = styled.div`
     }
 
     .stockinfo-map-wrapper {
+        max-width: 750px;
         width: 100%;
     }
 

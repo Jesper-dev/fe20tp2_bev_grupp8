@@ -40,3 +40,10 @@ const Discover = () => {
 };
 
 export default Discover;
+
+// {/* <Route exact path={ROUTES.DISCOVER_STOCKS}>
+// <Discover />
+// {/*  <DiscoverStocksList /> */}
+// <NavbarLeft />
+// <Toolbar />
+// </Route> */}
