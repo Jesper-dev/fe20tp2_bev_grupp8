@@ -7,6 +7,8 @@ export const ContentWrapper = styled.div`
     border-radius: 0.5rem;
     background: var(--body);
     box-shadow: var(--box-shadow-cards);
+    transition: all 0.4s ease-in-out;
+
     button {
         padding: 8px 16px;
         background: none;

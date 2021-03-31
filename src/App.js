@@ -14,9 +14,9 @@ import CryptoInfoPage from './components/crypto-information/CryptoInformationPag
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
-import ProfileWall from './components/profile/profile-wall/ProfileWall';
-import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
-import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
+// import ProfileWall from './components/profile/profile-wall/ProfileWall';
+// import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
+// import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
 import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
@@ -52,7 +52,7 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>
                         <Profile />
-                        <ProfilePortfolio />
+                        {/* <ProfilePortfolio /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
@@ -94,9 +94,9 @@ const App = () => {
                     <Toolbar />
 
                 </Route> */}
-                    <Route exact path={ROUTES.DASHBOARD}>
+                    <Route exact path={ROUTES.PROFILE_DASHBOARD}>
                         <Profile />
-                        <ProfileDashboard />
+                        {/* <ProfileDashboard /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>

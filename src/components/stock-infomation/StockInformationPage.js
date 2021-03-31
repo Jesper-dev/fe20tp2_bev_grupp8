@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+//import axios from 'axios'; //remove?
+//import { useParams } from 'react-router-dom'; //remove?
 import LineChart from '../charts/InfopageLinechart';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux'; //remove?
 import 'firebase/database';
 import { FirebaseContext } from '../firebase/context';
 import BackButton from '../shared/button/back-button/BackButton';
 
-import { setFollowing, setCurrency, setStocks } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+//import { setFollowing, setCurrency, setStocks } from '../../redux/actions'; //remove?
+//import { useDispatch } from 'react-redux'; //remove?
 
 
 import {
@@ -17,28 +17,55 @@ import {
     TradeBtns,
 } from './StockInfromationElements';
 
+
+
+
 const StockInformationPage = () => {
     // const [userData, setUserData] = useState(null)
     const [checked, setChecked] = useState(false);
     //*Redux stuff :)
-    const dispatch = useDispatch();
+ /*    const dispatch = useDispatch();
     const chosenShare = useSelector((state) => state.ChosenShare);
     const followingArr = useSelector((state) => state.Following);
     const Currency = useSelector((state) => state.Currency);
     const Stocks = useSelector((state) => state.Stocks);
 
-    const [stockData, setStockData] = useState({})
+    const [stockData, setStockData] = useState({}) */ // remove?
     const [loading, setLoading] = useState(true);
     const [didMount, setDidMount] = useState(false);
     const [stockIncludes, setStockIncludes] = useState(false)
 
     const firebase = useContext(FirebaseContext);
-    const { id } = useParams();
+    //const { id } = useParams(); //remove?
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
+    const checkIfFollowed = useCallback(() => {
+        let stocks = []
+        firebase.user(user.uid).child('/followingStocks').once('value', (snapshot) => {
+            const data = snapshot.val()
+
+            for (const key in data) {
+                stocks.push({ ...data[key] });
+            }
+            console.log(stocks)
+            stocks.forEach((item) => {
+                if(item.symbol === 'test') {
+                    setStockIncludes(true)
+                    setChecked(true);
+                    return;
+                } else {
+                    setStockIncludes(false)
+                    setChecked(false)
+                }
+            })
+        })
+    },[firebase, user.uid])
+
+
     useEffect(() => {
         setDidMount(true);
+        checkIfFollowed()
 
     /* const options = {
       method: 'GET',
@@ -89,7 +116,7 @@ const StockInformationPage = () => {
     firebase
         .user(user.uid)
         .child('/followingStocks/array')
-        .on('value', (snapshot) => {
+        .once('value', (snapshot) => {
             const data = snapshot.val();
             if (!data) return;
 
@@ -103,38 +130,21 @@ const StockInformationPage = () => {
 
          });
 
-         return () => {
+        return () => {
             setDidMount(false);
-          };
-    }, [didMount]);
+        };
+    }, [didMount, user.uid, firebase, checkIfFollowed]);
 
-    const checkIfFollowed = () => {
-        let stocks = []
-        firebase.user(user.uid).child('/followingStocks').once('value', (snapshot) => {
-            const data = snapshot.val()
-
-            for (const key in data) {
-                stocks.push({ ...data[key] });
-            }
-            console.log(stocks)
-            stocks.forEach((item) => {
-                if(item.symbol === 'test') {
-                    setStockIncludes(true)
-                    return;
-                } else {
-                    setStockIncludes(false)
-                }
-            })
-        })
-    }
 
     //*When you follow a stock
     const onFollow = () => {
-        console.log("hej")
         checkIfFollowed()
 
         if(stockIncludes === true) {
             firebase.user(user.uid).child('/followingStocks/test').remove()
+            if(user.organization){
+                firebase.organization(user.organization).child(`/users/${user.uid}/followingStocks/test`).remove()
+            }
         } else {
             firebase.user(user.uid).child('/followingStocks').update({
                 test: {
@@ -144,6 +154,17 @@ const StockInformationPage = () => {
                     shortName: 'test',
                 }
             })
+            if(user.organization) {
+                firebase.organization(user.organization).child(`/users/${user.uid}/followingStocks`).update({
+                    test: {
+                        symbol: 'test',
+                        regularMarketPrice: 20,
+                        regularMarketChangePercent: 20,
+                        shortName: 'test',
+                    }
+                })
+            }
+
         }
         // firebase.user(user.uid).child('/followingStocks').update({
         //     [stockData.symbol]: {

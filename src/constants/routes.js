@@ -14,11 +14,14 @@ export const DISCOVER_CRYPTO = '/discover/crypto';
 
 export const SOCIAL = '/social';
 export const PROFILE = '/profile';
-export const DASHBOARD = '/profile/dashboard';
+export const PROFILE_DASHBOARD = '/profile/dashboard';
 export const PROFILE_WALL = '/profile/wall';
 export const PROFILE_SETTINGS = '/profile-settings';
 export const PORTFOLIO = '/profile';
-export const INFO_CRYPTO = '/info-crypto';
+
+
+export const INFO_CRYPTO = '/info/crypto/:id';
+export const INFO_STOCK = '/info/:id';
 
 export const USER = '/user/:id';
-export const INFO_STOCK = '/info/:id';
+

@@ -28,11 +28,12 @@ const Home = () => {
     const [followingArr, setFollowingArr] = useState([]);
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
     const dispatch = useDispatch();
-
+    const [didMount, setDidMount] = useState(false);
     // let array = MockGetTickers.finance.result[0].quotes;
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
+        setDidMount(true);
         let followingDb = [];
         let followingDbCrypto = [];
         let data;
@@ -89,7 +90,15 @@ const Home = () => {
             setTotalCurrency(currencyData.currency);
             dispatch(setCurrency(currencyData)); //behöver
         })
-    }, []);
+        return () => {
+            setDidMount(false);
+          };
+    }, [didMount, dispatch, firebase, user.uid]); //changed!
+
+    // src\components\home\Home.js
+    // Line 96:8:  React Hook useEffect has missing dependencies:
+    // 'dispatch', 'firebase', and 'user.uid'.
+    // Either include them or remove the dependency array react-hooks/exhaustive-deps
 
     return (
         <>

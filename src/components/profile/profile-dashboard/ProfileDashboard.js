@@ -23,12 +23,16 @@ const ProfileDashboard = () => {
 
     const [admin, setAdmin] = useState(false);
     const [employee, setEmployee] = useState(false);
-
-    let OrgData = [];
-    let data = '';
-    let OrgDataFirebase;
+    //let OrgDataFirebase; //changed! placed in useEffect
+    //let OrgData = [];
+    //let data = ''; // changed!
+    const [didMount, setDidMount] = useState(false);
 
     useEffect(() => {
+        setDidMount(true);
+        let OrgData = [];
+        let data = '';
+        let OrgDataFirebase;
         const companyData = firebase.db.ref(
             'organizations/' + user.organization + '/users'
         );
@@ -53,8 +57,12 @@ const ProfileDashboard = () => {
             setAdmin(data.ADMIN === 'ADMIN' ? true : false);
             setEmployee(data.EMPLOYEE === 'EMPLOYEE' ? true : false);
         });
-    }, []);
+        return () => {
+            setDidMount(false);
+        };
 
+    }, [didMount, dispatch, firebase.db, user.organization, user.uid]);
+    //OrgData, dispatch, firebase.db, user.organization, user.uid
     //*Kanske skicka ned olika arrayer som props ned till components och inte kalla på de i components själva
 
     return (
@@ -68,13 +76,13 @@ const ProfileDashboard = () => {
                             : OrganizationData[0].organization}
                     </h2>
                     <TotalCompValue />
-                    <MostFollowedStocks
+                    {/* <MostFollowedStocks
                         orgName={
                             !OrganizationData[0]
                                 ? ''
                                 : OrganizationData[0].organization
                         }
-                    />
+                    /> */}
                     {/* <BoughtStocks /> */}
                     <MostFollowedCrypto
                         orgName={

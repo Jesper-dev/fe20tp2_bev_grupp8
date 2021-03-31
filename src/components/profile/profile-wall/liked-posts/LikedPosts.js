@@ -64,7 +64,7 @@ const LikedPosts = () => {
 
     return(
 		<LikedPostsElement>
-			<h2>Liked posts</h2>
+			<h1>Liked posts</h1>
 			{likedPosts ? likedPosts.map((item, index) => {
 				return (
 					<UserPostCard

@@ -53,7 +53,11 @@ const MostFollowedCrypto = ({ orgName }) => {
                     orgData.push({ ...followedCryptos[key] });
                 }
                 makeArray(orgData);
+                console.log(orgData)
+
             });
+
+            console.log(orgData)
     }, []);
 
     //*This makes the array with all the stocks being followed in the organization
@@ -70,8 +74,10 @@ const MostFollowedCrypto = ({ orgName }) => {
             }
         }
         setOrgDataState(orgFollowArray);
+        console.log(orgFollowArray)
         findMostFrequent(orgFollowArray);
         makeFinalArr(maxElState);
+
     };
 
     const makeFinalArr = (arr) => {
@@ -87,6 +93,7 @@ const MostFollowedCrypto = ({ orgName }) => {
             mostFollowedTop.push(objFull);
         });
         setMostFollowedTopState(mostFollowedTop);
+        console.log(mostFollowedTopState)
     };
 
     let data = {
@@ -114,7 +121,7 @@ const MostFollowedCrypto = ({ orgName }) => {
 
     return (
         <ContentWrapper>
-            <h4>{orgName} Mosts Followed Cryptos</h4>
+            <h4>Mosts Followed Cryptos</h4>
             <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>

@@ -46,7 +46,7 @@ const MostFollowedStocks = ({ orgName }) => {
         firebase
             .organization(user.organization)
             .child('/users')
-            .on('value', (snapshot) => {
+            .once('value', (snapshot) => {
                 const followedStocks = snapshot.val();
                 if (!followedStocks) return;
                 for (const key in followedStocks) {
@@ -114,7 +114,7 @@ const MostFollowedStocks = ({ orgName }) => {
 
     return (
         <ContentWrapper>
-            <h4>{orgName} Mosts Followed Stocks</h4>
+            <h4>Mosts Followed Stocks</h4>
             <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>

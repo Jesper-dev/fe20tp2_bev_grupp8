@@ -1,16 +1,18 @@
 import styled from "styled-components"
 
 const LikedPostsElement = styled.section`
-	max-width: 40rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
 	margin: auto;
+	width: 100%;
+	max-width: 40rem;
+	max-height: 60vh;
 	overflow: auto;
-	padding: 1rem;
 
-	h2 {
-		margin: 16px 16px;
+	h1 {
+		margin: 2rem 0 0 0;
 	}
-
-	margin-bottom: 56px;
 `;
 
 export default LikedPostsElement;

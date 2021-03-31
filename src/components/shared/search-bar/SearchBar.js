@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react'; //changed!
 
 import { SearchBarElement } from './SearchBarElements';
 import { filterUsers } from '../../../redux/actions';

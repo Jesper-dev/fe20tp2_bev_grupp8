@@ -10,43 +10,20 @@ import {
 } from './CryptoChartElements';
 import { WatchStockButton } from '../../stock-infomation/StockInfromationElements'
 
-const CryptoChart = ({ id, img, name, onFollow }) => {
+const CryptoChart = ({ id, img, name, onFollow, checked}) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const [cryptoInfo, setCryptoInfo] = useState([]) //remove?
     const [labelsSate, setLabelState] = useState([])
     const [priceSate, setPriceState] = useState([])
 
     const chosenCrypto = useSelector((state) => state.ChosenCrypto);
-    const [checked, setChecked] = useState(false)
 
     const firebase = useContext(FirebaseContext);
-
-    const onChange = () => {
-        // ??
-        setChecked(!checked);
-    }
+    console.log(checked)
 
     let labels = []
     let prices = []
     useEffect(() => {
-
-         let followingDB = firebase.db.ref(
-             'users/' + user.uid + '/followingCrypto/array'
-         );
-         followingDB.on('value', (snapshot) => {
-             const data = snapshot.val();
-             console.log(data);
-
-             if (!data) return;
-             data.forEach((item) => {
-                 // if(!item || !item.symbol) return
-                 if (item.symbol === chosenCrypto[0].symbol) {
-                     setChecked(true);
-                 } else if (!item.symbol === chosenCrypto[0].symbol) {
-                     setChecked(false);
-                 }
-             });
-         });
 
         const weekAgo = Date.now() - 604800000
         const today = Date.now().valueOf()
@@ -54,7 +31,6 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
         const unixTime = Math.floor(today / 1000);
         const unixTimeWeek = Math.floor(weekAgo / 1000)
         console.log(checked)
-    /*     setCheckedCrypto(checked) */
 
         getCryptoInfo(unixTimeWeek, unixTime)
 
@@ -112,6 +88,7 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
                 <img src={img} alt='Logo of crypto'/>
                 <h1>{name}</h1>
             </InLineDiv>
+
             <div className="chart-topbar-wrapper">
                 <WatchStockButton
                     eyecolor={
@@ -119,13 +96,13 @@ const CryptoChart = ({ id, img, name, onFollow }) => {
                     }
                     onClick={() => {
                         onFollow();
-                        onChange();
                     }}
                     /*      onChange={} */
                 >
                     <i className="far fa-eye"></i>
                 </WatchStockButton>
             </div>
+
             <Line
                 data={chartData}
                 options={{

@@ -19,13 +19,13 @@ const UserInfoCard = () => {
 			console.log(snapshot.val());
 			setUserData(snapshot.val());
 		  });
-	}, []);
+	}, [firebase, id]); //changed!
 
 	return(
 		<UserInfoCardElement>
 			<Backbutton />
 			{userData == null ? <p>Loading user data...</p> : <>
-			<img src={userData.picture.profile_pic}/>
+			<img src={userData.picture.profile_pic} alt="profile pic"/>
 			<h1>{userData.username}</h1>
 			<p>{userData.currency.currency.toLocaleString()}$</p>
 			<p>{userData.email}</p>

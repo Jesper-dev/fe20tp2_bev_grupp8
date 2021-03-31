@@ -1,14 +1,17 @@
 import styled from "styled-components"
 
 const UserPostElement = styled.section`
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
 	margin: auto;
 	width: 100%;
 	max-width: 40rem;
-	max-height: 50vh;
+	max-height: 60vh;
 	overflow: auto;
 
 	h1 {
-		margin: 1.5rem 0 1rem 0;
+		margin: 2rem 0 0 0;
 	}
 `;
 

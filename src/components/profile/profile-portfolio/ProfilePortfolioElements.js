@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 56px;
+export const ContentWrapper = styled.section`
+    margin: auto;
     width: 100%;
+    max-width: 40rem;
 
-    >article{
-        margin-top: 8px;
-        max-width: 750px;
-        width: 90%;
+    h1 {
+        margin: 2rem 0 1.25rem 0;
     }
-
 `;

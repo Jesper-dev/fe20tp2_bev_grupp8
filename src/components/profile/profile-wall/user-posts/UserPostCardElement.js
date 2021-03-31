@@ -4,10 +4,11 @@ const UserPostCardWrapper = styled.article`
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
-	margin-top: 2rem;
+	/* margin-top: 1.25rem; */
 	background-color: var(--body);
 	padding: 1rem;
 	border-radius: 0.25rem;
+	box-shadow: var(--box-shadow-cards);
 
 	h2 {
 		margin: 0;

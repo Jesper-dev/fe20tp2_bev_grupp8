@@ -14,7 +14,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     let history = useHistory();
 
     const setChosenCryptoOption = (name) => {
-        history.push("/info-crypto");
+        history.push(`/info/crypto/${name}`);
         let filterName = name.trim();
         chosenCryptoArray = cryptoList.filter(function (item) {
             return item.name === filterName;
@@ -40,7 +40,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
                 >
                     {percent.toFixed(2)}%
                 </span>
-                <Link to="/info-crypto">
+                <Link to={`/info/crypto/${name}`}>
                     <span>
                         <i className="fas fa-caret-right"></i>
                     </span>

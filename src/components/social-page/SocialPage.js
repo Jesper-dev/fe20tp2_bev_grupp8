@@ -31,7 +31,7 @@ const SocialPage = () => {
             dispatch(setUsers(usersArray))
         });
 
-    }, [dispatch])
+    }, [dispatch, firebase]) //changed!
 
     return (
 

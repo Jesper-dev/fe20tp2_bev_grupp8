@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Route } from 'react-router';
 import * as ROUTES from '../../constants/routes'
 
+import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfileWall from './profile-wall/ProfileWall';
+import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 
 import { FirebaseContext } from '../firebase/context'
 import { withAuthorization } from '../session';
@@ -39,7 +41,7 @@ const Profile = () => {
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink))
         });
-    }, []); //varning!
+    }, [dispatch, firebase, userData.uid]); //varning!
 
     return (
         <ContentWrapper>
@@ -63,8 +65,18 @@ const Profile = () => {
             <MainWrapper>
                 <Route
                     exact
+                    path={ROUTES.PROFILE}
+                    component={ProfilePortfolio}
+                />
+                <Route
+                    exact
                     path={ROUTES.PROFILE_WALL}
                     component={ProfileWall}
+                />
+                <Route
+                    exact
+                    path={ROUTES.PROFILE_DASHBOARD}
+                    component={ProfileDashboard}
                 />
             </MainWrapper>
         </ContentWrapper>

@@ -43,7 +43,7 @@ const NavigationAuth = () => (
                 </NavLink>
             </li>
             <li>
-                <NavLink to={ROUTES.DASHBOARD}>
+                <NavLink to={ROUTES.PROFILE_DASHBOARD}>
                     Dashboard
                 </NavLink>
             </li>

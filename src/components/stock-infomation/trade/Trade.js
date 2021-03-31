@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
@@ -23,6 +23,28 @@ const Trade = () => {
     const chosenShare = useSelector((state) => state.ChosenShare);
     const firebase = useContext(FirebaseContext);
 
+        //*Checks if clicked stock has been bought before and if true display how many
+        const checkHolding = useCallback(async () => {
+            await firebase
+                .user(user.uid)
+                .child('/possessionStocks')
+                .on('value', (snapshot) => {
+                    let dataDB = snapshot.val();
+                    if (dataDB == undefined) return;
+                    let stocks = [];
+                    for (const key in dataDB) {
+                        stocks.push({ ...dataDB[key] });
+                    }
+                    stocks.forEach((item) => {
+                        if (item.symbol == chosenShare[0].symbol) {
+                            setHolding(item.amount);
+                            // setClickedStock(item);
+                        }
+                    });
+                });
+        }, [chosenShare, firebase, user.uid]);
+
+
     useEffect(() => {
         firebase.user(user.uid).once('value', (snapshot) => {
             const data = snapshot.val();
@@ -30,7 +52,8 @@ const Trade = () => {
             setUserData(data);
         });
         checkHolding();
-    }, [buy]);
+
+    }, [buy, checkHolding, firebase, user.uid]);
 
     const onButtonClick = (e) => {
         if (e.target.innerText == 'BUY') {
@@ -40,26 +63,8 @@ const Trade = () => {
         }
     };
 
-    //*Checks if clicked stock has been bought before and if true display how many
-    const checkHolding = async () => {
-        await firebase
-            .user(user.uid)
-            .child('/possessionStocks')
-            .on('value', (snapshot) => {
-                let dataDB = snapshot.val();
-                if (dataDB == undefined) return;
-                let stocks = [];
-                for (const key in dataDB) {
-                    stocks.push({ ...dataDB[key] });
-                }
-                stocks.forEach((item) => {
-                    if (item.symbol == chosenShare[0].symbol) {
-                        setHolding(item.amount);
-                        // setClickedStock(item);
-                    }
-                });
-            });
-    };
+
+
 
     const addToRecentlyBought = (
         symbol,
@@ -135,7 +140,7 @@ const Trade = () => {
     ) => {
         checkIfStockIncludes(symbol);
         let amountNum = parseInt(amountOfStocks);
-        if (buy == true) {
+        if (buy === true) {
             if (stockIncludes == true) {
                 let existingAmount = parseInt(includedStock.amount);
                 let resAmount = parseInt(existingAmount + amountNum);

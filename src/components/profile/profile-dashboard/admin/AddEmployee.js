@@ -8,7 +8,7 @@ const AddEmployee = () => {
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
-    let orgData; //remove?
+    //let orgData; //changed! put it inside useEffect
     //let emails; //remove?
 
     const handleSubmit = (e) => {
@@ -46,13 +46,16 @@ const AddEmployee = () => {
 
 
     useEffect(() => {
+        let orgData;
+        // firebase.organization(user.organization)
         const organization = firebase.db.ref('organizations/' + user.organization);
         organization.on('value', (snapshot) => {
             orgData = snapshot.val();
             if (!orgData) return;
             setEmployeeList(orgData.emails.list)
         });
-    },[] ) //varning!
+
+    },[firebase.db, user.organization] ) //varning!
 
     return (
         <AddEmailWrapper open={open}>

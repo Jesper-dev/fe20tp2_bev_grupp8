@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     setSeeRecommendations,
     setSeeFollowing,
@@ -18,35 +18,37 @@ const CustomizeHomepage = () => {
     const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
     const SeeNewsRedux = useSelector((state) => state.SeeNews);
 
-    useEffect(() => {
-        checkIfRec();
-        checkIfFollow();
-        checkIfNews();
-    }, []);
-
-    const checkIfRec = () => {
+    const checkIfRec = useCallback(() => {
         if (SeeRecRedux === true) {
             setCheckedRec(true);
         } else if (SeeRecRedux === false) {
             setCheckedRec(false);
         }
-    };
+    }, [SeeRecRedux]);
 
-    const checkIfFollow = () => {
+    const checkIfFollow = useCallback(() => {
         if (SeeFollowingRedux === true) {
             setCheckedFollow(true);
         } else if (SeeFollowingRedux === false) {
             setCheckedFollow(false);
         }
-    };
+    }, [SeeFollowingRedux]);
 
-    const checkIfNews = () => {
+    const checkIfNews = useCallback(() => {
         if (SeeNewsRedux === true) {
             setCheckedNews(true);
         } else if (SeeNewsRedux === false) {
             setCheckedNews(false);
         }
-    };
+    }, [SeeNewsRedux]);
+
+    useEffect(() => {
+        checkIfRec();
+        checkIfFollow();
+        checkIfNews();
+    }, [checkIfFollow, checkIfNews, checkIfRec]);
+
+
 
     const seeFunc = (e) => {
         if (e.target.value === 'Rec') {
