@@ -10,11 +10,15 @@ const TotalCompValue = () => {
     const [totalOrgCurrency, setTotalOrgCurrency] = useState(0);
     const [orgDataState, setOrgDataState] = useState([]);
 
-    let totalValue = [];
-    let orgData = [];
+    const [didMount, setDidMount] = useState(false);
+   // let totalValue = [];
+    //let orgData = [];
     //let totalCurrency = 0; //changed! placed in useEffect
 
     useEffect(() => {
+        setDidMount(true);
+        let totalValue = [];
+        let orgData = [];
         //totalCurrency = 0;
         let totalCurrency = 0;
         firebase
@@ -37,7 +41,10 @@ const TotalCompValue = () => {
                 let newInt = parseInt(totalCurrency);
                 setTotalOrgCurrency(newInt);
             });
-    }, []);
+            return () => {
+                setDidMount(false);
+              };
+    }, [didMount, firebase, user.uid, user.organization]);
 
     return (
         <ContentWrapper>

@@ -22,24 +22,23 @@ const INITIAL_STATE = {
         currency: 100000
     },
     followingStocks: {
-        array: [
+        'LV':
             {
                 regularMarketChangePercent: 150,
                 regularMarketPrice: 250,
                 shortName: 'lets-vest',
                 symbol: 'LV',
             },
-        ],
+
     },
     followingCrypto: {
-        array: [
+        'LVCry':
             {
                 regularMarketChangePercent: 150,
                 regularMarketPrice: 250,
                 shortName: 'lets-vest-CrY',
                 image: 'LV-CrY',
             },
-        ],
     },
     possessionStocks: {
         'LV': {

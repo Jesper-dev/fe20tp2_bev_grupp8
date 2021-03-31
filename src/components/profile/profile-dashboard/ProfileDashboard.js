@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import AddEmployee from './admin/AddEmployee';
 import TotalCompValue from './data-card/total-comp-value/TotalCompValue';
-//import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks'; //remove?
+import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks';
 import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto';
 import RecentlyBought from './data-card/recently-bought/RecentlyBought';
 //import BoughtStocks from './data-card/bought-stocks/BoughtStocks' //remove?
@@ -76,13 +76,13 @@ const ProfileDashboard = () => {
                             : OrganizationData[0].organization}
                     </h2>
                     <TotalCompValue />
-                    {/* <MostFollowedStocks
+                    <MostFollowedStocks
                         orgName={
                             !OrganizationData[0]
                                 ? ''
                                 : OrganizationData[0].organization
                         }
-                    /> */}
+                    />
                     {/* <BoughtStocks /> */}
                     <MostFollowedCrypto
                         orgName={
@@ -91,7 +91,7 @@ const ProfileDashboard = () => {
                                 : OrganizationData[0].organization
                         }
                     />
-                    <RecentlyBought />
+                    {/* <RecentlyBought /> */}
                 </>
             ) : (
                 <>

@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 // import LineChart from '../charts/InfopageLinechart';
 import axios from 'axios'
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import CryptoChart from './crypto-chart/CryptoChart'
 
-//import axios from 'axios' // remove?
-
-import { setFollowingCrypto } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+//import { setFollowingCrypto } from '../../redux/actions'; //remove?
+//import { useDispatch } from 'react-redux'; //remove?
 
 import { ContentWrapper, DescriptionWrapper } from './CryptoInformationPageElements';
 import { FirebaseContext } from '../firebase/context';
-import { WatchStockButton } from '../stock-infomation/StockInfromationElements'
+//import { WatchStockButton } from '../stock-infomation/StockInfromationElements' //remove?
 
 
 //let following = []; // remove?
@@ -21,11 +19,11 @@ import { WatchStockButton } from '../stock-infomation/StockInfromationElements'
 const CryptoInformationPage = () => {
 
     const [checked, setChecked] = useState(false);//remove?
-    const dispatch = useDispatch();
-    const chosenCrypto = useSelector((state) => state.ChosenCrypto);
-    const followingArr = useSelector((state) => state.FollowingCrypto); //remove?
+    //const dispatch = useDispatch();//remove?
+    //const chosenCrypto = useSelector((state) => state.ChosenCrypto);//remove?
+    //const followingArr = useSelector((state) => state.FollowingCrypto); //remove?
     const [cryptoData, setCryptoData] = useState({})
-    const [cryptoIncludes, setCryptoIncludes] = useState(false)
+    //const [cryptoIncludes, setCryptoIncludes] = useState(false)//remove?
 
     const [descClicked, setDescClicked] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -35,15 +33,12 @@ const CryptoInformationPage = () => {
 
 
     const firebase = useContext(FirebaseContext);
-    let itIncludes = false;
-
+    //let itIncludes = false; //remove?
 // https://api.coingecko.com/api/v3/coins/bitcoin?localization=true&tickers=true&market_data=true&developer_data=true&sparkline=true
 
 useEffect(() => {
 
     setDidMount(true);
-
-
     (async () => {
         await axios.get(`https://api.coingecko.com/api/v3/coins/${id.toLowerCase()}?localization=true&tickers=true&market_data=true&developer_data=true&sparkline=true`)
     .then((response) => {
@@ -60,31 +55,41 @@ useEffect(() => {
     return () => {
         setDidMount(false);
     };
-}, [didMount]);
+}, [didMount, id]);
+//, checkIfFollowed, id checkIfFollowed,
 
 
-    const checkIfFollowed = (cryptoList) => {
-        if(!cryptoData) return;
-        let cryptos = []
-            firebase.user(user.uid).child('/followingCrypto').once('value', (snapshot) => {
-                const data = snapshot.val()
-                console.log('Crypto name is: ', cryptoList.name)
-                for (const key in data) {
-                    cryptos.push({ ...data[key] });
+const checkIfFollowed = useCallback((cryptoList) => {
+    if(!cryptoData) return;
+    let cryptos = []
+        firebase.user(user.uid).child('/followingCrypto').once('value', (snapshot) => {
+            const data = snapshot.val()
+            console.log('Crypto name is: ', cryptoList.name)
+            for (const key in data) {
+                cryptos.push({ ...data[key] });
+            }
+            for(let i = 0; i < cryptos.length; i++){
+                if(cryptos[i].name == cryptoList.name) {
+                    console.log("It includes")
+                    setChecked(true)
+                    return;
+                } else {
+                    console.log("It does not include")
+                    setChecked(false)
+                    console.log(checked)
                 }
-                for(let i = 0; i < cryptos.length; i++){
-                    if(cryptos[i].name == cryptoList.name) {
-                        console.log("It includes")
-                        setChecked(true)
-                        return;
-                    } else {
-                        console.log("It does not include")
-                        setChecked(false)
-                        console.log(checked)
-                    }
-                }
-            })
-    }
+            }
+        })
+}, [checked, cryptoData, firebase, user.uid]);
+//checked, cryptoData, firebase, user.uid
+
+
+
+
+
+
+
+
 
     const onFollow = () => {
 

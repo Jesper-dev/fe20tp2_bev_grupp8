@@ -46,15 +46,13 @@ const MostFollowedCrypto = ({ orgName }) => {
         firebase
             .organization(user.organization)
             .child('/users')
-            .on('value', (snapshot) => {
+            .once('value', (snapshot) => {
                 const followedCryptos = snapshot.val();
                 if (!followedCryptos) return;
                 for (const key in followedCryptos) {
                     orgData.push({ ...followedCryptos[key] });
                 }
                 makeArray(orgData);
-                console.log(orgData)
-
             });
 
             console.log(orgData)
@@ -62,17 +60,20 @@ const MostFollowedCrypto = ({ orgName }) => {
 
     //*This makes the array with all the stocks being followed in the organization
     const makeArray = (arr) => {
+        console.log(arr[0].followingCrypto)
         let j = 0;
         let i = 0;
-        while (j < arr.length) {
-            if (arr[j].followingCrypto.array[i] === undefined) {
+         while (j < arr.length) {
+            let keys = Object.keys(arr[j].followingStocks);
+            if (arr[j].followingStocks[keys[i]] === undefined) {
                 i = 0;
                 j++;
             } else {
-                orgFollowArray.push(arr[j].followingCrypto.array[i].symbol);
+                orgFollowArray.push(arr[j].followingStocks[keys[i]]);
                 i++;
             }
         }
+        console.log(orgFollowArray)
         setOrgDataState(orgFollowArray);
         console.log(orgFollowArray)
         findMostFrequent(orgFollowArray);

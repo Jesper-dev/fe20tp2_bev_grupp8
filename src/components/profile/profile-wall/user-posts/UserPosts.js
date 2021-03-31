@@ -28,7 +28,7 @@ const UserPosts = () => {
 				setLikedPosts(data);
 			}
 		});
-	}, []);
+	}, [firebase.db, userData.uid]);
 
 	const updateData = (postData, likeData) => {
 		let userId = firebase.auth.currentUser.uid;
