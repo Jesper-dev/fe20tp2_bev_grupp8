@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import AddEmployee from './admin/AddEmployee';
 import TotalCompValue from './data-card/total-comp-value/TotalCompValue';
-import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks';
+//import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks'; //remove?
 import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto';
 import RecentlyBought from './data-card/recently-bought/RecentlyBought';
 //import BoughtStocks from './data-card/bought-stocks/BoughtStocks' //remove?

@@ -12,10 +12,11 @@ const TotalCompValue = () => {
 
     let totalValue = [];
     let orgData = [];
-    let totalCurrency = 0;
+    //let totalCurrency = 0; //changed! placed in useEffect
 
     useEffect(() => {
-        totalCurrency = 0;
+        //totalCurrency = 0;
+        let totalCurrency = 0;
         firebase
             .organization(user.organization)
             .child('/users')

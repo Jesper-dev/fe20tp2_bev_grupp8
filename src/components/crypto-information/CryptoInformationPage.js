@@ -94,6 +94,9 @@ useEffect(() => {
         if(checked == true) {
             console.log("Hit kommer vi")
             firebase.user(user.uid).child(`/followingCrypto/${cryptoData.name}`).remove()
+            if(user.organization) {
+                firebase.organization(user.organization).child(`/users/${user.uid}/followingCrypto/${cryptoData.name}`).remove()
+            }
         } else {
             firebase.user(user.uid).child('/followingCrypto').update({
                 [cryptoData.name]: {
@@ -104,6 +107,18 @@ useEffect(() => {
                     image: cryptoData.image.small
                 }
             })
+
+            if(user.organization) {
+                firebase.organization(user.organization).child(`/users/${user.uid}/followingCrypto`).update({
+                    [cryptoData.name]: {
+                        symbol: cryptoData.symbol,
+                        regularMarketPrice: cryptoData.market_data.current_price.usd ? cryptoData.market_data.current_price.usd.toLocaleString() : '20',
+                        regularMarketChangePercent: cryptoData.market_data.price_change_percentage_24h.toFixed(2),
+                        name: cryptoData.name,
+                        image: cryptoData.image.small
+                    }
+                })
+            }
 
         }
         setChecked(!checked);
