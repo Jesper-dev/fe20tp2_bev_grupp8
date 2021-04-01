@@ -44,7 +44,7 @@ const FollowingHome = ({ array, cryptoList }) => {
                             cryptoList={MockCrypto}
                             key={index}
                             img={item.image}
-                            name={item.shortName}
+                            name={item.name}
                             price={item.regularMarketPrice}
                             percent={item.regularMarketChangePercent}
                         />

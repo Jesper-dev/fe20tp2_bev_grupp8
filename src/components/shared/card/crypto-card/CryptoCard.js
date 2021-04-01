@@ -24,6 +24,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     };
 
     let newName = name.substring(0, 3)
+    let percentInt = parseInt(percent)
 
     return (
         <>
@@ -38,7 +39,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
                             : { color: '#DD577D' }
                     }
                 >
-                    {percent.toFixed(2)}%
+                    {percentInt.toFixed(2)}%
                 </span>
                 <Link to={`/info/crypto/${name}`}>
                     <span>
