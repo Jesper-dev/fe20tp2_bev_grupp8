@@ -16,30 +16,25 @@ const MostFollowedCrypto = ({ orgName }) => {
     const [showBar, setShowBar] = useState(false);
 
     let orgFollowArray = [];
-    // let sortedArray = [];
     let orgData = [];
-    let mostFollowedTop = [];
-    let maxElState = [];
-    let stockAmount = [];
-    let stockLabels = [];
 
-    const findMostFrequent = (arr) => {
-        return arr
-            .reduce((acc, cur, ind, arr) => {
-                if (arr.indexOf(cur) === ind) {
-                    return [...acc, [cur, 1]];
-                } else {
-                    acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
-                        cur,
-                        acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
-                    ];
-                    maxElState = acc;
-                    return acc;
-                }
-            }, [])
-            .sort((a, b) => b[1] - a[1])
-            .filter((cur, ind, arr) => cur[1] === arr[0][1])
-            .map((cur) => cur[0]);
+    const foo = (arr) => {
+        let a = [],
+            b = [],
+            prev;
+
+        arr.sort();
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== prev) {
+                a.push(arr[i]);
+                b.push(1);
+            } else {
+                b[b.length - 1]++;
+            }
+            prev = arr[i];
+        }
+
+        return [a, b];
     };
 
     useEffect(() => {
@@ -54,45 +49,30 @@ const MostFollowedCrypto = ({ orgName }) => {
                 }
                 makeArray(orgData);
             });
-
-            console.log(orgData)
     }, []);
 
     //*This makes the array with all the stocks being followed in the organization
     const makeArray = (arr) => {
-        console.log(arr[0].followingCrypto)
         let j = 0;
         let i = 0;
          while (j < arr.length) {
-            let keys = Object.keys(arr[j].followingStocks);
-            if (arr[j].followingStocks[keys[i]] === undefined) {
+            let keys = Object.keys(arr[j].followingCrypto);
+            if (arr[j].followingCrypto[keys[i]] === undefined) {
                 i = 0;
                 j++;
             } else {
-                orgFollowArray.push(arr[j].followingStocks[keys[i]]);
+                orgFollowArray.push(arr[j].followingCrypto[keys[i]].symbol);
                 i++;
             }
         }
         setOrgDataState(orgFollowArray);
-        findMostFrequent(orgFollowArray);
-        makeFinalArr(maxElState);
-
+        let result = foo(orgFollowArray)
+        makeFinalArr(result);
     };
 
     const makeFinalArr = (arr) => {
-        arr.forEach((item) => {
-            stockAmount.push(item[1]);
-            stockLabels.push(item[0]);
-            setStockAmountState(stockAmount);
-            setStockLabelsState(stockLabels);
-            const objFull = {
-                name: item[0],
-                count: item[1],
-            };
-            mostFollowedTop.push(objFull);
-        });
-        setMostFollowedTopState(mostFollowedTop);
-        console.log(mostFollowedTopState)
+        setStockAmountState(arr[1]);
+        setStockLabelsState(arr[0]);
     };
 
     let data = {
@@ -113,10 +93,28 @@ const MostFollowedCrypto = ({ orgName }) => {
                     '#FADF7C',
                     '#AD34AD',
                 ],
-                hoverOffset: 4,
+                minBarLength: 50,
+                hoverOffset: 1,
             },
         ],
-    };
+    }
+
+let options = {
+         maintainAspectRatio: false,
+                        legend: {
+                            display: false,
+                    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+
+
+
 
     return (
         <ContentWrapper>
@@ -131,12 +129,7 @@ const MostFollowedCrypto = ({ orgName }) => {
             {showBar ? (
                 <Bar
                     data={data}
-                    options={{
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false,
-                        },
-                    }}
+                    options={options}
                 />
             ) : (
                 <Pie

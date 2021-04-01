@@ -23,47 +23,27 @@ const MostFollowedStocks = ({ orgName }) => {
     let stockAmount = [];
     let stockLabels = [];
 
-    const findMostFrequent = (arr) => {
-        return arr
-            .reduce((acc, cur, ind, arr) => {
-                if (arr.indexOf(cur) === ind) {
-                    console.log('hej')
-                    return [...acc, [cur, 1]];
-                } else {
-                    acc[acc.indexOf(acc.find((e) => e[0] === cur))] = [
-                        cur,
-                        acc[acc.indexOf(acc.find((e) => e[0] === cur))][1] + 1,
-                    ];
-                    console.log('Hejsan')
-                    maxElState = acc;
-                    return acc;
-                }
-            }, [])
-            .sort((a, b) => b[1] - a[1])
-            .filter((cur, ind, arr) => cur[1] === arr[0][1])
-            .map((cur) => cur[0]);
+
+
+    const foo = (arr) => {
+        let a = [],
+            b = [],
+            prev;
+
+        arr.sort();
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== prev) {
+                a.push(arr[i]);
+                b.push(1);
+            } else {
+                b[b.length - 1]++;
+            }
+            prev = arr[i];
+        }
+
+        return [a, b];
     };
 
-
-
-    // function findMostFrequest(arr) {
-    //     let compare = "";
-    //     let mostFreq = "";
-
-    //     arr.reduce((acc, val) => {
-    //       if (val in acc) { // if key already exists
-    //         acc[val]++; // then increment it by 1
-    //       } else {
-    //         acc[val] = 1; // or else create a key with value 1
-    //       } if (acc[val] > compare) { // if value of that key is greater than the compare value.
-    //         compare = acc[val]; // than make it a new compare value.
-    //         mostFreq = val; // also make that key most frequent.
-
-    //       } return acc;
-    //     }, {})
-
-    //     console.log("Most Frequent Item is:", mostFreq);
-    // }
 
     useEffect(() => {
         firebase
@@ -81,7 +61,6 @@ const MostFollowedStocks = ({ orgName }) => {
 
     //*This makes the array with all the stocks being followed in the organization
     const makeArray = (arr) => {
-
         let j = 0;
         let i = 0;
         while (j < arr.length) {
@@ -90,34 +69,18 @@ const MostFollowedStocks = ({ orgName }) => {
                 i = 0;
                 j++;
             } else {
-                orgFollowArray.push(arr[j].followingStocks[keys[i]]);
+                orgFollowArray.push(arr[j].followingStocks[keys[i]].symbol);
                 i++;
             }
         }
         setOrgDataState(orgFollowArray);
-        // findMostFrequest(orgFollowArray);
-        makeFinalArr(maxElState);
-
-
+        let result = foo(orgFollowArray);
+        makeFinalArr(result);
     };
 
-
-
     const makeFinalArr = (arr) => {
-        console.log(arr);
-        arr.forEach((item) => {
-            stockAmount.push(item[1]);
-            stockLabels.push(item[0]);
-            setStockAmountState(stockAmount);
-            setStockLabelsState(stockLabels);
-
-            const objFull = {
-                name: item[0],
-                count: item[1],
-            };
-            mostFollowedTop.push(objFull);
-        });
-        setMostFollowedTopState(mostFollowedTop);
+        setStockAmountState(arr[1]);
+        setStockLabelsState(arr[0]);
     };
 
     let data = {
@@ -143,6 +106,21 @@ const MostFollowedStocks = ({ orgName }) => {
         ],
     };
 
+    let options = {
+         maintainAspectRatio: false,
+                        legend: {
+                            display: false,
+                    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+
+
     return (
         <ContentWrapper>
             <h4>Mosts Followed Stocks</h4>
@@ -156,12 +134,7 @@ const MostFollowedStocks = ({ orgName }) => {
             {showBar ? (
                 <Bar
                     data={data}
-                    options={{
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false,
-                        },
-                    }}
+                    options={options}
                 />
             ) : (
                 <Pie

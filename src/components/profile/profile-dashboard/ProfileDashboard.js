@@ -5,7 +5,7 @@ import TotalCompValue from './data-card/total-comp-value/TotalCompValue';
 import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks';
 import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto';
 import RecentlyBought from './data-card/recently-bought/RecentlyBought';
-//import BoughtStocks from './data-card/bought-stocks/BoughtStocks' //remove?
+/* import BoughtStocks from './data-card/bought-stocks/BoughtStocks' */
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrganizationData } from '../../../redux/actions';
@@ -91,7 +91,7 @@ const ProfileDashboard = () => {
                                 : OrganizationData[0].organization
                         }
                     />
-                    {/* <RecentlyBought /> */}
+                    <RecentlyBought />
                 </>
             ) : (
                 <>

@@ -29,13 +29,13 @@ const RecentlyBought = () => {
 
     return (
         <ContentWrapper>
-       {/*      <h4>Recently Bought Stock</h4>
+            <h4>Recently Bought Stock</h4>
             <div className="info-wrapper">
                 <p><span>Username: </span>{dataDB.user}</p>
                 <p><span>Stock: </span>{dataDB.symbol}</p>
                 <p><span>Amount: </span> {dataDB.amount}</p>
                 <p><span>Price: </span>{dataDB.price * dataDB.amount}$</p>
-            </div> */}
+            </div>
         </ContentWrapper>
     );
 };

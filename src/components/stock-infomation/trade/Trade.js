@@ -28,7 +28,7 @@ const Trade = () => {
             await firebase
                 .user(user.uid)
                 .child('/possessionStocks')
-                .on('value', (snapshot) => {
+                .once('value', (snapshot) => {
                     let dataDB = snapshot.val();
                     if (dataDB == undefined) return;
                     let stocks = [];
@@ -142,8 +142,8 @@ const Trade = () => {
         let amountNum = parseInt(amountOfStocks);
         if (buy === true) {
             if (stockIncludes == true) {
-                let existingAmount = parseInt(includedStock.amount);
-                let resAmount = parseInt(existingAmount + amountNum);
+                console.log(includedStock)
+                let resAmount = includedStock.amount + amountNum
                 firebase
                     .user(user.uid)
                     .child(`/possessionStocks/${symbol}`)
@@ -196,7 +196,7 @@ const Trade = () => {
             let resAmount = parseInt(existingAmount - amountNum);
 
             if (resAmount <= 0) {
-                setHolding(0);
+
                 firebase
                     .user(user.uid)
                     .child(`/possessionStocks/${symbol}`)
@@ -208,6 +208,7 @@ const Trade = () => {
                         .child(`/users/${user.uid}/possessionStocks/${symbol}`)
                         .remove();
                 }
+                setHolding(0);
             } else {
                 firebase
                     .user(user.uid)

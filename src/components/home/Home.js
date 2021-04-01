@@ -46,60 +46,14 @@ const Home = () => {
         setDidMount(true);
         let followingStocksList = [];
         let followingCryptoList = [];
-        let data;
-        let dataCrypto;
         let currencyData;
-        //* Gets a list of users in our database
         getFollowInfo('/followingStocks', followingStocksList)
         getFollowInfo('/followingCrypto', followingCryptoList)
         console.log(followingCryptoList)
         setFollowingArr(followingStocksList)
         setFollowingArrCrypto(followingCryptoList)
 
-        //*Behöver inte utkommentarad kod längre
-        // let stocks = firebase.db.ref(
-        //     'users/' + user.uid + '/followingStocks/array'
-        // );
-        // if (stocks === null) {
-        //     return;
-        // }
-
-        // stocks.on('value', (snapshot) => {
-        //     data = snapshot.val();
-        //     if (data == null) {
-        //         return;
-        //     }
-
-        //     for (let i = 0; i < data; i++) {
-        //         followingDb.push(data[i]);
-        //     }
-        //     data.forEach((item) => followingDb.push(item));
-        //     setFollowingArr(followingDb);
-        //     dispatch(setFollowing(followingDb));
-        // });
-
-        // let cryptos = firebase.db.ref( 'users/' + user.uid + '/followingCrypto/array');
-
-        // if (cryptos === null) {
-        //     return;
-        // }
-
-        // cryptos.on('value', (snapshot) => {
-        //     dataCrypto = snapshot.val();
-        //     console.log(dataCrypto)
-        //     if (dataCrypto == null) {
-        //         return;
-        //     }
-
-        //     for (let i = 0; i < dataCrypto; i++) {
-        //         followingDbCrypto.push(dataCrypto[i]);
-        //     }
-        //     dataCrypto.forEach((item) => followingDbCrypto.push(item));
-        //     setFollowingArrCrypto(followingDbCrypto);
-            // dispatch(setFollowing(followingDbCrypto));
-        // });
-
-        firebase.user(user.uid).child('/currency').on('value', (snapshot) => {
+        firebase.user(user.uid).child('/currency').once('value', (snapshot) => {
             currencyData = snapshot.val();
             if (currencyData == null) {
                 return;
@@ -109,14 +63,8 @@ const Home = () => {
         })
         return () => {
             setDidMount(false);
-          };
+        };
     }, [didMount, dispatch, firebase, user.uid]); //changed!
-
-    // src\components\home\Home.js
-    // Line 96:8:  React Hook useEffect has missing dependencies:
-    // 'dispatch', 'firebase', and 'user.uid'.
-    // Either include them or remove the dependency array react-hooks/exhaustive-deps
-
 
 
     return (

@@ -1,15 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React,{ useEffect, useContext, useState} from 'react';
+import { FirebaseContext } from '../../firebase/context';
 
 // import { ContentWrapper } from './ProfilePortfolioElements'; //remove?
 import PortfolioOverview from '../../shared/card/portfolio-overview/PortfolioOverviewCard';
 import Possession from './profile-possession/Possession.js'
 
 const ProfilePortfolio = () => {
-    const Currency = useSelector((state) => state.Currency);
+    const user = JSON.parse(localStorage.getItem('authUser'));
+    const firebase = useContext(FirebaseContext);
+    const [currency, setCurrency] = useState(0)
+
+    useEffect(() => {
+        firebase.user(user.uid).child('/currency/currency').once('value', (snapshot) => {
+            const data = snapshot.val()
+            if(!data) return
+            setCurrency(data)
+        })
+    }, [])
     return (
         <>
-            <PortfolioOverview total={Currency.toLocaleString()} />
+            <PortfolioOverview total={currency.toLocaleString()} />
             <Possession />
         </>
     );

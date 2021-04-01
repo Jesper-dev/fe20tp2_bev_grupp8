@@ -6,10 +6,16 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    
+
     gap: 3rem;
 
     h2 {
         margin: 16px;
     }
 `
+
+/*
+export const GridWrapper = styled.div`
+    display: grid;
+`
+*/
