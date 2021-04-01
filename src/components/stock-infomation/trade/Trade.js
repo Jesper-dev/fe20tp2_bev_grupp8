@@ -4,6 +4,7 @@ import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
 // import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
 import { ContentWrapper } from './TradeElements';
+import { parse } from '@fortawesome/fontawesome-svg-core';
 
 const Trade = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -98,7 +99,8 @@ const Trade = () => {
             calcCurrency = currency1 - currency2.toFixed(2) * num;
             if (calcCurrency <= 0) {
                 alert('Insufficient funds');
-                return;
+                let funds = false
+                return funds;
             }
         } else if (buy === false) {
             calcCurrency = currency1 + currency2.toFixed(2) * num;
@@ -121,8 +123,8 @@ const Trade = () => {
             if (stocks[i].symbol == symbol) {
                 console.log('Den finns');
                 stockIncludes = true;
-                setIncludedStock(stocks[i]);
-                return;
+                let stock = stocks[i]
+                return stock;
             } else {
                 console.log('Den finns inte');
                 stockIncludes = false;
@@ -138,12 +140,15 @@ const Trade = () => {
         price,
         percent
     ) => {
-        checkIfStockIncludes(symbol);
+        let stock = checkIfStockIncludes(symbol);
         let amountNum = parseInt(amountOfStocks);
+
         if (buy === true) {
             if (stockIncludes == true) {
-                console.log(includedStock)
-                let resAmount = includedStock.amount + amountNum
+                console.log(stock)
+                let existingAmount = parseInt(stock.amount)
+                let resAmount = existingAmount + amountNum
+                console.log(resAmount)
                 firebase
                     .user(user.uid)
                     .child(`/possessionStocks/${symbol}`)
@@ -192,7 +197,7 @@ const Trade = () => {
                 console.log('You cant sell more than you have');
                 return;
             }
-            let existingAmount = parseInt(includedStock.amount);
+            let existingAmount = parseInt(stock.amount);
             let resAmount = parseInt(existingAmount - amountNum);
 
             if (resAmount <= 0) {
@@ -225,6 +230,7 @@ const Trade = () => {
                             amount: resAmount,
                         });
                 }
+                checkHolding()
             }
         }
     };
@@ -235,29 +241,36 @@ const Trade = () => {
         } else if (buy === true) {
             if (userData == null) return;
             let currency = userData.currency.currency;
-            updateUserCurrency(
+            let funds = updateUserCurrency(
                 true,
                 currency,
                 chosenShare[0].regularMarketPrice,
                 numOfStocks
             );
-            updateUserPossession(
-                true,
-                chosenShare[0].symbol,
-                chosenShare[0].shortName,
-                numOfStocks,
-                chosenShare[0].regularMarketPrice,
-                chosenShare[0].regularMarketChangePercent
-            );
-            addToRecentlyBought(
-                chosenShare[0].symbol,
-                chosenShare[0].shortName,
-                numOfStocks,
-                chosenShare[0].regularMarketPrice,
-                user.username,
-                chosenShare[0].regularMarketChangePercent,
-                user.organization
-            );
+            if(funds == false) {
+                return
+            } else {
+                updateUserPossession(
+                    true,
+                    chosenShare[0].symbol,
+                    chosenShare[0].shortName,
+                    numOfStocks,
+                    chosenShare[0].regularMarketPrice,
+                    chosenShare[0].regularMarketChangePercent
+                );
+
+                addToRecentlyBought(
+                    chosenShare[0].symbol,
+                    chosenShare[0].shortName,
+                    numOfStocks,
+                    chosenShare[0].regularMarketPrice,
+                    user.username,
+                    chosenShare[0].regularMarketChangePercent,
+                    user.organization
+                );
+            }
+
+
             setNumOfStocks(0);
             setBuy(false);
         }
@@ -289,8 +302,6 @@ const Trade = () => {
             setSell(false);
         }
     };
-
-    console.log(userData);
     return (
         <ContentWrapper>
             {/* <p>{userData ? userData : ''}</p> */}
