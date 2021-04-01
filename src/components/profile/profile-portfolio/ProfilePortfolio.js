@@ -16,7 +16,7 @@ const ProfilePortfolio = () => {
             if(!data) return
             setCurrency(data)
         })
-    }, [])
+    }, [firebase, user.uid]);
     return (
         <>
             <PortfolioOverview total={currency.toLocaleString()} />

@@ -36,7 +36,7 @@ const INITIAL_STATE = {
             {
                 regularMarketChangePercent: 150,
                 regularMarketPrice: 250,
-                name: 'lets-vest-CrY',
+                name: 'lets-vest-Cry',
                 image: 'LV-CrY',
                 symbol: 'LVCry'
             },

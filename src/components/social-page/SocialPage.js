@@ -10,7 +10,8 @@ import { setUsers } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { UserWrapper } from "./SocialPageElements"
+import ContentWrapper from "../shared/wrappers/ContentWrapper";
+import { MainWrapper } from "./SocialPageElements"
 
 import { withAuthorization } from '../session/index';
 let usersArray = []
@@ -34,24 +35,22 @@ const SocialPage = () => {
     }, [dispatch, firebase]) //changed!
 
     return (
+        <ContentWrapper>
+            <MainWrapper>
+                    <SearchBar />
+                    {filteredUsers.length > 0 ? filteredUsers.map((item, index) => {
+                        return (
+                            <UserCard
+                                key={index}
+                                img={item.picture ? item.picture.profile_pic : "img"}
+                                username={item.username}
+                                total={item.currency ? item.currency.currency : 20}
+                            />
+                        )
+                    }) : <SocialPost />}
 
-        <UserWrapper>
-            <SearchBar />
-            {filteredUsers.length > 0 ? filteredUsers.map((item, index) => {
-                return (
-                    <UserCard
-                        key={index}
-                        img={item.picture ? item.picture.profile_pic : "img"}
-                        username={item.username}
-                        total={item.currency ? item.currency.currency : 20}
-                    />
-                )
-            }) : <SocialPost />}
-
-        </UserWrapper>
-
-
-
+                </MainWrapper>
+        </ContentWrapper>
     );
 }
 

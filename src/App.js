@@ -68,8 +68,8 @@ const App = () => {
                     </Route> */}
                     <Route exact path={ROUTES.TRADE}>
                         <Trade />
-                        {/* <NavbarLeft />
-                        <Toolbar /> */}
+                        <NavbarLeft />
+                        <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.INFO_CRYPTO}>
                         <CryptoInfoPage />
@@ -153,13 +153,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    min-height: 100vh;
-    /* margin: 0 0 56px 0; */
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: var(--typefaces);
     background-color: var(--body-secondary);
+  }
+
+  #root {
+    display: flex;
+    min-height: 100vh;
   }
 
     p {

@@ -8,8 +8,8 @@ import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 
 import { FirebaseContext } from '../firebase/context'
 import { withAuthorization } from '../session';
-
-import { ContentWrapper, HeaderWrapper, MainWrapper, ProfileSettingsBtn } from './ProfileElements';
+import ContentWrapper from "../shared/wrappers/ContentWrapper";
+import { HeaderWrapper, MainWrapper, ProfileSettingsBtn } from './ProfileElements';
 import TabBar from "../shared/tab-bar/TabBar";
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';

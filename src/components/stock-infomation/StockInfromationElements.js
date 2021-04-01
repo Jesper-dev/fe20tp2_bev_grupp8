@@ -121,7 +121,8 @@ export const TradeBtns = styled(Link)`
     cursor: pointer;
     font-weight: 400;
     font-family: inherit;
-    margin-left: 15px;
+    //margin-left: 15px;
+    margin: 15px;
 
     a:focus {
         box-shadow: var(--box-shadow-focus);

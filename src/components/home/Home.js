@@ -1,6 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
 // import StockCard from '../shared/card/stock-card/StockCard';
-import { ContentWrapper } from './HomeElements';
+
+import { MainWrapper } from './HomeElements';
+
+import ContentWrapper from "../shared/wrappers/ContentWrapper";
+
 // import Recommendations from '../../api/recommendations/Recommendations';
 import Following from '../shared/homepage-custom-sections/FollowingHome';
 import RecommendationHome from '../shared/homepage-custom-sections/RecommendationHome';
@@ -19,17 +23,13 @@ import { setFollowing, setCurrency } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const Home = () => {
-    // const stocksList = useSelector((state) => state.RecommendationReducer);
-    /*     const following = useSelector((state) => state.Following); */
     const [totalCurrency, setTotalCurrency] = useState(0);
-    //const followingCrypto = useSelector((state) => state.FollowingCrypto); //remove?
-    // const Currency = useSelector((state) => state.Currency);
-    const firebase = useContext(FirebaseContext);
     const [followingArr, setFollowingArr] = useState([]);
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
     const dispatch = useDispatch();
     const [didMount, setDidMount] = useState(false);
-    // let array = MockGetTickers.finance.result[0].quotes;
+
+    const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     const getFollowInfo = (dir, arr) => {
@@ -70,18 +70,20 @@ const Home = () => {
     return (
         <>
             <ContentWrapper>
-                <PortfolioOverview
-                    total={totalCurrency.toLocaleString()}
-                    difference={0}
-                    percent={0}
-                />
+                <MainWrapper>
+                    <PortfolioOverview
+                        total={totalCurrency.toLocaleString()}
+                        difference={0}
+                        percent={0}
+                    />
 
-                <News array={MockNewsList.items.result.slice(0, 1)} />
+                    <News array={MockNewsList.items.result.slice(0, 1)} />
 
-                <Following array={followingArr} cryptoList={followingArrCrypto} />
-                <RecommendationHome MockData={MockData}  />
+                    <Following array={followingArr} cryptoList={followingArrCrypto} />
+                    <RecommendationHome MockData={MockData}  />
+                    {/* <Recommendations /> */}
+                </MainWrapper>
             </ContentWrapper>
-            {/* <Recommendations /> */}
         </>
     );
 };

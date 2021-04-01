@@ -13,6 +13,7 @@ import { setOrganizationData } from '../../../redux/actions';
 import { FirebaseContext } from '../../firebase/context';
 
 import { Wrapper } from './ProfileDashboardElements';
+import RecentlySold from './data-card/recently-sold/RecentlySold';
 
 const ProfileDashboard = () => {
     const dispatch = useDispatch();
@@ -92,6 +93,7 @@ const ProfileDashboard = () => {
                         }
                     />
                     <RecentlyBought />
+                    <RecentlySold />
                 </>
             ) : (
                 <>
