@@ -7,7 +7,7 @@ import { FirebaseContext } from '../../../../firebase/context';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ContentWrapper } from './MostFollowedCryptoElements';
 
-const MostFollowedCrypto = ({ orgName }) => {
+const MostFollowedCrypto = ({ orgName, pie }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
     const [orgDataState, setOrgDataState] = useState([]);
@@ -119,25 +119,16 @@ const MostFollowedCrypto = ({ orgName }) => {
     return (
         <ContentWrapper>
             <h4>Most Followed Cryptos</h4>
-
-            <button onClick={() => setShowBar(!showBar)}>
+            {/*          <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>
                 ) : (
                     <i className="far fa-chart-bar"></i>
                 )}
-            </button>
+            </button> */}
 
             <TransitionGroup>
-                {showBar ? (
-                    <CSSTransition
-                        in={showBar}
-                        timeout={1500}
-                        classNames="my-node"
-                    >
-                        <Bar data={data} options={options} />
-                    </CSSTransition>
-                ) : (
+                {pie ? (
                     <CSSTransition
                         in={!showBar}
                         timeout={1500}
@@ -152,6 +143,14 @@ const MostFollowedCrypto = ({ orgName }) => {
                 }, */
                             }}
                         />
+                    </CSSTransition>
+                ) : (
+                    <CSSTransition
+                        in={showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Bar data={data} options={options} />
                     </CSSTransition>
                 )}
             </TransitionGroup>

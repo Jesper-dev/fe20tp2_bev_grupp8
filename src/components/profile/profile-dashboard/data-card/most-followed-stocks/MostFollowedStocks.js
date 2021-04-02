@@ -6,7 +6,7 @@ import { FirebaseContext } from '../../../../firebase/context';
 
 import { ContentWrapper } from './MostFollowedStocksElement';
 
-const MostFollowedStocks = ({ orgName, inProp }) => {
+const MostFollowedStocks = ({ orgName, pie }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
     const [orgDataState, setOrgDataState] = useState([]);
@@ -123,23 +123,15 @@ const MostFollowedStocks = ({ orgName, inProp }) => {
     return (
         <ContentWrapper>
             <h4>Most Followed Stocks</h4>
-            <button onClick={() => setShowBar(!showBar)}>
+            {/*           <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>
                 ) : (
                     <i className="far fa-chart-bar"></i>
                 )}
-            </button>
+            </button> */}
             <TransitionGroup>
-                {showBar ? (
-                    <CSSTransition
-                        in={showBar}
-                        timeout={1500}
-                        classNames="my-node"
-                    >
-                        <Bar data={data} options={options} />
-                    </CSSTransition>
-                ) : (
+                {pie ? (
                     <CSSTransition
                         in={!showBar}
                         timeout={1500}
@@ -154,6 +146,14 @@ const MostFollowedStocks = ({ orgName, inProp }) => {
                 }, */
                             }}
                         />
+                    </CSSTransition>
+                ) : (
+                    <CSSTransition
+                        in={showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Bar data={data} options={options} />
                     </CSSTransition>
                 )}
             </TransitionGroup>

@@ -5,7 +5,7 @@ import TotalCompValue from './data-card/total-comp-value/TotalCompValue';
 import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks';
 /* import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto'; */
 
-import BarChartCard from './data-card/bar-chart-card/BarChartCard'
+import BarChartCard from './data-card/dashboard-chart-card/DashboardChartCard';
 import RecentlyBought from './data-card/recently-bought/RecentlyBought';
 /* import BoughtStocks from './data-card/bought-stocks/BoughtStocks' */
 
@@ -63,7 +63,6 @@ const ProfileDashboard = () => {
         return () => {
             setDidMount(false);
         };
-
     }, [didMount, dispatch, firebase.db, user.organization, user.uid]);
     //OrgData, dispatch, firebase.db, user.organization, user.uid
     //*Kanske skicka ned olika arrayer som props ned till components och inte kalla på de i components själva
@@ -80,21 +79,6 @@ const ProfileDashboard = () => {
                     </h2>
                     <TotalCompValue />
                     <BarChartCard />
-              {/*       <MostFollowedStocks
-                        orgName={
-                            !OrganizationData[0]
-                                ? ''
-                                : OrganizationData[0].organization
-                        }
-                    /> */}
-                    {/* <BoughtStocks /> */}
-                 {/*    <MostFollowedCrypto
-                        orgName={
-                            !OrganizationData[0]
-                                ? ''
-                                : OrganizationData[0].organization
-                        }
-                    /> */}
                     <RecentlyBought />
                     <RecentlySold />
                 </>
