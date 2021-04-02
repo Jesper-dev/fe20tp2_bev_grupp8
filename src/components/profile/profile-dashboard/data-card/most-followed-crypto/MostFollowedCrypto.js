@@ -4,6 +4,7 @@ import { Bar, Pie } from 'react-chartjs-2'; //changed!
 
 import { FirebaseContext } from '../../../../firebase/context';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ContentWrapper } from './MostFollowedCryptoElements';
 
 const MostFollowedCrypto = ({ orgName }) => {
@@ -55,7 +56,7 @@ const MostFollowedCrypto = ({ orgName }) => {
     const makeArray = (arr) => {
         let j = 0;
         let i = 0;
-         while (j < arr.length) {
+        while (j < arr.length) {
             let keys = Object.keys(arr[j].followingCrypto);
             if (arr[j].followingCrypto[keys[i]] === undefined) {
                 i = 0;
@@ -66,7 +67,7 @@ const MostFollowedCrypto = ({ orgName }) => {
             }
         }
         setOrgDataState(orgFollowArray);
-        let result = foo(orgFollowArray)
+        let result = foo(orgFollowArray);
         makeFinalArr(result);
     };
 
@@ -97,28 +98,28 @@ const MostFollowedCrypto = ({ orgName }) => {
                 hoverOffset: 1,
             },
         ],
-    }
+    };
 
-let options = {
-         maintainAspectRatio: false,
-                        legend: {
-                            display: false,
+    let options = {
+        maintainAspectRatio: false,
+        legend: {
+            display: false,
+        },
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
                     },
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
-}
-
-
-
+                },
+            ],
+        },
+    };
 
     return (
         <ContentWrapper>
-            <h4>Mosts Followed Cryptos</h4>
+            <h4>Most Followed Cryptos</h4>
+
             <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>
@@ -126,22 +127,34 @@ let options = {
                     <i className="far fa-chart-bar"></i>
                 )}
             </button>
-            {showBar ? (
-                <Bar
-                    data={data}
-                    options={options}
-                />
-            ) : (
-                <Pie
-                    data={data}
-                    options={{
-                        maintainAspectRatio: false,
-                        /*   legend: {
+
+            <TransitionGroup>
+                {showBar ? (
+                    <CSSTransition
+                        in={showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Bar data={data} options={options} />
+                    </CSSTransition>
+                ) : (
+                    <CSSTransition
+                        in={!showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Pie
+                            data={data}
+                            options={{
+                                maintainAspectRatio: false,
+                                /*   legend: {
                     display: false,
                 }, */
-                    }}
-                />
-            )}
+                            }}
+                        />
+                    </CSSTransition>
+                )}
+            </TransitionGroup>
         </ContentWrapper>
     );
 };

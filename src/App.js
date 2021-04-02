@@ -7,9 +7,9 @@ import Discover from './components/discover/Discover';
 // import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
 
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
-import NavbarLeft from './components/shared/navbar-left/NavbarLeft'
+import NavbarLeft from './components/shared/navbar-left/NavbarLeft';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
-import Trade from './components/stock-infomation/trade/Trade'
+import Trade from './components/stock-infomation/trade/Trade';
 import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
@@ -169,6 +169,21 @@ const GlobalStyle = createGlobalStyle`
     h1 {
         margin: 0;
     }
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 8500ms linear;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 8500ms linear;
+}
+
 `;
 
 export default withAuthentication(App);

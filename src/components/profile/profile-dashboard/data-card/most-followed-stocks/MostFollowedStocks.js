@@ -1,11 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Bar, Pie, Chart } from 'react-chartjs-2';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { FirebaseContext } from '../../../../firebase/context';
 
 import { ContentWrapper } from './MostFollowedStocksElement';
 
-const MostFollowedStocks = ({ orgName }) => {
+const MostFollowedStocks = ({ orgName, inProp }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
     const [orgDataState, setOrgDataState] = useState([]);
@@ -22,8 +23,6 @@ const MostFollowedStocks = ({ orgName }) => {
     let maxElState = [];
     let stockAmount = [];
     let stockLabels = [];
-
-
 
     const foo = (arr) => {
         let a = [],
@@ -43,7 +42,6 @@ const MostFollowedStocks = ({ orgName }) => {
 
         return [a, b];
     };
-
 
     useEffect(() => {
         firebase
@@ -107,23 +105,24 @@ const MostFollowedStocks = ({ orgName }) => {
     };
 
     let options = {
-         maintainAspectRatio: false,
-                        legend: {
-                            display: false,
+        maintainAspectRatio: false,
+        legend: {
+            display: false,
+        },
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
                     },
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
-}
-
+                },
+            ],
+        },
+    };
 
     return (
         <ContentWrapper>
-            <h4>Mosts Followed Stocks</h4>
+            <h4>Most Followed Stocks</h4>
             <button onClick={() => setShowBar(!showBar)}>
                 {showBar ? (
                     <i className="fas fa-chart-pie"></i>
@@ -131,22 +130,33 @@ const MostFollowedStocks = ({ orgName }) => {
                     <i className="far fa-chart-bar"></i>
                 )}
             </button>
-            {showBar ? (
-                <Bar
-                    data={data}
-                    options={options}
-                />
-            ) : (
-                <Pie
-                    data={data}
-                    options={{
-                        maintainAspectRatio: false,
-                        /*   legend: {
+            <TransitionGroup>
+                {showBar ? (
+                    <CSSTransition
+                        in={showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Bar data={data} options={options} />
+                    </CSSTransition>
+                ) : (
+                    <CSSTransition
+                        in={!showBar}
+                        timeout={1500}
+                        classNames="my-node"
+                    >
+                        <Pie
+                            data={data}
+                            options={{
+                                maintainAspectRatio: false,
+                                /*   legend: {
                     display: false,
                 }, */
-                    }}
-                />
-            )}
+                            }}
+                        />
+                    </CSSTransition>
+                )}
+            </TransitionGroup>
         </ContentWrapper>
     );
 };
