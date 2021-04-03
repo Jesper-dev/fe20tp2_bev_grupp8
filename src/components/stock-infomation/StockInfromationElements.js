@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export const ContentWrapper = styled.div`
     /* height: 100vh; */
@@ -8,6 +8,7 @@ export const ContentWrapper = styled.div`
     align-items: center;
     background-color: var(--body);
     margin-bottom: 56px;
+    width: 100%;
 
     h1 {
         text-align: center;
@@ -16,7 +17,7 @@ export const ContentWrapper = styled.div`
     }
 
     .chartjs-render-monitor {
-        width: 100%;
+        width: inherit;
     }
 
     .informationContainer {
@@ -108,7 +109,6 @@ export const WatchStockButton = styled.button`
         font-size: 1.2rem;
     }
 `;
-
 
 export const TradeBtns = styled(Link)`
     text-decoration: none;

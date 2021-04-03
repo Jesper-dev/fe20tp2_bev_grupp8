@@ -57,20 +57,21 @@ export const ButtonPrimary = styled(Link)`
     }
 `;
 
-export const ShowCryptoBtn = styled.button`
-    padding: 0.75rem 2rem;
-    border: 0.125rem solid var(--primary);
-    border-radius: 0.25rem;
-    margin: auto;
-    background: none;
-    color: var(--primary-dark);
+export const GenericVestBtn = styled.button`
+    text-align: center;
+    padding: ${(props) => props.pad};
+    border: ${(props) => props.border};
+    border-radius: ${(props) => props.br};
+    background-color: ${(props) => props.bg};
+    color: ${(props) => props.co};
     font-family: inherit;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 100ms linear, color 100ms linear;
+    outline: none;
 
     &:hover {
-        background-color: var(--primary);
+        background-color: ${(props) => props.hovbg};
         color: var(--body);
     }
 `;

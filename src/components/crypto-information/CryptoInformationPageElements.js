@@ -7,8 +7,9 @@ export const ContentWrapper = styled.div`
     align-items: center;
     background-color: var(--body-secondary);
     margin-bottom: 56px;
+    width: 100%;
 
-    .information-wrapper{
+    .information-wrapper {
         width: 90vw;
         max-width: 700px;
     }
@@ -26,10 +27,10 @@ export const ContentWrapper = styled.div`
         margin: 8px;
         font-size: 1.1rem;
         line-height: 1.35;
-/*         display: flex;
+        /*         display: flex;
         align-items: center; */
     }
-/*
+    /*
     button {
         padding: 0.75rem 1rem;
         background: none;
@@ -71,18 +72,16 @@ export const ContentWrapper = styled.div`
     }
 `;
 
-
 export const DescriptionWrapper = styled.section`
+    transition: height 0.45s ease-in-out;
+    height: ${({ descClicked }) => (!descClicked ? '180px' : '350px')};
+    overflow: hidden;
 
-        transition: height 0.45s ease-in-out;
-        height: ${({ descClicked }) => (!descClicked ? '180px' : '350px')};
-        overflow: hidden;
-
-        box-shadow: var(--box-shadow-cards);
-        border-radius: 4px;
-        padding: 16px;
-        margin: 8px;
-        font-size: 0.9rem;
-        line-height: 1.35;
-        cursor: pointer;
-`
+    box-shadow: var(--box-shadow-cards);
+    border-radius: 4px;
+    padding: 16px;
+    margin: 8px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    cursor: pointer;
+`;

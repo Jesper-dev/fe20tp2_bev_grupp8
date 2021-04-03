@@ -1,31 +1,31 @@
-import React, {useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import { NavBar, Banner, About } from './LandingpageElements';
 import { Button } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';
-import FirebaseContext from "../firebase/context"
+import FirebaseContext from '../firebase/context';
 // import { Link } from 'react-router-dom';
 
 import MoneySvg from '../svgs/LandingSvg';
 import InvestSvg from '../svgs/InvestSvg';
 import ProfitsSvg from '../svgs/ProfitsSvg';
-import LogoLets from '../svgs/LogoLets'
+import LogoLets from '../svgs/LogoLets';
 
 const Landingpage = () => {
-	const firebase = useContext(FirebaseContext);
+    const firebase = useContext(FirebaseContext);
 
-	useEffect(() => {
-		// temporary console.log example
-		const styles = [
-			"display: inline-block;",
-			"padding: 0.75rem;",
-			"border: 0.125rem solid #5068F5;",
-			"border-radius: 0.2rem;",
-			"color: #5068F5;",
-			"font-size: 2rem;"
-		].join(" ");
+    useEffect(() => {
+        // temporary console.log example
+        const styles = [
+            'display: inline-block;',
+            'padding: 0.75rem;',
+            'border: 0.125rem solid #5068F5;',
+            'border-radius: 0.2rem;',
+            'color: #5068F5;',
+            'font-size: 2rem;',
+        ].join(' ');
 
-		console.log("%cLet's Vest!", styles);
-	}, [])
+        console.log("%cLet's Vest!", styles);
+    }, []);
 
     return (
         <div>

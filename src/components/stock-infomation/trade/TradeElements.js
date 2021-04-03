@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainWrapper = styled.main`
-/*     display: flex;
+    /*     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 1rem;
@@ -13,7 +13,7 @@ export const MainWrapper = styled.main`
     justify-content: center;
     align-items: center;
     height: 100%;
-/*     background-color: aliceblue; */
+    /*     background-color: aliceblue; */
 
     .tmp-wrapper {
         height: 500px;
@@ -25,7 +25,32 @@ export const MainWrapper = styled.main`
         border-radius: 0.5rem;
         box-shadow: var(--box-shadow-cards);
         background: var(--body);
+    }
 
+    .wallet-wrapper {
+        padding: 0.5rem 0.375rem 0.5rem 0.1rem;
+        border: 0.09375rem solid #c8c8c8;
+        border-radius: 0.25rem;
+        color: #383838;
+        font-family: inherit;
+        font-size: 0.9125rem;
+        font-weight: 500;
+        text-indent: 0.375rem;
+    }
+
+    .brokage-wrapper {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 0.1rem;
+        border-bottom: dashed 1px #c8c8c8;
+    }
+
+    .stock-overview-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 120px;
     }
 
     h2 {
@@ -33,24 +58,23 @@ export const MainWrapper = styled.main`
     }
 
     .buttonWrapper {
-     /*    border: 1px solid black; */
-        height: 8%;
-        width: 80%;
+        /*    border: 1px solid black; */
+        /*        height: 8%; */
+        width: 100%;
         display: flex;
         justify-content: space-around;
     }
 
-    .buttonWrapper > button {
-        width: 25%;
-    }
-
     .amountWrapper {
-        margin-bottom: 32px;
-    }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 8px;
 
-    .amountWrapper > input {
-        width: 15%;
-        height: 50%;
-        margin: 8px;
+        span:nth-child(2) {
+            font-weight: bold;
+            font-size: 1.6rem;
+            transition: all 0.6s linear;
+        }
     }
 `;
