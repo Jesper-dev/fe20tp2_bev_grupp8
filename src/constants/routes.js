@@ -15,9 +15,9 @@ export const PROFILE_SETTINGS = '/profile/settings';
 
 export const INFO_CRYPTO = '/info/crypto/:id';
 export const INFO_STOCK = '/info/:id';
-
 export const INFO = '/info';
-export const TRADE = '/trade'
+
+export const TRADE_STOCK = '/trade/:id';
 
 export const USER = '/user/:id';
 

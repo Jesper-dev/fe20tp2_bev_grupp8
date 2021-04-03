@@ -94,3 +94,9 @@ export const filterUsers = (filteredUsers) => {
         payload: filteredUsers,
     };
 };
+export const toggleSearch = (searching) => {
+    return {
+        type: 'SEARCHING',
+        payload: searching,
+    };
+};

@@ -19,7 +19,11 @@ import SearchBar from '../shared/search-bar/SearchBar';
 import DiscoverSearch from './discover-search/DiscoverSearch';
 import TabBar from '../shared/tab-bar/TabBar';
 
+import { useSelector } from 'react-redux';
+
 const Discover = () => {
+    const Searching = useSelector((state) => state.Searching);
+
     const tabs = [
         {
             label: 'Discover',
@@ -41,22 +45,23 @@ const Discover = () => {
     return (
         <ContentWrapper>
             <HeaderWrapper>
-                {/*     <SearchBar /> */}
                 <DiscoverSearch />
-                <TabBar tabs={tabs} />
+                {!Searching ? <TabBar tabs={tabs} /> : null}
             </HeaderWrapper>
-            <MainWrapper>
-                <Route
-                    exact
-                    path={ROUTES.DISCOVER_STOCKS}
-                    component={DiscoverStocksList}
-                />
-                <Route
-                    exact
-                    path={ROUTES.DISCOVER_CRYPTO}
-                    component={DiscoverCryptoList}
-                />
-            </MainWrapper>
+            {!Searching ? (
+                <MainWrapper>
+                    <Route
+                        exact
+                        path={ROUTES.DISCOVER_STOCKS}
+                        component={DiscoverStocksList}
+                    />
+                    <Route
+                        exact
+                        path={ROUTES.DISCOVER_CRYPTO}
+                        component={DiscoverCryptoList}
+                    />
+                </MainWrapper>
+            ) : null}
         </ContentWrapper>
     );
 };

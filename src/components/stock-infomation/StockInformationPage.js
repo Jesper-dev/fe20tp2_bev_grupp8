@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
+import axios from 'axios';
 import LineChart from '../charts/InfopageLinechart';
 import 'firebase/database';
 import { FirebaseContext } from '../firebase/context';
 import BackButton from '../shared/button/back-button/BackButton';
+import { useParams } from 'react-router-dom';
 import {
     ContentWrapper,
     WatchStockButton,
@@ -11,16 +13,14 @@ import {
 
 const StockInformationPage = () => {
     const [checked, setChecked] = useState(false);
-    //*Redux stuff :)
-    const [
-        loading,
-        setLoading,
-    ] = useState(true);
+
+    const [stockData, setStockData] = useState({});
+    const [loading, setLoading] = useState(true);
     const [didMount, setDidMount] = useState(false);
     const [stockIncludes, setStockIncludes] = useState(false);
 
     const firebase = useContext(FirebaseContext);
-    //const { id } = useParams(); //remove?
+    const { id } = useParams();
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
@@ -52,49 +52,30 @@ const StockInformationPage = () => {
         setDidMount(true);
         checkIfFollowed();
 
-        /* const options = {
-      method: 'GET',
-      url: 'https://alpha-vantage.p.rapidapi.com/query',
-      params: { function: 'GLOBAL_QUOTE', symbol: id },
-      headers: {
-          'x-rapidapi-key':
-              '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
-          'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
-      },
-    };
+        const options = {
+            method: 'GET',
+            url:
+                'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary',
+            params: { symbol: id, region: 'US' },
+            headers: {
+                'x-rapidapi-key':
+                    '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
+                'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
+            },
+        };
 
-        axios
-      .request(options)
-      .then(function (response) {
-          console.log(response.data);
-      })
-      .catch(function (error) {
-          console.error(error);
-      }); */
+        (async () => {
+            await axios
+                .request(options)
+                .then((response) => {
+                    setStockData(response.data);
+                    setLoading(false);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        })();
 
-        //     const options = {
-        //       method: 'GET',
-        //       url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary',
-        //       params: { symbol: id, region: 'US' },
-        //       headers: {
-        //           'x-rapidapi-key':
-        //               '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
-        //           'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
-        //       },
-        //   };
-
-        //   (async () => {
-        //     await axios.request(options)
-        //     .then((response) => {
-        //         setStockData(response.data);
-        //         setLoading(false);
-        //     })
-        //     .catch(function (error) {
-        //         console.error(error);
-        //     });
-        //   })()
-
-        setLoading(false);
         return () => {
             setDidMount(false);
         };
@@ -111,7 +92,7 @@ const StockInformationPage = () => {
                     .organization(user.organization)
                     .child(`/users/${user.uid}/followingStocks/test`)
                     .remove();
-                setChecked(false)
+                setChecked(false);
             }
         } else {
             firebase
@@ -139,7 +120,7 @@ const StockInformationPage = () => {
                     });
             }
 
-            setChecked(true)
+            setChecked(true);
         }
     };
 
@@ -153,13 +134,15 @@ const StockInformationPage = () => {
                 <ContentWrapper>
                     <BackButton />
                     <div className="stockinfo-map-wrapper">
-                        {/* <h1>
+                        <h1>
                             {stockData.quoteType.shortName
                                 ? stockData.quoteType.shortName
                                 : stockData.quoteType.longName}
-                        </h1> */}
+                        </h1>
                         <div className="chart-topbar-wrapper">
-                            <TradeBtns to="/trade">TRADE</TradeBtns>
+                            <TradeBtns to={`/trade/${stockData.symbol}`}>
+                                TRADE
+                            </TradeBtns>
                             <WatchStockButton
                                 eyecolor={
                                     checked
@@ -176,31 +159,35 @@ const StockInformationPage = () => {
                         <LineChart />
 
                         <div className="informationContainer">
-                            {/* <p>{stockData.symbol}</p> */}
-                            {/*       <p>
+                            <p>{stockData.symbol}</p>
+                            {/*        <p>
                                 Market price:{' '}
                                 {item.regularMarketPrice
                                     ? item.regularMarketPrice
                                     : 200}{' '}
                                 $
                             </p> */}
-                            {/*      <p>
+                            {/* <p>
                                 Reg market change:{' '}
                                 {item.regularMarketChange
                                     ? item.regularMarketChange.toFixed(2)
                                     : 200}
                                 %
                             </p> */}
-                            {/* <p>
+                            <p>
                                 Market change percent:{' '}
                                 {stockData.price.regularMarketChangePercent.raw
-                                    ? stockData.price.regularMarketChangePercent.fmt
+                                    ? stockData.price.regularMarketChangePercent
+                                          .fmt
                                     : 2}
                             </p>
                             <p>
                                 {stockData.summaryProfile.longBusinessSummary}
+                            </p>
+                            {/*       <p className="holds-in-share">
+                                Your holding in this share is:{' '}
+                                {clickedStock.amount ? clickedStock.amount : 0}
                             </p> */}
-                            {/*  <p className="holds-in-share">Your holding in this share is: {clickedStock.amount ? clickedStock.amount : 0}</p> */}
                         </div>
                     </div>
                 </ContentWrapper>

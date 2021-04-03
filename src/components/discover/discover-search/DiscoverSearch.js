@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+/* REDUX SETUP */
+import { useDispatch } from 'react-redux';
+import { toggleSearch } from '../../../redux/actions';
+
 import SearchBar from '../../shared/search-bar/SearchBar';
 
 import UsFlag from '../../svgs/flags/America';
@@ -14,6 +18,9 @@ import { CardWrapper, SearchListWrapper } from './DiscoverSearchElements';
 
 const DiscoverSearch = () => {
     const [searchList, setSearchList] = useState([]);
+    const [searching, setSearching] = useState(false);
+
+    const dispatch = useDispatch();
 
     let timer = 1000;
     let timeoutVal = 1000;
@@ -21,7 +28,16 @@ const DiscoverSearch = () => {
     const onSearchedStock = (e) => {
         let searchWord = e.target.value;
 
-        if (!searchWord) return;
+        if (searchWord) {
+            dispatch(toggleSearch(true));
+            setSearching(true);
+        }
+
+        if (!searchWord) {
+            dispatch(toggleSearch(false));
+            setSearching(false);
+            return;
+        }
 
         const options = {
             method: 'GET',
@@ -55,44 +71,46 @@ const DiscoverSearch = () => {
     return (
         <>
             <SearchBar onSearchedStock={onSearchedStock} />
-            <SearchListWrapper>
-                {searchList.map((item, i) => {
-                    return (
-                        <>
-                            <CardWrapper>
-                                {item['4. region'] == 'United States' ? (
-                                    <UsFlag />
-                                ) : null}
-                                {item['8. currency'] == 'CAD' ? (
-                                    <Canada />
-                                ) : null}
-                                {item['4. region'] == 'United Kingdom' ? (
-                                    <UnitedKingdom />
-                                ) : null}
-                                {item['8. currency'] == 'BRL' ? (
-                                    <Brazil />
-                                ) : null}
-                                {item['8. currency'] == 'EUR' ? (
-                                    <Europe />
-                                ) : null}
+            {searching ? (
+                <SearchListWrapper>
+                    {searchList.map((item, i) => {
+                        return (
+                            <>
+                                <CardWrapper>
+                                    {item['4. region'] == 'United States' ? (
+                                        <UsFlag />
+                                    ) : null}
+                                    {item['8. currency'] == 'CAD' ? (
+                                        <Canada />
+                                    ) : null}
+                                    {item['4. region'] == 'United Kingdom' ? (
+                                        <UnitedKingdom />
+                                    ) : null}
+                                    {item['8. currency'] == 'BRL' ? (
+                                        <Brazil />
+                                    ) : null}
+                                    {item['8. currency'] == 'EUR' ? (
+                                        <Europe />
+                                    ) : null}
 
-                                <span>
-                                    {item['2. name'].length > 20
-                                        ? item['2. name'].slice(0, 18)
-                                        : item['2. name']}
-                                </span>
-                                <span>{item['1. symbol']}</span>
-
-                                <Link to={`/info/`}>
                                     <span>
-                                        <i className="fas fa-caret-right"></i>
+                                        {item['2. name'].length > 20
+                                            ? item['2. name'].slice(0, 18)
+                                            : item['2. name']}
                                     </span>
-                                </Link>
-                            </CardWrapper>
-                        </>
-                    );
-                })}
-            </SearchListWrapper>
+                                    <span>{item['1. symbol']}</span>
+
+                                    <Link to={`/info/`}>
+                                        <span>
+                                            <i className="fas fa-caret-right"></i>
+                                        </span>
+                                    </Link>
+                                </CardWrapper>
+                            </>
+                        );
+                    })}
+                </SearchListWrapper>
+            ) : null}
         </>
     );
 };

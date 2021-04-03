@@ -13,7 +13,7 @@ export const ContentWrapper = styled.div`
     h1 {
         text-align: center;
         margin: 32px 8px 8px 8px;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
     }
 
     .chartjs-render-monitor {

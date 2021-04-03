@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
@@ -9,10 +11,17 @@ import { GenericVestBtn } from '../../shared/button/ButtonElements';
 import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
 import ContentWrapper from '../../shared/wrappers/ContentWrapper';
 
+import {
+    checkIfTooManyStocks,
+    addToRecentlyBought,
+    addToRecentlySold,
+} from './TradeFunctions';
+
 const Trade = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     let stockIncludes;
 
+    const [loading, setLoading] = useState(true);
     const [sell, setSell] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
@@ -21,10 +30,16 @@ const Trade = () => {
     const [buy, setBuy] = useState(false);
     const [holding, setHolding] = useState(0);
 
+    const [symbol, setSymbol] = useState('');
+    const [price, setPrice] = useState(0);
+    const [changePercent, setChangePercent] = useState(0);
+    const [stockData, setStockData] = useState({});
     const [userData, setUserData] = useState({});
     /* let userDataVariable = {} */
 
     const chosenShare = useSelector((state) => state.ChosenShare);
+
+    const { id } = useParams();
     const firebase = useContext(FirebaseContext);
 
     //*Checks if clicked stock has been bought before and if true display how many
@@ -40,8 +55,9 @@ const Trade = () => {
                     stocks.push({ ...dataDB[key] });
                 }
                 stocks.forEach((item) => {
-                    if (item.symbol === chosenShare[0].symbol) {
+                    if (item.symbol === symbol) {
                         setHolding(item.amount);
+
                         // setClickedStock(item);
                     }
                 });
@@ -49,6 +65,46 @@ const Trade = () => {
     }, [chosenShare, firebase, user.uid]);
 
     useEffect(() => {
+        const options = {
+            method: 'GET',
+            url: 'https://alpha-vantage.p.rapidapi.com/query',
+            params: {
+                function: 'GLOBAL_QUOTE',
+                symbol: id,
+                datatype: 'json',
+            },
+            headers: {
+                'x-rapidapi-key':
+                    '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
+                'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
+            },
+        };
+
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                setStockData(response.data);
+                setChangePercent(
+                    parseFloat(
+                        stockData['Global Quote']['10. change percent'].replace(
+                            ',',
+                            '.'
+                        )
+                    )
+                );
+                setPrice(
+                    parseFloat(
+                        stockData['Global Quote']['05. price'].replace(',', '.')
+                    )
+                );
+                setSymbol(response.data['Global Quote']['01. symbol']);
+                setLoading(false);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
         firebase.user(user.uid).once('value', (snapshot) => {
             const data = snapshot.val();
             if (!data) return;
@@ -63,56 +119,6 @@ const Trade = () => {
         } else if (e.target.innerText === 'SELL') {
             onSell(numOfStocks);
         }
-    };
-
-    const addToRecentlyBought = (
-        symbol,
-        name,
-        amountOfStocks,
-        price,
-        user,
-        percent,
-        org
-    ) => {
-        let amountNum = parseInt(amountOfStocks);
-        firebase
-            .organization(org)
-            .child('/recentlyBought')
-            .set({
-                [symbol]: {
-                    name,
-                    amount: amountNum,
-                    price,
-                    symbol,
-                    user,
-                    percent,
-                },
-            });
-    };
-
-    const addToRecentlySold = (
-        symbol,
-        name,
-        amountOfStocks,
-        price,
-        user,
-        percent,
-        org
-    ) => {
-        let amountNum = parseInt(amountOfStocks);
-        firebase
-            .organization(org)
-            .child('/recentlySold')
-            .set({
-                [symbol]: {
-                    name,
-                    amount: amountNum,
-                    price,
-                    symbol,
-                    user,
-                    percent,
-                },
-            });
     };
 
     const updateUserCurrency = (buy, currency1, currency2, number) => {
@@ -152,16 +158,6 @@ const Trade = () => {
                 console.log('Den finns inte');
                 stockIncludes = false;
             }
-        }
-    };
-
-    const checkIfTooManyStocks = (numOfStocks) => {
-        if (numOfStocks > holding || numOfStocks <= -1) {
-            let tooMany = true;
-            return tooMany;
-        } else {
-            let tooMany = false;
-            return tooMany;
         }
     };
 
@@ -268,32 +264,28 @@ const Trade = () => {
         } else if (buy === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
-            let funds = updateUserCurrency(
-                true,
-                currency,
-                chosenShare[0].regularMarketPrice,
-                numOfStocks
-            );
+            let funds = updateUserCurrency(true, currency, price, numOfStocks);
             if (funds === false) {
                 return;
             } else {
                 updateUserPossession(
                     true,
-                    chosenShare[0].symbol,
-                    chosenShare[0].shortName,
+                    symbol,
+                    'no more shortName. Bad?',
                     numOfStocks,
-                    chosenShare[0].regularMarketPrice,
-                    chosenShare[0].regularMarketChangePercent
+                    price,
+                    changePercent
                 );
 
                 addToRecentlyBought(
-                    chosenShare[0].symbol,
-                    chosenShare[0].shortName,
+                    symbol,
+                    'no more shortName. Bad?',
                     numOfStocks,
-                    chosenShare[0].regularMarketPrice,
+                    price,
                     user.username,
-                    chosenShare[0].regularMarketChangePercent,
-                    user.organization
+                    changePercent,
+                    user.organization,
+                    firebase
                 );
             }
             setNumOfStocks(0);
@@ -309,32 +301,28 @@ const Trade = () => {
         } else if (sell === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
-            let tooMany = checkIfTooManyStocks(numOfStocks);
+            let tooMany = checkIfTooManyStocks(numOfStocks, holding);
             if (tooMany === true) {
                 alert('You cant sell more than you have');
                 return;
             } else {
-                updateUserCurrency(
-                    false,
-                    currency,
-                    chosenShare[0].regularMarketPrice,
-                    numOfStocks
-                );
+                updateUserCurrency(false, currency, price, numOfStocks);
                 updateUserPossession(
                     false,
-                    chosenShare[0].symbol,
-                    chosenShare[0].shortName,
+                    symbol,
+                    'no more shortName. Bad?',
                     numOfStocks,
-                    chosenShare[0].regularMarketPrice
+                    price
                 );
                 addToRecentlySold(
-                    chosenShare[0].symbol,
-                    chosenShare[0].shortName,
+                    symbol,
+                    'no more shortName. Bad?',
                     numOfStocks,
-                    chosenShare[0].regularMarketPrice,
+                    price,
                     user.username,
-                    chosenShare[0].regularMarketChangePercent,
-                    user.organization
+                    changePercent,
+                    user.organization,
+                    firebase
                 );
                 setNumOfStocks(0);
                 setSell(false);
@@ -344,145 +332,121 @@ const Trade = () => {
 
     const setValuesDom = (e) => {
         let targetVal = e.target.value;
-        let priceOne = chosenShare[0].regularMarketPrice;
-        let priceTwo = chosenShare[0].price;
+        let price = stockData['Global Quote']['05. price'];
         let amountStock = targetVal;
         let brokerage = targetVal / 10;
 
         if (e.target.id == 'amount-dollar') {
-            if (priceTwo == undefined) {
-                let calcAmountStock = Math.floor(targetVal / priceOne);
-                setTotalCost(calcAmountStock * priceOne + brokerage);
-                setAmountInDollar(targetVal);
-
-                setNumOfStocks(calcAmountStock);
-                return;
-            }
-            let calcAmountStock = Math.floor(targetVal / priceTwo);
-            setTotalCost(calcAmountStock * priceTwo + brokerage);
+            let calcAmountStock = Math.floor(targetVal / price);
+            setTotalCost(calcAmountStock * price + brokerage);
             setAmountInDollar(targetVal);
             setNumOfStocks(calcAmountStock);
             return;
         }
 
         setNumOfStocks(targetVal);
-
-        if (chosenShare[0].price == undefined) {
-            setTotalCost(amountStock * priceOne + brokerage);
-            setAmountInDollar((amountStock * priceOne).toFixed(0));
-            return;
-        }
-        setTotalCost(amountStock * priceTwo + brokerage);
-        setAmountInDollar((amountStock * priceTwo).toFixed(0));
+        setTotalCost(amountStock * price + brokerage);
+        setAmountInDollar((amountStock * price).toFixed(0));
     };
 
-    let mrkChange = chosenShare[0].regularMarketChangePercent;
     return (
-        <ContentWrapper>
-            <MainWrapper>
-                <div className="tmp-wrapper">
-                    {/* <p>{userData ? userData : ''}</p> */}
-                    {/*      <span>Wallet { userData }</span> */}
-                    {/* <input type="number" /> */}
+        <>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <ContentWrapper>
+                    <MainWrapper>
+                        <div className="tmp-wrapper">
+                            <div className="stock-overview-wrapper">
+                                <span
+                                    style={
+                                        changePercent < 0
+                                            ? { color: 'var(--lighter-red)' }
+                                            : { color: 'var(--lighter-green)' }
+                                    }
+                                >
+                                    {changePercent > 0 ? (
+                                        <i class="fas fa-long-arrow-alt-up"></i>
+                                    ) : (
+                                        <i class="fas fa-long-arrow-alt-down"></i>
+                                    )}
+                                    {changePercent.toFixed(2)}%
+                                </span>
+                                <h2>{symbol}</h2>
+                                <span>{price.toFixed(2)} $</span>
+                                <span>Your holding: {holding}</span>
+                            </div>
+                            <label>
+                                Wallet
+                                <div className="wallet-wrapper">
+                                    {!userData.currency
+                                        ? 'Loading...'
+                                        : userData.currency.currency.toLocaleString()}{' '}
+                                    $
+                                </div>
+                            </label>
 
-                    <div className="stock-overview-wrapper">
-                        <span
-                            style={
-                                mrkChange < 0
-                                    ? { color: 'var(--lighter-red)' }
-                                    : { color: 'var(--lighter-green)' }
-                            }
-                        >
-                            {mrkChange > 0 ? (
-                                <i class="fas fa-long-arrow-alt-up"></i>
-                            ) : (
-                                <i class="fas fa-long-arrow-alt-down"></i>
-                            )}{' '}
-                            {chosenShare[0].regularMarketChangePercent.toFixed(
-                                2
-                            )}{' '}
-                            %
-                        </span>
-                        <h2>{chosenShare[0].shortName}</h2>
-                        <span>
-                            {chosenShare[0].regularMarketPrice
-                                ? chosenShare[0].regularMarketPrice.toFixed(2)
-                                : chosenShare[0].price.toFixed(2)}{' '}
-                            $
-                        </span>
-                        <span>Your holding: {holding}</span>
-                    </div>
-                    <label>
-                        Wallet
-                        <div className="wallet-wrapper">
-                            {!userData.currency
-                                ? 'Loading...'
-                                : userData.currency.currency.toLocaleString()}{' '}
-                            $
+                            <label>
+                                Total amount in dollar
+                                <ReusabelInputField
+                                    id="amount-dollar"
+                                    min="0"
+                                    placeholder="Total amount"
+                                    type="number"
+                                    onChange={setValuesDom}
+                                    value={amountInDollar}
+                                />
+                            </label>
+
+                            <label>
+                                Amount of stocks
+                                <ReusabelInputField
+                                    min="0"
+                                    max="999"
+                                    placeholder="Amount"
+                                    type="number"
+                                    onChange={setValuesDom}
+                                    value={numOfStocks}
+                                />
+                            </label>
+
+                            <div className="brokage-wrapper">
+                                <span>Brokerage</span>
+                                <span>{numOfStocks / 10}$</span>
+                            </div>
+                            <div className="amountWrapper">
+                                <span>Total Amount</span>
+                                <span>{totalCost.toFixed(2)} $</span>
+                            </div>
+                            <div className="buttonWrapper">
+                                <GenericVestBtn
+                                    bg="var(--primary)"
+                                    hovbg="var(--lighter-green)"
+                                    co="var(--body)"
+                                    br="2rem"
+                                    border="0.125rem solid var(--primary)"
+                                    pad="0.6rem 3rem"
+                                    onClick={onButtonClick}
+                                >
+                                    BUY
+                                </GenericVestBtn>
+                                <GenericVestBtn
+                                    bg="white"
+                                    hovbg="var(--lighter-red)"
+                                    co="var(--primary)"
+                                    br="2rem"
+                                    border="0.125rem solid var(--primary)"
+                                    pad="0.6rem 3rem"
+                                    onClick={onButtonClick}
+                                >
+                                    SELL
+                                </GenericVestBtn>
+                            </div>
                         </div>
-                    </label>
-
-                    <label>
-                        Total amount in dollar
-                        <ReusabelInputField
-                            id="amount-dollar"
-                            min="0"
-                            /*     maxlength="3" */
-                            placeholder="Total amount"
-                            type="number"
-                            onChange={setValuesDom}
-                            value={amountInDollar}
-                        />
-                    </label>
-
-                    <label>
-                        Amount of stocks
-                        <ReusabelInputField
-                            min="0"
-                            max="999"
-                            placeholder="Amount"
-                            type="number"
-                            onChange={setValuesDom}
-                            value={numOfStocks}
-                        />
-                    </label>
-
-                    <div className="brokage-wrapper">
-                        <span>Brokerage</span>
-                        <span>{numOfStocks / 10}$</span>
-                    </div>
-                    <div className="amountWrapper">
-                        <span>Total Amount</span>
-                        <span>{totalCost.toFixed(2)} $</span>
-                        {/* <span>{(totCost + numOfStocks / 10).toFixed(2)} $</span> */}
-                    </div>
-                    <div className="buttonWrapper">
-                        <GenericVestBtn
-                            bg="var(--primary)"
-                            hovbg="var(--lighter-green)"
-                            co="var(--body)"
-                            br="2rem"
-                            border="0.125rem solid var(--primary)"
-                            pad="0.6rem 3rem"
-                            onClick={onButtonClick}
-                        >
-                            BUY
-                        </GenericVestBtn>
-                        <GenericVestBtn
-                            bg="white"
-                            hovbg="var(--lighter-red)"
-                            co="var(--primary)"
-                            br="2rem"
-                            border="0.125rem solid var(--primary)"
-                            pad="0.6rem 3rem"
-                            onClick={onButtonClick}
-                        >
-                            SELL
-                        </GenericVestBtn>
-                    </div>
-                </div>
-            </MainWrapper>
-        </ContentWrapper>
+                    </MainWrapper>
+                </ContentWrapper>
+            )}
+        </>
     );
 };
 

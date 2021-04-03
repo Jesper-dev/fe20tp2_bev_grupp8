@@ -66,7 +66,7 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route> */}
-                    <Route exact path={ROUTES.TRADE}>
+                    <Route exact path={ROUTES.TRADE_STOCK}>
                         <Trade />
                         <NavbarLeft />
                         <Toolbar />
