@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import SearchBar from '../../shared/search-bar/SearchBar';
 
 import UsFlag from '../../svgs/flags/America';
+import Europe from '../../svgs/flags/Europe';
+import Brazil from '../../svgs/flags/Brazil';
+import Canada from '../../svgs/flags/Canada';
+import UnitedKingdom from '../../svgs/flags/UnitedKingdom';
 
 import { CardWrapper, SearchListWrapper } from './DiscoverSearchElements';
 
@@ -16,6 +20,8 @@ const DiscoverSearch = () => {
 
     const onSearchedStock = (e) => {
         let searchWord = e.target.value;
+
+        if (!searchWord) return;
 
         const options = {
             method: 'GET',
@@ -57,6 +63,19 @@ const DiscoverSearch = () => {
                                 {item['4. region'] == 'United States' ? (
                                     <UsFlag />
                                 ) : null}
+                                {item['8. currency'] == 'CAD' ? (
+                                    <Canada />
+                                ) : null}
+                                {item['4. region'] == 'United Kingdom' ? (
+                                    <UnitedKingdom />
+                                ) : null}
+                                {item['8. currency'] == 'BRL' ? (
+                                    <Brazil />
+                                ) : null}
+                                {item['8. currency'] == 'EUR' ? (
+                                    <Europe />
+                                ) : null}
+
                                 <span>
                                     {item['2. name'].length > 20
                                         ? item['2. name'].slice(0, 18)

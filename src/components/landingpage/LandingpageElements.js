@@ -26,7 +26,7 @@ export const NavBar = styled.nav`
         height: 60px;
         width: 300px;
 
-/*         @media screen and (min-width: 400px) {
+        /*         @media screen and (min-width: 400px) {
             height: 60px;
             width: 180px;
         } */
@@ -34,61 +34,62 @@ export const NavBar = styled.nav`
 `;
 
 export const Banner = styled.section`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-	padding: 2rem 1rem;
-	max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    max-height: 75vh;
 
-	ul {
-		display: flex;
+    ul {
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
-		gap: 0.5rem;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
+        gap: 0.5rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 
-	svg {
-		width: 256px;
-		height: 256px;
-	}
+    svg {
+        width: 256px;
+        height: 256px;
+    }
 
-	h2, p {
-		margin: 0;
-		text-align: center;
+    h2,
+    p {
+        margin: 0;
+        text-align: center;
         max-width: 40rem;
-	}
+    }
 
-	h2 {
-		font-size: 2.5rem;
-	}
+    h2 {
+        font-size: 2.5rem;
+    }
 `;
 
 export const About = styled.section`
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	gap: 1rem;
-	padding: 1rem;
-	background-color: var(--secondary);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--secondary);
 
-	div {
-		width: 12rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		background-color: white;
+    div {
+        width: 12rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        background-color: white;
 
-		svg {
-			width: 120px;
-			height: 120px;
-		}
-	}
+        svg {
+            width: 120px;
+            height: 120px;
+        }
+    }
 `;
