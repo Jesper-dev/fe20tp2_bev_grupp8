@@ -16,32 +16,34 @@ import { HeaderWrapper, MainWrapper } from './DiscoverElements';
 
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import SearchBar from '../shared/search-bar/SearchBar';
-import TabBar from "../shared/tab-bar/TabBar";
+import DiscoverSearch from './discover-search/DiscoverSearch';
+import TabBar from '../shared/tab-bar/TabBar';
 
 const Discover = () => {
-	const tabs = [
-		{
-			label: "Discover",
-			icon: <i className="fas fa-search-dollar"></i>,
-			link: ROUTES.DISCOVER
-		},
-		{
-			label: "Stocks",
-			icon: <i className="fas fa-chart-line"></i>,
-			link: ROUTES.DISCOVER_STOCKS
-		},
-		{
-			label: "Crypto",
-			icon: <i className="fab fa-btc"></i>,
-			link: ROUTES.DISCOVER_CRYPTO
-		}
-	];
+    const tabs = [
+        {
+            label: 'Discover',
+            icon: <i className="fas fa-search-dollar"></i>,
+            link: ROUTES.DISCOVER,
+        },
+        {
+            label: 'Stocks',
+            icon: <i className="fas fa-chart-line"></i>,
+            link: ROUTES.DISCOVER_STOCKS,
+        },
+        {
+            label: 'Crypto',
+            icon: <i className="fab fa-btc"></i>,
+            link: ROUTES.DISCOVER_CRYPTO,
+        },
+    ];
 
     return (
         <ContentWrapper>
             <HeaderWrapper>
-                <SearchBar />
-				<TabBar tabs={tabs}/>
+                {/*     <SearchBar /> */}
+                <DiscoverSearch />
+                <TabBar tabs={tabs} />
             </HeaderWrapper>
             <MainWrapper>
                 <Route
