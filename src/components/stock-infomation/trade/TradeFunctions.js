@@ -34,6 +34,15 @@ export const updateUserCurrency = (
     firebase.user(user.uid).child('/currency').set({
         currency,
     });
+
+    if (user.organization) {
+        firebase
+            .organization(user.organization)
+            .child(`/users/${user.uid}/currency`)
+            .set({
+                currency,
+            });
+    }
 };
 
 export const addToRecentlyBought = (

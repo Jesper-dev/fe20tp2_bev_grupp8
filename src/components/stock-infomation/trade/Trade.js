@@ -113,32 +113,6 @@ const Trade = () => {
                 });
         })();
 
-        /*         axios
-            .request(options)
-            .then(function (response) {
-                console.log(response.data);
-
-                setStockData(response.data);
-                setChangePercent(
-                    parseFloat(
-                        stockData['Global Quote']['10. change percent'].replace(
-                            ',',
-                            '.'
-                        )
-                    )
-                );
-                setPrice(
-                    parseFloat(
-                        stockData['Global Quote']['05. price'].replace(',', '.')
-                    )
-                );
-                setSymbol(response.data['Global Quote']['01. symbol']);
-                setLoading(false);
-            })
-            .catch(function (error) {
-                console.error(error);
-            }); */
-
         firebase.user(user.uid).once('value', (snapshot) => {
             const data = snapshot.val();
             if (!data) return;
