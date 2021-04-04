@@ -15,12 +15,14 @@ import {
     checkIfTooManyStocks,
     addToRecentlyBought,
     addToRecentlySold,
+    updateUserCurrency,
 } from './TradeFunctions';
 
 const Trade = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     let stockIncludes;
 
+    const [didMount, setDidMount] = useState(false);
     const [loading, setLoading] = useState(true);
     const [sell, setSell] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
@@ -65,6 +67,8 @@ const Trade = () => {
     }, [chosenShare, firebase, user.uid]);
 
     useEffect(() => {
+        setDidMount(true);
+
         const options = {
             method: 'GET',
             url: 'https://alpha-vantage.p.rapidapi.com/query',
@@ -80,10 +84,40 @@ const Trade = () => {
             },
         };
 
-        axios
+        (async () => {
+            await axios
+                .request(options)
+                .then((response) => {
+                    console.log(response.data);
+                    setStockData(response.data);
+                    setChangePercent(
+                        parseFloat(
+                            response.data['Global Quote'][
+                                '10. change percent'
+                            ].replace(',', '.')
+                        )
+                    );
+                    setPrice(
+                        parseFloat(
+                            response.data['Global Quote']['05. price'].replace(
+                                ',',
+                                '.'
+                            )
+                        )
+                    );
+                    setSymbol(response.data['Global Quote']['01. symbol']);
+                    setLoading(false);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        })();
+
+        /*         axios
             .request(options)
             .then(function (response) {
                 console.log(response.data);
+
                 setStockData(response.data);
                 setChangePercent(
                     parseFloat(
@@ -103,7 +137,7 @@ const Trade = () => {
             })
             .catch(function (error) {
                 console.error(error);
-            });
+            }); */
 
         firebase.user(user.uid).once('value', (snapshot) => {
             const data = snapshot.val();
@@ -111,7 +145,10 @@ const Trade = () => {
             setUserData(data);
         });
         checkHolding();
-    }, [buy, sell, checkHolding, firebase, user.uid]);
+        return () => {
+            setDidMount(false);
+        };
+    }, [didMount, buy, sell, checkHolding, firebase, user.uid]);
 
     const onButtonClick = (e) => {
         if (e.target.innerText === 'BUY') {
@@ -119,27 +156,6 @@ const Trade = () => {
         } else if (e.target.innerText === 'SELL') {
             onSell(numOfStocks);
         }
-    };
-
-    const updateUserCurrency = (buy, currency1, currency2, number) => {
-        let calcCurrency = 0;
-        let num = parseInt(number);
-        if (buy === true) {
-            calcCurrency = currency1 - currency2.toFixed(2) * num;
-            if (calcCurrency <= 0) {
-                alert('Insufficient funds');
-                let funds = false;
-                return funds;
-            }
-        } else if (buy === false) {
-            calcCurrency = currency1 + currency2.toFixed(2) * num;
-        }
-
-        let currencyFixed = calcCurrency.toFixed(2);
-        let currency = parseInt(currencyFixed);
-        firebase.user(user.uid).child('/currency').set({
-            currency,
-        });
     };
 
     const checkIfStockIncludes = (symbol) => {
@@ -150,12 +166,10 @@ const Trade = () => {
         }
         for (let i = 0; i < stocks.length; i++) {
             if (stocks[i].symbol === symbol) {
-                console.log('Den finns');
                 stockIncludes = true;
                 let stock = stocks[i];
                 return stock;
             } else {
-                console.log('Den finns inte');
                 stockIncludes = false;
             }
         }
@@ -264,7 +278,14 @@ const Trade = () => {
         } else if (buy === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
-            let funds = updateUserCurrency(true, currency, price, numOfStocks);
+            let funds = updateUserCurrency(
+                true,
+                currency,
+                price,
+                numOfStocks,
+                firebase,
+                user
+            );
             if (funds === false) {
                 return;
             } else {
@@ -306,7 +327,14 @@ const Trade = () => {
                 alert('You cant sell more than you have');
                 return;
             } else {
-                updateUserCurrency(false, currency, price, numOfStocks);
+                updateUserCurrency(
+                    false,
+                    currency,
+                    price,
+                    numOfStocks,
+                    firebase,
+                    user
+                );
                 updateUserPossession(
                     false,
                     symbol,
