@@ -20,13 +20,13 @@ import {
 
 const TradeCrypto = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
-    let stockIncludes;
+    let cryptoIncludes;
 
     const [didMount, setDidMount] = useState(false);
     const [loading, setLoading] = useState(true);
     const [sell, setSell] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
-    const [numOfStocks, setNumOfStocks] = useState(0);
+    const [numOfCoins, setNumOfCoins] = useState(0);
     const [totalCost, setTotalCost] = useState(0);
     // const [includes, setIncludes] = useState(false);
     const [buy, setBuy] = useState(false);
@@ -35,7 +35,6 @@ const TradeCrypto = () => {
     const [symbol, setSymbol] = useState('');
     const [price, setPrice] = useState(0);
     const [changePercent, setChangePercent] = useState(0);
-    const [stockData, setStockData] = useState({});
     const [cryptoData, setCryptoData] = useState({});
     const [userData, setUserData] = useState({});
     /* let userDataVariable = {} */
@@ -46,26 +45,29 @@ const TradeCrypto = () => {
     const firebase = useContext(FirebaseContext);
 
     //*Checks if clicked stock has been bought before and if true display how many
-    const checkHolding = useCallback(async () => {
-        await firebase
-            .user(user.uid)
-            .child('/possessionStocks')
-            .once('value', (snapshot) => {
-                let dataDB = snapshot.val();
-                if (dataDB === undefined) return;
-                let stocks = [];
-                for (const key in dataDB) {
-                    stocks.push({ ...dataDB[key] });
-                }
-                stocks.forEach((item) => {
-                    if (item.symbol === symbol) {
-                        setHolding(item.amount);
-
-                        // setClickedStock(item);
+    const checkHolding = useCallback(
+        async (symbol) => {
+            await firebase
+                .user(user.uid)
+                .child('/possessionCrypto')
+                .once('value', (snapshot) => {
+                    let dataDB = snapshot.val();
+                    if (dataDB === undefined) return;
+                    let stocks = [];
+                    for (const key in dataDB) {
+                        stocks.push({ ...dataDB[key] });
                     }
+                    stocks.forEach((item) => {
+                        if (item.symbol === symbol) {
+                            setHolding(item.amount);
+
+                            // setClickedStock(item);
+                        }
+                    });
                 });
-            });
-    }, [chosenShare, firebase, user.uid]);
+        },
+        [chosenShare, firebase, user.uid]
+    );
 
     useEffect(() => {
         setDidMount(true);
@@ -78,12 +80,19 @@ const TradeCrypto = () => {
                 .then((response) => {
                     console.log(response.data);
                     setCryptoData(response.data);
-                    setLoading(false);
+                    checkHolding(response.data.symbol);
+                    setChangePercent(
+                        cryptoData.market_data.price_change_percentage_24h
+                    );
+                    setPrice(cryptoData.market_data.current_price.usd);
+                    setSymbol(cryptoData.symbol);
                     /*       checkIfFollowed(response.data); */
                 })
+
                 .catch((error) => {
                     console.error(error);
                 });
+            setLoading(false);
         })();
 
         firebase.user(user.uid).once('value', (snapshot) => {
@@ -91,7 +100,6 @@ const TradeCrypto = () => {
             if (!data) return;
             setUserData(data);
         });
-        checkHolding();
         return () => {
             setDidMount(false);
         };
@@ -99,25 +107,25 @@ const TradeCrypto = () => {
 
     const onButtonClick = (e) => {
         if (e.target.innerText === 'BUY') {
-            onBuy(numOfStocks);
+            onBuy(numOfCoins);
         } else if (e.target.innerText === 'SELL') {
-            onSell(numOfStocks);
+            onSell(numOfCoins);
         }
     };
 
     const checkIfStockIncludes = (symbol) => {
-        let data = userData.possessionStocks;
-        let stocks = [];
+        let data = userData.possessionCrypto;
+        let cryptos = [];
         for (const key in data) {
-            stocks.push({ ...data[key] });
+            cryptos.push({ ...data[key] });
         }
-        for (let i = 0; i < stocks.length; i++) {
-            if (stocks[i].symbol === symbol) {
-                stockIncludes = true;
-                let stock = stocks[i];
-                return stock;
+        for (let i = 0; i < cryptos.length; i++) {
+            if (cryptos[i].symbol === symbol) {
+                cryptoIncludes = true;
+                let crypto = cryptos[i];
+                return crypto;
             } else {
-                stockIncludes = false;
+                cryptoIncludes = false;
             }
         }
     };
@@ -131,15 +139,15 @@ const TradeCrypto = () => {
         percent
     ) => {
         let stock = checkIfStockIncludes(symbol);
-        let amountNum = parseInt(amountOfStocks);
+        let amountNum = parseFloat(amountOfStocks);
         if (buy === true) {
-            if (stockIncludes === true) {
-                let existingAmount = parseInt(stock.amount);
+            if (cryptoIncludes === true) {
+                let existingAmount = parseFloat(stock.amount);
                 let resAmount = existingAmount + amountNum;
                 console.log(resAmount);
                 firebase
                     .user(user.uid)
-                    .child(`/possessionStocks/${symbol}`)
+                    .child(`/possessionCrypto/${symbol}`)
                     .update({
                         amount: resAmount,
                     });
@@ -147,7 +155,7 @@ const TradeCrypto = () => {
                 if (user.organization) {
                     firebase
                         .organization(user.organization)
-                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .child(`/users/${user.uid}/possessionCrypto/${symbol}`)
                         .update({
                             amount: resAmount,
                         });
@@ -155,7 +163,7 @@ const TradeCrypto = () => {
             } else {
                 firebase
                     .user(user.uid)
-                    .child('/possessionStocks')
+                    .child('/possessionCrypto')
                     .update({
                         [symbol]: {
                             name,
@@ -168,7 +176,7 @@ const TradeCrypto = () => {
                 if (user.organization) {
                     firebase
                         .organization(user.organization)
-                        .child(`/users/${user.uid}/possessionStocks`)
+                        .child(`/users/${user.uid}/possessionCrypto`)
                         .update({
                             [symbol]: {
                                 name,
@@ -181,19 +189,19 @@ const TradeCrypto = () => {
                 }
             }
         } else {
-            let existingAmount = parseInt(stock.amount);
-            let resAmount = parseInt(existingAmount - amountNum);
+            let existingAmount = parseFloat(stock.amount);
+            let resAmount = parseFloat(existingAmount - amountNum);
 
             if (resAmount <= 0) {
                 firebase
                     .user(user.uid)
-                    .child(`/possessionStocks/${symbol}`)
+                    .child(`/possessionCrypto/${symbol}`)
                     .remove();
 
                 if (user.organization) {
                     firebase
                         .organization(user.organization)
-                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .child(`/users/${user.uid}/possessionCrypto/${symbol}`)
                         .remove();
                 }
                 setHolding(0);
@@ -201,7 +209,7 @@ const TradeCrypto = () => {
             } else {
                 firebase
                     .user(user.uid)
-                    .child(`/possessionStocks/${symbol}`)
+                    .child(`/possessionCrypto/${symbol}`)
                     .update({
                         amount: resAmount,
                     });
@@ -209,7 +217,7 @@ const TradeCrypto = () => {
                 if (user.organization) {
                     firebase
                         .organization(user.organization)
-                        .child(`/users/${user.uid}/possessionStocks/${symbol}`)
+                        .child(`/users/${user.uid}/possessionCrypto/${symbol}`)
                         .update({
                             amount: resAmount,
                         });
@@ -218,7 +226,7 @@ const TradeCrypto = () => {
             }
         }
     };
-    const onBuy = (numOfStocks) => {
+    const onBuy = (numOfCoins) => {
         if (buy === false) {
             setBuy(true);
             setSell(false);
@@ -229,7 +237,7 @@ const TradeCrypto = () => {
                 true,
                 currency,
                 price,
-                numOfStocks,
+                numOfCoins,
                 firebase,
                 user
             );
@@ -239,16 +247,16 @@ const TradeCrypto = () => {
                 updateUserPossession(
                     true,
                     symbol,
-                    'no more shortName. Bad?',
-                    numOfStocks,
+                    cryptoData.id,
+                    numOfCoins,
                     price,
                     changePercent
                 );
 
                 addToRecentlyBought(
                     symbol,
-                    'no more shortName. Bad?',
-                    numOfStocks,
+                    cryptoData.id,
+                    numOfCoins,
                     price,
                     user.username,
                     changePercent,
@@ -256,20 +264,20 @@ const TradeCrypto = () => {
                     firebase
                 );
             }
-            setNumOfStocks(0);
+            setNumOfCoins(0);
             setBuy(false);
         }
     };
 
     //*When we sell a stock
-    const onSell = (numOfStocks) => {
+    const onSell = (numOfCoins) => {
         if (sell === false) {
             setSell(true);
             setBuy(false);
         } else if (sell === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
-            let tooMany = checkIfTooManyStocks(numOfStocks, holding);
+            let tooMany = checkIfTooManyStocks(numOfCoins, holding);
             if (tooMany === true) {
                 alert('You cant sell more than you have');
                 return;
@@ -278,28 +286,28 @@ const TradeCrypto = () => {
                     false,
                     currency,
                     price,
-                    numOfStocks,
+                    numOfCoins,
                     firebase,
                     user
                 );
                 updateUserPossession(
                     false,
                     symbol,
-                    'no more shortName. Bad?',
-                    numOfStocks,
+                    cryptoData.id,
+                    numOfCoins,
                     price
                 );
                 addToRecentlySold(
                     symbol,
-                    'no more shortName. Bad?',
-                    numOfStocks,
+                    cryptoData.id,
+                    numOfCoins,
                     price,
                     user.username,
                     changePercent,
                     user.organization,
                     firebase
                 );
-                setNumOfStocks(0);
+                setNumOfCoins(0);
                 setSell(false);
             }
         }
@@ -307,19 +315,19 @@ const TradeCrypto = () => {
 
     const setValuesDom = (e) => {
         let targetVal = e.target.value;
-        let price = stockData['Global Quote']['05. price'];
+        let price = cryptoData.market_data.current_price.usd;
         let amountStock = targetVal;
-        let brokerage = targetVal / 10;
+        let brokerage = targetVal / 2;
 
         if (e.target.id == 'amount-dollar') {
             let calcAmountStock = Math.floor(targetVal / price);
             setTotalCost(calcAmountStock * price + brokerage);
             setAmountInDollar(targetVal);
-            setNumOfStocks(calcAmountStock);
+            setNumOfCoins(calcAmountStock);
             return;
         }
 
-        setNumOfStocks(targetVal);
+        setNumOfCoins(targetVal);
         setTotalCost(amountStock * price + brokerage);
         setAmountInDollar((amountStock * price).toFixed(0));
     };
@@ -331,26 +339,41 @@ const TradeCrypto = () => {
             ) : (
                 <ContentWrapper>
                     <MainWrapper>
-                        <div className="tmp-wrapper">
+                        <section>
                             <div className="stock-overview-wrapper">
+                                <img
+                                    className="coin-img"
+                                    src={cryptoData.image.large}
+                                />
                                 <span
                                     style={
-                                        changePercent < 0
+                                        cryptoData.market_data
+                                            .price_change_percentage_24h < 0
                                             ? { color: 'var(--lighter-red)' }
                                             : { color: 'var(--lighter-green)' }
                                     }
                                 >
-                                    {changePercent > 0 ? (
+                                    {cryptoData.market_data
+                                        .price_change_percentage_24h > 0 ? (
                                         <i class="fas fa-long-arrow-alt-up"></i>
                                     ) : (
                                         <i class="fas fa-long-arrow-alt-down"></i>
                                     )}
-                                    {changePercent.toFixed(2)}%
+                                    {cryptoData.market_data.price_change_percentage_24h.toFixed(
+                                        2
+                                    )}
+                                    %
                                 </span>
-                                <h2>{symbol}</h2>
-                                <span>{price.toFixed(2)} $</span>
-                                <span>Your holding: {holding}</span>
+                                <h2>{cryptoData.id}</h2>
+                                <span>
+                                    {cryptoData.market_data.current_price.usd.toFixed(
+                                        2
+                                    )}{' '}
+                                    $
+                                </span>
+                                <span>Your holding: {holding.toFixed(2)}</span>
                             </div>
+
                             <label>
                                 Wallet
                                 <div className="wallet-wrapper">
@@ -374,20 +397,21 @@ const TradeCrypto = () => {
                             </label>
 
                             <label>
-                                Amount of stocks
+                                Amount of coins
                                 <ReusabelInputField
+                                    step=".01"
                                     min="0"
                                     max="999"
                                     placeholder="Amount"
                                     type="number"
                                     onChange={setValuesDom}
-                                    value={numOfStocks}
+                                    value={numOfCoins}
                                 />
                             </label>
 
                             <div className="brokage-wrapper">
-                                <span>Brokerage</span>
-                                <span>{numOfStocks / 10}$</span>
+                                <span>Trading Fee</span>
+                                <span>{(numOfCoins / 2).toFixed(2)}$</span>
                             </div>
                             <div className="amountWrapper">
                                 <span>Total Amount</span>
@@ -417,7 +441,7 @@ const TradeCrypto = () => {
                                     SELL
                                 </GenericVestBtn>
                             </div>
-                        </div>
+                        </section>
                     </MainWrapper>
                 </ContentWrapper>
             )}

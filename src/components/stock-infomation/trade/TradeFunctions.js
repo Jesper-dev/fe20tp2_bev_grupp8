@@ -17,7 +17,7 @@ export const updateUserCurrency = (
     user
 ) => {
     let calcCurrency = 0;
-    let num = parseInt(number);
+    let num = parseFloat(number);
     if (buy === true) {
         calcCurrency = currency1 - currency2.toFixed(2) * num;
         if (calcCurrency <= 0) {
@@ -30,7 +30,7 @@ export const updateUserCurrency = (
     }
 
     let currencyFixed = calcCurrency.toFixed(2);
-    let currency = parseInt(currencyFixed);
+    let currency = parseFloat(currencyFixed);
     firebase.user(user.uid).child('/currency').set({
         currency,
     });
@@ -55,7 +55,7 @@ export const addToRecentlyBought = (
     org,
     firebase
 ) => {
-    let amountNum = parseInt(amountOfStocks);
+    let amountNum = parseFloat(amountOfStocks);
     firebase
         .organization(org)
         .child('/recentlyBought')
@@ -81,7 +81,7 @@ export const addToRecentlySold = (
     org,
     firebase
 ) => {
-    let amountNum = parseInt(amountOfStocks);
+    let amountNum = parseFloat(amountOfStocks);
     firebase
         .organization(org)
         .child('/recentlySold')

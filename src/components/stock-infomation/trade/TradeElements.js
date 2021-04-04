@@ -2,19 +2,23 @@ import styled from 'styled-components';
 
 export const MainWrapper = styled.main`
     flex: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     & > section {
         display: flex;
         flex-direction: column;
         padding: 1.5rem;
         border-radius: 0.5rem;
+        gap: 0.5rem;
         box-shadow: var(--box-shadow-cards);
         background: var(--body);
     }
 
+    .coin-img {
+        width: 55px;
+    }
     .wallet-wrapper {
         padding: 0.5rem 0.375rem 0.5rem 0.1rem;
         border: 0.09375rem solid #c8c8c8;
@@ -30,6 +34,7 @@ export const MainWrapper = styled.main`
         display: flex;
         justify-content: space-between;
         padding-bottom: 0.1rem;
+        margin: 0.375rem;
         border-bottom: dashed 1px #c8c8c8;
     }
 
@@ -38,7 +43,7 @@ export const MainWrapper = styled.main`
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        height: 120px;
+        gap: 0.375rem;
     }
 
     h2 {
@@ -50,8 +55,8 @@ export const MainWrapper = styled.main`
         /*        height: 8%; */
         width: 100%;
         display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
         justify-content: space-around;
     }
 
