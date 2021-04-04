@@ -10,6 +10,7 @@ import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import NavbarLeft from './components/shared/navbar-left/NavbarLeft';
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import Trade from './components/stock-infomation/trade/Trade';
+import TradeCrypto from './components/stock-infomation/trade/TradeCrypto';
 import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
@@ -68,6 +69,11 @@ const App = () => {
                     </Route> */}
                     <Route exact path={ROUTES.TRADE_STOCK}>
                         <Trade />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.TRADE_CRYPTO}>
+                        <TradeCrypto />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>

@@ -18,6 +18,7 @@ export const INFO_STOCK = '/info/:id';
 export const INFO = '/info';
 
 export const TRADE_STOCK = '/trade/:id';
+export const TRADE_CRYPTO = '/trade/crypto/:id';
 
 export const USER = '/user/:id';
 
