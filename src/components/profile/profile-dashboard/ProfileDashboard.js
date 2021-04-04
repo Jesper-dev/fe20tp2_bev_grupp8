@@ -69,7 +69,7 @@ const ProfileDashboard = () => {
 
     return (
         <Wrapper>
-            {admin ? <AddEmployee /> : ''}
+{/*             {admin ? <AddEmployee /> : ''}
             {admin || employee ? (
                 <>
                     <h2>
@@ -87,7 +87,63 @@ const ProfileDashboard = () => {
                     <h2>Not part of a organization</h2>
                     <span className="join-today">Join today...</span>
                 </>
-            )}
+            )} */}
+			<div class="quick-cards-wrapper">
+				<div class="quick-info-cards">
+					<article class="total">
+						<h1>Total assets</h1>
+						<h2>192 173$</h2>
+					</article>
+					<article class="change">
+						<h1>Change</h1>
+						<h2>21.4%</h2>
+					</article>
+					<article class="profits">
+						<h1>Profits</h1>
+						<h2>5 614$</h2>
+					</article>
+				</div>
+
+				<article class="featured">
+					<h1>Employee of the week</h1>
+					<p>Dave is the best, yay!</p>
+				</article>
+			</div>
+			<article class="employees">
+				<h3>Employees</h3>
+				<table>
+					<tr>
+						<th>Firstname ▾</th>
+						<th>Lastname ▾</th>
+						<th>Age ▾</th>
+						<th>Gender ▾</th>
+					</tr>
+					<tr>
+						<td>Eve</td>
+						<td>Jackson</td>
+						<td>94</td>
+						<td>Female</td>
+					</tr>
+					<tr>
+						<td>Peter</td>
+						<td>Cummings</td>
+						<td>63</td>
+						<td>Male</td>
+					</tr>
+					<tr>
+						<td>Bobby</td>
+						<td>Buttocks</td>
+						<td>74</td>
+						<td>Male</td>
+					</tr>
+					<tr>
+						<td>Jackie</td>
+						<td>Donger</td>
+						<td>51</td>
+						<td>Male</td>
+					</tr>
+				</table>
+			</article>
         </Wrapper>
     );
 };
