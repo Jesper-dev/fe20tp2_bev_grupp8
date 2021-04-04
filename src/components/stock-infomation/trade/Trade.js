@@ -45,26 +45,29 @@ const Trade = () => {
     const firebase = useContext(FirebaseContext);
 
     //*Checks if clicked stock has been bought before and if true display how many
-    const checkHolding = useCallback(async () => {
-        await firebase
-            .user(user.uid)
-            .child('/possessionStocks')
-            .once('value', (snapshot) => {
-                let dataDB = snapshot.val();
-                if (dataDB === undefined) return;
-                let stocks = [];
-                for (const key in dataDB) {
-                    stocks.push({ ...dataDB[key] });
-                }
-                stocks.forEach((item) => {
-                    if (item.symbol === symbol) {
-                        setHolding(item.amount);
-
-                        // setClickedStock(item);
+    const checkHolding = useCallback(
+        async (symbolOnLoad) => {
+            await firebase
+                .user(user.uid)
+                .child('/possessionStocks')
+                .once('value', (snapshot) => {
+                    let dataDB = snapshot.val();
+                    if (dataDB === undefined) return;
+                    let stocks = [];
+                    for (const key in dataDB) {
+                        stocks.push({ ...dataDB[key] });
                     }
+                    stocks.forEach((item) => {
+                        if (item.symbol === symbolOnLoad) {
+                            setHolding(item.amount);
+
+                            // setClickedStock(item);
+                        }
+                    });
                 });
-            });
-    }, [chosenShare, firebase, user.uid]);
+        },
+        [chosenShare, firebase, user.uid]
+    );
 
     useEffect(() => {
         setDidMount(true);
@@ -106,6 +109,7 @@ const Trade = () => {
                         )
                     );
                     setSymbol(response.data['Global Quote']['01. symbol']);
+                    checkHolding(response.data['Global Quote']['01. symbol']);
                     setLoading(false);
                 })
                 .catch(function (error) {
@@ -118,7 +122,7 @@ const Trade = () => {
             if (!data) return;
             setUserData(data);
         });
-        checkHolding();
+
         return () => {
             setDidMount(false);
         };
