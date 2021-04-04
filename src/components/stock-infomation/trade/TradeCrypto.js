@@ -18,7 +18,7 @@ import {
     updateUserCurrency,
 } from './TradeFunctions';
 
-const Trade = () => {
+const TradeCrypto = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     let stockIncludes;
 
@@ -36,6 +36,7 @@ const Trade = () => {
     const [price, setPrice] = useState(0);
     const [changePercent, setChangePercent] = useState(0);
     const [stockData, setStockData] = useState({});
+    const [cryptoData, setCryptoData] = useState({});
     const [userData, setUserData] = useState({});
     /* let userDataVariable = {} */
 
@@ -69,46 +70,18 @@ const Trade = () => {
     useEffect(() => {
         setDidMount(true);
 
-        const options = {
-            method: 'GET',
-            url: 'https://alpha-vantage.p.rapidapi.com/query',
-            params: {
-                function: 'GLOBAL_QUOTE',
-                symbol: id,
-                datatype: 'json',
-            },
-            headers: {
-                'x-rapidapi-key':
-                    '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
-                'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
-            },
-        };
-
         (async () => {
             await axios
-                .request(options)
+                .get(
+                    `https://api.coingecko.com/api/v3/coins/${id.toLowerCase()}?localization=true&tickers=true&market_data=true&developer_data=true&sparkline=true`
+                )
                 .then((response) => {
                     console.log(response.data);
-                    setStockData(response.data);
-                    setChangePercent(
-                        parseFloat(
-                            response.data['Global Quote'][
-                                '10. change percent'
-                            ].replace(',', '.')
-                        )
-                    );
-                    setPrice(
-                        parseFloat(
-                            response.data['Global Quote']['05. price'].replace(
-                                ',',
-                                '.'
-                            )
-                        )
-                    );
-                    setSymbol(response.data['Global Quote']['01. symbol']);
+                    setCryptoData(response.data);
                     setLoading(false);
+                    /*       checkIfFollowed(response.data); */
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.error(error);
                 });
         })();
@@ -358,7 +331,7 @@ const Trade = () => {
             ) : (
                 <ContentWrapper>
                     <MainWrapper>
-                        <section>
+                        <div className="tmp-wrapper">
                             <div className="stock-overview-wrapper">
                                 <span
                                     style={
@@ -444,7 +417,7 @@ const Trade = () => {
                                     SELL
                                 </GenericVestBtn>
                             </div>
-                        </section>
+                        </div>
                     </MainWrapper>
                 </ContentWrapper>
             )}
@@ -452,4 +425,4 @@ const Trade = () => {
     );
 };
 
-export default Trade;
+export default TradeCrypto;

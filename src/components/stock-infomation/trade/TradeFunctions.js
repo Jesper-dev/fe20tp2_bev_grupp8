@@ -8,6 +8,43 @@ export const checkIfTooManyStocks = (numOfStocks, holding) => {
     }
 };
 
+export const updateUserCurrency = (
+    buy,
+    currency1,
+    currency2,
+    number,
+    firebase,
+    user
+) => {
+    let calcCurrency = 0;
+    let num = parseInt(number);
+    if (buy === true) {
+        calcCurrency = currency1 - currency2.toFixed(2) * num;
+        if (calcCurrency <= 0) {
+            alert('Insufficient funds');
+            let funds = false;
+            return funds;
+        }
+    } else if (buy === false) {
+        calcCurrency = currency1 + currency2.toFixed(2) * num;
+    }
+
+    let currencyFixed = calcCurrency.toFixed(2);
+    let currency = parseInt(currencyFixed);
+    firebase.user(user.uid).child('/currency').set({
+        currency,
+    });
+
+    if (user.organization) {
+        firebase
+            .organization(user.organization)
+            .child(`/users/${user.uid}/currency`)
+            .set({
+                currency,
+            });
+    }
+};
+
 export const addToRecentlyBought = (
     symbol,
     name,
