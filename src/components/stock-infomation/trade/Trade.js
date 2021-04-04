@@ -356,7 +356,7 @@ const Trade = () => {
             ) : (
                 <ContentWrapper>
                     <MainWrapper>
-                        <div className="tmp-wrapper">
+                        <section>
                             <div className="stock-overview-wrapper">
                                 <span
                                     style={
@@ -442,7 +442,7 @@ const Trade = () => {
                                     SELL
                                 </GenericVestBtn>
                             </div>
-                        </div>
+                        </section>
                     </MainWrapper>
                 </ContentWrapper>
             )}

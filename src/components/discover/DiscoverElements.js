@@ -8,6 +8,7 @@ const HeaderWrapper = styled.header`
 `;
 
 const MainWrapper = styled.main`
+	flex: 1;
     display: flex;
     flex-direction: column;
 `;

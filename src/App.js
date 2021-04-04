@@ -158,11 +158,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--body-secondary);
   }
 
-  #root {
-    display: flex;
-    min-height: 100vh;
-  }
-
     p {
         margin: 0;
     }

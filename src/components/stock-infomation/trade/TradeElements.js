@@ -1,27 +1,15 @@
 import styled from 'styled-components';
 
 export const MainWrapper = styled.main`
-    /*     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--box-shadow-cards);
-    margin: auto;
-    background: var(--body); */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    /*     background-color: aliceblue; */
+    flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-    .tmp-wrapper {
-        height: 500px;
-        width: 320px;
+    & > section {
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        padding: 2rem;
+        padding: 1.5rem;
         border-radius: 0.5rem;
         box-shadow: var(--box-shadow-cards);
         background: var(--body);
@@ -62,6 +50,8 @@ export const MainWrapper = styled.main`
         /*        height: 8%; */
         width: 100%;
         display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
         justify-content: space-around;
     }
 
