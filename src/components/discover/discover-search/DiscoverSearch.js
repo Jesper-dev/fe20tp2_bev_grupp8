@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 /* REDUX SETUP */
 import { useDispatch } from 'react-redux';
@@ -21,6 +21,7 @@ const DiscoverSearch = () => {
     const [searching, setSearching] = useState(false);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     let timer = 1000;
     let timeoutVal = 1000;
@@ -76,7 +77,13 @@ const DiscoverSearch = () => {
                     {searchList.map((item, i) => {
                         return (
                             <>
-                                <CardWrapper>
+                                <CardWrapper
+                                    onClick={() =>
+                                        history.push(
+                                            `/info/${item['1. symbol']}`
+                                        )
+                                    }
+                                >
                                     {item['4. region'] == 'United States' ? (
                                         <UsFlag />
                                     ) : null}
@@ -100,7 +107,7 @@ const DiscoverSearch = () => {
                                     </span>
                                     <span>{item['1. symbol']}</span>
 
-                                    <Link to={`/info/`}>
+                                    <Link to={`/info/${item['1. symbol']}`}>
                                         <span>
                                             <i className="fas fa-caret-right"></i>
                                         </span>
