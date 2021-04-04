@@ -12,13 +12,14 @@ export const CardWrapper = styled.article`
     width: 100%;
     min-height: 3rem;
     background: var(--body);
+    cursor: pointer;
 
     .lv-coin {
         height: 30px;
         width: 30px;
     }
-    
-     & > span {
+
+    & > span {
         flex: 1;
         font-size: 1rem;
         font-weight: 600;

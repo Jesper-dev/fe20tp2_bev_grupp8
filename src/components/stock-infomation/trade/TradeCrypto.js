@@ -136,7 +136,8 @@ const TradeCrypto = () => {
         name,
         amountOfStocks,
         price,
-        percent
+        percent,
+        imageUrl
     ) => {
         let stock = checkIfStockIncludes(symbol);
         let amountNum = parseFloat(amountOfStocks);
@@ -171,6 +172,7 @@ const TradeCrypto = () => {
                             price,
                             symbol,
                             percent,
+                            image: imageUrl,
                         },
                     });
                 if (user.organization) {
@@ -184,6 +186,7 @@ const TradeCrypto = () => {
                                 price,
                                 symbol,
                                 percent,
+                                image: imageUrl,
                             },
                         });
                 }
@@ -250,7 +253,8 @@ const TradeCrypto = () => {
                     cryptoData.id,
                     numOfCoins,
                     price,
-                    changePercent
+                    changePercent,
+                    cryptoData.image.large
                 );
 
                 addToRecentlyBought(
@@ -261,7 +265,8 @@ const TradeCrypto = () => {
                     user.username,
                     changePercent,
                     user.organization,
-                    firebase
+                    firebase,
+                    cryptoData.image.large
                 );
             }
             setNumOfCoins(0);
