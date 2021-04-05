@@ -1,18 +1,15 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.section`
-    padding: 16px;
-    margin: auto;
-    width: 100%;
+export const ContentWrapper = styled.article`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
     box-sizing: border-box;
     border-radius: 4px;
     background: var(--body);
     box-shadow: var(--box-shadow-cards);
-    height: 550px;
-
-    @media screen and (max-width: 400px) {
-        max-width: 100%;
-    }
 
     .drop-down-wrapper {
         display: flex;

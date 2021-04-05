@@ -8,7 +8,7 @@ import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedSto
 /* import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto'; */
 
 import BarChartCard from './data-card/dashboard-chart-card/DashboardChartCard';
-import RecentlyBought from './data-card/recently-bought/RecentlyBought';
+import RecentlyBoughtSold from './data-card/recently-sold-bought/RecentlyBoughtSold';
 /* import BoughtStocks from './data-card/bought-stocks/BoughtStocks' */
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,8 +16,7 @@ import { setOrganizationData } from '../../../redux/actions';
 
 import { FirebaseContext } from '../../firebase/context';
 
-import { Wrapper } from './ProfileDashboardElements';
-import RecentlySold from './data-card/recently-sold/RecentlySold';
+import { Wrapper, SectionWrapper } from './ProfileDashboardElements';
 
 const ProfileDashboard = () => {
     const dispatch = useDispatch();
@@ -71,48 +70,27 @@ const ProfileDashboard = () => {
 
     return (
         <>
-            <h1 style={{ fontSize: '1.25rem', margin: '2rem 0 -0.75rem 2rem' }}>
-                Weekly report
-                <span style={{ color: 'grey', marginLeft: '0.25rem' }}>▾</span>
-            </h1>
-            <Wrapper>
-                {/*             {admin ? <AddEmployee /> : ''}
-                {admin || employee ? (
-                    <>
-                        <h2>
-                            {!OrganizationData[0]
-                                ? ''
-                                : OrganizationData[0].organization}
-                        </h2>
-                        <TotalCompValue />
-                        <BarChartCard />
-                        <RecentlyBought />
-                        <RecentlySold />
-                    </>
-                ) : (
-                    <>
-                        <h2>Not part of a organization</h2>
-                        <span className="join-today">Join today...</span>
-                    </>
-                )} */}
-                <div className="quick-cards-wrapper">
-                    <CompanyOverview />
-                    <FeaturedEmployee />
-                </div>
-                <EmployeeOverview />
-            </Wrapper>
-            <h1 style={{ fontSize: '1.25rem', margin: '2rem 0 1.25rem 2rem' }}>
-                Most followed{' '}
-                <span
-                    style={{ color: 'grey', textDecorationLine: 'underline' }}
-                >
-                    Stocks
-                </span>
-                <span style={{ color: 'grey' }}>▾</span>
-            </h1>
-            <BarChartCard />
-            <RecentlyBought />
-            <RecentlySold />
+            <SectionWrapper>
+                <h1>
+                    Weekly report <span>▾</span>
+                </h1>
+                <Wrapper>
+                    <div className="quick-cards-wrapper">
+                        <CompanyOverview />
+                        <FeaturedEmployee />
+                    </div>
+                    <EmployeeOverview />
+                </Wrapper>
+            </SectionWrapper>
+            <SectionWrapper>
+                <h1>
+                    Most followed <span>Stocks ▾</span>
+                </h1>
+                <Wrapper>
+                    <BarChartCard />
+                    <RecentlyBoughtSold />
+                </Wrapper>
+            </SectionWrapper>
         </>
     );
 };

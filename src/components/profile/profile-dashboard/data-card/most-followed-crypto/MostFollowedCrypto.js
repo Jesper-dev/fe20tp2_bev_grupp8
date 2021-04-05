@@ -119,14 +119,6 @@ const MostFollowedCrypto = ({ orgName, pie }) => {
     return (
         <ContentWrapper>
             <h4>Most Followed Cryptos</h4>
-            {/*          <button onClick={() => setShowBar(!showBar)}>
-                {showBar ? (
-                    <i className="fas fa-chart-pie"></i>
-                ) : (
-                    <i className="far fa-chart-bar"></i>
-                )}
-            </button> */}
-
             <TransitionGroup>
                 {pie ? (
                     <CSSTransition
@@ -138,9 +130,6 @@ const MostFollowedCrypto = ({ orgName, pie }) => {
                             data={data}
                             options={{
                                 maintainAspectRatio: false,
-                                /*   legend: {
-                    display: false,
-                }, */
                             }}
                         />
                     </CSSTransition>

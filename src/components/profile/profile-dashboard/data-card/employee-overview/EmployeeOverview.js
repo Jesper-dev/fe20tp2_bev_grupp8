@@ -1,62 +1,52 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import EmployeeOverviewWrapper from './EmployeeOverviewElements';
-import { FirebaseContext } from '../../../../firebase/context';
 
-import { setUsers } from '../../../../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const TotalCompUser = () => {
-    const user = JSON.parse(localStorage.getItem('authUser'));
-    const firebase = useContext(FirebaseContext);
-    const dispatch = useDispatch();
+    const OrganizationData = useSelector((state) => state.OrganizationData);
 
-    const [totalOrgCurrency, setTotalOrgCurrency] = useState(0);
-    const [orgDataState, setOrgDataState] = useState([]);
+    /*     const CalcChangePercent = (item) => {
+        (((item.currency.currency - 100000) / 100000) * 100).toFixed(2);
+    }; */
 
-    const [didMount, setDidMount] = useState(false);
-
-    useEffect(() => {
-        setDidMount(true);
-
-        let orgData = [];
-
-        firebase
-            .organization(user.organization)
-            .child('/users')
-            .on('value', (snapshot) => {
-                let users = snapshot.val();
-                if (!users) return;
-
-                for (const key in users) {
-                    orgData.push({ ...users[key] });
-                }
-                setOrgDataState(orgData);
-                dispatch(setUsers(orgData));
-            });
-        return () => {
-            setDidMount(false);
-        };
-    }, [didMount, firebase, user.organization]);
-    // (userCash / currentCompanyCash) * 100;
     return (
         <EmployeeOverviewWrapper>
-            <h1>Employees</h1>
+            <h2>Employees</h2>
             <table>
-                <tr>
-                    <th>Username ▾</th>
-                    <th>Available cash ▾</th>
-                    <th>Change ▾</th>
-                    <th>Role ▾</th>
-                </tr>
-                {orgDataState.map((item, index) => {
+                <thead>
+                    <tr>
+                        <th>Username ▾</th>
+                        <th>Available cash ▾</th>
+                        <th>Change ▾</th>
+                        <th>Role ▾</th>
+                    </tr>
+                </thead>
+                {OrganizationData.map((item, index) => {
                     return (
-                        <tr>
+                        <tr key={index}>
                             <td>
                                 <img src={item.picture.profile_pic} />
                                 {item.username}
+                                {item.roles.ADMIN ? (
+                                    <i
+                                        style={{ color: 'grey' }}
+                                        className="fas fa-user-shield"
+                                    ></i>
+                                ) : null}
                             </td>
                             <td>{item.currency.currency} $</td>
-                            <td>
+                            <td
+                                style={
+                                    (
+                                        ((item.currency.currency - 100000) /
+                                            100000) *
+                                        100
+                                    ).toFixed(2) > -0.1
+                                        ? { color: 'var(--lighter-green)' }
+                                        : { color: 'var(--lighter-red)' }
+                                }
+                            >
                                 {(
                                     ((item.currency.currency - 100000) /
                                         100000) *
