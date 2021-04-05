@@ -6,7 +6,7 @@ import { ContentWrapper } from './SignUpElements';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
-import LogoLets from '../svgs/LogoLets'
+import LogoLets from '../svgs/LogoLets';
 
 const SignUp = () => (
     <div>
@@ -15,49 +15,45 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-	usernameTaken: false,
+    usernameTaken: false,
     username: '',
     organization: '',
     currency: {
-        currency: 100000
+        currency: 100000,
     },
     followingStocks: {
-        'LV':
-            {
-                regularMarketChangePercent: 150,
-                regularMarketPrice: 250,
-                shortName: 'lets-vest',
-                symbol: 'LV',
-            },
-
+        LV: {
+            regularMarketChangePercent: 150,
+            regularMarketPrice: 250,
+            shortName: 'lets-vest',
+            symbol: 'LV',
+        },
     },
     followingCrypto: {
-        'LVCry':
-            {
-                regularMarketChangePercent: 150,
-                regularMarketPrice: 250,
-                name: 'lets-vest-Cry',
-                image: 'LV-CrY',
-                symbol: 'LVCry'
-            },
+        LVCry: {
+            regularMarketChangePercent: 150,
+            regularMarketPrice: 250,
+            name: 'lets-vest-Cry',
+            image: 'LV-CrY',
+            symbol: 'LVCry',
+        },
     },
     possessionStocks: {
-        'LV': {
+        LV: {
             regularMarketPrice: 250,
             shortName: 'lets-vest',
             symbol: 'LV',
             amount: 1,
         },
-
     },
     possessionCrypto: {
-        'LVCry': {
-            current_price: 250,
+        LVCry: {
+            price: 250,
+            percent: 150,
             name: 'lets-vest-CrY',
             image: 'LV-CrY',
             amount: 1,
         },
-
     },
     post: {
         posts: [
@@ -74,7 +70,7 @@ const INITIAL_STATE = {
         settings: {
             recommended: true,
             following: true,
-            news: true
+            news: true,
         },
     },
     picture: {
@@ -96,20 +92,19 @@ const INITIAL_STATE = {
     loading: false,
     organizationname: '',
     likedPosts: [
-		{
-			content: "Let's Vest is the best website ever!",
-			username: "Let's Vest",
-			liked: true,
-			likeCount: 299,
-			timestamp: 736180964,
-		},
-	]
+        {
+            content: "Let's Vest is the best website ever!",
+            username: "Let's Vest",
+            liked: true,
+            likeCount: 299,
+            timestamp: 736180964,
+        },
+    ],
 };
 
 let activeOrganizations;
 let currentEmails;
 let activeOrganizationsName = [];
-
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -117,37 +112,41 @@ class SignUpFormBase extends Component {
         this.state = { ...INITIAL_STATE };
     }
 
-	checkUsernameTaken = (str) => {
-		this.setState({ usernameTaken: false });
+    checkUsernameTaken = (str) => {
+        this.setState({ usernameTaken: false });
 
-		const usersRef = this.props.firebase.users();
-		// const usersRef = this.props.firebase.db.ref('users/');
+        const usersRef = this.props.firebase.users();
+        // const usersRef = this.props.firebase.db.ref('users/');
 
-		// usersRef.startAt(null, str).endAt(null, str).on("value", () => {
-		// 		console.log("Username already in use!");
-		// 		this.setState({ usernameTaken: true });
-		// });
+        // usersRef.startAt(null, str).endAt(null, str).on("value", () => {
+        // 		console.log("Username already in use!");
+        // 		this.setState({ usernameTaken: true });
+        // });
 
-		usersRef.orderByChild("username").equalTo(str).on("child_added", () => {
-			console.log("Username already in use!");
-			this.setState({ usernameTaken: true });
-		});
-	}
+        usersRef
+            .orderByChild('username')
+            .equalTo(str)
+            .on('child_added', () => {
+                console.log('Username already in use!');
+                this.setState({ usernameTaken: true });
+            });
+    };
 
     componentDidMount = () => {
-      /*   console.log('hello') */
-            const activeOrganizationsFirebase = this.props.firebase.db.ref('organizations/');
+        /*   console.log('hello') */
+        const activeOrganizationsFirebase = this.props.firebase.db.ref(
+            'organizations/'
+        );
 
-            activeOrganizationsFirebase.on('value', (snapshot) => {
-                activeOrganizations = snapshot.val();
-                if (!activeOrganizations) return;
+        activeOrganizationsFirebase.on('value', (snapshot) => {
+            activeOrganizations = snapshot.val();
+            if (!activeOrganizations) return;
 
-                   for (const key in activeOrganizations) {
-                       activeOrganizationsName.push({ key });
-                   }
-            });
-
-    }
+            for (const key in activeOrganizations) {
+                activeOrganizationsName.push({ key });
+            }
+        });
+    };
 
     onSubmit = (event) => {
         this.setState({ loading: true });
@@ -168,28 +167,29 @@ class SignUpFormBase extends Component {
             partOfOrganization,
             list,
             userSettings,
-            likedPosts
+            likedPosts,
         } = this.state;
         //IF ENTERED EMAIL exists in Comp email
-        if(partOfOrganization){
+        if (partOfOrganization) {
             let exists = false;
-            const orgEmailList = this.props.firebase.db.ref('organizations/' + organizationname + '/emails/list' );
-
+            const orgEmailList = this.props.firebase.db.ref(
+                'organizations/' + organizationname + '/emails/list'
+            );
 
             orgEmailList.on('value', (snapshot) => {
                 currentEmails = snapshot.val();
                 if (!currentEmails) return;
 
-                for(let i = 0; i < currentEmails.length; i++){
-                    if(currentEmails[i].email === email){
-                        console.log("It exist")
+                for (let i = 0; i < currentEmails.length; i++) {
+                    if (currentEmails[i].email === email) {
+                        console.log('It exist');
                         exists = true;
                     } else {
-                        console.log("It doesnt exist")
+                        console.log('It doesnt exist');
                         exists = false;
                     }
                 }
-                if(!exists) return
+                if (!exists) return;
             });
         }
 
@@ -217,11 +217,11 @@ class SignUpFormBase extends Component {
                         picture,
                         organization,
                         userSettings,
-                        likedPosts
+                        likedPosts,
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
-                    if(isAdmin) {
+                    if (isAdmin) {
                         this.props.firebase
                             .organization(
                                 organization + '/users/' + authUser.user.uid
@@ -239,12 +239,11 @@ class SignUpFormBase extends Component {
                                 picture,
                                 organization,
                                 userSettings,
-                                likedPosts
+                                likedPosts,
                             });
-                            this.props.firebase.organization(
-                                organization + '/emails'
-                            )
-                            .set({ list })
+                        this.props.firebase
+                            .organization(organization + '/emails')
+                            .set({ list });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
                             email,
@@ -258,28 +257,28 @@ class SignUpFormBase extends Component {
                             picture,
                             organization,
                             userSettings,
-                            likedPosts
+                            likedPosts,
                         });
                     } else {
-                    this.props.firebase
-                        .organization(
-                            organizationname + '/users/' + authUser.user.uid
-                        )
-                        .set({
-                            username,
-                            email,
-                            roles,
-                            currency,
-                            followingStocks,
-                            followingCrypto,
-                            possessionStocks,
-                            possessionCrypto,
-                            post,
-                            picture,
-                            organization: organizationname,
-                            userSettings,
-                            likedPosts
-                        });
+                        this.props.firebase
+                            .organization(
+                                organizationname + '/users/' + authUser.user.uid
+                            )
+                            .set({
+                                username,
+                                email,
+                                roles,
+                                currency,
+                                followingStocks,
+                                followingCrypto,
+                                possessionStocks,
+                                possessionCrypto,
+                                post,
+                                picture,
+                                organization: organizationname,
+                                userSettings,
+                                likedPosts,
+                            });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
                             email,
@@ -293,7 +292,7 @@ class SignUpFormBase extends Component {
                             picture,
                             userSettings,
                             organization: organizationname,
-                            likedPosts
+                            likedPosts,
                         });
                     }
                 }
@@ -312,12 +311,12 @@ class SignUpFormBase extends Component {
         if (/\s/.test(event.target.value)) {
             // It has any kind of whitespace
             // göra error
-            return
+            return;
         }
 
         // console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
-		this.checkUsernameTaken(event.target.value);
+        this.checkUsernameTaken(event.target.value);
     };
 
     onChangeCheckbox = (event) => {
@@ -334,8 +333,6 @@ class SignUpFormBase extends Component {
         }
         this.setState({ [event.target.name]: event.target.checked });
     };
-
-
 
     render() {
         const {
@@ -354,11 +351,12 @@ class SignUpFormBase extends Component {
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
             email === '' ||
-            username === '' || this.state.usernameTaken;
+            username === '' ||
+            this.state.usernameTaken;
 
         return (
             <ContentWrapper>
-            {/*     <h1>Let's Vest</h1> */}
+                {/*     <h1>Let's Vest</h1> */}
                 <LogoLets className="logo-lets" />
                 {this.state.loading ? (
                     'Loading...'
@@ -416,7 +414,6 @@ class SignUpFormBase extends Component {
                                 />
                             </label>
                             {isAdmin ? (
-
                                 <label>
                                     {' '}
                                     Name of organization

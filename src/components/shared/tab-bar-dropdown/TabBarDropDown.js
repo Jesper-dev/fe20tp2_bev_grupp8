@@ -5,7 +5,7 @@ import { TabBarDropDownElement } from './TabBarDropDownElements';
 const TabBarDropDown = ({ setDataFunction }) => {
     return (
         <TabBarDropDownElement>
-            <ul class="dropdown">
+            <ul className="dropdown">
                 <li>
                     <a>stockdata</a>
                     <ul>

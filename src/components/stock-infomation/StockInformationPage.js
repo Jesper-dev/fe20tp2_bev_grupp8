@@ -36,7 +36,7 @@ const StockInformationPage = () => {
                     stocks.push({ ...data[key] });
                 }
                 stocks.forEach((item) => {
-                    if (item.symbol === 'test') {
+                    if (item.symbol === id) {
                         setStockIncludes(true);
                         setChecked(true);
                         return;
@@ -86,7 +86,7 @@ const StockInformationPage = () => {
         checkIfFollowed();
 
         if (stockIncludes === true) {
-            firebase.user(user.uid).child('/followingStocks/test').remove();
+            firebase.user(user.uid).child(`/followingStocks/${id}`).remove();
             if (user.organization) {
                 firebase
                     .organization(user.organization)
@@ -99,11 +99,13 @@ const StockInformationPage = () => {
                 .user(user.uid)
                 .child('/followingStocks')
                 .update({
-                    test: {
-                        symbol: 'test',
-                        regularMarketPrice: 20,
-                        regularMarketChangePercent: 20,
-                        shortName: 'test',
+                    id: {
+                        symbol: id,
+                        regularMarketPrice:
+                            stockData.financialData.currentPrice,
+                        regularMarketChangePercent:
+                            stockData.price.regularMarketChangePercent.fmt,
+                        shortName: stockData.quoteType.shortName,
                     },
                 });
             if (user.organization) {
@@ -111,11 +113,13 @@ const StockInformationPage = () => {
                     .organization(user.organization)
                     .child(`/users/${user.uid}/followingStocks`)
                     .update({
-                        test: {
-                            symbol: 'test',
-                            regularMarketPrice: 20,
-                            regularMarketChangePercent: 20,
-                            shortName: 'test',
+                        id: {
+                            symbol: id,
+                            regularMarketPrice:
+                                stockData.financialData.currentPrice,
+                            regularMarketChangePercent:
+                                stockData.price.regularMarketChangePercent.fmt,
+                            shortName: stockData.quoteType.shortName,
                         },
                     });
             }
@@ -160,13 +164,10 @@ const StockInformationPage = () => {
 
                         <div className="informationContainer">
                             <p>{stockData.symbol}</p>
-                            {/*        <p>
-                                Market price:{' '}
-                                {item.regularMarketPrice
-                                    ? item.regularMarketPrice
-                                    : 200}{' '}
-                                $
-                            </p> */}
+                            <p>
+                                Market price:
+                                {stockData.financialData.currentPrice}$
+                            </p>
                             {/* <p>
                                 Reg market change:{' '}
                                 {item.regularMarketChange

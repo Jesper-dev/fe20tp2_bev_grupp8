@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import AddEmployee from './admin/AddEmployee';
-import TotalCompValue from './data-card/total-comp-value/TotalCompValue';
+import CompanyOverview from './data-card/company-overview/CompanyOverview';
+import EmployeeOverview from './data-card/employee-overview/EmployeeOverview';
+import FeaturedEmployee from './data-card/featured-employee/FeaturedEmployee';
 import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedStocks';
 /* import MostFollowedCrypto from './data-card/most-followed-crypto/MostFollowedCrypto'; */
 
@@ -68,83 +70,50 @@ const ProfileDashboard = () => {
     //*Kanske skicka ned olika arrayer som props ned till components och inte kalla på de i components själva
 
     return (
-        <Wrapper>
-{/*             {admin ? <AddEmployee /> : ''}
-            {admin || employee ? (
-                <>
-                    <h2>
-                        {!OrganizationData[0]
-                            ? ''
-                            : OrganizationData[0].organization}
-                    </h2>
-                    <TotalCompValue />
-                    <BarChartCard />
-                    <RecentlyBought />
-                    <RecentlySold />
-                </>
-            ) : (
-                <>
-                    <h2>Not part of a organization</h2>
-                    <span className="join-today">Join today...</span>
-                </>
-            )} */}
-			<div class="quick-cards-wrapper">
-				<div class="quick-info-cards">
-					<article class="total">
-						<h1>Total assets</h1>
-						<h2>192 173$</h2>
-					</article>
-					<article class="change">
-						<h1>Change</h1>
-						<h2>21.4%</h2>
-					</article>
-					<article class="profits">
-						<h1>Profits</h1>
-						<h2>5 614$</h2>
-					</article>
-				</div>
-
-				<article class="featured">
-					<h1>Employee of the week</h1>
-					<p>Dave is the best, yay!</p>
-				</article>
-			</div>
-			<article class="employees">
-				<h3>Employees</h3>
-				<table>
-					<tr>
-						<th>Firstname ▾</th>
-						<th>Lastname ▾</th>
-						<th>Age ▾</th>
-						<th>Gender ▾</th>
-					</tr>
-					<tr>
-						<td>Eve</td>
-						<td>Jackson</td>
-						<td>94</td>
-						<td>Female</td>
-					</tr>
-					<tr>
-						<td>Peter</td>
-						<td>Cummings</td>
-						<td>63</td>
-						<td>Male</td>
-					</tr>
-					<tr>
-						<td>Bobby</td>
-						<td>Buttocks</td>
-						<td>74</td>
-						<td>Male</td>
-					</tr>
-					<tr>
-						<td>Jackie</td>
-						<td>Donger</td>
-						<td>51</td>
-						<td>Male</td>
-					</tr>
-				</table>
-			</article>
-        </Wrapper>
+        <>
+            <h1 style={{ fontSize: '1.25rem', margin: '2rem 0 -0.75rem 2rem' }}>
+                Weekly report
+                <span style={{ color: 'grey', marginLeft: '0.25rem' }}>▾</span>
+            </h1>
+            <Wrapper>
+                {/*             {admin ? <AddEmployee /> : ''}
+                {admin || employee ? (
+                    <>
+                        <h2>
+                            {!OrganizationData[0]
+                                ? ''
+                                : OrganizationData[0].organization}
+                        </h2>
+                        <TotalCompValue />
+                        <BarChartCard />
+                        <RecentlyBought />
+                        <RecentlySold />
+                    </>
+                ) : (
+                    <>
+                        <h2>Not part of a organization</h2>
+                        <span className="join-today">Join today...</span>
+                    </>
+                )} */}
+                <div className="quick-cards-wrapper">
+                    <CompanyOverview />
+                    <FeaturedEmployee />
+                </div>
+                <EmployeeOverview />
+            </Wrapper>
+            <h1 style={{ fontSize: '1.25rem', margin: '2rem 0 1.25rem 2rem' }}>
+                Most followed{' '}
+                <span
+                    style={{ color: 'grey', textDecorationLine: 'underline' }}
+                >
+                    Stocks
+                </span>
+                <span style={{ color: 'grey' }}>▾</span>
+            </h1>
+            <BarChartCard />
+            <RecentlyBought />
+            <RecentlySold />
+        </>
     );
 };
 

@@ -360,9 +360,9 @@ const TradeCrypto = () => {
                                 >
                                     {cryptoData.market_data
                                         .price_change_percentage_24h > 0 ? (
-                                        <i class="fas fa-long-arrow-alt-up"></i>
+                                        <i className="fas fa-long-arrow-alt-up"></i>
                                     ) : (
-                                        <i class="fas fa-long-arrow-alt-down"></i>
+                                        <i className="fas fa-long-arrow-alt-down"></i>
                                     )}
                                     {cryptoData.market_data.price_change_percentage_24h.toFixed(
                                         2

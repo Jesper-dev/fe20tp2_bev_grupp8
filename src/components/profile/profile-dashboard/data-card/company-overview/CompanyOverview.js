@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import { FirebaseContext } from '../../../../firebase/context';
 
-import { ContentWrapper, EmployeesValue } from './TotalCompValueElements';
+import { CompanyOverviewWrapper } from './CompanyOverviewElements';
 
 const TotalCompValue = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -40,16 +40,23 @@ const TotalCompValue = () => {
                     totalCurrency += currency;
                 }
 
-                let currentInvest = 35000;
-                let costInvestment = parseInt(totalCurrency);
-                setTotalOrgCurrency(costInvestment);
+                let howManyBought = 50; //how many shares were bought
+                let timeOfbuying = 250; //what was the value
+                let currentvalue = 550; //what is the current value now  of bought stock
+
+                let currentValueOfInvest = currentvalue * howManyBought; // värdeföränding i aktien
+                let costOfInvestment = 0;
+
+                let totalCapital = parseInt(totalCurrency);
+                setTotalOrgCurrency(totalCapital);
 
                 let originalValue = orgData.length * 100000;
-                let roi = currentInvest - costInvestment; ///ROI = (curent value of inventst =25000 - costInvestment =25000  )
-                //let roi = costInvestment - originalValue;
-                setRoi(roi);
+                costOfInvestment = totalCapital - originalValue; //hur mycket vi har köpt
 
-                let changePercent = roi / costInvestment; //* 100;
+                let roi = currentValueOfInvest - costOfInvestment;
+                setRoi(roi);
+                ///console.log(roi);
+                let changePercent = (roi / costOfInvestment) * 100;
                 setChange(changePercent);
             });
         return () => {
@@ -59,10 +66,10 @@ const TotalCompValue = () => {
 
     // 500000 - 475000 = 25000
     // 475000 - 500000 = -25000
-    // ROI = (curent value of inventst =25000 - costInvestment =25000  )
+    // ROI = (curent value of inventst =25000 - cost investment =25000  )
 
     return (
-        <div className="quick-info-cards">
+        <CompanyOverviewWrapper>
             <article>
                 <h1>Wallet</h1>
                 <h2>{totalOrgCurrency.toLocaleString()}$</h2>
@@ -83,7 +90,7 @@ const TotalCompValue = () => {
                 <h1 title="Return of investment (ROI)">Return</h1>
                 <h2>{roi}$</h2>
             </article>
-        </div>
+        </CompanyOverviewWrapper>
     );
 };
 

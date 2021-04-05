@@ -1,29 +1,8 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import CryptoCard from '../../../shared/card/crypto-card/CryptoCard';
 import { ContentWrapper } from './PossessionElements';
-import { FirebaseContext } from '../../../firebase/context';
 
-const PossessionCrypto = () => {
-    const firebase = useContext(FirebaseContext);
-    const user = JSON.parse(localStorage.getItem('authUser'));
-
-    const [cryptoPossesionState, setCryptoPossesionState] = useState([]);
-
-    useEffect(() => {
-        let possessioList = [];
-        firebase
-            .user(user.uid)
-            .child('/possessionCrypto')
-            .on('value', (snapshot) => {
-                const possessionData = snapshot.val();
-                if (!possessionData) return;
-                for (const key in possessionData) {
-                    possessioList.push({ ...possessionData[key] });
-                }
-                setCryptoPossesionState(possessioList);
-            });
-    }, [firebase, user.uid]);
-
+const PossessionCrypto = ({ cryptoPossesionState }) => {
     return (
         <>
             <ContentWrapper>

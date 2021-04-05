@@ -1,33 +1,8 @@
-import React, { useEffect, useContext, useState } from 'react';
-//import {useSelector} from "react-redux"
+import React from 'react';
 import StockCard from '../../../shared/card/stock-card/StockCard';
-//import MockGetTickers from '../../../../api/Mock/MockGetTickers.json';
 import { ContentWrapper } from './PossessionElements';
-import { FirebaseContext } from '../../../firebase/context';
 
-const Possession = () => {
-    // const Stocks = useSelector((state) => state.Stocks)
-    //let array = MockGetTickers.finance.result[0].quotes; //remove?
-    const firebase = useContext(FirebaseContext);
-    const user = JSON.parse(localStorage.getItem('authUser'));
-
-    const [stocksPossesionState, setStocksPossesionState] = useState([]);
-
-    useEffect(() => {
-        let possessioList = [];
-        firebase
-            .user(user.uid)
-            .child('/possessionStocks')
-            .on('value', (snapshot) => {
-                const possessionData = snapshot.val();
-                if (!possessionData) return;
-                for (const key in possessionData) {
-                    possessioList.push({ ...possessionData[key] });
-                }
-                setStocksPossesionState(possessioList);
-            });
-    }, [firebase, user.uid]); //changed!
-
+const Possession = ({ stocksPossesionState }) => {
     return (
         <ContentWrapper>
             <h1>Possession Stocks</h1>

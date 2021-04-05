@@ -372,9 +372,9 @@ const Trade = () => {
                                     }
                                 >
                                     {changePercent > 0 ? (
-                                        <i class="fas fa-long-arrow-alt-up"></i>
+                                        <i className="fas fa-long-arrow-alt-up"></i>
                                     ) : (
-                                        <i class="fas fa-long-arrow-alt-down"></i>
+                                        <i className="fas fa-long-arrow-alt-down"></i>
                                     )}
                                     {changePercent.toFixed(2)}%
                                 </span>
