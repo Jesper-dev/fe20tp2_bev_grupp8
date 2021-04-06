@@ -8,7 +8,7 @@ import { ContentWrapper } from './DashboardChartCardElements';
 
 const BarChartCard = () => {
     const [stocks, setStocks] = useState(false);
-    const [pie, setPie] = useState(true);
+    const [pie, setPie] = useState(false);
 
     const setDataFunction = (e) => {
         let value = e.target.id;
