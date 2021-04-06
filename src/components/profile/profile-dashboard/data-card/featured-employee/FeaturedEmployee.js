@@ -56,7 +56,7 @@ const FeaturedEmployee = () => {
                             &nbsp;profit this week!
                         </p>
                     </div>
-                    <div>
+                    <div style={{alignItems: "center"}}>
                         <img src={featuredUser.picture.profile_pic} />
                         <Link to={`/user/${featuredUser.username}`}>
                             Profile

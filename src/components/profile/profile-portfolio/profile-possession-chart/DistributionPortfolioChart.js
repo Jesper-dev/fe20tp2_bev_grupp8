@@ -58,18 +58,11 @@ const DistributionPortfolioChart = ({
         datasets: [
             {
                 label: 'Most followed stocks',
-                data: [currency, 2000, 3000],
+                data: [currency, 12000, 13000],
                 backgroundColor: [
-                    '#3e95cd',
-                    '#8e5ea2',
-                    '#3cba9f',
-                    '#e8c3b9',
-                    '#c45850',
-                    '#3DAD9C',
-                    '#4BFADF',
-                    '#F964FA',
-                    '#FADF7C',
-                    '#AD34AD',
+                    '#9BC53D',
+                    '#5BC0EB',
+                    '#FDE74C'
                 ],
                 minBarLength: 50,
                 hoverOffset: 1,
@@ -80,7 +73,7 @@ const DistributionPortfolioChart = ({
     let options = {
         maintainAspectRatio: false,
         legend: {
-            display: false,
+            display: true,
         },
         scales: {
             yAxes: [
@@ -95,6 +88,7 @@ const DistributionPortfolioChart = ({
 
     return (
         <ContentWrapper>
+            <h2>Possesion distribution</h2>
             <Pie data={data} options={options} />
         </ContentWrapper>
     );

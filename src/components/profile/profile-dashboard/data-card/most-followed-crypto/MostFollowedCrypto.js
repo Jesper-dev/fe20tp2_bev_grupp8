@@ -80,7 +80,7 @@ const MostFollowedCrypto = ({ orgName, pie }) => {
         labels: stockLabelsState,
         datasets: [
             {
-                label: 'Most followed stocks',
+                label: 'Most followed crypto',
                 data: stockAmountState,
                 backgroundColor: [
                     '#3e95cd',

@@ -28,12 +28,6 @@ const TotalCompUser = () => {
                             <td>
                                 <img src={item.picture.profile_pic} />
                                 {item.username}
-                                {item.roles.ADMIN ? (
-                                    <i
-                                        style={{ color: 'grey' }}
-                                        className="fas fa-user-shield"
-                                    ></i>
-                                ) : null}
                             </td>
                             <td>{item.currency.currency} $</td>
                             <td
@@ -56,8 +50,8 @@ const TotalCompUser = () => {
                             </td>
                             <td>
                                 {item.roles.EMPLOYEE
-                                    ? item.roles.EMPLOYEE.toLowerCase()
-                                    : item.roles.ADMIN.toLowerCase()}
+                                    ? <i className="fas fa-user"></i>
+                                    : <i className="fas fa-user-shield"></i>}
                             </td>
                         </tr>
                     );

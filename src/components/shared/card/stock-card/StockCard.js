@@ -43,7 +43,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
                         : { color: 'var(--lighter-red)' }
                 }
             >
-                {percent ? percent.toFixed(2) : 0}%
+                {percent ? parseFloat(percent).toFixed(2) : 0}%
             </span>
             <Link to={`/info/${name}`}>
                 <span>

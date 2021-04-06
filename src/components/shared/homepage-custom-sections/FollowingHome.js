@@ -25,7 +25,7 @@ const FollowingHome = ({ array, cryptoList }) => {
                             stocksList={array}
                             key={index}
                             name={item.symbol}
-                            cost={item.regularMarketPrice}
+                            cost={item.regularMarketPrice.raw}
                             percent={item.regularMarketChangePercent}
                         />
                     );

@@ -35,6 +35,7 @@ const StockInformationPage = () => {
                 for (const key in data) {
                     stocks.push({ ...data[key] });
                 }
+                //*Vi kör bara 'test' i DB
                 stocks.forEach((item) => {
                     if (item.symbol === id) {
                         setStockIncludes(true);
@@ -68,6 +69,7 @@ const StockInformationPage = () => {
             await axios
                 .request(options)
                 .then((response) => {
+                    console.log(response.data)
                     setStockData(response.data);
                     setLoading(false);
                 })
@@ -90,7 +92,7 @@ const StockInformationPage = () => {
             if (user.organization) {
                 firebase
                     .organization(user.organization)
-                    .child(`/users/${user.uid}/followingStocks/test`)
+                    .child(`/users/${user.uid}/followingStocks/${id}`)
                     .remove();
                 setChecked(false);
             }
@@ -99,7 +101,7 @@ const StockInformationPage = () => {
                 .user(user.uid)
                 .child('/followingStocks')
                 .update({
-                    id: {
+                    [id]: {
                         symbol: id,
                         regularMarketPrice:
                             stockData.financialData.currentPrice,
@@ -113,7 +115,7 @@ const StockInformationPage = () => {
                     .organization(user.organization)
                     .child(`/users/${user.uid}/followingStocks`)
                     .update({
-                        id: {
+                        [id]: {
                             symbol: id,
                             regularMarketPrice:
                                 stockData.financialData.currentPrice,
@@ -130,6 +132,7 @@ const StockInformationPage = () => {
 
     const onChange = () => setChecked(!checked);
 
+    console.log('stockData is: ', stockData)
     return (
         <>
             {loading ? (
@@ -141,7 +144,8 @@ const StockInformationPage = () => {
                         <h1>
                             {stockData.quoteType.shortName
                                 ? stockData.quoteType.shortName
-                                : stockData.quoteType.longName}
+                                : stockData.quoteType.longName
+                            }
                         </h1>
                         <div className="chart-topbar-wrapper">
                             <TradeBtns to={`/trade/${stockData.symbol}`}>
@@ -165,8 +169,8 @@ const StockInformationPage = () => {
                         <div className="informationContainer">
                             <p>{stockData.symbol}</p>
                             <p>
-                                Market price:
-                                {stockData.financialData.currentPrice}$
+                                {/* Det fanns ingen .fmt i slutet */}
+                                Market price: {stockData.financialData.currentPrice.fmt}$
                             </p>
                             {/* <p>
                                 Reg market change:{' '}

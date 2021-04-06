@@ -43,6 +43,7 @@ const ProfileChooseImg = () => {
 
 
     const updateUser = (userId, imageUrl) => {
+        //TODO Göra om till ny firebase fetch kod och sätt även profilbild i org
         firebase.db.ref('users/' + userId + "/picture").set({
           profile_pic: imageUrl
         });

@@ -42,6 +42,10 @@ const EmployeeOverviewWrapper = styled.article`
             align-items: center;
             gap: 0.5rem;
         }
+
+        & > i {
+            color: grey;
+        }
     }
 
     @media screen and (max-width: 640px) {

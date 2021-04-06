@@ -29,6 +29,18 @@ const FeaturedEmployeeWrapper = styled.article`
                 margin-left: 0.5rem;
                 color: gold;
             }
+
+            a {
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.25rem;
+                color: var(--primary);
+                font-weight: 500;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #e8e8e8;
+                }
+            }
         }
     }
 `;

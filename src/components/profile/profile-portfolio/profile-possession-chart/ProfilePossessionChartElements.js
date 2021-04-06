@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    text-align: center;
+export const ContentWrapper = styled.section`
+/*     text-align: center;
     padding: 24px;
-    border-radius: 0.5rem;
-
-    div {
-        height: 70%;
-    }
+    border-radius: 0.5rem; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: auto;
+    width: 100%;
+    max-width: 40rem;
+    max-height: 30%;
 `;

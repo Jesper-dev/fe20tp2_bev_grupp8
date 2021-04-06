@@ -10,4 +10,14 @@ export const ContentWrapper = styled.div`
         color: var(--body-fifth);
         text-align: center;
     }
+
+    & > button {
+        padding: 0.75rem 1rem;
+        background: lightgrey;
+        border: none;
+        background: none;
+        font-family: inherit;
+        font-size: 0.875rem;
+        cursor: pointer;
+    }
 `;

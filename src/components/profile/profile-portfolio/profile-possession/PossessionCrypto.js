@@ -7,6 +7,7 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
         <>
             <ContentWrapper>
                 <h1>Possession cryptocurrencies</h1>
+                <div>
                 {cryptoPossesionState.length > 0 ? (
                     cryptoPossesionState.map((item, index) => {
                         return (
@@ -25,6 +26,7 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
                 ) : (
                     <p>Loading...</p>
                 )}
+                </div>
             </ContentWrapper>
         </>
     );

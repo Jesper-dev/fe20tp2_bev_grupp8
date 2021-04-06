@@ -105,6 +105,7 @@ const INITIAL_STATE = {
 let activeOrganizations;
 let currentEmails;
 let activeOrganizationsName = [];
+let availOrgs = [];
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -145,6 +146,8 @@ class SignUpFormBase extends Component {
             for (const key in activeOrganizations) {
                 activeOrganizationsName.push({ key });
             }
+
+            // availOrgs blablabla
         });
     };
 
@@ -184,12 +187,19 @@ class SignUpFormBase extends Component {
                     if (currentEmails[i].email === email) {
                         console.log('It exist');
                         exists = true;
+                        return;
                     } else {
                         console.log('It doesnt exist');
                         exists = false;
                     }
                 }
                 if (!exists) return;
+
+                // const index = currentEmails.findIndex(obj => obj.email === email);
+                // console.log(index);
+                // if (index === -1) {
+                //    return;
+                // }
             });
         }
 
