@@ -4,19 +4,11 @@ import CryptoCard from '../card/crypto-card/CryptoCard';
 
 import { ContentWrapper } from './HomepageComponentsElements';
 import MockCrypto from '../../../api/Mock/MockCrypto.json';
-import { useSelector } from 'react-redux';
 
 const FollowingHome = ({ array, cryptoList }) => {
-    const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
     return (
         <>
-            <ContentWrapper
-                style={
-                    SeeFollowingRedux
-                        ? { display: 'flex' }
-                        : { display: 'none' }
-                }
-            >
+            <ContentWrapper>
                 <h3>Watching</h3>
                 {array.length === 0 && cryptoList.length === 0 ? (
                     <p>

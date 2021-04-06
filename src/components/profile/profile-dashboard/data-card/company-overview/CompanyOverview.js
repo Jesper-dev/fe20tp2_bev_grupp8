@@ -51,7 +51,7 @@ const TotalCompValue = () => {
             changePercent = 0;
         } else changePercent = (roi / costOfInvestment) * 100;
 
-        console.log(changePercent);
+        // console.log(changePercent);
         setChange(changePercent);
         setTotalOrgCurrency(totalCapital + roi); //should Roi be add to total capital
         return () => {

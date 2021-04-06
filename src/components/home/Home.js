@@ -26,6 +26,11 @@ const Home = () => {
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
+
+    const [rec, setRec] = useState(true);
+    const [watching, setWatching] = useState(true);
+    const [news, setNews] = useState(true);
+
     const dispatch = useDispatch();
     const [didMount, setDidMount] = useState(false);
 
@@ -42,14 +47,23 @@ const Home = () => {
         })
     }
 
+    const getUserSettings = () => {
+        firebase.user(user.uid).child('/userSettings/settings').once('value', (snapshot) => {
+            const data = snapshot.val()
+            data.watching ? setWatching(true) : setWatching(false)
+            data.news ? setNews(true) : setNews(false)
+            data.recommended ? setRec(true) : setRec(false)
+        })
+    }
+
     useEffect(() => {
         setDidMount(true);
+        getUserSettings()
         let followingStocksList = [];
         let followingCryptoList = [];
         let currencyData;
         getFollowInfo('/followingStocks', followingStocksList)
         getFollowInfo('/followingCrypto', followingCryptoList)
-        console.log(followingCryptoList)
         setFollowingArr(followingStocksList)
         setFollowingArrCrypto(followingCryptoList)
 
@@ -61,6 +75,7 @@ const Home = () => {
             setTotalCurrency(currencyData.currency);
             dispatch(setCurrency(currencyData)); //behöver
         })
+
         return () => {
             setDidMount(false);
         };
@@ -76,12 +91,9 @@ const Home = () => {
                         difference={0}
                         percent={0}
                     />
-
-                    <News array={MockNewsList.items.result.slice(0, 1)} />
-
-                    <Following array={followingArr} cryptoList={followingArrCrypto} />
-                    <RecommendationHome MockData={MockData}  />
-                    {/* <Recommendations /> */}
+                    {news ? <News News array={MockNewsList.items.result.slice(0, 1)} /> : ''}
+                    {watching ? <Following array={followingArr} cryptoList={followingArrCrypto} /> : ''}
+                    {rec ? <RecommendationHome MockData={MockData} /> : ''}
                 </MainWrapper>
             </ContentWrapper>
         </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import {
     setSeeRecommendations,
     setSeeFollowing,
@@ -9,62 +9,66 @@ import { useSelector } from 'react-redux';
 
 import { ContentWrapper } from './CustomizeHomepageElements'
 
+import { FirebaseContext } from '../../../firebase/context';
+
 const CustomizeHomepage = () => {
+    const user = JSON.parse(localStorage.getItem('authUser'));
     const [checkedRec, setCheckedRec] = useState(true);
-    const [checkedFollow, setCheckedFollow] = useState(true);
+    const [checkedWatch, setCheckedWatch] = useState(true);
     const [checkedNews, setCheckedNews] = useState(true);
     const dispatch = useDispatch();
     const SeeRecRedux = useSelector((state) => state.SeeRecommendations);
     const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
     const SeeNewsRedux = useSelector((state) => state.SeeNews);
-
-    const checkIfRec = useCallback(() => {
-        if (SeeRecRedux === true) {
-            setCheckedRec(true);
-        } else if (SeeRecRedux === false) {
-            setCheckedRec(false);
-        }
-    }, [SeeRecRedux]);
-
-    const checkIfFollow = useCallback(() => {
-        if (SeeFollowingRedux === true) {
-            setCheckedFollow(true);
-        } else if (SeeFollowingRedux === false) {
-            setCheckedFollow(false);
-        }
-    }, [SeeFollowingRedux]);
-
-    const checkIfNews = useCallback(() => {
-        if (SeeNewsRedux === true) {
-            setCheckedNews(true);
-        } else if (SeeNewsRedux === false) {
-            setCheckedNews(false);
-        }
-    }, [SeeNewsRedux]);
+    const firebase = useContext(FirebaseContext)
 
     useEffect(() => {
-        checkIfRec();
-        checkIfFollow();
-        checkIfNews();
-    }, [checkIfFollow, checkIfNews, checkIfRec]);
+        getDataDB()
+    }, []);
+
+    const getDataDB = () => {
+        firebase.user(user.uid).child('/userSettings/settings').once('value', (snapshot) => {
+            const data = snapshot.val()
+            data.watching ? setCheckedWatch(true) : setCheckedWatch(false)
+            data.news ? setCheckedNews(true) : setCheckedNews(false)
+            data.recommended ? setCheckedRec(true) : setCheckedRec(false)
+        })
+    }
 
 
+    const updateDB = (path, value, state) => {
+        if(value === 'Rec'){
+            firebase.user(user.uid).child(path).update({
+                recommended: !state
+            })
+        }
+        else if(value === 'Watch'){
+            firebase.user(user.uid).child(path).update({
+                watching: !state
+            })
+        }
+        else if(value === 'News'){
+            firebase.user(user.uid).child(path).update({
+                news: !state
+            })
+        }
+    }
 
     const seeFunc = (e) => {
         if (e.target.value === 'Rec') {
-            dispatch(setSeeRecommendations(!SeeRecRedux));
-        } else if (e.target.value === 'Follow') {
-            dispatch(setSeeFollowing(!SeeFollowingRedux));
+            updateDB('/userSettings/settings', 'Rec', checkedRec)
+        } else if (e.target.value === 'Watch') {
+            updateDB('/userSettings/settings', 'Watch', checkedWatch)
         } else if (e.target.value === 'News') {
-            dispatch(setSeeNews(!SeeNewsRedux));
+            updateDB('/userSettings/settings', 'News', checkedNews)
         }
     };
 
     const onChange = (e) => {
         if (e.target.value === 'Rec') {
             setCheckedRec(!checkedRec);
-        } else if (e.target.value === 'Follow') {
-            setCheckedFollow(!checkedFollow);
+        } else if (e.target.value === 'Watch') {
+            setCheckedWatch(!checkedWatch);
         } else if (e.target.value === 'News') {
             setCheckedNews(!checkedNews);
         }
@@ -87,15 +91,15 @@ const CustomizeHomepage = () => {
                 <label htmlFor="rec" className="toggle-btn"></label>
             </div>
             <div className="tgl">
-                <p>Show Following</p>
+                <p>Show Watching</p>
                 <input
                     type="checkbox"
                     id="follow"
                     className="checkbox"
                     onChange={onChange}
-                    checked={checkedFollow}
+                    checked={checkedWatch}
                     onClick={seeFunc}
-                    value="Follow"
+                    value="Watch"
                 />
                 <label htmlFor="follow" className="toggle-btn"></label>
             </div>

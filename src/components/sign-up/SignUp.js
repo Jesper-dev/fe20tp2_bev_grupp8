@@ -69,7 +69,7 @@ const INITIAL_STATE = {
     userSettings: {
         settings: {
             recommended: true,
-            following: true,
+            watching: true,
             news: true,
         },
     },
