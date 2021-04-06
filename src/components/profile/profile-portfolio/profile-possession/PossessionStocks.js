@@ -6,6 +6,7 @@ const Possession = ({ stocksPossesionState }) => {
     return (
         <ContentWrapper>
             <h1>Possession Stocks</h1>
+            <div>
             {stocksPossesionState.length > 0 ? (
                 stocksPossesionState.map((item, index) => {
                     return (
@@ -22,6 +23,7 @@ const Possession = ({ stocksPossesionState }) => {
             ) : (
                 <p>Loading...</p>
             )}
+            </div>
         </ContentWrapper>
     );
 };

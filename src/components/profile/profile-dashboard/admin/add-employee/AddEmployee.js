@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AddEmailWrapper } from './AddEmployeeElements'
-import { FirebaseContext } from '../../../firebase/context';
+import { FirebaseContext } from '../../../../firebase';
+import EmployeeCard from './EmployeeCard'
 const AddEmployee = () => {
     const [open, setOpen] = useState(false)
     const [emailValue, setEmailValue] = useState('')
@@ -18,8 +19,8 @@ const AddEmployee = () => {
     }
 
     const addEmailToDb = (email) => {
-        //let emailList = []; //remove?
 
+        //TODO Gör om denna i sinom tid
         const emailsData = firebase.db.ref('organizations/' + user.organization + '/emails/list');
         if (emailsData === null) {
             return;
@@ -28,9 +29,6 @@ const AddEmployee = () => {
         let list = [];
         emailsData.on('value', (snapshot) => {
             list = snapshot.val();
-            // if(emails == null) {
-            //     return;
-            // }
         });
 
         const emailObj = {
@@ -58,26 +56,12 @@ const AddEmployee = () => {
     },[firebase.db, user.organization] ) //varning!
 
     return (
-        <AddEmailWrapper open={open}>
-            {open ? (
-                <p onClick={() => setOpen(!open)}>-</p>
-            ) : (
-                <p onClick={() => setOpen(!open)}>+</p>
-            )}
+        <AddEmailWrapper>
             <h3>List of employees</h3>
             <div className="emailWrapper">
                 {employeeList.map((item, i) => {
                     return (
-                        <span
-                            style={
-                                i % 2 === 0
-                                    ? { background: 'var(--body-third)' }
-                                    : { background: 'var(--body)' }
-                            }
-                            key={i}
-                        >
-                            {item.email}
-                        </span>
+                        <EmployeeCard key={i} email={item.email} i={i} />
                     );
                 })}
             </div>
@@ -99,4 +83,4 @@ const AddEmployee = () => {
     );
 }
 
-export default AddEmployee
+export default AddEmployee;

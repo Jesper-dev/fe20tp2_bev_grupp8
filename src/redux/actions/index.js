@@ -75,6 +75,13 @@ export const setProfileImage = (image) => {
     };
 };
 
+export const setOrgLogo = (image) => {
+    return {
+        type: 'ORGLOGO',
+        payload: image,
+    };
+};
+
 export const setUsers = (users) => {
     return {
         type: 'USERS',
@@ -98,5 +105,17 @@ export const toggleSearch = (searching) => {
     return {
         type: 'SEARCHING',
         payload: searching,
+    };
+};
+export const setCryptoPossession = (crypto) => {
+    return {
+        type: 'CRYPTO',
+        payload: crypto,
+    };
+};
+export const setStockPossession = (stocks) => {
+    return {
+        type: 'STOCKS',
+        payload: stocks,
     };
 };

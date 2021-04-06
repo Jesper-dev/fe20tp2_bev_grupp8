@@ -9,10 +9,13 @@ import SeeRecommendations from './SeeRecommendations';
 import SeeFollowing from './SeeFollowing';
 import SeeNews from './SeeNews';
 import ProfileImgReducer from './ProfileImgReducer';
+import OrgLogoReducer from './OrgLogoReducer';
 import Users from './Users';
 import FilteredUsers from './FilteredUsers';
 import OrganizationData from './OrganizationData';
 import Searching from './Searching';
+import PossessionCrypto from './PossessionCrypto'
+import PossessionStocks from './PossessionStocks'
 
 import { combineReducers } from 'redux';
 
@@ -28,10 +31,13 @@ const allReducers = combineReducers({
     SeeFollowing,
     SeeNews,
     ProfileImgReducer,
+    OrgLogoReducer,
     Users,
     FilteredUsers,
     OrganizationData,
     Searching,
+    PossessionCrypto,
+    PossessionStocks
 });
 
 export default allReducers;

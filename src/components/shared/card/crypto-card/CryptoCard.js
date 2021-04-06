@@ -9,7 +9,7 @@ import Coin from '../../../svgs/Coin';
 
 let chosenCryptoArray = [];
 
-const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
+const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
     const dispatch = useDispatch();
     let history = useHistory();
 
@@ -29,6 +29,17 @@ const CryptoCard = ({ name, price, img, percent, cryptoList }) => {
     return (
         <>
             <CardWrapper onClick={() => setChosenCryptoOption(name)}>
+                 {!amount ? (
+                ''
+            ) : (
+                <span>
+                    {amount.toFixed(2)}{' '}
+                    <i
+                        className="fas fa-piggy-bank"
+                        style={{ color: 'pink' }}
+                    ></i>
+                </span>
+            )}
                 {img === 'LV-CrY' ? (
                     <Coin className="lv-coin" />
                 ) : (

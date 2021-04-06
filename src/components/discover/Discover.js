@@ -15,7 +15,7 @@ import DiscoverCryptoList from './discover-cryptolist/DiscoverCryptoList';
 import { HeaderWrapper, MainWrapper } from './DiscoverElements';
 
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
-import SearchBar from '../shared/search-bar/SearchBar';
+// import SearchBar from '../shared/search-bar/SearchBar';
 import DiscoverSearch from './discover-search/DiscoverSearch';
 import TabBar from '../shared/tab-bar/TabBar';
 

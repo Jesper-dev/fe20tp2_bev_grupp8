@@ -11,6 +11,7 @@ const EmployeeOverviewWrapper = styled.article`
 
     img {
         width: 1.5rem;
+        border-radius: 20px;
     }
 
     table {

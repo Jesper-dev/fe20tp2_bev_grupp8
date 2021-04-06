@@ -10,6 +10,37 @@ const SocialPost = () => {
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
+const writeNewPost = (uid, username, picture, postData) => {
+    // A post entry.
+    var postData = {
+        username: username,
+        content: postData,
+        likeCount: 0,
+        liked: false,
+        timestamp: Date.now(),
+        uid: uid,
+      //body: body,
+      //title: title,
+        likes: 0,
+        picture: picture
+    };
+
+    // Get a key for a new Post.
+    let newPostKey = firebase.posts().push().key;
+/*     var newPostKey = firebase.db().ref('posts').push().key; */
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    let updates = {};
+    let updatesUser = {};
+    updates['/posts/' + newPostKey] = postData;
+    updatesUser[uid + '/post/posts/' + newPostKey] = postData;
+
+    firebase.users().update(updatesUser);
+    return firebase.posts().update(updates);
+  }
+
+
+
     const onChangeText = (evt) => {
         setPostData(evt.target.value);
 
@@ -29,32 +60,21 @@ const SocialPost = () => {
     const handleSubmitPost = (e) => {
         e.preventDefault();
 
-		const userPostsObj = firebase.user(`${userData.uid}/post/posts`);
-        if (userPostsObj == null) {
-			return;
-        }
-		
-		let userPostsArr;
+		const profilePicObj = firebase.user(`${userData.uid}/picture/profile_pic`);
 
-        userPostsObj.on('value', (snapshot) => {
-            userPostsArr = snapshot.val();
-            if (userPostsArr == null) {
-                return;
+		let profilePic;
+
+        profilePicObj.once('value', (snapshot) => {
+            profilePic = snapshot.val();
+            if (profilePic == null) {
+                profilePic = 'I Have NO Pic!'
             }
         });
 
-        const postObj = {
-            username: userData.username,
-            content: postData,
-            likeCount: 0,
-            liked: false,
-            timestamp: Date.now(),
-        };
-
-        if (postObj.content) {
-            userPostsArr.push(postObj);
-            updateData(userPostsArr);
-
+if (postData) {
+          writeNewPost(userData.uid, userData.username, profilePic, postData)
+/*             userPostsArr.push(postObj);
+            updateData(userPostsArr); */
             setPostData('');
 			document.querySelector("textarea").classList.remove('not-empty');
         }
@@ -77,3 +97,5 @@ const SocialPost = () => {
 };
 
 export default SocialPost;
+
+

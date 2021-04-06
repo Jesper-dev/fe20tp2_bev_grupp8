@@ -1,11 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import {
-    setSeeRecommendations,
-    setSeeFollowing,
-    setSeeNews,
-} from '../../../../redux/actions';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 import { ContentWrapper } from './CustomizeHomepageElements'
 
@@ -16,10 +9,6 @@ const CustomizeHomepage = () => {
     const [checkedRec, setCheckedRec] = useState(true);
     const [checkedWatch, setCheckedWatch] = useState(true);
     const [checkedNews, setCheckedNews] = useState(true);
-    const dispatch = useDispatch();
-    const SeeRecRedux = useSelector((state) => state.SeeRecommendations);
-    const SeeFollowingRedux = useSelector((state) => state.SeeFollowing);
-    const SeeNewsRedux = useSelector((state) => state.SeeNews);
     const firebase = useContext(FirebaseContext)
 
     useEffect(() => {
@@ -49,6 +38,7 @@ const CustomizeHomepage = () => {
         }
         else if(value === 'News'){
             firebase.user(user.uid).child(path).update({
+
                 news: !state
             })
         }

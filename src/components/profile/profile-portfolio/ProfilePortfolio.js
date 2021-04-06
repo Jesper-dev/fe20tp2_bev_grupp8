@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { FirebaseContext } from '../../firebase/context';
+import { useDispatch } from 'react-redux'
+import { setStockPossession, setCryptoPossession } from '../../../redux/actions'
 
 // import { ContentWrapper } from './ProfilePortfolioElements'; //remove?
 import PortfolioOverview from '../../shared/card/portfolio-overview/PortfolioOverviewCard';
@@ -10,6 +12,7 @@ import DistributionPortfolioChart from './profile-possession-chart/DistributionP
 const ProfilePortfolio = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
+    const dispatch = useDispatch()
 
     const [currency, setCurrency] = useState(0);
     const [stocksPossesionState, setStocksPossesionState] = useState([]);
@@ -36,6 +39,7 @@ const ProfilePortfolio = () => {
                 }
 
                 setCryptoPossesionState(possessioListCrypto);
+                dispatch(setCryptoPossession(possessioListCrypto))
             });
 
         let possessioListStocks = [];
@@ -49,6 +53,7 @@ const ProfilePortfolio = () => {
                     possessioListStocks.push({ ...possessionData[key] });
                 }
                 setStocksPossesionState(possessioListStocks);
+                 dispatch(setStockPossession(possessioListStocks))
             });
     }, [firebase, user.uid]);
     return (

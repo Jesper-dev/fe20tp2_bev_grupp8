@@ -10,7 +10,7 @@ export const NavbarLeftElement = styled.nav`
     width: 14rem;
 
     border-right: 1px solid var(--body-third);
-    
+
     ul {
         padding: 0;
         margin: 0;
@@ -45,7 +45,19 @@ export const NavbarLeftElement = styled.nav`
     }
 
     .logo-link {
-        margin: 1.5rem 0;
+        display: flex;
+        align-items: unset;
+        justify-content: unset;
+        padding: 0;
+        margin: 1.5rem 0.5rem;
+        border-radius: 0.5rem;
+        height: 4rem;
+        overflow: hidden;
+
+        img {
+            flex: 1;
+            object-fit: contain;
+        }
     }
 
     .logo-link:hover {

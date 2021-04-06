@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import AddEmployee from './admin/AddEmployee';
+// import AddEmployee from './admin/AddEmployee';
 import CompanyOverview from './data-card/company-overview/CompanyOverview';
 import EmployeeOverview from './data-card/employee-overview/EmployeeOverview';
 import FeaturedEmployee from './data-card/featured-employee/FeaturedEmployee';

@@ -49,6 +49,7 @@ const SocialPage = () => {
                         )
                     }) : <SocialPost />}
 
+
                 </MainWrapper>
         </ContentWrapper>
     );

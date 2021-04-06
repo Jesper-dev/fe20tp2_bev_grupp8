@@ -23,6 +23,7 @@ const Profile = () => {
     const firebase = useContext(FirebaseContext)
     const dispatch = useDispatch()
     const [username, setUsername] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false)
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
@@ -36,6 +37,8 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setUsername(data.username)
+
+            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false)
             if (!data.picture) return
             // setImage(data.picture.profile_pic)
             let blobLink = data.picture.profile_pic;
@@ -74,6 +77,11 @@ const Profile = () => {
                             <i className="fas fa-user-edit"></i>
                             Edit Profile
                         </ProfileSettingsBtn>
+                        {isAdmin ? <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
+                            <i className="fas fa-user-shield"></i>
+                            Edit Organization
+                        </ProfileSettingsBtn> : ''}
+
                 </section>
 				<TabBar tabs={tabs}/>
             </HeaderWrapper>

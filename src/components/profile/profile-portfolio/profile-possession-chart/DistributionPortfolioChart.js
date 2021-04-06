@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bar, Pie } from 'react-chartjs-2'; //changed!
+import { Pie } from 'react-chartjs-2'; //changed!
+import { useSelector } from 'react-redux'
 
 import { ContentWrapper } from './ProfilePossessionChartElements';
+
 
 const DistributionPortfolioChart = ({
     stocksPossesionState,
@@ -10,12 +12,18 @@ const DistributionPortfolioChart = ({
     currency,
 }) => {
     const [cryptoData, setCryptoData] = useState({});
+    const [cryptoDataSpliced, setCryptoDataSpliced] = useState([]);
     const [currentCryptoValue, setCurrentCryptoValue] = useState(0);
 
+    const PossessionStocks = useSelector(state => state.PossessionStocks)
+    const PossessionCrypto = useSelector(state => state.PossessionCrypto)
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let cryptoIds = '';
+        let splicedArr = cryptoPossesionState.splice(0,1)
+
+        setCryptoDataSpliced(splicedArr)
 
         cryptoPossesionState.forEach((item) => {
             if (item.name == 'lets-vest-CrY') return;
@@ -30,6 +38,7 @@ const DistributionPortfolioChart = ({
                     )
                     .then((response) => {
                         setCryptoData(response.data);
+
                         setLoading(false);
                     })
                     .catch((error) => {
@@ -43,12 +52,20 @@ const DistributionPortfolioChart = ({
 
     useEffect(() => {
         let cryptoDataArray = [];
-        cryptoDataArray.push(cryptoData);
+          for (const key in cryptoData) {
+                cryptoDataArray.push({ ...cryptoData[key] });
+            }
+               /* console.log(cryptoDataArray) */
 
-        /*    cryptoDataArray.forEach((item) => {
-            currentCryptoValue + item.usd;
-            setCurrentCryptoValue();
-        }); */
+           cryptoDataArray.forEach((item, i) => {
+               console.log(cryptoDataSpliced)
+               console.log(item.usd)
+
+    /*         setCurrentCryptoValue(currentCryptoValue + (item.usd * cryptoDataSpliced[i].amount)) */
+ /*            console.log(currentCryptoValue) */
+   /*          setCurrentCryptoValue(currentCryptoValue + item.usd); */
+        });
+        console.log(currentCryptoValue)
 
         return () => {};
     }, [cryptoData]);
@@ -88,7 +105,7 @@ const DistributionPortfolioChart = ({
 
     return (
         <ContentWrapper>
-            <h2>Possesion distribution</h2>
+            <h1>Possesion distribution</h1>
             <Pie data={data} options={options} />
         </ContentWrapper>
     );

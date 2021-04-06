@@ -15,6 +15,7 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
+    partOfOrg: false,
     usernameTaken: false,
     username: '',
     organization: '',
@@ -105,7 +106,6 @@ const INITIAL_STATE = {
 let activeOrganizations;
 let currentEmails;
 let activeOrganizationsName = [];
-let availOrgs = [];
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -146,8 +146,6 @@ class SignUpFormBase extends Component {
             for (const key in activeOrganizations) {
                 activeOrganizationsName.push({ key });
             }
-
-            // availOrgs blablabla
         });
     };
 
@@ -172,9 +170,8 @@ class SignUpFormBase extends Component {
             userSettings,
             likedPosts,
         } = this.state;
-        //IF ENTERED EMAIL exists in Comp email
+
         if (partOfOrganization) {
-            let exists = false;
             const orgEmailList = this.props.firebase.db.ref(
                 'organizations/' + organizationname + '/emails/list'
             );
@@ -183,25 +180,24 @@ class SignUpFormBase extends Component {
                 currentEmails = snapshot.val();
                 if (!currentEmails) return;
 
-                for (let i = 0; i < currentEmails.length; i++) {
-                    if (currentEmails[i].email === email) {
-                        console.log('It exist');
-                        exists = true;
-                        return;
-                    } else {
-                        console.log('It doesnt exist');
-                        exists = false;
-                    }
-                }
-                if (!exists) return;
+                const index = currentEmails.findIndex(obj => obj.email == email);
 
-                // const index = currentEmails.findIndex(obj => obj.email === email);
-                // console.log(index);
-                // if (index === -1) {
-                //    return;
-                // }
+                if (index === -1) {
+                    // this.setState({ partOfOrg: false });
+                    this.state.partOfOrg = false;
+                } else {
+                    // this.setState({ partOfOrg: true });
+                    this.state.partOfOrg = true;
+                }
             });
         }
+
+        console.log(`partOfOrg: ${this.state.partOfOrg}`);
+
+        if (!this.state.partOfOrg) {
+            this.setState({ loading: false });
+            return;
+        };
 
         const roles = {};
         if (isAdmin) {

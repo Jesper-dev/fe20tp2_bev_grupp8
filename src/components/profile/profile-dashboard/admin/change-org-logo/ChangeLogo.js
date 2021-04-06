@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
-import { FirebaseContext } from '../../../firebase/context'
+import { FirebaseContext } from '../../../../firebase'
 import { useSelector } from 'react-redux';
 
 import 'firebase/database'
@@ -9,20 +9,23 @@ import {
     ContentWrapper,
     ProfileSettingsImg,
     CropperWrapper,
-} from './ProfileImgElements';
+} from './ChangeLogoElements';
 
-import ProfileSvg from '../../../svgs/ProfileSvg';
+import LogoImgCropper from './LogoImgCropper';
 
-import ImageCropper from './ProfileImgCropper';
-
-const ProfileChooseImg = () => {
+const ChangeLogo = () => {
     const firebase = useContext(FirebaseContext)
     const user = JSON.parse(localStorage.getItem('authUser'));
 
-    const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
-    const profileImg = useSelector((state) => state.ProfileImgReducer)
+    const OrgLogoReducer = useSelector((state) => state.OrgLogoReducer);
+    const logo = useSelector((state) => state.OrgLogoReducer)
 
     const [inputImg, setInputImg] = useState('');
+    const [logoDB, setLogoDB] = useState('');
+
+    useEffect(() => {
+        getLogo()
+    }, [])
 
     const onInputChange = (e) => {
         // convert image file to base64 string
@@ -42,42 +45,32 @@ const ProfileChooseImg = () => {
         }
     };
 
-
-    const updateUser = (userId, imageUrl) => {
-        firebase.user(userId).child('/picture').set({
-            profile_pic: imageUrl
+    const updateOrg = (logo) => {
+        firebase.organization(user.organization).child('/Logo').set({
+            Logo: logo
         })
-
-        if(user.organization) {
-            firebase.organization(user.organization).child(`/users/${userId}/picture`).set({
-                profile_pic: imageUrl
-            })
-        }
     }
 
-    // const getImage = (userId) => {
-    //     const myImg = firebase.db.ref('users/' + userId + '/picture');
-    //     myImg.on('value', (snapshot) => {
-    //     const data = snapshot.val();
-    //     console.log(data);
-    //    });
-    // }
+    const getLogo = () => {
+        firebase.organization(user.organization).child('/Logo').once('value', (snapshot) => {
+            const data = snapshot.val()
+            setLogoDB(data.Logo)
+        })
+    }
 
     const handleSubmitImage = (e) => {
         // upload blob to firebase 'images' folder with filename 'image'
         e.preventDefault();
         setInputImg(null);
-        updateUser(user.uid, profileImg)
+        updateOrg(logo)
     };
-
-
 
     return (
         <>
             <ContentWrapper>
-                {!ProfileImgReducer ? <ProfileSvg className="svg-avatar" /> :
-            <ProfileSettingsImg src={ProfileImgReducer} />
-                }
+            {!logoDB ? <ProfileSettingsImg src={logoDB} /> :
+                <ProfileSettingsImg src={logoDB} />
+            }
                 <form onSubmit={handleSubmitImage}>
                     <label htmlFor="file-upload" className="custom-file-upload">
                    <i className="fas fa-cloud-upload-alt"></i> Upload Image
@@ -91,7 +84,7 @@ const ProfileChooseImg = () => {
                      <button type="submit">Save Image</button>
                     {inputImg && (
                         <CropperWrapper>
-                            <ImageCropper
+                            <LogoImgCropper
                                 // getBlob={getBlob}
                                 inputImg={inputImg}
                             />
@@ -104,4 +97,4 @@ const ProfileChooseImg = () => {
     );
 };
 
-export default ProfileChooseImg;
+export default ChangeLogo;

@@ -19,6 +19,7 @@ import PasswordForget from './components/password-forget/PasswordForget';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
+import OrganizationSettings from './components/profile/profile-dashboard/admin/OrganizationSettings'
 import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -117,6 +118,11 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    <Route exact path={ROUTES.ADMIN_SETTINGS}>
+                        <OrganizationSettings />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
                 </Switch>
             </Router>
         </>
@@ -162,6 +168,17 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: var(--typefaces);
     background-color: var(--body-secondary);
+
+            &::-webkit-scrollbar-track {
+            width: 10px;
+            background-color: var(--primary);
+            box-shadow: inset 0 0 5px var(--primary);
+            border-radius: 10px;
+            }
+         &::-webkit-scrollbar {
+            background-color: var(--third);
+            width: 10px;
+        }
   }
 
     p {

@@ -10,11 +10,12 @@ const FeaturedEmployeeWrapper = styled.article`
     & > div {
         display: flex;
         justify-content: space-between;
+        height: 100%;
 
         & > div {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            gap: 0.75rem;
 
             h4 {
                 margin: 0.5rem 0;

@@ -2,47 +2,24 @@ import styled from 'styled-components'
 
 
 export const AddEmailWrapper = styled.div`
-    position: absolute;
-    right: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
     background: var(--body-secondary);
-    /*  border: 2px solid var(--secondary); */
     border-radius: 4px;
     box-shadow: var(--box-shadow-cards);
     margin: 8px;
-
-    width: ${({ open }) => (!open ? '35px' : '95%')};
-    height: ${({ open }) => (!open ? '35px' : '300px')};
-
-    /* transition: all 0.4s; */
+    width: 30%;
+    height: 300px;
 
     h3 {
         margin: 16px;
         margin-bottom: 0;
-        display: ${({ open }) => (!open ? 'none' : 'block')};
-    }
-    span {
-        padding: 8px;
-    }
-
-    p {
-        color: ${({ open }) => (!open ? 'var(--lighter-green)' : '')};
-        position: absolute;
-        right: 8px;
-        display: flex;
-        justify-content: ${({ open }) => (!open ? 'center' : 'flex-end')};
-        align-items: center;
-        font-size: 1.8rem;
-        margin: ${({ open }) => (!open ? '0' : '8px')};
-        cursor: pointer;
     }
 
     .emailWrapper {
-        display: ${({ open }) => (!open ? 'none' : 'flex')};
+        display: flex;
         flex-direction: column;
         width: 95%;
         height: 50%;
@@ -54,7 +31,7 @@ export const AddEmailWrapper = styled.div`
     }
 
     form {
-        display: ${({ open }) => (!open ? 'none' : 'flex')};
+        display: flex;
         flex-direction: row;
         align-items: center;
     }
@@ -123,3 +100,4 @@ export const AddEmailWrapper = styled.div`
         }
     }
 `;
+

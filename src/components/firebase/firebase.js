@@ -122,6 +122,12 @@ class Firebase {
 
     users = () => this.db.ref('users');
 
+    // *** Post API ***
+
+    post = (uid) => this.db.ref(`posts/${uid}`);
+
+    posts = () => this.db.ref('posts');
+
     // *** Message API ***
 
     message = (uid) => this.db.ref(`messages/${uid}`);
