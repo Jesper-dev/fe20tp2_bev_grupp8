@@ -46,15 +46,15 @@ const AddEmployee = () => {
     };
 
     const makeUserAdmin = (email) => {
-        let user = findUser(email);
-        updateEmployee(user.id);
+        let userData = findUser(email);
+        updateEmployee(userData.id);
     };
 
     const findUser = (email) => {
         let users = [];
         firebase
             .organization(user.organization)
-            .child('/users/')
+            .child('/users')
             .once('value', (snapshot) => {
                 const data = snapshot.val();
                 console.log(data);

@@ -43,8 +43,8 @@ const UserPosts = () => {
         console.log(newPostRef);
         // Create the data we want to update
         var updatedUserData = {};
-        updatedUserData['users/' + userId + 'post/' + newPostKey] = true;
-        updatedUserData['posts/' + newPostKey] = {
+        updatedUserData['posts/posts' + newPostKey] = true;
+        updatedUserData['users/' + userId + 'post/' + newPostKey] = {
             liked: liked,
             likeCount: likeCount,
         };
@@ -86,7 +86,6 @@ const UserPosts = () => {
         if (userPost[index].liked) {
             userPost[index].likeCount--;
             userPost[index].liked = false;
-            updateLikedPost(userPost.liked);
             // remove userPost[index] from likedArray
             let likeIndex = likedPosts.findIndex(
                 (item) => item.timestamp == e.target.value
@@ -96,7 +95,6 @@ const UserPosts = () => {
             userPost[index].likeCount++;
             userPost[index].liked = true;
             // add userPost[index] to likedArray
-            updateLikedPost();
             likedPosts.push(userPost[index]);
         }
 

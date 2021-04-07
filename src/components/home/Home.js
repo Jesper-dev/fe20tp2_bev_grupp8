@@ -20,7 +20,11 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 //import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context';
-import { setFollowing, setCurrency } from '../../redux/actions';
+import {
+    setFollowing,
+    setFollowingCrypto,
+    setCurrency,
+} from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const Home = () => {
@@ -70,6 +74,7 @@ const Home = () => {
         let followingCryptoList = [];
         let currencyData;
         getFollowInfo('/followingStocks', followingStocksList);
+        dispatch(setFollowingCrypto(followingCryptoList));
         getFollowInfo('/followingCrypto', followingCryptoList);
         setFollowingArr(followingStocksList);
         setFollowingArrCrypto(followingCryptoList);
