@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -12,25 +12,9 @@ const WatchingCrypto = ({ cryptoList }) => {
     const [cryptoData, setCryptoData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    /*     const [cryptoIds, setCryptoIds] = useState(''); */
-    let followingCryptoList = [];
-
     const FollowingCrypto = useSelector((state) => state.FollowingCrypto);
 
     let cryptoIds = '';
-
-    /*     const getFollowInfo = (dir, arr) => {
-        firebase
-            .user(user.uid)
-            .child(dir)
-            .once('value', (snapshot) => {
-                let data = snapshot.val();
-                for (const key in data) {
-                    arr.push({ ...data[key] });
-                }
-                return arr;
-            });
-    }; */
 
     const createCryptoArray = (data) => {
         let cryptoDataArray = [];
@@ -42,26 +26,17 @@ const WatchingCrypto = ({ cryptoList }) => {
         for (const key in data) {
             cryptoDataArray.push({ ...data[key] });
         }
-        console.log(cryptoDataArray);
     };
 
-    const createCryptoIdList = (cryptoList) => {
-        for (let i = 0; i < cryptoList.length; i++) {
-            if (cryptoList[i].name == 'lets-vest-Cry') continue;
-            /*  setCryptoIds(cryptoIds + cryptoList[i].name + ','); */
-            cryptoIds += cryptoList[i].name + ',';
+    const createCryptoIdList = () => {
+        for (let i = 0; i < FollowingCrypto.length; i++) {
+            if (FollowingCrypto[i].name == 'lets-vest-Cry') continue;
+            cryptoIds += FollowingCrypto[i].name + ',';
         }
     };
 
     useEffect(() => {
-        /*         getFollowInfo('/followingCrypto', followingCryptoList); */
-
-        console.log(FollowingCrypto);
-        /*     cryptoList.forEach((item) => {
-            if (item.name == 'lets-vest-Cry') return;
-            cryptoIds += item.name + ',';
-        }); */
-
+        /*   getFollowInfo('/followingCrypto', followingCryptoList); */
         createCryptoIdList(FollowingCrypto);
 
         console.log(cryptoIds);
@@ -82,11 +57,11 @@ const WatchingCrypto = ({ cryptoList }) => {
                     });
             })();
         }
-    }, [FollowingCrypto]);
+    }, []);
 
     return (
         <ContentWrapper>
-            <h3>Watching Cryptocurrencies</h3>
+            {/* <h3>Watching Cryptocurrencies</h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {cryptoList.map((item, index) => {
                 return (
@@ -98,7 +73,7 @@ const WatchingCrypto = ({ cryptoList }) => {
                         percent={item.regularMarketChangePercent}
                     />
                 );
-            })}
+            })} */}
         </ContentWrapper>
     );
 };
