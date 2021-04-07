@@ -35,25 +35,39 @@ const UserPosts = () => {
 
     //let newPostKey = firebase.posts().push().key;
 
+    // ALL posts-----> Post
+    //like---> users/post/post
+
+
+
     // Generate a new push ID for the new post
-    const updateLikedPost = (liked, likeCount) => {
+    const updateLikedPost = (liked, likeCount, uid) => {
         let userId = firebase.auth.currentUser.uid;
-        var newPostRef = firebase.posts().push();
-        var newPostKey = newPostRef.key();
-        console.log(newPostRef);
+
+        //var newPostRef = firebase.post().child("posts").push();
+        //var newPostKey = newPostRef.key();
+
+       let newPostKey = firebase.post(uid).child("posts").push().key;
         // Create the data we want to update
         var updatedUserData = {};
-        updatedUserData['posts/posts' + newPostKey] = true;
-        updatedUserData['users/' + userId + 'post/' + newPostKey] = {
+        let updatedData = {};
+
+
+        //updatedUserData['posts' + newPostKey] = true;
+        updatedUserData[userId + '/post/' + 'posts/' + newPostKey] = {
             liked: liked,
             likeCount: likeCount,
         };
+       // console.log(updatedUserData[userId + '/post/' + '/posts/'+ '/' + newPostKey])
         // Do a deep-path update
-        return firebase.db.ref.update(updatedUserData, function (error) {
+        return firebase.users().update(updatedUserData);
+             //firebase.posts().update(updatedData);
+    /*     firebase.users().update(updatedUserData, function (error) {
+            //console.log(newPostRef);
             if (error) {
                 console.log('Error updating data:', error);
             }
-        });
+        }); */
     };
     //console.log(updateLikedPost);
     /* 	const updateLikedPost = (postData, likeData) => {
@@ -70,39 +84,45 @@ const UserPosts = () => {
 		return firebase.users().update(updatesUser)
 	} */
 
-    const updateData = (postData, likeData) => {
+/*     const updateData = (postData, likeData) => {
         let userId = firebase.auth.currentUser.uid;
 
-        firebase.db.ref('users/' + userId + '/post/posts').set(postData);
+        firebase.user('users/' + userId + '/post/posts').set(postData);
 
-        firebase.db.ref('users/' + userId + '/likedPosts').set(likeData);
-    };
+        firebase.user('users/' + userId + '/likedPosts').set(likeData);
+    }; */
 
     const handleChange = (e) => {
-        let index = userPost.findIndex(
-            (item) => item.timestamp == e.target.value
-        );
+        //let index = userPost.findIndex(
+            //(item) => item.timestamp == 0 //e.target.value
+        //);
 
-        if (userPost[index].liked) {
-            userPost[index].likeCount--;
-            userPost[index].liked = false;
+        let index = e.target.value
+
+       // if (userPost[index].liked) {
+            //userPost[index].likeCount--;
+            //userPost[index].liked = false;
+            //updateLikedPost(userPost[index]);
             // remove userPost[index] from likedArray
-            let likeIndex = likedPosts.findIndex(
+/*             let likeIndex = likedPosts.findIndex(
                 (item) => item.timestamp == e.target.value
-            );
-            likedPosts.splice(likeIndex, 1);
-        } else {
-            userPost[index].likeCount++;
-            userPost[index].liked = true;
+            ); */
+            //likedPosts.splice(likeIndex, 1);
+       //} else {
+            //userPost[index].likeCount++;
+            //userPost[index].liked = true;
             // add userPost[index] to likedArray
-            likedPosts.push(userPost[index]);
-        }
-
-        // console.log(`ClickedPostContent: ${userPost[index].content}`)
-        // console.log(`Liked: ${userPost[index].liked}`);
+            //updatedUserData.push(userPost[index]);
+            //updateLikedPost(userPost[index].liked, userPost[index].likeCount, userPost.uid);
+            //likedPosts.push(userPost[index]);
+           //updateLikedPost(userPost[index].liked, userPost[index].likeCount);
+        //}
+        console.log(index)
+         //console.log(`ClickedPostContent: ${userPost[index].content}`)
+        //console.log(`Liked: ${userPost[index].liked}`);
         // console.log(`LikeCount: ${userPost[index].likeCount}`);
-        updateLikedPost(userPost);
-        console.log(updateLikedPost(userPost));
+       // updateLikedPost(userPost[index].liked, userPost[index].likeCount, userPost.uid);
+
         //updateData(userPost, likedPosts);
     };
 
@@ -119,9 +139,9 @@ const UserPosts = () => {
                               content={item.content}
                               timestamp={item.timestamp}
                               likeCount={item.likeCount}
-                              //handleChange={handleChange}
+                              handleChange={handleChange}
                               ///users/post/posts
-                              liked={item.liked}
+                              //liked={item.liked}
                           />
                       );
                   })

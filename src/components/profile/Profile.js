@@ -49,8 +49,6 @@ const Profile = () => {
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
-    console.log(isAdmin);
-
     const tabs = [
         {
             label: 'Portfolio',

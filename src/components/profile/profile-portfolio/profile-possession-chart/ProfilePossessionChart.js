@@ -29,6 +29,7 @@ const DistributionPortfolioChart = ({
             cryptoIds += item.name + ',';
         });
 
+
         if (cryptoIds) {
             (async () => {
                 await axios

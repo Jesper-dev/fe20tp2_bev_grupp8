@@ -15,7 +15,7 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-    partOfOrg: false,
+    partOfOrg: 0, // why not just default to true
     usernameTaken: false,
     username: '',
     organization: '',
@@ -194,7 +194,7 @@ class SignUpFormBase extends Component {
 
         console.log(`partOfOrg: ${this.state.partOfOrg}`);
 
-        if (!this.state.partOfOrg) {
+        if (this.state.partOfOrg === false) {
             this.setState({ loading: false });
             return;
         };

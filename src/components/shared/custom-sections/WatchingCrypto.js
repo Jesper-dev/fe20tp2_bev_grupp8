@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -9,59 +9,60 @@ import { ContentWrapper } from './CustomComponentsElements';
 
 const WatchingCrypto = ({ cryptoList }) => {
     let LabelsArr = ['icon', 'name', 'price', 'change 24h ▾', 'info'];
+
     const [cryptoData, setCryptoData] = useState(null);
     const [loading, setLoading] = useState(true);
-
     const FollowingCrypto = useSelector((state) => state.FollowingCrypto);
 
     let cryptoIds = '';
 
-    const createCryptoArray = (data) => {
-        let cryptoDataArray = [];
+    const createCryptoIdList = (cryptoList) => {
         for (let i = 0; i < cryptoList.length; i++) {
             if (cryptoList[i].name == 'lets-vest-Cry') continue;
-            data[cryptoList[i].name]['name'] = cryptoList[i].name;
-            data[cryptoList[i].name]['image'] = cryptoList[i].image;
-        }
-        for (const key in data) {
-            cryptoDataArray.push({ ...data[key] });
+     /*      setCryptoListIDs(cryptoListIDs + cryptoList[i].name + ',') */
         }
     };
-
-    const createCryptoIdList = () => {
-        for (let i = 0; i < FollowingCrypto.length; i++) {
-            if (FollowingCrypto[i].name == 'lets-vest-Cry') continue;
-            cryptoIds += FollowingCrypto[i].name + ',';
-        }
-    };
-
+/*
     useEffect(() => {
-        /*   getFollowInfo('/followingCrypto', followingCryptoList); */
-        createCryptoIdList(FollowingCrypto);
-
-        console.log(cryptoIds);
-
-        if (cryptoIds) {
-            (async () => {
+         (async () => {
                 await axios
                     .get(
-                        `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
+                        `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
                     )
                     .then((response) => {
                         setCryptoData(response.data);
-                        createCryptoArray(response.data);
+                    console.log('hey')
                         setLoading(false);
                     })
                     .catch((error) => {
                         console.error(error);
                     });
             })();
-        }
-    }, []);
+    }, [cryptoList]) */
+
+
+useEffect(() => {
+      if (!FollowingCrypto || cryptoList) return;
+
+      console.log(FollowingCrypto)
+      console.log(cryptoList)
+
+        FollowingCrypto.forEach((item) => {
+            if (item.name == 'lets-vest-CrY') return;
+            cryptoIds += item.name + ',';
+        });
+        return () => {
+
+    }
+}, [FollowingCrypto, cryptoList])
+
+
+
+
 
     return (
         <ContentWrapper>
-            {/* <h3>Watching Cryptocurrencies</h3>
+            <h3>Watching Cryptocurrencies</h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {cryptoList.map((item, index) => {
                 return (
@@ -73,7 +74,7 @@ const WatchingCrypto = ({ cryptoList }) => {
                         percent={item.regularMarketChangePercent}
                     />
                 );
-            })} */}
+            })}
         </ContentWrapper>
     );
 };

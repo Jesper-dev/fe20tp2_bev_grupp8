@@ -21,7 +21,7 @@ const writeNewPost = (uid, username, picture, postData) => {
         uid: uid,
       //body: body,
       //title: title,
-        likes: 0,
+        //likes: 0,
         picture: picture
     };
 

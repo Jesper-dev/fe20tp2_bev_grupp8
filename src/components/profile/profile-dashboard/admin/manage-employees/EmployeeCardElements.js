@@ -24,6 +24,7 @@ export const EmployeeWrapper = styled.div`
         display: ${({ open }) => (open ? 'flex' : 'none')};
         align-items: center;
         height: 60px;
+        width: 50%;
         background-color: none;
     }
 

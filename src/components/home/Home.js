@@ -67,6 +67,8 @@ const Home = () => {
             });
     };
 
+
+
     useEffect(() => {
         setDidMount(true);
         getUserSettings();
@@ -78,6 +80,8 @@ const Home = () => {
         getFollowInfo('/followingCrypto', followingCryptoList);
         setFollowingArr(followingStocksList);
         setFollowingArrCrypto(followingCryptoList);
+
+
 
         firebase
             .user(user.uid)
@@ -115,7 +119,7 @@ const Home = () => {
                     )}
                     {watching ? (
                         <WatchingCrypto cryptoList={followingArrCrypto} />
-                    ) : null}
+                    ) : ''}
                     {watching ? <WatchingStocks array={followingArr} /> : null}
 
                     {rec ? <RecommendationHome MockData={MockData} /> : ''}

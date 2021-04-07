@@ -5,7 +5,7 @@ export const CryptoListElement = styled.section`
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin: auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 40rem;
 

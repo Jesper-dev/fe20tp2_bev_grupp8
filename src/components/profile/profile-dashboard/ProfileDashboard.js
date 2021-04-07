@@ -9,7 +9,7 @@ import MostFollowedStocks from './data-card/most-followed-stocks/MostFollowedSto
 
 import BarChartCard from './data-card/dashboard-chart-card/DashboardChartCard';
 import RecentlyBoughtSold from './data-card/recently-sold-bought/RecentlyBoughtSold';
-/* import BoughtStocks from './data-card/bought-stocks/BoughtStocks' */
+import BoughtStocks from './data-card/bought-stocks/BoughtStocks'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrganizationData } from '../../../redux/actions';
@@ -95,6 +95,7 @@ const ProfileDashboard = () => {
                         <Wrapper>
                             <BarChartCard />
                             <RecentlyBoughtSold />
+                            <BoughtStocks />
                         </Wrapper>
                     </SectionWrapper>
                 </>

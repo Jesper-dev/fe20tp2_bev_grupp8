@@ -10,10 +10,11 @@ const BoughtStocks = () => {
     const [orgDataListState, setOrgDataListState] = useState([])
     const [orgBoughtData, setOrgBoughtData] = useState([])
     let array = []
+
     useEffect(() => {
         let orgDataArr = []
 
-        let orgData = firebase.db.ref('organizations/' + user.organization + '/users');
+        let orgData = firebase.organization(user.organization + '/users');
         orgData.on('value', (snapshot) => {
             const boughtStocks = snapshot.val();
             if (!boughtStocks) return;
@@ -21,41 +22,45 @@ const BoughtStocks = () => {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
             setOrgDataListState(orgDataArr)
-            console.log(orgDataListState)
-            // makeBoughtArray(orgDataArr)
+            console.log(orgDataArr)
+
+            makeBoughtArray(orgDataArr)
         });
 
     }, [])
-    //TODO Ska sätta alla köpta stocks i en array
-    // const makeBoughtArray = (arr) => {
-    //     console.log(arr)
 
-    //     let i = 0;
-    //     for(let j = 0; j < arr.length; i++){
+    const makeBoughtArray = (arr) => {
+        console.log(arr)
+        let orgStockPossessionArr = []
+            let j = 0;
+            let i = 0;
+            while (j < arr.length) {
+            let keys = Object.keys(arr[j].possessionStocks);
+            if (arr[j].possessionStocks[keys[i]] === undefined) {
+                i = 0;
+                j++;
+            } else {
+                orgStockPossessionArr.push({ symbol: arr[j].possessionStocks[keys[i]].symbol, amount: arr[j].possessionStocks[keys[i]].amount, username: arr[j].username});
+                i++;
+            }
+        }
 
-    //         if(arr[i].possessionStocks) {
-    //             const boughtObj = {
-    //                 name: arr[j].possessionStocks.array[i].name,
-    //                 amount: arr[j].possessionStocks.array[i].amount
-    //             }
-    //             array.push(boughtObj)
-    //             i++
-    //         }
-    //         if(arr[i].possessionStocks && arr[j].possessionStocks.array === undefined){
-    //             i = 0;
-    //             j++
-    //         }
-    //     }
+          console.log(orgStockPossessionArr)
+          let uniq = [...new Set(orgStockPossessionArr)];
+
+          console.log(uniq)
 
 
-    //     setOrgBoughtData(array)
-    // }
-    // console.log(orgBoughtData)
+
+        setOrgBoughtData(orgStockPossessionArr)
+    }
+
     return (
         <ContentWrapper>
             <h1>Bought Stocks Here</h1>
-            {orgDataListState.map((item, index) => {
-                return <p key={index}>{item.possessionStocks ? item.possessionStocks.array.name : ''} </p>
+            <p> adsadsa a :d </p>
+            {orgBoughtData.map((item, index) => {
+                return <p key={index}>{item.symbol ? item.symbol : ''} </p>
             })}
         </ContentWrapper>
     )

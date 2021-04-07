@@ -5,7 +5,9 @@ const TabBarElement = styled.nav`
     width: 100%;
     max-width: 24rem;
     height: 2.5rem;
-    background: #e3ecfc;
+    /* background: #e3ecfc; */
+    background-color: var(--primary);
+    background-color: var(--clr-primary-light);
 
     & > ul {
         display: grid;
@@ -25,7 +27,8 @@ const TabBarElement = styled.nav`
 				gap: 0.25rem;
 				border-radius: 0.375rem;
 				height: 100%;
-				color: #3f426b;
+				color: #000;
+				color: var(--clr-primary-dark);
 				font-size: 0.75rem;
 				font-weight: 500;
 				text-decoration: none;
@@ -33,12 +36,20 @@ const TabBarElement = styled.nav`
 				transition: background-color 125ms linear, color 125ms linear;
 
 				&:hover {
-					background-color: #d2dff7;
+					/* background-color: #d2dff7; */
+					background-color: var(--blue-100);
+					background-color: var(--clr-primary-lighter);
 				}
 
 				&.active {
-					background: var(--primary);
+					/* background: var(--primary); */
+					background-color: var(--clr-primary);
 					color: #f8f8f8;
+					color: var(--clr-primary-light));
+
+					&:hover {
+						background-color: var(--clr-primary-darker));
+					}
 				}
         	}
         }

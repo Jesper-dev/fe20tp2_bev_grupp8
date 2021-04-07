@@ -1,7 +1,7 @@
 import React from 'react'
 import UserPostCardWrapper from "./UserPostCardElement";
 
-const UserPostCard = ({username, content, timestamp, liked, likeCount, handleChange}) => {
+const UserPostCard = ({username, content, timestamp, liked, likeCount, handleChange, uid}) => {
     return (
         <UserPostCardWrapper>
             <h2>{username}</h2>
@@ -13,7 +13,7 @@ const UserPostCard = ({username, content, timestamp, liked, likeCount, handleCha
                         className="checkbox"
                         type='checkbox'
                         checked={liked}
-                        value={timestamp}
+                        value={uid}
                         onChange={handleChange}
                     />
                     <i className="fas fa-heart"></i>

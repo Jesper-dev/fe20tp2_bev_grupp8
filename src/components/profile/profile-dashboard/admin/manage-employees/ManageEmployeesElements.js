@@ -8,9 +8,9 @@ export const ManageWrapper = styled.div`
     background: var(--body-secondary);
     border-radius: 4px;
     box-shadow: var(--box-shadow-cards);
-    margin: 8px;
-    width: 40%;
+    width: 60%;
     height: 400px;
+    margin: 1rem auto;
 
     h3 {
         margin: 16px;
@@ -27,6 +27,17 @@ export const ManageWrapper = styled.div`
         overflow: auto;
         /*         border: 1px solid black; */
         border-radius: 10px;
+
+        &::-webkit-scrollbar-track {
+            width: 10px;
+            background-color: var(--primary);
+            box-shadow: inset 0 0 5px var(--primary);
+            border-radius: 10px;
+            }
+         &::-webkit-scrollbar {
+            background-color: var(--third);
+            width: 10px;
+        }
     }
 
     form {
@@ -82,8 +93,8 @@ export const ManageWrapper = styled.div`
         /* Maring is not best solution. Fixed this way since align center centers button relative to label height. */
         margin-top: 10px;
 
-        padding: 8px;
-        font-size: 1.1rem;
+        padding: 16px;
+        font-size: 1.2rem;
         outline: none;
         cursor: pointer;
 

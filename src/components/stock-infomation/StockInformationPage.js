@@ -69,7 +69,6 @@ const StockInformationPage = () => {
             await axios
                 .request(options)
                 .then((response) => {
-                    console.log(response.data)
                     setStockData(response.data);
                     setLoading(false);
                 })
@@ -132,7 +131,6 @@ const StockInformationPage = () => {
 
     const onChange = () => setChecked(!checked);
 
-    console.log('stockData is: ', stockData)
     return (
         <>
             {loading ? (

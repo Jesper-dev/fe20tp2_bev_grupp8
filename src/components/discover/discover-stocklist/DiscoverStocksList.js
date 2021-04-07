@@ -39,7 +39,7 @@ const DiscoverStocksList = () => {
             setMounted(true);
         };
     }, [mounted]);
-    /* 
+    /*
     const checkForFlag = (array) => {
         if (array[0].region === 'US') return <UsFlag />;
     }; */
@@ -49,7 +49,7 @@ const DiscoverStocksList = () => {
             <h1>
                 Stockmarket <UsFlag />
             </h1>
-            {stocks.map((item, index) => {
+            {stocks.length ? stocks.map((item, index) => {
                 return (
                     <StockCard
                         key={index}
@@ -67,7 +67,7 @@ const DiscoverStocksList = () => {
                         stocksList={stocks}
                     />
                 );
-            })}
+            }) : <p>Loading...</p>}
         </StockListElement>
     );
 };

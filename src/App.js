@@ -1,3 +1,5 @@
+import React, {useState, useEffect, useContext} from "react"
+
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import SocialPage from './components/social-page/SocialPage';
@@ -26,8 +28,46 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
+import { FirebaseContext } from "./components/firebase";
 
 const App = () => {
+    const firebase = useContext(FirebaseContext)
+    const user = JSON.parse(localStorage.getItem('authUser'));
+    const [colorList, setColorList] = useState([])
+    const getColors = () => {
+        firebase.organization(user.organization).child("/colors").on('value', (snapshot) => {
+            const data = snapshot.val();
+            let colors = []
+            for (const key in data) {
+                const obj = {
+                    name: key,
+                    color: data[key].value,
+                };
+                colors.push(obj);
+            }
+
+            console.log(colors)
+            setColorList(colors)
+            setColor(colors)
+        })
+
+
+    }
+
+    console.log(colorList)
+
+    const setColor = (array) => {
+        console.log('Color is: ', array[0].color)
+        const body = document.body;
+        body.style.setProperty('--primary', array[0].color);
+        body.style.setProperty('--secondary', array[1].color);
+        body.style.setProperty('--third', array[2].color);
+    }
+
+    useEffect(() => {
+        getColors()
+    }, [])
+
     return (
         <>
             <Router>
@@ -129,10 +169,23 @@ const App = () => {
     );
 };
 
+
 const GlobalStyle = createGlobalStyle`
   :root {
-      //Darkblue-Purple-ish
+        --clr-black: #000;
+        --clr-white: #fff;
+
+        --clr-almost-white: #eee;
+
+        --clr-primary-light: #ddd;
+        --clr-primary-lighter: #ccc;
+        --clr-primary: #555;
+        --clr-primary-darker: #444;
+        --clr-primary-dark: #222;
+
+    //Darkblue-Purple-ish
     --primary: #5068F5;
+    /* --primary: {colorList}; */
     //Lighter-darkblue
     --secondary: #3E80DE;
     //Light-blue
@@ -168,6 +221,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: var(--typefaces);
     background-color: var(--body-secondary);
+    background-color: var(--clr-almost-white);
 
             &::-webkit-scrollbar-track {
             width: 10px;

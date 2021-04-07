@@ -9,8 +9,6 @@ const AddEmployee = () => {
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
-    //let orgData; //changed! put it inside useEffect
-    //let emails; //remove?
 
     const handleSubmit = (e) => {
         e.preventDefault();

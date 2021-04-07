@@ -1,5 +1,5 @@
 {
-  "devDependencies":{
+  "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -48,7 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "react-color": "^2.19.3",
+    "react-colorful": "^5.1.1"
   }
-
 }
-
