@@ -38,7 +38,7 @@ const UserPosts = () => {
     // Generate a new push ID for the new post
     const updateLikedPost = (liked, likeCount) => {
         let userId = firebase.auth.currentUser.uid;
-        var newPostRef = firebase.db.ref.child('posts').push();
+        var newPostRef = firebase.posts().push();
         var newPostKey = newPostRef.key();
         console.log(newPostRef);
         // Create the data we want to update
