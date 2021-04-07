@@ -6,7 +6,7 @@ export const NavbarLeftElement = styled.nav`
     top: 0;
     left: 0;
     height: 100%;
-    background: var(--body);
+    background: var(--clr-white);
     width: 14rem;
 
     border-right: 1px solid var(--body-third);
@@ -35,13 +35,17 @@ export const NavbarLeftElement = styled.nav`
         transition: background-color 125ms ease-in-out, color 125ms ease-in-out;
 
         &:hover {
-            background-color: var(--light-blue);
+            background-color: var(--clr-primary-light);
         }
     }
 
     .active {
-        background-color: var(--light-blue);
-        color: var(--secondary);
+        background-color: var(--clr-primary-light__dimmer);
+        color: var(--clr-almost-black);
+
+		&:hover {
+			background-color: var(--clr-primary-light__dimmer);
+		}
     }
 
     .logo-link {

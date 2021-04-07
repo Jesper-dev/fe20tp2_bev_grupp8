@@ -3,10 +3,9 @@ import styled from 'styled-components';
 export const ToolbarElement = styled.nav`
     position: fixed;
     bottom: 0;
-
     width: 100%;
     height: 3.5rem;
-    background-color: var(--primary);
+    background-color: var(--clr-primary);
 
     ul {
         display: grid;
@@ -24,16 +23,25 @@ export const ToolbarElement = styled.nav`
         justify-content: center;
         gap: 0.25rem;
         height: 100%;
-        color: var(--body);
+        color: var(--clr-almost-white);
+		font-size: 0.875rem;
         text-decoration: none;
 
+		.fas {
+			font-size: 1.125rem;
+		}
+
         &:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--clr-primary__brighter);
         }
     }
 
     .active {
-        background-color: var(--primary-dark);
+        background-color: var(--clr-primary__dimmer);
+
+		&:hover {
+			background-color: var(--clr-primary__dimmer);
+		}
     }
 
     @media screen and (min-width: 1026px) {

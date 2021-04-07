@@ -2,11 +2,10 @@ import styled from 'styled-components'
 
 const TabBarElement = styled.nav`
     border-radius: 0.375rem;
+	margin: auto;
     width: 100%;
     max-width: 24rem;
     height: 2.5rem;
-    /* background: #e3ecfc; */
-    background-color: var(--primary);
     background-color: var(--clr-primary-light);
 
     & > ul {
@@ -27,28 +26,23 @@ const TabBarElement = styled.nav`
 				gap: 0.25rem;
 				border-radius: 0.375rem;
 				height: 100%;
-				color: #000;
-				color: var(--clr-primary-dark);
+				color: var(--clr-almost-black);
 				font-size: 0.75rem;
 				font-weight: 500;
 				text-decoration: none;
 				user-select: none;
 				transition: background-color 125ms linear, color 125ms linear;
 
-				&:hover {
-					/* background-color: #d2dff7; */
-					background-color: var(--blue-100);
-					background-color: var(--clr-primary-lighter);
+				&:hover, &:active {
+					background-color: var(--clr-primary-light__dimmer);
 				}
 
 				&.active {
-					/* background: var(--primary); */
 					background-color: var(--clr-primary);
-					color: #f8f8f8;
-					color: var(--clr-primary-light));
+    				color: var(--clr-almost-white);
 
-					&:hover {
-						background-color: var(--clr-primary-darker));
+					&:hover, &:active {
+						background-color: var(--clr-primary__brighter);
 					}
 				}
         	}
