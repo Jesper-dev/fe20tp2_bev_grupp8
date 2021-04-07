@@ -1,7 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-
-export const AddEmailWrapper = styled.div`
+export const ManageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -10,8 +9,8 @@ export const AddEmailWrapper = styled.div`
     border-radius: 4px;
     box-shadow: var(--box-shadow-cards);
     margin: 8px;
-    width: 30%;
-    height: 300px;
+    width: 40%;
+    height: 400px;
 
     h3 {
         margin: 16px;
@@ -40,7 +39,6 @@ export const AddEmailWrapper = styled.div`
         font-size: 0.8rem;
         margin: 8px;
         max-width: 210px;
-
     }
 
     form > label > input {
@@ -84,7 +82,6 @@ export const AddEmailWrapper = styled.div`
         /* Maring is not best solution. Fixed this way since align center centers button relative to label height. */
         margin-top: 10px;
 
-
         padding: 8px;
         font-size: 1.1rem;
         outline: none;
@@ -100,4 +97,3 @@ export const AddEmailWrapper = styled.div`
         }
     }
 `;
-

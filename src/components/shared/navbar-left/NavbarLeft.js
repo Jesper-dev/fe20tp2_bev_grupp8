@@ -1,33 +1,36 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 import * as ROUTES from '../../../constants/routes';
 
-import { FirebaseContext } from '../../firebase'
+import { FirebaseContext } from '../../firebase';
 
-import { NavbarLeftElement } from './NavbarLeftElements'
+import { NavbarLeftElement } from './NavbarLeftElements';
 import { AuthUserContext } from '../../session';
 
-import LogoNav from '../../svgs/LogoLets'
-
+import LogoNav from '../../svgs/LogoLets';
 
 const NavbarLeft = ({ authUser }) => {
-    const firebase = useContext(FirebaseContext)
+    const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const [logo, setLogo] = useState('')
+    const [logo, setLogo] = useState('');
 
     const checkIfOrganizationLogo = () => {
-        if(user.organization) {
-            firebase.organization(user.organization).child('/Logo').once('value', (snapshot) => {
-                const data = snapshot.val()
-                setLogo(data.Logo)
-            })
+        if (user === null) return;
+        if (user.organization) {
+            firebase
+                .organization(user.organization)
+                .child('/Logo')
+                .once('value', (snapshot) => {
+                    const data = snapshot.val();
+                    setLogo(data.Logo);
+                });
         }
-    }
+    };
 
     useEffect(() => {
-        checkIfOrganizationLogo()
-    }, [])
+        checkIfOrganizationLogo();
+    }, [user]);
 
     return (
         <AuthUserContext.Consumer>
@@ -42,16 +45,17 @@ const NavbarLeft = ({ authUser }) => {
     );
 };
 
-
-
-
 // authUser.roles[ROLES.ADMIN]
-const NavigationAuth = ({logo}) => (
+const NavigationAuth = ({ logo }) => (
     <NavbarLeftElement>
         <ul>
             <li>
                 <Link to={ROUTES.HOME} className="logo-link">
-                    {logo ? <img src={logo} /> : <LogoNav className="logo-left-nav" />}
+                    {logo ? (
+                        <img src={logo} />
+                    ) : (
+                        <LogoNav className="logo-left-nav" />
+                    )}
                 </Link>
             </li>
             <li>
@@ -113,4 +117,4 @@ const NavigationNonAuth = () => (
     </NavbarLeftElement>
 );
 
-export default NavbarLeft
+export default NavbarLeft;

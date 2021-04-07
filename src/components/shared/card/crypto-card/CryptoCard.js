@@ -29,17 +29,17 @@ const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
     return (
         <>
             <CardWrapper onClick={() => setChosenCryptoOption(name)}>
-                 {!amount ? (
-                ''
-            ) : (
-                <span>
-                    {amount.toFixed(2)}{' '}
-                    <i
-                        className="fas fa-piggy-bank"
-                        style={{ color: 'pink' }}
-                    ></i>
-                </span>
-            )}
+                {!amount ? (
+                    ''
+                ) : (
+                    <span>
+                        {amount.toFixed(2)}{' '}
+                        <i
+                            className="fas fa-piggy-bank"
+                            style={{ color: 'pink' }}
+                        ></i>
+                    </span>
+                )}
                 {img === 'LV-CrY' ? (
                     <Coin className="lv-coin" />
                 ) : (
@@ -54,7 +54,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
                             : { color: '#DD577D' }
                     }
                 >
-                    {percentInt.toFixed(2)}%
+                    {percentInt ? percentInt.toFixed(2) : 0}%
                 </span>
                 <Link to={`/info/crypto/${name}`}>
                     <span>

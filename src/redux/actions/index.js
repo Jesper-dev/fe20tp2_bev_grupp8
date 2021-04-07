@@ -119,3 +119,9 @@ export const setStockPossession = (stocks) => {
         payload: stocks,
     };
 };
+export const setFetchedCryptos = (cryptos) => {
+    return {
+        type: 'FETCHEDCRYPTO',
+        payload: cryptos,
+    };
+};

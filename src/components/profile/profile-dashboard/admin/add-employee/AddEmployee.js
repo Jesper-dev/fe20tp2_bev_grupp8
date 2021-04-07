@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react'
-import { AddEmailWrapper } from './AddEmployeeElements'
+import React, { useState, useEffect, useContext } from 'react';
+import { ManageWrapper } from './AddEmployeeElements';
 import { FirebaseContext } from '../../../../firebase';
-import EmployeeCard from './EmployeeCard'
+import EmployeeCard from './EmployeeCard';
 const AddEmployee = () => {
-    const [open, setOpen] = useState(false)
-    const [emailValue, setEmailValue] = useState('')
-    const [employeeList, setEmployeeList] = useState([])
+    const [open, setOpen] = useState(false);
+    const [emailValue, setEmailValue] = useState('');
+    const [employeeList, setEmployeeList] = useState([]);
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -14,14 +14,33 @@ const AddEmployee = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!emailValue)return
-        addEmailToDb(emailValue)
-    }
+        if (!emailValue) return;
+        addEmailToDb(emailValue);
+    };
+
+    const deleteEmailDb = (email) => {
+        firebase
+            .organization(user.organization)
+            .child('/emails/list')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                let index = data.findIndex((x) => x.email === email);
+                data.splice(index, 1);
+                update(data);
+            });
+    };
+
+    const update = (list) => {
+        firebase.organization(user.organization).child('/emails').set({
+            list,
+        });
+    };
 
     const addEmailToDb = (email) => {
-
         //TODO Gör om denna i sinom tid
-        const emailsData = firebase.db.ref('organizations/' + user.organization + '/emails/list');
+        const emailsData = firebase.db.ref(
+            'organizations/' + user.organization + '/emails/list'
+        );
         if (emailsData === null) {
             return;
         }
@@ -32,36 +51,41 @@ const AddEmployee = () => {
         });
 
         const emailObj = {
-            email: email
+            email: email,
         };
 
-        list.push(emailObj)
+        list.push(emailObj);
         firebase.db.ref('organizations/' + user.organization + '/emails').set({
-            list
-        })
-        setEmailValue('')
-    }
-
+            list,
+        });
+        setEmailValue('');
+    };
 
     useEffect(() => {
         let orgData;
         // firebase.organization(user.organization)
-        const organization = firebase.db.ref('organizations/' + user.organization);
+        const organization = firebase.db.ref(
+            'organizations/' + user.organization
+        );
         organization.on('value', (snapshot) => {
             orgData = snapshot.val();
             if (!orgData) return;
-            setEmployeeList(orgData.emails.list)
+            setEmployeeList(orgData.emails.list);
         });
-
-    },[firebase.db, user.organization] ) //varning!
+    }, [firebase.db, user.organization]); //varning!
 
     return (
-        <AddEmailWrapper>
-            <h3>List of employees</h3>
+        <ManageWrapper>
+            <h3>Manage employees</h3>
             <div className="emailWrapper">
                 {employeeList.map((item, i) => {
                     return (
-                        <EmployeeCard key={i} email={item.email} i={i} />
+                        <EmployeeCard
+                            key={i}
+                            email={item.email}
+                            i={i}
+                            deleteFunc={deleteEmailDb}
+                        />
                     );
                 })}
             </div>
@@ -79,8 +103,8 @@ const AddEmployee = () => {
                     <i className="fas fa-user-plus"></i>
                 </button>
             </form>
-        </AddEmailWrapper>
+        </ManageWrapper>
     );
-}
+};
 
 export default AddEmployee;

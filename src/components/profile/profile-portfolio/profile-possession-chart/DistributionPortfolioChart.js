@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2'; //changed!
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
-import { ContentWrapper } from './ProfilePossessionChartElements';
+import { setFetchedCryptos } from '../../../../redux/actions';
 
+import { ContentWrapper } from './DistributionPortfilioChartElements.js.js';
 
 const DistributionPortfolioChart = ({
     stocksPossesionState,
     cryptoPossesionState,
     currency,
 }) => {
-    const [cryptoData, setCryptoData] = useState({});
-    const [cryptoDataSpliced, setCryptoDataSpliced] = useState([]);
-    const [currentCryptoValue, setCurrentCryptoValue] = useState(0);
+    const dispatch = useDispatch();
 
-    const PossessionStocks = useSelector(state => state.PossessionStocks)
-    const PossessionCrypto = useSelector(state => state.PossessionCrypto)
+    const [cryptoData, setCryptoData] = useState(null);
+    const [currentCryptoValue, setCurrentCryptoValue] = useState(250);
+
+    const PossessionStocks = useSelector((state) => state.PossessionStocks);
+    const PossessionCrypto = useSelector((state) => state.PossessionCrypto);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let cryptoIds = '';
-        let splicedArr = cryptoPossesionState.splice(0,1)
-
-        setCryptoDataSpliced(splicedArr)
 
         cryptoPossesionState.forEach((item) => {
             if (item.name == 'lets-vest-CrY') return;
@@ -48,39 +47,61 @@ const DistributionPortfolioChart = ({
         }
 
         return () => {};
-    }, [cryptoPossesionState]);
+    }, [cryptoPossesionState, PossessionCrypto]);
 
     useEffect(() => {
+        if (!cryptoData || !PossessionCrypto) return;
+
         let cryptoDataArray = [];
-          for (const key in cryptoData) {
-                cryptoDataArray.push({ ...cryptoData[key] });
-            }
-               /* console.log(cryptoDataArray) */
 
-           cryptoDataArray.forEach((item, i) => {
-               console.log(cryptoDataSpliced)
-               console.log(item.usd)
+        for (let i = 0; i < PossessionCrypto.length; i++) {
+            if (PossessionCrypto[i].name == 'lets-vest-CrY') continue;
+            cryptoData[PossessionCrypto[i].name]['amount'] =
+                PossessionCrypto[i].amount;
+            cryptoData[PossessionCrypto[i].name]['name'] =
+                PossessionCrypto[i].name;
+            cryptoData[PossessionCrypto[i].name]['image'] =
+                PossessionCrypto[i].image;
+        }
 
-    /*         setCurrentCryptoValue(currentCryptoValue + (item.usd * cryptoDataSpliced[i].amount)) */
- /*            console.log(currentCryptoValue) */
-   /*          setCurrentCryptoValue(currentCryptoValue + item.usd); */
-        });
-        console.log(currentCryptoValue)
+        for (const key in cryptoData) {
+            cryptoDataArray.push({ ...cryptoData[key] });
+        }
+
+        const getRandomInt = (max) => {
+            return Math.floor(Math.random() * max);
+        };
+
+        let letsVestObj = {
+            image: 'LV-CrY',
+            name: 'lets-vest-CrY',
+            usd: getRandomInt(350),
+            usd_24h_change: getRandomInt(100),
+            amount: 1,
+        };
+        cryptoDataArray.unshift(letsVestObj);
+
+        let totalCryptoValue = 0;
+
+        for (let i = 0; i < cryptoDataArray.length; i++) {
+            totalCryptoValue =
+                totalCryptoValue +
+                cryptoDataArray[i].amount * cryptoDataArray[i].usd;
+        }
+
+        dispatch(setFetchedCryptos(cryptoDataArray));
+        setCurrentCryptoValue(totalCryptoValue.toFixed(2));
 
         return () => {};
-    }, [cryptoData]);
+    }, [cryptoData, PossessionCrypto]);
 
     let data = {
         labels: ['available cash', 'Securities', 'cryptocurrencies'],
         datasets: [
             {
                 label: 'Most followed stocks',
-                data: [currency, 12000, 13000],
-                backgroundColor: [
-                    '#9BC53D',
-                    '#5BC0EB',
-                    '#FDE74C'
-                ],
+                data: [currency, 12000, currentCryptoValue],
+                backgroundColor: ['#9BC53D', '#5BC0EB', '#FDE74C'],
                 minBarLength: 50,
                 hoverOffset: 1,
             },

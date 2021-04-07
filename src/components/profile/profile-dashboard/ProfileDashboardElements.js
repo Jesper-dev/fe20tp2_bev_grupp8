@@ -55,3 +55,9 @@ export const SectionWrapper = styled.section`
         }
     }
 `;
+
+export const JoinTodayWrapper = styled.section`
+    margin-top: 35px;
+    text-align: center;
+    cursor: pointer;
+`;

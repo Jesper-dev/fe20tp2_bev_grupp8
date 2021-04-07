@@ -123,13 +123,7 @@ const MostFollowedStocks = ({ orgName, pie }) => {
     return (
         <ContentWrapper>
             <h4>Most Followed Stocks</h4>
-            {/*           <button onClick={() => setShowBar(!showBar)}>
-                {showBar ? (
-                    <i className="fas fa-chart-pie"></i>
-                ) : (
-                    <i className="far fa-chart-bar"></i>
-                )}
-            </button> */}
+
             <TransitionGroup>
                 {pie ? (
                     <CSSTransition

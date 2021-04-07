@@ -14,8 +14,9 @@ import Users from './Users';
 import FilteredUsers from './FilteredUsers';
 import OrganizationData from './OrganizationData';
 import Searching from './Searching';
-import PossessionCrypto from './PossessionCrypto'
-import PossessionStocks from './PossessionStocks'
+import PossessionCrypto from './PossessionCrypto';
+import PossessionStocks from './PossessionStocks';
+import FetchedCryptoValues from './FetchedCryptoValues';
 
 import { combineReducers } from 'redux';
 
@@ -37,7 +38,8 @@ const allReducers = combineReducers({
     OrganizationData,
     Searching,
     PossessionCrypto,
-    PossessionStocks
+    PossessionStocks,
+    FetchedCryptoValues,
 });
 
 export default allReducers;

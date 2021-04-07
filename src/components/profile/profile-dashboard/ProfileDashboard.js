@@ -16,7 +16,11 @@ import { setOrganizationData } from '../../../redux/actions';
 
 import { FirebaseContext } from '../../firebase/context';
 
-import { Wrapper, SectionWrapper } from './ProfileDashboardElements';
+import {
+    Wrapper,
+    SectionWrapper,
+    JoinTodayWrapper,
+} from './ProfileDashboardElements';
 
 const ProfileDashboard = () => {
     const dispatch = useDispatch();
@@ -70,27 +74,44 @@ const ProfileDashboard = () => {
 
     return (
         <>
-            <SectionWrapper>
-                <h1>
-                    Weekly report <span>▾</span>
-                </h1>
-                <Wrapper>
-                    <div className="quick-cards-wrapper">
-                        <CompanyOverview />
-                        <FeaturedEmployee />
-                    </div>
-                    <EmployeeOverview />
-                </Wrapper>
-            </SectionWrapper>
-            <SectionWrapper>
-                <h1>
-                    Most followed <span>Stocks ▾</span>
-                </h1>
-                <Wrapper>
-                    <BarChartCard />
-                    <RecentlyBoughtSold />
-                </Wrapper>
-            </SectionWrapper>
+            {admin || employee ? (
+                <>
+                    <SectionWrapper>
+                        <h1>
+                            Weekly report <span>▾</span>
+                        </h1>
+                        <Wrapper>
+                            <div className="quick-cards-wrapper">
+                                <CompanyOverview />
+                                <FeaturedEmployee />
+                            </div>
+                            <EmployeeOverview />
+                        </Wrapper>
+                    </SectionWrapper>
+                    <SectionWrapper>
+                        <h1>
+                            Most followed <span>Stocks ▾</span>
+                        </h1>
+                        <Wrapper>
+                            <BarChartCard />
+                            <RecentlyBoughtSold />
+                        </Wrapper>
+                    </SectionWrapper>
+                </>
+            ) : (
+                <>
+                    <SectionWrapper>
+                        <JoinTodayWrapper>
+                            <h1 className="join-today">
+                                You are not part of an organization.
+                            </h1>
+                            <span className="join-today">
+                                Click here to join today!
+                            </span>
+                        </JoinTodayWrapper>
+                    </SectionWrapper>
+                </>
+            )}
         </>
     );
 };

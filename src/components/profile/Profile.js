@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Route } from 'react-router';
-import * as ROUTES from '../../constants/routes'
+import * as ROUTES from '../../constants/routes';
 
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 
-import { FirebaseContext } from '../firebase/context'
+import { FirebaseContext } from '../firebase/context';
 import { withAuthorization } from '../session';
-import ContentWrapper from "../shared/wrappers/ContentWrapper";
-import { HeaderWrapper, MainWrapper, ProfileSettingsBtn } from './ProfileElements';
-import TabBar from "../shared/tab-bar/TabBar";
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
+import {
+    HeaderWrapper,
+    MainWrapper,
+    ProfileSettingsBtn,
+} from './ProfileElements';
+import TabBar from '../shared/tab-bar/TabBar';
 
 import ProfileImg from './profile-settings/profile-img/ProfileImg';
 import ProfileSvg from '../svgs/ProfileSvg';
@@ -18,12 +22,11 @@ import ProfileSvg from '../svgs/ProfileSvg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfileImage } from '../../redux/actions';
 
-
 const Profile = () => {
-    const firebase = useContext(FirebaseContext)
-    const dispatch = useDispatch()
-    const [username, setUsername] = useState('')
-    const [isAdmin, setIsAdmin] = useState(false)
+    const firebase = useContext(FirebaseContext);
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
@@ -36,30 +39,30 @@ const Profile = () => {
         const user = firebase.user(userData.uid);
         user.on('value', (snapshot) => {
             const data = snapshot.val();
-            setUsername(data.username)
-
-            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false)
-            if (!data.picture) return
+            setUsername(data.username);
+            if (!data.roles) return;
+            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false);
+            if (!data.picture) return;
             // setImage(data.picture.profile_pic)
             let blobLink = data.picture.profile_pic;
-            dispatch(setProfileImage(blobLink))
+            dispatch(setProfileImage(blobLink));
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
-	const tabs = [
-		{
-			label: "Portfolio",
-			link: ROUTES.PROFILE
-		},
-		{
-			label: "Wall",
-			link: ROUTES.PROFILE_WALL
-		},
-		{
-			label: "Dashboard",
-			link: ROUTES.PROFILE_DASHBOARD
-		}
-	];
+    const tabs = [
+        {
+            label: 'Portfolio',
+            link: ROUTES.PROFILE,
+        },
+        {
+            label: 'Wall',
+            link: ROUTES.PROFILE_WALL,
+        },
+        {
+            label: 'Dashboard',
+            link: ROUTES.PROFILE_DASHBOARD,
+        },
+    ];
 
     return (
         <ContentWrapper>
@@ -67,23 +70,26 @@ const Profile = () => {
                 <section>
                     <div>
                         {ProfileImgReducer ? (
-                                    <ProfileImg img={ProfileImgReducer} />
-                                ) : (
-                                    <ProfileSvg className="profile-avatar-svg" />
-                                )}
-                                <span>{username}</span>
+                            <ProfileImg img={ProfileImgReducer} />
+                        ) : (
+                            <ProfileSvg className="profile-avatar-svg" />
+                        )}
+                        <span>{username}</span>
                     </div>
-                        <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                            <i className="fas fa-user-edit"></i>
-                            Edit Profile
-                        </ProfileSettingsBtn>
-                        {isAdmin ? <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
+                    <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
+                        <i className="fas fa-user-edit"></i>
+                        Edit Profile
+                    </ProfileSettingsBtn>
+                    {isAdmin ? (
+                        <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
                             <i className="fas fa-user-shield"></i>
                             Edit Organization
-                        </ProfileSettingsBtn> : ''}
-
+                        </ProfileSettingsBtn>
+                    ) : (
+                        ''
+                    )}
                 </section>
-				<TabBar tabs={tabs}/>
+                <TabBar tabs={tabs} />
             </HeaderWrapper>
             <MainWrapper>
                 <Route
