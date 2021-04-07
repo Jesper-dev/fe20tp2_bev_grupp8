@@ -46,6 +46,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
                     <img src={img ? img : ''} alt="Icon of crypto" />
                 )}
                 <span>{newName + '...'}</span>
+                {/*  <span>{name}</span> */}
                 <span>{price.toLocaleString()}$</span>
                 <span
                     style={

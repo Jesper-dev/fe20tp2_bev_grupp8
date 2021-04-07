@@ -10,7 +10,7 @@ import {
 import PortfolioOverview from '../../shared/card/portfolio-overview/PortfolioOverviewCard';
 import Possession from './profile-possession/PossessionStocks';
 import PossessionCrypto from './profile-possession/PossessionCrypto';
-import DistributionPortfolioChart from './profile-possession-chart/DistributionPortfolioChart';
+import DistributionPortfolioChart from './profile-possession-chart/ProfilePossessionChart';
 
 const ProfilePortfolio = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));

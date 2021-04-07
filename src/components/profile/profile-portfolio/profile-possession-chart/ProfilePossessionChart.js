@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setFetchedCryptos } from '../../../../redux/actions';
 
-import { ContentWrapper } from './DistributionPortfilioChartElements.js.js';
+import { ContentWrapper } from './ProfilePossessionChartElements.js';
 
 const DistributionPortfolioChart = ({
     stocksPossesionState,

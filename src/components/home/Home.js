@@ -3,16 +3,17 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import { MainWrapper } from './HomeElements';
 
-import ContentWrapper from "../shared/wrappers/ContentWrapper";
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 
 // import Recommendations from '../../api/recommendations/Recommendations';
-import Following from '../shared/homepage-custom-sections/FollowingHome';
-import RecommendationHome from '../shared/homepage-custom-sections/RecommendationHome';
+import WatchingStocks from '../shared/custom-sections/WatchingStocks';
+import WatchingCrypto from '../shared/custom-sections/WatchingCrypto';
+import RecommendationHome from '../shared/custom-sections/Recommendation';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
 // import Mock from '../../api/Mock/Mock.json';
 import MockData from '../../api/Mock/MockData.json';
 // import MockGetTickers from '../../api/Mock/MockGetTickers.json';
-import News from '../shared/homepage-custom-sections/NewsCardSection';
+import News from '../shared/custom-sections/NewsCardSection';
 import MockNewsList from '../../api/Mock/MockNewsList.json';
 import { withAuthorization } from '../session'; //must be logged in to see content
 
@@ -38,49 +39,57 @@ const Home = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     const getFollowInfo = (dir, arr) => {
-        firebase.user(user.uid).child(dir).once('value', (snapshot) => {
-            let data = snapshot.val()
-            for (const key in data) {
-                arr.push({ ...data[key] });
-            }
-            return arr;
-        })
-    }
+        firebase
+            .user(user.uid)
+            .child(dir)
+            .once('value', (snapshot) => {
+                let data = snapshot.val();
+                for (const key in data) {
+                    arr.push({ ...data[key] });
+                }
+                return arr;
+            });
+    };
 
     const getUserSettings = () => {
-        firebase.user(user.uid).child('/userSettings/settings').once('value', (snapshot) => {
-            const data = snapshot.val()
-            data.watching ? setWatching(true) : setWatching(false)
-            data.news ? setNews(true) : setNews(false)
-            data.recommended ? setRec(true) : setRec(false)
-        })
-    }
+        firebase
+            .user(user.uid)
+            .child('/userSettings/settings')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                data.watching ? setWatching(true) : setWatching(false);
+                data.news ? setNews(true) : setNews(false);
+                data.recommended ? setRec(true) : setRec(false);
+            });
+    };
 
     useEffect(() => {
         setDidMount(true);
-        getUserSettings()
+        getUserSettings();
         let followingStocksList = [];
         let followingCryptoList = [];
         let currencyData;
-        getFollowInfo('/followingStocks', followingStocksList)
-        getFollowInfo('/followingCrypto', followingCryptoList)
-        setFollowingArr(followingStocksList)
-        setFollowingArrCrypto(followingCryptoList)
+        getFollowInfo('/followingStocks', followingStocksList);
+        getFollowInfo('/followingCrypto', followingCryptoList);
+        setFollowingArr(followingStocksList);
+        setFollowingArrCrypto(followingCryptoList);
 
-        firebase.user(user.uid).child('/currency').once('value', (snapshot) => {
-            currencyData = snapshot.val();
-            if (currencyData == null) {
-                return;
-            }
-            setTotalCurrency(currencyData.currency);
-            dispatch(setCurrency(currencyData)); //behöver
-        })
+        firebase
+            .user(user.uid)
+            .child('/currency')
+            .once('value', (snapshot) => {
+                currencyData = snapshot.val();
+                if (currencyData == null) {
+                    return;
+                }
+                setTotalCurrency(currencyData.currency);
+                dispatch(setCurrency(currencyData)); //behöver
+            });
 
         return () => {
             setDidMount(false);
         };
     }, [didMount, dispatch, firebase, user.uid]); //changed!
-
 
     return (
         <>
@@ -91,8 +100,19 @@ const Home = () => {
                         difference={0}
                         percent={0}
                     />
-                    {news ? <News News array={MockNewsList.items.result.slice(0, 1)} /> : ''}
-                    {watching ? <Following array={followingArr} cryptoList={followingArrCrypto} /> : ''}
+                    {news ? (
+                        <News
+                            News
+                            array={MockNewsList.items.result.slice(0, 1)}
+                        />
+                    ) : (
+                        ''
+                    )}
+                    {watching ? (
+                        <WatchingCrypto cryptoList={followingArrCrypto} />
+                    ) : null}
+                    {watching ? <WatchingStocks array={followingArr} /> : null}
+
                     {rec ? <RecommendationHome MockData={MockData} /> : ''}
                 </MainWrapper>
             </ContentWrapper>

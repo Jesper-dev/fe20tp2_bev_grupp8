@@ -57,7 +57,7 @@ const RecentlyBought = () => {
                     <td> {bought.user}</td>
                     <td> {bought.symbol}</td>
                     <td>{bought.amount}</td>
-                    <td> {bought.price * bought.amount}$</td>
+                    <td> {(bought.price * bought.amount).toFixed(2)}$</td>
                 </tr>
             </table>
 
@@ -76,7 +76,7 @@ const RecentlyBought = () => {
                     <td> {dataDB.user}</td>
                     <td> {dataDB.symbol}</td>
                     <td>{dataDB.amount}</td>
-                    <td> {dataDB.price * dataDB.amount}$</td>
+                    <td> {(dataDB.price * dataDB.amount).toFixed(2)}$</td>
                 </tr>
             </table>
         </ContentWrapper>

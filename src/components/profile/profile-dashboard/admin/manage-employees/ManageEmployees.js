@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ManageWrapper } from './AddEmployeeElements';
+import { ManageWrapper } from './ManageEmployeesElements';
 import { FirebaseContext } from '../../../../firebase';
 import EmployeeCard from './EmployeeCard';
 const AddEmployee = () => {
@@ -28,6 +28,63 @@ const AddEmployee = () => {
                 data.splice(index, 1);
                 update(data);
             });
+    };
+
+    const removeUser = (email) => {
+        deleteEmailDb(email);
+
+        let userData = findUser(email);
+        console.log(user.id);
+        firebase
+            .organization(user.organization)
+            .child(`/users/${userData.id}`)
+            .remove();
+
+        firebase.user(userData.id).update({
+            organization: '',
+        });
+    };
+
+    const makeUserAdmin = (email) => {
+        let user = findUser(email);
+        updateEmployee(user.id);
+    };
+
+    const findUser = (email) => {
+        let users = [];
+        firebase
+            .organization(user.organization)
+            .child('/users/')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                console.log(data);
+                let orgData = [];
+
+                for (const key in data) {
+                    const obj = {
+                        id: key,
+                        email: data[key].email,
+                    };
+                    users.push(obj);
+                }
+            });
+
+        let index = users.findIndex((x) => x.email === email);
+        let foundObj = users[index];
+        return foundObj;
+    };
+
+    const updateEmployee = (id) => {
+        firebase
+            .organization(user.organization)
+            .child(`/users/${id}/roles`)
+            .set({
+                ADMIN: 'ADMIN',
+            });
+
+        firebase.user(id).child('/roles').set({
+            ADMIN: 'ADMIN',
+        });
     };
 
     const update = (list) => {
@@ -84,7 +141,8 @@ const AddEmployee = () => {
                             key={i}
                             email={item.email}
                             i={i}
-                            deleteFunc={deleteEmailDb}
+                            removeUser={removeUser}
+                            makeUserAdmin={makeUserAdmin}
                         />
                     );
                 })}

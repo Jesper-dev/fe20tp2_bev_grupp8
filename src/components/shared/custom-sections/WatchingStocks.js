@@ -1,16 +1,18 @@
 import React from 'react';
 import StockCard from '../card/stock-card/StockCard';
-import CryptoCard from '../card/crypto-card/CryptoCard';
 
-import { ContentWrapper } from './HomepageComponentsElements';
-import MockCrypto from '../../../api/Mock/MockCrypto.json';
+import { ContentWrapper } from './CustomComponentsElements';
 
-const FollowingHome = ({ array, cryptoList }) => {
+import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
+
+const FollowingHome = ({ array }) => {
+    let LabelsArr = ['symbol', 'price', 'change 24h ▾'];
     return (
         <>
             <ContentWrapper>
-                <h3>Watching</h3>
-                {array.length === 0 && cryptoList.length === 0 ? (
+                <h3>Watching Securitys</h3>
+                <SectionDataIndicator LabelsArr={LabelsArr} />
+                {array.length === 0 ? (
                     <p>
                         You are not following any stocks or cryptocurrencies at
                         the moment! Use the Discover page to find stocks and
@@ -26,18 +28,6 @@ const FollowingHome = ({ array, cryptoList }) => {
                             key={index}
                             name={item.symbol}
                             cost={item.regularMarketPrice.raw}
-                            percent={item.regularMarketChangePercent}
-                        />
-                    );
-                })}
-                {cryptoList.map((item, index) => {
-                    return (
-                        <CryptoCard
-                            cryptoList={MockCrypto}
-                            key={index}
-                            img={item.image}
-                            name={item.name}
-                            price={item.regularMarketPrice}
                             percent={item.regularMarketChangePercent}
                         />
                     );

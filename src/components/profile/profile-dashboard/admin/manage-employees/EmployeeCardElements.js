@@ -27,6 +27,10 @@ export const EmployeeWrapper = styled.div`
         background-color: none;
     }
 
+    .toolbar > button {
+        margin: 8px;
+    }
+
     .toolbar > button:hover {
         color: black;
         border: 2px solid black;

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-import { Title } from './OrganizationSettingsElements'
-import ContentWrapper from '../../../shared/wrappers/ContentWrapper'
-import ChangeLogo from './change-org-logo/ChangeLogo'
-import AddEmployee from './add-employee/AddEmployee'
+import { Title } from './OrganizationSettingsElements';
+import ContentWrapper from '../../../shared/wrappers/ContentWrapper';
+import ChangeLogo from './change-org-logo/ChangeLogo';
+import AddEmployee from './manage-employees/ManageEmployees';
 
 const OrganizationSettings = () => {
     return (
@@ -12,7 +12,7 @@ const OrganizationSettings = () => {
             <ChangeLogo />
             <AddEmployee />
         </ContentWrapper>
-    )
-}
+    );
+};
 
-export default OrganizationSettings
+export default OrganizationSettings;
