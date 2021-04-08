@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SignOutBtnElement = styled.button`
     background: none;
-    color: var(--primary);
+    color: var(--clr-primary);
     font-size: 1.1rem;
 
     padding: 6px;

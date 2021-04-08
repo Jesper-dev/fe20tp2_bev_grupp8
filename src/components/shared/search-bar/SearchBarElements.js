@@ -43,15 +43,17 @@ export const SearchBarElement = styled.form`
         &:focus, &.not-empty {
             width: 100%;
             padding-right: 2.25rem;
-            border-color: #8CC4E0;
-            box-shadow: 0 0 0 0.1875rem #DDEAFD;
+            /* border-color: #8CC4E0; */
+            border-color: var(--clr-primary__brighter);
+            /* box-shadow: 0 0 0 0.1875rem #DDEAFD; */
+            box-shadow: 0 0 0 0.1875rem var(--clr-primary-light__dimmer);
 			color: #383838;
             cursor: unset;
         }
 
         &.not-empty {
             & + button > svg {
-                fill: var(--primary);
+                fill: var(--clr-primary);
             }
         }
 

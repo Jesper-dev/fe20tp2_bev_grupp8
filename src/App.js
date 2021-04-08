@@ -5,11 +5,9 @@ import Profile from './components/profile/Profile';
 import SocialPage from './components/social-page/SocialPage';
 import Discover from './components/discover/Discover';
 
-// import DiscoverCryptoList from './components/discover/discover-cryptolist/DiscoverCryptoList'
-// import DiscoverStocksList from './components/discover/discover-stocklist/DiscoverStocksList'
-
 import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import NavbarLeft from './components/shared/navbar-left/NavbarLeft';
+
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
 import Trade from './components/stock-infomation/trade/Trade';
 import TradeCrypto from './components/stock-infomation/trade/TradeCrypto';
@@ -33,67 +31,56 @@ import { FirebaseContext } from './components/firebase';
 const App = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const [colorList, setColorList] = useState([]);
-    const getColors = () => {
+
+	const root = document.querySelector(':root');
+
+	const [primaryColorValues, setPrimaryColorValues] = useState([231, 89, 64]);
+
+	useEffect(() => {
+     /*    if(!user) return  */
+		if (user && user.organization) {
+			getColor();
+		} else if (user) {
+			getColorPalette(primaryColorValues);
+		}
+    }, []);
+
+    const getColor = () => {
         firebase
             .organization(user.organization)
             .child('/colors')
             .on('value', (snapshot) => {
                 const data = snapshot.val();
-                let colors = [];
-                for (const key in data) {
-                    const obj = {
-                        name: key,
-                        color: data[key].value,
-                    };
-                    colors.push(obj);
-                }
-                setColorList(colors);
-                setColor(colors);
+                const h = data.primaryColor.h;
+                const s = data.primaryColor.s;
+                const l = data.primaryColor.l;
+
+				setPrimaryColorValues([h, s, l]);
+				getColorPalette([h, s, l]);
             });
     };
 
-    const setColor = (array) => {
-        const body = document.body;
-        body.style.setProperty('--primary', array[0].color);
-        body.style.setProperty('--secondary', array[1].color);
-        body.style.setProperty('--third', array[2].color);
-    };
-
-    useEffect(() => {
-        getColors();
-    }, []);
-
-    const root = document.querySelector(':root');
-
-    let primaryHslValues = [0, 0, 32];
-    /* primaryHslValues = [196, 72, 28]; */
-    /* primaryHslValues = [348, 88, 56]; */
-    /* primaryHslValues = [136, 32, 40]; */
-    /* primaryHslValues = [216, 72, 56]; */
-    /* primaryHslValues = [196, 56, 48]; */
-
-    const getColorPalette = (primaryHslValues) => {
+    const getColorPalette = primaryColorValues => {
         root.style.setProperty(
             '--clr-primary',
-            getColor(primaryHslValues, 'primary')
+            setColor(primaryColorValues, 'primary')
         );
         root.style.setProperty(
             '--clr-primary__brighter',
-            getColor(primaryHslValues, 'primary__brighter')
+            setColor(primaryColorValues, 'primary__brighter')
         );
         root.style.setProperty(
             '--clr-primary__dimmer',
-            getColor(primaryHslValues, 'primary__dimmer')
+            setColor(primaryColorValues, 'primary__dimmer')
         );
 
         root.style.setProperty(
             '--clr-primary-light',
-            getColor(primaryHslValues, 'primary-light')
+            setColor(primaryColorValues, 'primary-light')
         );
         root.style.setProperty(
             '--clr-primary-light__dimmer',
-            getColor(primaryHslValues, 'primary-light__dimmer')
+            setColor(primaryColorValues, 'primary-light__dimmer')
         );
 
         console.log(
@@ -123,8 +110,8 @@ const App = () => {
         );
     };
 
-    const getColor = (primaryHslValues, str) => {
-        const [h, s, l] = primaryHslValues;
+    const setColor = (primaryColorValues, str) => {
+        const [h, s, l] = primaryColorValues;
 
         let newLightness;
 
@@ -153,10 +140,6 @@ const App = () => {
 
         return hsl;
     };
-
-    useEffect(() => {
-        getColorPalette(primaryHslValues);
-    }, []);
 
     return (
         <>
@@ -267,8 +250,19 @@ const GlobalStyle = createGlobalStyle`
     --clr-almost-white: hsl(0, 0%, 98%);
     --clr-almost-black: hsl(0, 0%, 16%);
 
+/* Default color scheme
+
+	--clr-primary: hsl(32, 89%, 51%);
+	--clr-primary__brighter: hsl(32, 89%, 55%);
+	--clr-primary__dimmer: hsl(32, 89%, 47%);
+	--clr-primary-light: hsl(32, 89%, 94%);
+	--clr-primary-light__dimmer: hsl(32, 89%, 90%);
+
+*/
+
     //Darkblue-Purple-ish
-    --primary: #5068F5;
+    --primary: #3E80DE;
+    /* --primary: #5068F5; */
     /* --primary: {colorList}; */
     //Lighter-darkblue
     --secondary: #3E80DE;
@@ -304,24 +298,31 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: var(--typefaces);
-    background-color: var(--body-secondary);
     background-color: var(--clr-almost-white);
 
-            &::-webkit-scrollbar-track {
-            width: 10px;
-            background-color: var(--primary);
-            box-shadow: inset 0 0 5px var(--primary);
-            border-radius: 10px;
-            }
-         &::-webkit-scrollbar {
-            background-color: var(--third);
-            width: 10px;
-        }
+    &::-webkit-scrollbar-track
+    {-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #CCCCCC;
+    }
+
+    &::-webkit-scrollbar{
+	width: 12px;
+	background-color: #CCCCCC;
+    }
+
+    &::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: var(--clr-primary-light__dimmer);
+/* 	background-color: #555; */
+}
   }
 
     p {
         margin: 0;
     }
+
     h1 {
         margin: 0;
     }

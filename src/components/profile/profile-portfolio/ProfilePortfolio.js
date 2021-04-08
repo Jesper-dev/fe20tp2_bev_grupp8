@@ -65,13 +65,13 @@ const ProfilePortfolio = () => {
     return (
         <>
             <PortfolioOverview total={currency.toLocaleString()} />
-            <Possession stocksPossesionState={stocksPossesionState} />
-            <PossessionCrypto cryptoPossesionState={cryptoPossesionState} />
             <DistributionPortfolioChart
                 cryptoPossesionState={cryptoPossesionState}
                 stocksPossesionState={stocksPossesionState}
                 currency={currency}
             />
+            <Possession stocksPossesionState={stocksPossesionState} />
+            <PossessionCrypto cryptoPossesionState={cryptoPossesionState} />
         </>
     );
 };

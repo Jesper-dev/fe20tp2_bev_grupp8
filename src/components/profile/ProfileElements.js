@@ -52,7 +52,7 @@ export const ProfileSettingsBtn = styled(Link)`
     display: inline-block;
     padding: 0.375rem 0.5rem;
     border-radius: 0.25rem;
-    color: var(--primary-dark);
+    color: var(--clr-primary__dimmer);
     text-decoration: none;
     transition: background-color 125ms linear;
 

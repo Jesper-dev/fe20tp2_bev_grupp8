@@ -37,8 +37,10 @@ const ProfileSettings = () => {
                 <h1>Profile Settings</h1>
                 <ProfileImgChoose />
                 <CustomizeHomepage />
-                <SignOutButton />
-                <button onClick={deleteAccount}>DELETE ACCOUNT</button>
+				<div>
+					<SignOutButton />
+					<button onClick={deleteAccount}>DELETE ACCOUNT</button>
+				</div>
             </ContentWrapper>
         </>
     );

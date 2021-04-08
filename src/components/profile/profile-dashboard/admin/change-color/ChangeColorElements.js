@@ -1,51 +1,42 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 3.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2rem 4rem;
+	margin-bottom: 1rem;
 
-    @media screen and (min-width: 1024px) {
-        margin-bottom: 0;
-        min-height: 100vh;
-    }
+	.container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 2rem 1rem;
+		align-items: center;
 
-    button {
-        width: 90%;
-        font-size: 0.9rem;
-        margin: 8px;
+		.color-preview {
+			border: 0.1875rem solid var(--clr-primary__dimmer);
+			border-radius: 50%;
+			width: 5rem;
+			height: 5rem;
+			background: var(--clr-primary);
+		}
 
-        @media screen and (min-width: 1024px) {
-            height: 50px;
-            margin: 8px;
-        }
-    }
+		button {
+			padding: 0.75rem 1rem;
+			border: none;
+			border-radius: 0.25rem;
+			background-color: var(--clr-primary);
+			color: var(--clr-almost-white);
+			font-family: inherit;
+			font-size: 0.875rem;
+			font-weight: 500;
+			cursor: pointer;
+			transition: background-color 125ms linear;
 
-    .buttonWrapper {
-        display: flex;
-        align-items: center;
-    }
-
-    .prewDiv {
-        height: 60px;
-        width: 90%;
-        display: flex;
-        justify-content: space-around;
-        margin: 8px;
-
-        @media screen and (min-width: 1024px) {
-            height: 70px;
-            width: 20%;
-            display: flex;
-            justify-content: space-around;
-        }
-    }
-
-    .prewDiv > div {
-        border: 2px solid black;
-        height: inherit;
-        width: 25%;
-    }
+			&:hover, &:active {
+				background-color: var(--clr-primary__brighter);
+			}
+    	}
+	}
 `;

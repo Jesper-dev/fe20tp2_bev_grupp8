@@ -33,7 +33,7 @@ export const PortOverviewWrapper = styled.article`
         }
 
         .fa-wallet{
-            color: var(--secondary);
+            color: var(--clr-primary);
             margin-right: 0.25rem;
         }
     }

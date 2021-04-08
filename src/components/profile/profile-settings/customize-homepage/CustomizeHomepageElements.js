@@ -61,10 +61,10 @@ export const ContentWrapper = styled.div`
 
     /* Changes the toggle buttons background when checkbox is checked */
     .checkbox:checked + .toggle-btn {
-        background-color: var(--primary);
+        background-color: var(--clr-primary);
 
         &:active {
-            background-color: var(--primary-dark);
+            background-color: var(--clr-primary__dimmer);
         }
     }
 

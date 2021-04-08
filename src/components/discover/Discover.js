@@ -18,6 +18,8 @@ import ContentWrapper from '../shared/wrappers/ContentWrapper';
 // import SearchBar from '../shared/search-bar/SearchBar';
 import DiscoverSearch from './discover-search/DiscoverSearch';
 import TabBar from '../shared/tab-bar/TabBar';
+import MostBougthStocks from '../shared/custom-sections/MostBoughtStocks';
+import MostBougthCrypto from '../shared/custom-sections/MostBoughtCrypto';
 
 import { useSelector } from 'react-redux';
 
@@ -50,6 +52,8 @@ const Discover = () => {
             </HeaderWrapper>
             {!Searching ? (
                 <MainWrapper>
+                       <MostBougthStocks />
+                       <MostBougthCrypto />
                     <Route
                         exact
                         path={ROUTES.DISCOVER_STOCKS}

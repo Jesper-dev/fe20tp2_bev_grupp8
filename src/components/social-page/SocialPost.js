@@ -26,14 +26,14 @@ const writeNewPost = (uid, username, picture, postData) => {
     };
 
     // Get a key for a new Post.
-    let newPostKey = firebase.posts().push().key;
+    let newPostKey = firebase.post(uid).child("posts").push().key;
 /*     var newPostKey = firebase.db().ref('posts').push().key; */
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
     let updates = {};
     let updatesUser = {};
-    updates['/posts/' + newPostKey] = postData;
-    updatesUser[uid + '/post/posts/' + newPostKey] = postData;
+    updates[newPostKey] = postData;
+    updatesUser[uid + '/posts/' + newPostKey] = postData;
 
     firebase.users().update(updatesUser);
     return firebase.posts().update(updates);

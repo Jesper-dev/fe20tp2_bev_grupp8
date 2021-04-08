@@ -13,7 +13,7 @@ export const ContentWrapper = styled.div`
 
     textarea {
         padding: 0.75rem;
-        border: 0.125rem solid #ddd;
+        border: 0.1rem solid #ddd;
         border-radius: 0.25rem;
         outline: none;
         background: none;
@@ -23,12 +23,14 @@ export const ContentWrapper = styled.div`
         transition: height 250ms ease-in-out;
 
         &::placeholder {
-            color: var(--primary);
+            color: grey;
             opacity: 1;
         }
 
 		&:focus, &.not-empty {
 			height: 12rem;
+			border-color: var(--clr-primary__brighter);
+			box-shadow: 0 0 0 0.1875rem var(--clr-primary-light__dimmer);
 		}
     }
 
@@ -37,11 +39,16 @@ export const ContentWrapper = styled.div`
         border: none;
         border-radius: 0.25rem;
         margin: 0;
-        background-color: var(--primary);
+        background-color: var(--clr-primary);
         color: white;
         font-family: inherit;
         font-size: 1rem;
         font-weight: 500;
         cursor: pointer;
+		transition: background-color 125ms linear;
+
+		&:hover, &:active {
+			background-color: var(--clr-primary__brighter);
+		}
     }
 `;

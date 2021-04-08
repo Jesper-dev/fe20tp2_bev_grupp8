@@ -2,13 +2,14 @@ import React from 'react';
 
 import UserPosts from "./user-posts/UserPosts";
 import LikedPosts from "./liked-posts/LikedPosts";
+import ProfileBio from './profile-bio/ProfileBio'
 
 const ProfileWall = () => {
-
     return(
     <>
-        <UserPosts/>
-        <LikedPosts/>
+        <ProfileBio />
+        <UserPosts />
+        <LikedPosts />
     </>
     );
 };

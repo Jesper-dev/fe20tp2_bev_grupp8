@@ -6,6 +6,7 @@ export const ContentWrapper = styled.section`
     gap: 1rem;
     width: 100%;
     max-width: 40rem;
+            text-align: center;
 
     h3 {
         margin: 0;

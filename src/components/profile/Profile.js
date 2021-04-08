@@ -40,12 +40,13 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setUsername(data.username);
-            if (!data.roles) return;
-            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false);
-            if (!data.picture) return;
-            // setImage(data.picture.profile_pic)
+                        if (!data.picture) return;
+
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink));
+                if (!data.roles) return;
+            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false);
+
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
@@ -69,10 +70,10 @@ const Profile = () => {
             <HeaderWrapper>
                 <section>
                     <div>
-                        {ProfileImgReducer ? (
-                            <ProfileImg img={ProfileImgReducer} />
+                        {ProfileImgReducer == "null" ? (
+                            <ProfileSvg className="profile-avatar-svg" fillColor="var(--clr-primary)"/>
                         ) : (
-                            <ProfileSvg className="profile-avatar-svg" />
+                            <ProfileImg img={ProfileImgReducer} /> 
                         )}
                         <span>{username}</span>
                     </div>

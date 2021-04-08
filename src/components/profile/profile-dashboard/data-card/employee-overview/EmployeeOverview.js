@@ -1,6 +1,8 @@
 import React from 'react';
 import EmployeeOverviewWrapper from './EmployeeOverviewElements';
 
+import ProfileSvg from '../../../../svgs/ProfileSvg'
+
 import { useSelector } from 'react-redux';
 
 const TotalCompUser = () => {
@@ -26,7 +28,9 @@ const TotalCompUser = () => {
                     return (
                         <tr key={index}>
                             <td>
+                                {item.picture.profile_pic == 'null' ? <ProfileSvg className="svg-avatar" fillColor="var(--clr-primary)" /> :
                                 <img src={item.picture.profile_pic} />
+                                }
                                 {item.username}
                             </td>
                             <td>{item.currency.currency} $</td>

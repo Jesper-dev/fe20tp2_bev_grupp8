@@ -13,6 +13,9 @@ const EmployeeOverviewWrapper = styled.article`
         width: 1.5rem;
         border-radius: 20px;
     }
+    svg{
+        width: 1.8rem;
+    }
 
     table {
         width: 100%;

@@ -10,7 +10,7 @@ export const ContentWrapper = styled.section`
     margin: auto;
     width: 100%;
     max-width: 40rem;
-    max-height: 30%;
+    max-height: 25%;
 
     h1 {
         margin: 2rem 0 0.75rem 0;

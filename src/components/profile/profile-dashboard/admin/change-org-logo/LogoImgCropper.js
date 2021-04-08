@@ -32,7 +32,7 @@ const LogoImgCropper = ({ getBlob, inputImg }) => {
                 image={inputImg}
                 crop={crop}
                 zoom={zoom}
-                aspect={1}
+                aspect={4/2}
                 onCropChange={setCrop}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}

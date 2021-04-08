@@ -35,7 +35,7 @@ const FeaturedEmployeeWrapper = styled.article`
             a {
                 padding: 0.25rem 0.5rem;
                 border-radius: 0.25rem;
-                color: var(--primary);
+                color: var(--clr-primary);
                 font-weight: 500;
                 text-decoration: none;
 

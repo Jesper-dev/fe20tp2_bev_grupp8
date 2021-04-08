@@ -21,8 +21,9 @@ export const ContentWrapper = styled.div`
         border-radius: 0.2rem;
         width: 155px;
         padding: 8px;
-        background: var(--secondary);
+        background: var(--clr-primary);
         color: var(--body);
+		cursor: pointer;
     }
 
     input[type='file'] {
@@ -30,8 +31,8 @@ export const ContentWrapper = styled.div`
     }
 
     .custom-file-upload {
-        color: var(--secondary);
-        border: 1px solid var(--secondary);
+        color: var(--clr-primary);
+        border: 1px solid var(--clr-primary__dimmer);
         border-radius: 0.25rem;
         display: inline-block;
         text-align: center;
@@ -44,18 +45,15 @@ export const ContentWrapper = styled.div`
         margin: 15px auto;
         width: 150px;
         height: 150px;
-        /*  border: 3px solid var(--secondary); */
-        fill: salmon;
         border-radius: 50%;
     }
 `;
 
 export const ProfileImgElement = styled.img`
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     margin: 8px;
-    /*     border: 3px solid var(--primary); */
 `;
 
 export const ProfileSettingsImg = styled.img`

@@ -7,6 +7,7 @@ const TotalStockAssets = () => {
     const OrganizationData = useSelector((state) => state.OrganizationData);
 
     const [stockData, setStockData] = useState(null);
+    const [stockValues, setStockValues] = useState(0)
     const [amountArray, setAmountArray] = useState([]);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const TotalStockAssets = () => {
 
         let symbols = unique.join();
 
-        /*     const options = {
+            const options = {
             method: 'GET',
             url:
                 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes',
@@ -37,18 +38,20 @@ const TotalStockAssets = () => {
             })
             .catch(function (error) {
                 console.error(error);
-            }); */
+            });
 
         return () => {};
     }, []);
 
     useEffect(() => {
         let total = 0;
-        amountArray.forEach((item) => {
+    
+        amountArray.forEach((item, i) => {
             /*      let index = stockData.findIndex((x) => x.symbol == item.symbol); */
-            return (total += stockData.regularMarketPrice * item.amount);
+            return (total += stockData[i].regularMarketPrice * item.amount);
         });
-        console.log(total);
+        
+       setStockValues(total.toFixed(2))
 
         return () => {};
     }, [stockData]);
@@ -110,7 +113,7 @@ const TotalStockAssets = () => {
     return (
         <article>
             <h2>Stocks value</h2>
-            <h3>69$</h3>
+            <h3>{stockValues}$</h3>
         </article>
     );
 };

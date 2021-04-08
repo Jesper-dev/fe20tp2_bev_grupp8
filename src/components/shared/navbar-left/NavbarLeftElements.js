@@ -60,17 +60,19 @@ export const NavbarLeftElement = styled.nav`
 
         img {
             flex: 1;
-            object-fit: contain;
+            object-fit: cover;
         }
+
+		svg {
+			width: 100%;
+			height: 100%;
+		}
     }
 
     .logo-link:hover {
         background: none;
     }
 
-    .logo-left-nav {
-        width: 12rem;
-    }
 
     @media screen and (max-width: 1024px) {
         display: none;

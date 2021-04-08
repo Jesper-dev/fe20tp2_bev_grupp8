@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { FirebaseContext } from '../../../firebase/context'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfileImage } from '../../../../redux/actions'
 
 import 'firebase/database'
 
@@ -12,17 +13,34 @@ import {
 } from './ProfileImgElements';
 
 import ProfileSvg from '../../../svgs/ProfileSvg';
-
 import ImageCropper from './ProfileImgCropper';
 
 const ProfileChooseImg = () => {
     const firebase = useContext(FirebaseContext)
     const user = JSON.parse(localStorage.getItem('authUser'));
+    const dispatch = useDispatch()
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
     const profileImg = useSelector((state) => state.ProfileImgReducer)
 
     const [inputImg, setInputImg] = useState('');
+
+    useEffect(() => {
+        const route = firebase.user(user.uid + '/picture/' + 'profile_pic');
+
+        route.once('value', (snapshot) => {
+            const data = snapshot.val();
+    
+            if (!data) return;
+            dispatch(setProfileImage(data));
+    
+        })
+        
+        return () => {
+            
+        }
+    }, [])
+
 
     const onInputChange = (e) => {
         // convert image file to base64 string
@@ -75,7 +93,7 @@ const ProfileChooseImg = () => {
     return (
         <>
             <ContentWrapper>
-                {!ProfileImgReducer ? <ProfileSvg className="svg-avatar" /> :
+                {!ProfileImgReducer || ProfileImgReducer == 'null' ? <ProfileSvg className="svg-avatar" fillColor="var(--clr-primary)" /> :
             <ProfileSettingsImg src={ProfileImgReducer} />
                 }
                 <form onSubmit={handleSubmitImage}>
