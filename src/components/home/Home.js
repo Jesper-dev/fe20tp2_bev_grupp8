@@ -10,6 +10,9 @@ import WatchingStocks from '../shared/custom-sections/WatchingStocks';
 import WatchingCrypto from '../shared/custom-sections/WatchingCrypto';
 import RecommendationHome from '../shared/custom-sections/Recommendation';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
+
+import MostBougthStocks from '../shared/custom-sections/MostBoughtStocks';
+import MostBougthCrypto from '../shared/custom-sections/MostBoughtCrypto';
 // import Mock from '../../api/Mock/Mock.json';
 import MockData from '../../api/Mock/MockData.json';
 // import MockGetTickers from '../../api/Mock/MockGetTickers.json';
@@ -106,11 +109,16 @@ const Home = () => {
         <>
             <ContentWrapper>
                 <MainWrapper>
-                    <PortfolioOverview
-                        total={totalCurrency.toLocaleString()}
-                        difference={0}
-                        percent={0}
-                    />
+                    <section>
+                        <PortfolioOverview
+                            total={totalCurrency.toLocaleString()}
+                            difference={0}
+                            percent={0}
+                        />
+                    </section>
+                    <MostBougthCrypto />
+                    <MostBougthStocks />
+
                     {news ? (
                         <News
                             News
@@ -120,7 +128,9 @@ const Home = () => {
                         ''
                     )}
                     {watchingCryptos ? (
-                        <WatchingCrypto cryptoList={followingArrCrypto} />
+                        <WatchingCrypto
+                            cryptoList={followingArrCrypto.slice(0, 3)}
+                        />
                     ) : (
                         ''
                     )}

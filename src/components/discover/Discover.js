@@ -52,8 +52,14 @@ const Discover = () => {
             </HeaderWrapper>
             {!Searching ? (
                 <MainWrapper>
-                       <MostBougthStocks />
-                       <MostBougthCrypto />
+                    <Route
+                        exact
+                        path={ROUTES.DISCOVER}
+                        component={DiscoverStocksList}
+                    >
+                        <MostBougthStocks />
+                        <MostBougthCrypto />
+                    </Route>
                     <Route
                         exact
                         path={ROUTES.DISCOVER_STOCKS}

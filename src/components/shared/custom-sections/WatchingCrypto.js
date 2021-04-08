@@ -19,10 +19,10 @@ const WatchingCrypto = ({ cryptoList }) => {
     const createCryptoIdList = (cryptoList) => {
         for (let i = 0; i < cryptoList.length; i++) {
             if (cryptoList[i].name == 'lets-vest-Cry') continue;
-     /*      setCryptoListIDs(cryptoListIDs + cryptoList[i].name + ',') */
+            /*      setCryptoListIDs(cryptoListIDs + cryptoList[i].name + ',') */
         }
     };
-/*
+    /*
     useEffect(() => {
          (async () => {
                 await axios
@@ -40,29 +40,22 @@ const WatchingCrypto = ({ cryptoList }) => {
             })();
     }, [cryptoList]) */
 
+    /*     useEffect(() => {
+        if (!FollowingCrypto || cryptoList) return;
 
-useEffect(() => {
-      if (!FollowingCrypto || cryptoList) return;
-
-      console.log(FollowingCrypto)
-      console.log(cryptoList)
+        console.log(FollowingCrypto);
+        console.log(cryptoList);
 
         FollowingCrypto.forEach((item) => {
             if (item.name == 'lets-vest-CrY') return;
             cryptoIds += item.name + ',';
         });
-        return () => {
-
-    }
-}, [FollowingCrypto, cryptoList])
-
-
-
-
+        return () => {};
+    }, [FollowingCrypto, cryptoList]); */
 
     return (
         <ContentWrapper>
-            <h3>Watching Cryptocurrencies</h3>
+            <h3>Watching Cryptocurrencies </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {cryptoList.map((item, index) => {
                 return (

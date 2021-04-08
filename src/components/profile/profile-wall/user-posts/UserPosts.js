@@ -5,41 +5,38 @@ import UserPostsElement from './UserPostsElement';
 import UserPostCard from './UserPostCard';
 
 const UserPosts = () => {
-	const firebase = useContext(FirebaseContext);
+    const firebase = useContext(FirebaseContext);
 
     const [userPosts, setUserPosts] = useState([]);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        let postArray = [];
+        firebase
+            .user(user.uid)
+            .child('/posts')
+            .on('value', (snapshot) => {
+                let data = snapshot.val();
 
-        firebase.user(user.uid).child("/posts").on('value', (snapshot) => {
-            let data = snapshot.val();
-			
-			for (const key in data) {
-                postArray.push({ ...data[key] });
-            }
-	
-			console.log(data);
-			setUserPosts(postArray);
-        });
-    },[]);
-
+                const arrOfArr = Object.entries(data);
+                setUserPosts(arrOfArr);
+            });
+    }, []);
     return (
         <UserPostsElement>
             <h1>Posts</h1>
             {userPosts
-                ? userPosts.map((post, index) => {
+                ? userPosts.map((arr, index) => {
                       return (
                           <UserPostCard
                               key={index}
-                              username={post.username}
-                              content={post.content}
-                              timestamp={post.timestamp}
-                              likeCount={post.likeCount}
-                              liked={post.liked}
-							  /* picture={post.picture} */
+                              uid={arr[0]}
+                              username={arr[1].username}
+                              content={arr[1].content}
+                              timestamp={arr[1].timestamp}
+                              likeCount={arr[1].likeCount}
+                              liked={arr[1].liked}
+                              /* picture={post.picture} */
                           />
                       );
                   })

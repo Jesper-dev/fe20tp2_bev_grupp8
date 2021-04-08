@@ -29,6 +29,17 @@ const UserInfoCardElement = styled.div`
         box-shadow: var(--box-shadow-cards);
         border-radius: 0.25rem;
     }
+
+    .followerWrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 10%;
+    }
+
+    .followerWrapper > p {
+        margin: 0%;
+    }
 `;
 
 export default UserInfoCardElement;

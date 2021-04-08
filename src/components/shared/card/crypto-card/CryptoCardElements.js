@@ -6,7 +6,8 @@ export const CardWrapper = styled.article`
     align-items: center;
     justify-content: space-around;
     gap: 1rem;
-    padding: 0 1rem;
+    /*    padding: 0 1rem; */
+    padding: 0.5rem 0.75rem;
     border-radius: 0.25rem;
     box-shadow: var(--box-shadow-cards);
     width: 100%;

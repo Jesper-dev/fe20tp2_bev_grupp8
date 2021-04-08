@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContentWrapper = styled.article`
     box-sizing: border-box;
-    flex: 2;
+    width: 100%;
 
     h1 {
         margin: 0.5rem 0.25rem;

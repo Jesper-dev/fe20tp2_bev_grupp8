@@ -2,19 +2,21 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import StockCard from '../card/stock-card/StockCard';
 
-import { setUsers } from '../../../redux/actions'
-import { useDispatch } from 'react-redux'
+import { setUsers } from '../../../redux/actions';
+import { useDispatch } from 'react-redux';
 import { FirebaseContext } from '../../firebase/context';
-import { ContentWrapper } from './CustomComponentsElements';
+import { SectionWrapper } from './CustomComponentsElements';
 
-
+import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
 
 const MostBoughtStocks = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [orgDataListState, setOrgDataListState] = useState([]);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
+
+    let LabelsArr = ['symbol', 'price', 'change 24h ▾'];
 
     useEffect(() => {
         let orgDataArr = [];
@@ -26,7 +28,7 @@ const MostBoughtStocks = () => {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
             setOrgDataListState(orgDataArr);
-            dispatch(setUsers(orgDataArr))
+            dispatch(setUsers(orgDataArr));
             makeBoughtArray(orgDataArr);
         });
     }, []);
@@ -76,19 +78,23 @@ const MostBoughtStocks = () => {
     };
 
     return (
-        <ContentWrapper>
-            <h3>Hottest stocks <i className="fas fa-fire-alt" style={{ color: 'orange'}}></i></h3>
+        <SectionWrapper>
+            <h3>
+                Hottest stocks{' '}
+                <i className="fas fa-fire-alt" style={{ color: 'orange' }}></i>
+            </h3>
+            <SectionDataIndicator LabelsArr={LabelsArr} />
             {orgBoughtData.map((item, index) => {
                 return (
                     <StockCard
                         key={index}
                         name={item.symbol}
-                 /*        amount={item.amount} */
+                        /*        amount={item.amount} */
                     />
                 );
             })}
-        </ContentWrapper>
-    )
-}
+        </SectionWrapper>
+    );
+};
 
-export default MostBoughtStocks
+export default MostBoughtStocks;

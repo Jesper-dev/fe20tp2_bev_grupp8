@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const PortOverviewWrapper = styled.article`
-	background-color: var(--body);
-	padding: 1rem;
-	border-radius: 0.25rem;
+    background-color: var(--body);
+    padding: 1rem;
+    border-radius: 0.25rem;
     box-shadow: var(--box-shadow-cards);
 
     box-sizing: border-box;
@@ -11,12 +11,12 @@ export const PortOverviewWrapper = styled.article`
     max-width: 40rem;
     margin: 2rem auto 0 auto;
 
-	h2 {
-		margin: 0;
-		color: #383838;
-		font-size: 1.25rem;
-		font-weight: 600;
-	}
+    h2 {
+        margin: 0;
+        color: #383838;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
 
     & > header {
         display: flex;
@@ -32,7 +32,7 @@ export const PortOverviewWrapper = styled.article`
             font-weight: 500;
         }
 
-        .fa-wallet{
+        .fa-wallet {
             color: var(--clr-primary);
             margin-right: 0.25rem;
         }

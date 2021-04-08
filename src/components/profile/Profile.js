@@ -27,6 +27,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [followerCount, setFollowerCount] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
@@ -39,14 +40,14 @@ const Profile = () => {
         const user = firebase.user(userData.uid);
         user.on('value', (snapshot) => {
             const data = snapshot.val();
+            setFollowerCount(data.followerCount);
             setUsername(data.username);
-                        if (!data.picture) return;
+            if (!data.picture) return;
 
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink));
-                if (!data.roles) return;
+            if (!data.roles) return;
             data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false);
-
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
@@ -70,12 +71,16 @@ const Profile = () => {
             <HeaderWrapper>
                 <section>
                     <div>
-                        {ProfileImgReducer == "null" ? (
-                            <ProfileSvg className="profile-avatar-svg" fillColor="var(--clr-primary)"/>
+                        {ProfileImgReducer == 'null' ? (
+                            <ProfileSvg
+                                className="profile-avatar-svg"
+                                fillColor="var(--clr-primary)"
+                            />
                         ) : (
-                            <ProfileImg img={ProfileImgReducer} /> 
+                            <ProfileImg img={ProfileImgReducer} />
                         )}
                         <span>{username}</span>
+                        <span>Followers: {followerCount} </span>
                     </div>
                     <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
                         <i className="fas fa-user-edit"></i>

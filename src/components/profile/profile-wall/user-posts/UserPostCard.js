@@ -1,23 +1,30 @@
-import React, {useContext} from 'react'
-import UserPostCardWrapper from "./UserPostCardElement";
+import React, { useContext } from 'react';
+import UserPostCardWrapper from './UserPostCardElement';
 import { FirebaseContext } from '../../../firebase/context';
 
-const UserPostCard = ({username, content, timestamp, likeCount, liked}) => {
-	const firebase = useContext(FirebaseContext);
+const UserPostCard = ({
+    uid,
+    username,
+    content,
+    timestamp,
+    likeCount,
+    liked,
+}) => {
+    const firebase = useContext(FirebaseContext);
 
-	const handleChange = () => {
-		const userId = firebase.auth.currentUser.uid;
-        
-		console.log(userId);
-		
-		firebase.user(userId).child("/posts").on("value", snapshot => {
+    const handleChange = (evt) => {
+        const userId = firebase.auth.currentUser.uid;
 
-		});
+        firebase
+            .user(userId)
+            .child('/posts')
+            .on('value', (snapshot) => {
+                let data = snapshot.val();
+            });
 
-		// toggle liked boolean on user/posts
-		// update like count for user/posts && posts
-		// 
-	};
+        // toggle liked boolean on user/posts/uid
+        // update like count for user/posts && posts
+    };
 
     return (
         <UserPostCardWrapper>
@@ -28,16 +35,16 @@ const UserPostCard = ({username, content, timestamp, likeCount, liked}) => {
                 <label>
                     <input
                         className="checkbox"
-                        type='checkbox'
+                        type="checkbox"
                         checked={liked}
-						onChange={handleChange}
+                        onChange={handleChange}
                     />
                     <i className="fas fa-heart"></i>
                 </label>
                 <span className="likes">{likeCount}</span>
             </div>
         </UserPostCardWrapper>
-    )
-}
+    );
+};
 
-export default UserPostCard
+export default UserPostCard;

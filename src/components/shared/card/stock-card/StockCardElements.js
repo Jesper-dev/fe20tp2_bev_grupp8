@@ -10,6 +10,7 @@ export const CardWrapper = styled.article`
     box-shadow: var(--box-shadow-cards);
     width: 100%;
     min-height: 3rem;
+    /* max-height: 48px; */
     background: var(--body);
 
     & > span {
