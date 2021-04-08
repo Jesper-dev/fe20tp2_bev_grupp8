@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import TotalStockAssets from '../total-stock-assets/TotalStockAssets';
 import { CompanyOverviewWrapper } from './CompanyOverviewElements';
 
 const TotalCompValue = () => {
@@ -65,10 +66,11 @@ const TotalCompValue = () => {
 
     return (
         <CompanyOverviewWrapper>
-            <article>
+            <TotalStockAssets />
+            {/* <article>
                 <h2>Wallet</h2>
                 <h3>{totalOrgCurrency.toLocaleString()}$</h3>
-            </article>
+            </article> */}
             <article>
                 <h2>Change</h2>
                 <h3

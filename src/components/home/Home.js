@@ -33,7 +33,8 @@ const Home = () => {
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
 
     const [rec, setRec] = useState(true);
-    const [watching, setWatching] = useState(true);
+    const [watchingCryptos, setWatchingCryptos] = useState(true);
+    const [watchingSecuritys, setWatchingSecuritys] = useState(true);
     const [news, setNews] = useState(true);
 
     const dispatch = useDispatch();
@@ -61,13 +62,16 @@ const Home = () => {
             .child('/userSettings/settings')
             .once('value', (snapshot) => {
                 const data = snapshot.val();
-                data.watching ? setWatching(true) : setWatching(false);
+                data.watchingCryptos
+                    ? setWatchingCryptos(true)
+                    : setWatchingCryptos(false);
+                data.watchingSecuritys
+                    ? setWatchingSecuritys(true)
+                    : setWatchingSecuritys(false);
                 data.news ? setNews(true) : setNews(false);
                 data.recommended ? setRec(true) : setRec(false);
             });
     };
-
-
 
     useEffect(() => {
         setDidMount(true);
@@ -80,8 +84,6 @@ const Home = () => {
         getFollowInfo('/followingCrypto', followingCryptoList);
         setFollowingArr(followingStocksList);
         setFollowingArrCrypto(followingCryptoList);
-
-
 
         firebase
             .user(user.uid)
@@ -117,10 +119,14 @@ const Home = () => {
                     ) : (
                         ''
                     )}
-                    {watching ? (
+                    {watchingCryptos ? (
                         <WatchingCrypto cryptoList={followingArrCrypto} />
-                    ) : ''}
-                    {watching ? <WatchingStocks array={followingArr} /> : null}
+                    ) : (
+                        ''
+                    )}
+                    {watchingSecuritys ? (
+                        <WatchingStocks array={followingArr} />
+                    ) : null}
 
                     {rec ? <RecommendationHome MockData={MockData} /> : ''}
                 </MainWrapper>

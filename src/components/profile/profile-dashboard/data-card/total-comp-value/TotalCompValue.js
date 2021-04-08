@@ -33,7 +33,10 @@ const TotalCompValue = () => {
                 for (const key in totalValue) {
                     orgData.push({ ...totalValue[key] });
                 }
+
+                console.log(orgData);
                 setOrgDataState(orgData);
+                makeBoughtArray(orgData);
 
                 for (let i = 0; i < orgData.length; i++) {
                     let currency = orgData[i].currency.currency;

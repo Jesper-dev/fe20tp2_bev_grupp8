@@ -42,44 +42,59 @@ const RecentlyBought = () => {
 
     return (
         <ContentWrapper>
-            <h4>Recently Bought Stock</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username ▾</th>
-                        <th>Stock ▾</th>
-                        <th>Amount ▾</th>
-                        <th>Price ▾</th>
-                    </tr>
-                </thead>
-
-                <tr>
-                    <td> {bought.user}</td>
-                    <td> {bought.symbol}</td>
-                    <td>{bought.amount}</td>
-                    <td> {(bought.price * bought.amount).toFixed(2)}$</td>
-                </tr>
-            </table>
-
-            <h4>Recently Sold Stock</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username ▾</th>
-                        <th>Stock ▾</th>
-                        <th>Amount ▾</th>
-                        <th>Price ▾</th>
-                    </tr>
-                </thead>
-
-                <tr>
-                    <td> {dataDB.user}</td>
-                    <td> {dataDB.symbol}</td>
-                    <td>{dataDB.amount}</td>
-                    <td> {(dataDB.price * dataDB.amount).toFixed(2)}$</td>
-                </tr>
-            </table>
+            <Table
+                title="Recently bought stock"
+                user={bought.user}
+                symbol={bought.symbol}
+                amount={bought.amount}
+                price={bought.price}
+            />
+            <Table
+                title="Recently sold stock"
+                user={dataDB.user}
+                symbol={dataDB.symbol}
+                amount={dataDB.amount}
+                price={dataDB.price}
+            />
+            <Table
+                title="Recently bought cryptocurrency"
+                user={dataDB.user}
+                symbol={dataDB.symbol}
+                amount={dataDB.amount}
+                price={dataDB.price}
+            />
+            <Table
+                title="Recently sold cryptocurrency"
+                user={dataDB.user}
+                symbol={dataDB.symbol}
+                amount={dataDB.amount}
+                price={dataDB.price}
+            />
         </ContentWrapper>
+    );
+};
+export const Table = ({ title, user, symbol, amount, price }) => {
+    return (
+        <>
+            <h4>{title}</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username ▾</th>
+                        <th>Stock ▾</th>
+                        <th>Amount ▾</th>
+                        <th>Price ▾</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td> {user}</td>
+                    <td> {symbol}</td>
+                    <td>{amount}</td>
+                    <td> {(price * amount).toFixed(2)}$</td>
+                </tr>
+            </table>
+        </>
     );
 };
 

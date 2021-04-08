@@ -70,7 +70,8 @@ const INITIAL_STATE = {
     userSettings: {
         settings: {
             recommended: true,
-            watching: true,
+            watchingCryptos: true,
+            watchingSecuritys: true,
             news: true,
         },
     },
@@ -180,7 +181,9 @@ class SignUpFormBase extends Component {
                 currentEmails = snapshot.val();
                 if (!currentEmails) return;
 
-                const index = currentEmails.findIndex(obj => obj.email == email);
+                const index = currentEmails.findIndex(
+                    (obj) => obj.email == email
+                );
 
                 if (index === -1) {
                     // this.setState({ partOfOrg: false });
@@ -197,7 +200,7 @@ class SignUpFormBase extends Component {
         if (this.state.partOfOrg === false) {
             this.setState({ loading: false });
             return;
-        };
+        }
 
         const roles = {};
         if (isAdmin) {

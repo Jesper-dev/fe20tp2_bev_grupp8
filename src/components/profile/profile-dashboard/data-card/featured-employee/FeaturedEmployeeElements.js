@@ -4,6 +4,7 @@ const FeaturedEmployeeWrapper = styled.article`
     flex: 1;
 
     img {
+        border-radius: 50%;
         width: 55px;
     }
 

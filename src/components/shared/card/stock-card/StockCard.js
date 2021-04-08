@@ -4,18 +4,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { chosenShare } from '../../../../redux/actions';
 
-
 let chosenShareArray = [];
 
 const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const setChosenStockOption = (name) => {
-        let filterName = name.trim();
+        /*         let filterName = name.trim();
             chosenShareArray = stocksList.filter(function (item) {
                 return item.symbol === filterName;
             });
-        dispatch(chosenShare(chosenShareArray));
+        dispatch(chosenShare(chosenShareArray)); */
         history.push(`/info/${name}`);
     };
 

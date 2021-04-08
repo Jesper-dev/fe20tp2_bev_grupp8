@@ -1,18 +1,18 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, { useEffect, useContext, useState } from 'react';
+
+import StockCard from '../../../../shared/card/stock-card/StockCard';
 
 import { FirebaseContext } from '../../../../firebase/context';
-
-import { ContentWrapper } from './BoughtStocksElements'
+import { ContentWrapper } from './BoughtStocksElements';
 
 const BoughtStocks = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const firebase = useContext(FirebaseContext)
-    const [orgDataListState, setOrgDataListState] = useState([])
-    const [orgBoughtData, setOrgBoughtData] = useState([])
-    let array = []
+    const firebase = useContext(FirebaseContext);
+    const [orgDataListState, setOrgDataListState] = useState([]);
+    const [orgBoughtData, setOrgBoughtData] = useState([]);
 
     useEffect(() => {
-        let orgDataArr = []
+        let orgDataArr = [];
 
         let orgData = firebase.organization(user.organization + '/users');
         orgData.on('value', (snapshot) => {
@@ -21,49 +21,70 @@ const BoughtStocks = () => {
             for (const key in boughtStocks) {
                 orgDataArr.push({ ...boughtStocks[key] });
             }
-            setOrgDataListState(orgDataArr)
-            console.log(orgDataArr)
+            setOrgDataListState(orgDataArr);
 
-            makeBoughtArray(orgDataArr)
+            makeBoughtArray(orgDataArr);
         });
+    }, []);
 
-    }, [])
+    const ReduceFunc = (arr) => {
+        let result = [];
+        arr.forEach(function (a) {
+            if (!this[a.symbol]) {
+                this[a.symbol] = { symbol: a.symbol, amount: 0 };
+                result.push(this[a.symbol]);
+            }
+            this[a.symbol].amount += a.amount;
+        }, Object.create(null));
+        return result;
+    };
 
     const makeBoughtArray = (arr) => {
-        console.log(arr)
-        let orgStockPossessionArr = []
-            let j = 0;
-            let i = 0;
-            while (j < arr.length) {
+        let orgStockPossessionArr = [];
+        let j = 0;
+        let i = 0;
+        while (j < arr.length) {
             let keys = Object.keys(arr[j].possessionStocks);
             if (arr[j].possessionStocks[keys[i]] === undefined) {
                 i = 0;
                 j++;
             } else {
-                orgStockPossessionArr.push({ symbol: arr[j].possessionStocks[keys[i]].symbol, amount: arr[j].possessionStocks[keys[i]].amount, username: arr[j].username});
+                orgStockPossessionArr.push({
+                    symbol: arr[j].possessionStocks[keys[i]].symbol,
+                    amount: arr[j].possessionStocks[keys[i]].amount,
+                    username: arr[j].username,
+                });
                 i++;
             }
+            const sortByAmount = (arr) => {
+                arr.sort(function (a, b) {
+                    return a.amount - b.amount;
+                });
+            };
+            let reducedArray = ReduceFunc(orgStockPossessionArr);
+
+            sortByAmount(reducedArray);
+
+            reducedArray.reverse().splice(5, reducedArray.length);
+
+            setOrgBoughtData(reducedArray);
         }
-
-          console.log(orgStockPossessionArr)
-          let uniq = [...new Set(orgStockPossessionArr)];
-
-          console.log(uniq)
-
-
-
-        setOrgBoughtData(orgStockPossessionArr)
-    }
+    };
 
     return (
         <ContentWrapper>
-            <h1>Bought Stocks Here</h1>
-            <p> adsadsa a :d </p>
+            <h1>Top 5 owned stocks</h1>
             {orgBoughtData.map((item, index) => {
-                return <p key={index}>{item.symbol ? item.symbol : ''} </p>
+                return (
+                    <StockCard
+                        key={index}
+                        name={item.symbol}
+                        amount={item.amount}
+                    />
+                );
             })}
         </ContentWrapper>
-    )
-}
+    );
+};
 
-export default BoughtStocks
+export default BoughtStocks;

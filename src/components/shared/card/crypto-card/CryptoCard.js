@@ -15,12 +15,12 @@ const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
 
     const setChosenCryptoOption = (name) => {
         history.push(`/info/crypto/${name}`);
-        let filterName = name.trim();
+        /*        let filterName = name.trim();
         chosenCryptoArray = cryptoList.filter(function (item) {
             return item.name === filterName;
-        });
-
-        dispatch(chosenCrypto(chosenCryptoArray));
+        }); */
+        /* 
+        dispatch(chosenCrypto(chosenCryptoArray)); */
     };
 
     let newName = name.substring(0, 3);

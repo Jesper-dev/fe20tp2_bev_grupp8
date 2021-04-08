@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, { useState, useEffect, useContext } from 'react';
 
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
@@ -21,111 +21,142 @@ import PasswordForget from './components/password-forget/PasswordForget';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
-import OrganizationSettings from './components/profile/profile-dashboard/admin/OrganizationSettings'
+import OrganizationSettings from './components/profile/profile-dashboard/admin/OrganizationSettings';
 import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
-import { FirebaseContext } from "./components/firebase";
+import { FirebaseContext } from './components/firebase';
 
 const App = () => {
-    // const firebase = useContext(FirebaseContext)
-    // const user = JSON.parse(localStorage.getItem('authUser'));
-    // const [colorList, setColorList] = useState([])
-    // const getColors = () => {
-    //     firebase.organization(user.organization).child("/colors").on('value', (snapshot) => {
-    //         const data = snapshot.val();
-    //         let colors = []
-    //         for (const key in data) {
-    //             const obj = {
-    //                 name: key,
-    //                 color: data[key].value,
-    //             };
-    //             colors.push(obj);
-    //         }
+    const firebase = useContext(FirebaseContext);
+    const user = JSON.parse(localStorage.getItem('authUser'));
+    const [colorList, setColorList] = useState([]);
+    const getColors = () => {
+        firebase
+            .organization(user.organization)
+            .child('/colors')
+            .on('value', (snapshot) => {
+                const data = snapshot.val();
+                let colors = [];
+                for (const key in data) {
+                    const obj = {
+                        name: key,
+                        color: data[key].value,
+                    };
+                    colors.push(obj);
+                }
+                setColorList(colors);
+                setColor(colors);
+            });
+    };
 
-    //         console.log(colors)
-    //         setColorList(colors)
-    //         setColor(colors)
-    //     })
+    const setColor = (array) => {
+        const body = document.body;
+        body.style.setProperty('--primary', array[0].color);
+        body.style.setProperty('--secondary', array[1].color);
+        body.style.setProperty('--third', array[2].color);
+    };
 
+    useEffect(() => {
+        getColors();
+    }, []);
 
-    // }
+    const root = document.querySelector(':root');
 
-    // console.log(colorList)
+    let primaryHslValues = [0, 0, 32];
+    /* primaryHslValues = [196, 72, 28]; */
+    /* primaryHslValues = [348, 88, 56]; */
+    /* primaryHslValues = [136, 32, 40]; */
+    /* primaryHslValues = [216, 72, 56]; */
+    /* primaryHslValues = [196, 56, 48]; */
 
-    // const setColor = (array) => {
-    //     console.log('Color is: ', array[0].color)
-    //     const body = document.body;
-    //     body.style.setProperty('--primary', array[0].color);
-    //     body.style.setProperty('--secondary', array[1].color);
-    //     body.style.setProperty('--third', array[2].color);
-    // }
+    const getColorPalette = (primaryHslValues) => {
+        root.style.setProperty(
+            '--clr-primary',
+            getColor(primaryHslValues, 'primary')
+        );
+        root.style.setProperty(
+            '--clr-primary__brighter',
+            getColor(primaryHslValues, 'primary__brighter')
+        );
+        root.style.setProperty(
+            '--clr-primary__dimmer',
+            getColor(primaryHslValues, 'primary__dimmer')
+        );
 
-    // useEffect(() => {
-    //     getColors()
-    // }, [])
+        root.style.setProperty(
+            '--clr-primary-light',
+            getColor(primaryHslValues, 'primary-light')
+        );
+        root.style.setProperty(
+            '--clr-primary-light__dimmer',
+            getColor(primaryHslValues, 'primary-light__dimmer')
+        );
 
-	const root = document.querySelector(":root")
+        console.log(
+            `--clr-primary: ${window
+                .getComputedStyle(root)
+                .getPropertyValue('--clr-primary')}`
+        );
+        console.log(
+            `--clr-primary__brighter: ${window
+                .getComputedStyle(root)
+                .getPropertyValue('--clr-primary__brighter')}`
+        );
+        console.log(
+            `--clr-primary__dimmer: ${window
+                .getComputedStyle(root)
+                .getPropertyValue('--clr-primary__dimmer')}`
+        );
+        console.log(
+            `--clr-primary-light: ${window
+                .getComputedStyle(root)
+                .getPropertyValue('--clr-primary-light')}`
+        );
+        console.log(
+            `--clr-primary-light__dimmer: ${window
+                .getComputedStyle(root)
+                .getPropertyValue('--clr-primary-light__dimmer')}`
+        );
+    };
 
-	let primaryHslValues = [0, 0, 32];
-		/* primaryHslValues = [196, 72, 28]; */
-		/* primaryHslValues = [348, 88, 56]; */
-		/* primaryHslValues = [136, 32, 40]; */
-		/* primaryHslValues = [216, 72, 56]; */
-		/* primaryHslValues = [196, 56, 48]; */
+    const getColor = (primaryHslValues, str) => {
+        const [h, s, l] = primaryHslValues;
 
-	const getColorPalette = primaryHslValues => {
-		root.style.setProperty("--clr-primary", getColor(primaryHslValues, "primary"));
-		root.style.setProperty("--clr-primary__brighter", getColor(primaryHslValues, "primary__brighter"));
-		root.style.setProperty("--clr-primary__dimmer", getColor(primaryHslValues, "primary__dimmer"));
+        let newLightness;
 
-		root.style.setProperty("--clr-primary-light", getColor(primaryHslValues, "primary-light"));
-		root.style.setProperty("--clr-primary-light__dimmer", getColor(primaryHslValues, "primary-light__dimmer"));
+        switch (str) {
+            case 'primary':
+                newLightness = l;
+                break;
+            case 'primary__brighter':
+                newLightness = l + 4;
+                break;
+            case 'primary__dimmer':
+                newLightness = l - 4;
+                break;
+            case 'primary-light':
+                newLightness = 94;
+                break;
+            case 'primary-light__dimmer':
+                newLightness = 90;
+                break;
+            default:
+                newLightness = l;
+                break;
+        }
 
-		console.log(`--clr-primary: ${window.getComputedStyle(root).getPropertyValue("--clr-primary")}`);
-		console.log(`--clr-primary__brighter: ${window.getComputedStyle(root).getPropertyValue("--clr-primary__brighter")}`);
-		console.log(`--clr-primary__dimmer: ${window.getComputedStyle(root).getPropertyValue("--clr-primary__dimmer")}`);
-		console.log(`--clr-primary-light: ${window.getComputedStyle(root).getPropertyValue("--clr-primary-light")}`);
-		console.log(`--clr-primary-light__dimmer: ${window.getComputedStyle(root).getPropertyValue("--clr-primary-light__dimmer")}`);
-	}
+        const hsl = `hsl(${h}, ${s}%, ${newLightness}%)`;
 
-	const getColor = (primaryHslValues, str) => {
-		const [h, s, l] = primaryHslValues;
-	
-		let newLightness;
-	
-		switch (str) {
-			case "primary":
-				newLightness = l;
-				break;
-			case "primary__brighter":
-				newLightness = l + 4;
-				break;
-			case "primary__dimmer":
-				newLightness = l - 4;
-				break;
-			case "primary-light":
-				newLightness = 94;
-				break;
-			case "primary-light__dimmer":
-				newLightness = 90;
-				break;
-			default:
-				newLightness = l;
-				break;
-		}
-	
-		const hsl = `hsl(${h}, ${s}%, ${newLightness}%)`;
-	
-		return hsl;
-	};
+        return hsl;
+    };
 
-	useEffect(() => {
-		getColorPalette(primaryHslValues);
-	}, [])
+    useEffect(() => {
+        getColorPalette(primaryHslValues);
+    }, []);
 
     return (
         <>
@@ -227,7 +258,6 @@ const App = () => {
         </>
     );
 };
-
 
 const GlobalStyle = createGlobalStyle`
   :root {

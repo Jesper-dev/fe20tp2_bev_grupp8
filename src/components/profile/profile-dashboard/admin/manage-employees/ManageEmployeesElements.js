@@ -8,9 +8,22 @@ export const ManageWrapper = styled.div`
     background: var(--body-secondary);
     border-radius: 4px;
     box-shadow: var(--box-shadow-cards);
-    width: 60%;
+    width: 100%;
     height: 400px;
     margin: 1rem auto;
+
+    @media screen and (min-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        background: var(--body-secondary);
+        border-radius: 4px;
+        box-shadow: var(--box-shadow-cards);
+        width: 60%;
+        height: 400px;
+        margin: 1rem auto;
+    }
 
     h3 {
         margin: 16px;
@@ -33,8 +46,8 @@ export const ManageWrapper = styled.div`
             background-color: var(--primary);
             box-shadow: inset 0 0 5px var(--primary);
             border-radius: 10px;
-            }
-         &::-webkit-scrollbar {
+        }
+        &::-webkit-scrollbar {
             background-color: var(--third);
             width: 10px;
         }

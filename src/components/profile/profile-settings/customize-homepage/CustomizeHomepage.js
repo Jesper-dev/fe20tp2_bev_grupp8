@@ -1,64 +1,85 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 
-import { ContentWrapper } from './CustomizeHomepageElements'
+import { ContentWrapper } from './CustomizeHomepageElements';
 
 import { FirebaseContext } from '../../../firebase/context';
 
 const CustomizeHomepage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const [checkedRec, setCheckedRec] = useState(true);
-    const [checkedWatch, setCheckedWatch] = useState(true);
+    const [checkedWatchCryptos, setCheckedWatchCryptos] = useState(true);
+    const [checkedWatchSecuritys, setCheckedWatchSecuritys] = useState(true);
     const [checkedNews, setCheckedNews] = useState(true);
-    const firebase = useContext(FirebaseContext)
+    const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-        getDataDB()
+        getDataDB();
     }, []);
 
     const getDataDB = () => {
-        firebase.user(user.uid).child('/userSettings/settings').once('value', (snapshot) => {
-            const data = snapshot.val()
-            data.watching ? setCheckedWatch(true) : setCheckedWatch(false)
-            data.news ? setCheckedNews(true) : setCheckedNews(false)
-            data.recommended ? setCheckedRec(true) : setCheckedRec(false)
-        })
-    }
-
+        firebase
+            .user(user.uid)
+            .child('/userSettings/settings')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                data.watchingCryptos
+                    ? setCheckedWatchCryptos(true)
+                    : setCheckedWatchCryptos(false);
+                data.watchingSecuritys
+                    ? setCheckedWatchSecuritys(true)
+                    : setCheckedWatchSecuritys(false);
+                data.news ? setCheckedNews(true) : setCheckedNews(false);
+                data.recommended ? setCheckedRec(true) : setCheckedRec(false);
+            });
+    };
 
     const updateDB = (path, value, state) => {
-        if(value === 'Rec'){
+        if (value === 'Rec') {
             firebase.user(user.uid).child(path).update({
-                recommended: !state
-            })
-        }
-        else if(value === 'Watch'){
+                recommended: !state,
+            });
+        } else if (value === 'WatchCryptos') {
             firebase.user(user.uid).child(path).update({
-                watching: !state
-            })
-        }
-        else if(value === 'News'){
+                watchingCryptos: !state,
+            });
+        } else if (value === 'WatchSecuritys') {
             firebase.user(user.uid).child(path).update({
-
-                news: !state
-            })
+                watchingSecuritys: !state,
+            });
+        } else if (value === 'News') {
+            firebase.user(user.uid).child(path).update({
+                news: !state,
+            });
         }
-    }
+    };
 
     const seeFunc = (e) => {
         if (e.target.value === 'Rec') {
-            updateDB('/userSettings/settings', 'Rec', checkedRec)
-        } else if (e.target.value === 'Watch') {
-            updateDB('/userSettings/settings', 'Watch', checkedWatch)
+            updateDB('/userSettings/settings', 'Rec', checkedRec);
+        } else if (e.target.value === 'WatchCryptos') {
+            updateDB(
+                '/userSettings/settings',
+                'WatchCryptos',
+                checkedWatchCryptos
+            );
+        } else if (e.target.value === 'WatchSecuritys') {
+            updateDB(
+                '/userSettings/settings',
+                'WatchSecuritys',
+                checkedWatchSecuritys
+            );
         } else if (e.target.value === 'News') {
-            updateDB('/userSettings/settings', 'News', checkedNews)
+            updateDB('/userSettings/settings', 'News', checkedNews);
         }
     };
 
     const onChange = (e) => {
         if (e.target.value === 'Rec') {
             setCheckedRec(!checkedRec);
-        } else if (e.target.value === 'Watch') {
-            setCheckedWatch(!checkedWatch);
+        } else if (e.target.value === 'WatchCryptos') {
+            setCheckedWatchCryptos(!checkedWatchCryptos);
+        } else if (e.target.value === 'WatchSecuritys') {
+            setCheckedWatchSecuritys(!checkedWatchSecuritys);
         } else if (e.target.value === 'News') {
             setCheckedNews(!checkedNews);
         }
@@ -81,17 +102,33 @@ const CustomizeHomepage = () => {
                 <label htmlFor="rec" className="toggle-btn"></label>
             </div>
             <div className="tgl">
-                <p>Show Watching</p>
+                <p>Show Watching Cryptos</p>
                 <input
                     type="checkbox"
-                    id="follow"
+                    id="followCrypto"
                     className="checkbox"
                     onChange={onChange}
-                    checked={checkedWatch}
+                    checked={checkedWatchCryptos}
                     onClick={seeFunc}
-                    value="Watch"
+                    value="WatchCryptos"
                 />
-                <label htmlFor="follow" className="toggle-btn"></label>
+                <label htmlFor="followCrypto" className="toggle-btn"></label>
+            </div>
+            <div className="tgl">
+                <p>Show Watching Securitys</p>
+                <input
+                    type="checkbox"
+                    id="followCryptoSecuritys"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedWatchSecuritys}
+                    onClick={seeFunc}
+                    value="WatchSecuritys"
+                />
+                <label
+                    htmlFor="followCryptoSecuritys"
+                    className="toggle-btn"
+                ></label>
             </div>
             <div className="tgl">
                 <p>Show News</p>
