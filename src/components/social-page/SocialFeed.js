@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-// import UserPostCard from '../user-posts/UserPostCard';
+import UserPostCard from '../profile/profile-wall/user-posts/UserPostCard';
 // import LikedPostsElement from "./LikedPostsElement";
 import { FirebaseContext } from '../firebase/context';
 
@@ -8,6 +8,7 @@ const SocialFeed = () => {
 	const firebase = useContext(FirebaseContext);
 	const [usersList, setUsersList] = useState([])
 	const [followingList, setFollowingList] = useState([])
+	const [followingPostsList, setFollowingPostsList] = useState([])
 	const [mounted, setMounted] = useState(true)
 
     useEffect(() => {
@@ -47,7 +48,6 @@ const SocialFeed = () => {
 				}
                 users.push(obj);
             }
-			console.log(users)
 			setUsersList(users)
 			findFollowingUsers(users)
         });
@@ -64,9 +64,10 @@ const SocialFeed = () => {
 				for (const key in data) {
 					following.push(data[key].username);
 				}
+				console.log(array[0].posts)
 				following.forEach((item, index) => {
 					if(item === array[index].username) {
-						list.push(array[index])
+						array[index].posts ? list.push(array[index].posts) : console.log("Nej")
 					}
 				})
 				getFollowingUserPosts(list)
@@ -76,41 +77,67 @@ const SocialFeed = () => {
 	const getFollowingUserPosts = (array) => {
 		let userPosts = []
 		array.forEach((item, index) => {
-            userPosts.push(item.posts)
-		})
+			userPosts.push(item)
 
-		console.log(userPosts[0])
+		})
+		console.log(userPosts)
+		let list = makePostsList(userPosts)
+		setFollowingPostsList(list)
 	}
 
-   /*
-	const handleChange = (e) => {
-		let index = userPost.findIndex(item => item.timestamp == e.target.value);
-		if (userPost[index].liked) {
-			userPost[index].likeCount--;
-			userPost[index].liked = false;
-            // remove userPost[index] from likedArray
-			let likeIndex = likedPosts.findIndex(item => item.timestamp === e.target.value);
-			likedPosts.splice(likeIndex, 1);
-		} else {
-			userPost[index].likeCount++;
-			userPost[index].liked = true;
-            // add userPost[index] to likedArray
-			likedPosts.push(userPost[index]);
-		}
+	const makePostsList = (array) => {
+        console.log(array[0])
+		let postsList = []
+		array.forEach((item, index) => {
+			for(const key in item) {
+				postsList.push(item[key])
+			}
+		})
+        return postsList;
+	}
 
-		// console.log(`ClickedPostContent: ${userPost[index].content}`)
-		// console.log(`Liked: ${userPost[index].liked}`);
-		// console.log(`LikeCount: ${userPost[index].likeCount}`);
 
-		updateData(userPost, likedPosts);
-	};
+	// const handleChange = (e) => {
+	// 	let index = userPost.findIndex(item => item.timestamp == e.target.value);
+	// 	if (userPost[index].liked) {
+	// 		userPost[index].likeCount--;
+	// 		userPost[index].liked = false;
+    //         // remove userPost[index] from likedArray
+	// 		let likeIndex = likedPosts.findIndex(item => item.timestamp === e.target.value);
+	// 		likedPosts.splice(likeIndex, 1);
+	// 	} else {
+	// 		userPost[index].likeCount++;
+	// 		userPost[index].liked = true;
+    //         // add userPost[index] to likedArray
+	// 		likedPosts.push(userPost[index]);
+	// 	}
 
-	*/
+	// 	// console.log(`ClickedPostContent: ${userPost[index].content}`)
+	// 	// console.log(`Liked: ${userPost[index].liked}`);
+	// 	// console.log(`LikeCount: ${userPost[index].likeCount}`);
+
+	// 	updateData(userPost, likedPosts);
+	// };
+
+
 
 return(
 
 	<div>
 		<h1>Hej</h1>
+		{followingPostsList ? followingPostsList.map((item, index) => {
+            return (
+                <UserPostCard
+                key={index}
+                username={item.username}
+                content={item.content}
+                timestamp={item.timestamp}
+                liked={item.liked}
+                likeCount={item.likeCount}
+                // handleChange={handleChange}
+                />
+            )
+        }) : 'No liked posts'}
 	</div>
 
     // <LikedPostsElement>
