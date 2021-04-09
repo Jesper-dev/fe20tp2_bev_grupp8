@@ -57,10 +57,12 @@ const UserInfoCard = () => {
         if (e.target.textContent === 'follow') {
             addUser(username, email);
             addFollowerCount(uniId);
+            followerName(uniId, true)
             setFollowed(true);
         } else {
             removeUser(username);
             removeFollowerCount(uniId);
+            followerName(uniId, false)
             setFollowed(false);
         }
     };
@@ -92,6 +94,25 @@ const UserInfoCard = () => {
                     followerCount: newFollowerCount,
                 });
             });
+    };
+
+    const followerName = (id, add) => {
+        if(add === true) {
+            firebase
+            .user(id)
+            .child('/followers')
+            .update({
+                [user.username]: {
+                    username: user.username
+                }
+            });
+        } else {
+            firebase
+            .user(id)
+            .child(`/followers/${user.username}`)
+            .remove();
+        }
+
     };
 
     const removeFollowerCount = (id) => {
