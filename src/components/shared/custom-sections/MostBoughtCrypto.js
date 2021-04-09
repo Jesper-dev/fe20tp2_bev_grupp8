@@ -4,11 +4,15 @@ import { useSelector } from 'react-redux';
 import CryptoCard from '../card/crypto-card/CryptoCard';
 import { SectionWrapper } from './CustomComponentsElements';
 
+import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
+
 const MostBoughtCrypto = () => {
     const Users = useSelector((state) => state.Users);
 
     const [orgDataListState, setOrgDataListState] = useState([]);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
+
+    let LabelsArr = ['icon', 'name', 'price', 'change 24h ▾', 'info'];
 
     useEffect(() => {
         makeBoughtArray(Users);
@@ -70,6 +74,7 @@ const MostBoughtCrypto = () => {
                 Hottest cryptos{' '}
                 <i className="fas fa-fire-alt" style={{ color: 'orange' }}></i>
             </h3>
+            <SectionDataIndicator LabelsArr={LabelsArr} />
             {orgBoughtData.map((item, index) => {
                 return (
                     <CryptoCard

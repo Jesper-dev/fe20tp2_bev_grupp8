@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 export const ContentWrapper = styled.div`
     padding: 1rem;
     margin-bottom: 3.5rem;
-    margin-left: calc(100vw - 100%); // https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
+    margin-left: calc(
+        100vw - 100%
+    ); // https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
 
     @media screen and (min-width: 1024px) {
         margin-left: 14rem;
@@ -17,6 +19,23 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     gap: 1.5rem;
 
+    .follow-info-wrapper {
+        width: 100%;
+        max-width: 16rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .followers-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        span:nth-child(2) {
+            font-size: 0.8rem;
+        }
+    }
+
     & > section {
         display: flex;
         justify-content: space-between;
@@ -27,7 +46,7 @@ export const HeaderWrapper = styled.header`
         & > div {
             display: flex;
             align-items: center;
-            gap:0.75rem;
+            gap: 0.75rem;
 
             img {
                 margin: 0%;

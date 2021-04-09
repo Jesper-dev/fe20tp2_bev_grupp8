@@ -79,8 +79,25 @@ const Profile = () => {
                         ) : (
                             <ProfileImg img={ProfileImgReducer} />
                         )}
+
                         <span>{username}</span>
-                        <span>Followers: {followerCount} </span>
+                    </div>
+                    <div className="follow-info-wrapper">
+                        <div className="followers-wrapper">
+                            <span>
+                                {' '}
+                                {followerCount > 0 ? followerCount : 0}{' '}
+                            </span>
+                            <span>Followers</span>
+                        </div>
+
+                        <div className="followers-wrapper">
+                            <span>
+                                {' '}
+                                {followerCount > 0 ? followerCount : 0}{' '}
+                            </span>
+                            <span>Following</span>
+                        </div>
                     </div>
                     <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
                         <i className="fas fa-user-edit"></i>

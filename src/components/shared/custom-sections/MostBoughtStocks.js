@@ -16,7 +16,7 @@ const MostBoughtStocks = () => {
     const [orgDataListState, setOrgDataListState] = useState([]);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
 
-    let LabelsArr = ['symbol', 'price', 'change 24h ▾'];
+    let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
 
     useEffect(() => {
         let orgDataArr = [];

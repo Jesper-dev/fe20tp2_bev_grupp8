@@ -4,7 +4,7 @@ import { ContentWrapper } from './CustomComponentsElements';
 import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
 
 const RecommendationHome = ({ MockData }) => {
-    let LabelsArr = ['symbol', 'price', 'change 24h'];
+    let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
     return (
         <>
             <ContentWrapper>

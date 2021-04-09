@@ -29,6 +29,8 @@ export const PortOverviewWrapper = styled.article`
         }
 
         .total {
+            display: flex;
+            flex-direction: column;
             font-weight: 500;
         }
 

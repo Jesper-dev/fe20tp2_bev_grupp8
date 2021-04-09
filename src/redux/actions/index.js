@@ -125,3 +125,9 @@ export const setFetchedCryptos = (cryptos) => {
         payload: cryptos,
     };
 };
+export const setFetchedStocks = (stocks) => {
+    return {
+        type: 'FETCHEDSTOCKS',
+        payload: stocks,
+    };
+};

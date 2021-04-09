@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { chosenShare } from '../../../../redux/actions';
 
+import UsFlag from '../../../svgs/flags/America';
+
 let chosenShareArray = [];
 
 const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
@@ -20,6 +22,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
 
     return (
         <CardWrapper id={name} onClick={() => setChosenStockOption(name)}>
+            <UsFlag />
             {/* <span>⭐</span> */}
             {!amount ? (
                 ''

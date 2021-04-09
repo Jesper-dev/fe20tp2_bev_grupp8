@@ -2,7 +2,14 @@ import React from 'react';
 import { PortOverviewWrapper } from './PortfolioOverviewCardElements';
 // import { ContentWrapper as AnotherWrapper } from '../../homepage-custom-sections/HomepageComponentsElements.js';
 
-const PortfolioOverviewCard = ({ total, difference, percent }) => {
+const PortfolioOverviewCard = ({
+    total,
+    difference,
+    percent,
+    stockvalue,
+    cryptovalue,
+}) => {
+    console.log(stockvalue);
     return (
         <PortOverviewWrapper>
             <header>
@@ -20,7 +27,16 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
                     </span>
                 </h2>
                 <span className="total">
-                    Total: <span>{total}$</span>
+                    {/*   Cash: <span>{total}$</span> */}
+                    {/*        Crypto: <span>{cryptovalue.toFixed(2)}$</span>
+                    Securities: <span>{stockvalue.toFixed(2)}$</span> */}
+                    Total assets:{' '}
+                    <span>
+                        {(parseFloat(total) + cryptovalue + stockvalue).toFixed(
+                            2
+                        )}
+                        $
+                    </span>
                 </span>
             </header>
         </PortOverviewWrapper>

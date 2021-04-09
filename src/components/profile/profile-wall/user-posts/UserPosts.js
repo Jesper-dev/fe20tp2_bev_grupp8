@@ -18,8 +18,8 @@ const UserPosts = () => {
             .on('value', (snapshot) => {
                 let data = snapshot.val();
 
-                const arrOfArr = Object.entries(data);
-                setUserPosts(arrOfArr);
+                /*       const arrOfArr = Object.entries(data);
+                setUserPosts(arrOfArr); */
             });
     }, []);
     return (

@@ -17,6 +17,7 @@ import Searching from './Searching';
 import PossessionCrypto from './PossessionCrypto';
 import PossessionStocks from './PossessionStocks';
 import FetchedCryptoValues from './FetchedCryptoValues';
+import FetchedStockValues from './FetchedStockValues';
 
 import { combineReducers } from 'redux';
 
@@ -31,7 +32,6 @@ const allReducers = combineReducers({
     SeeRecommendations,
     SeeFollowing,
     SeeNews,
-    ProfileImgReducer,
     OrgLogoReducer,
     Users,
     FilteredUsers,
@@ -40,6 +40,8 @@ const allReducers = combineReducers({
     PossessionCrypto,
     PossessionStocks,
     FetchedCryptoValues,
+    FetchedStockValues,
+    ProfileImgReducer,
 });
 
 export default allReducers;
