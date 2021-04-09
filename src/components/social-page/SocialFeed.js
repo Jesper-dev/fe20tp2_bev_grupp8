@@ -1,19 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
 import UserPostCard from '../profile/profile-wall/user-posts/UserPostCard';
-// import LikedPostsElement from "./LikedPostsElement";
+import LikedPostsElement from "../profile/profile-wall/liked-posts/LikedPostsElement";
 import { FirebaseContext } from '../firebase/context';
 
 const SocialFeed = () => {
 	const userData = JSON.parse(localStorage.getItem('authUser'));
 	const firebase = useContext(FirebaseContext);
-	const [usersList, setUsersList] = useState([])
 	const [followingList, setFollowingList] = useState([])
 	const [followingPostsList, setFollowingPostsList] = useState([])
 	const [mounted, setMounted] = useState(true)
 
     useEffect(() => {
 		setMounted(false)
-		getUsers()
+		getPostsFromFollowing()
 		// findFollowingUsers()
 		// getFollowingUserPosts(usersList, followingList)
 		// firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
@@ -35,7 +34,7 @@ const SocialFeed = () => {
 		}
 	}, [firebase.db, userData.uid, mounted]);
 
-	const getUsers = () => {
+	const getPostsFromFollowing = () => {
         firebase.users().once('value', (snapshot) => {
             const data = snapshot.val();
             let users = [];
@@ -48,7 +47,6 @@ const SocialFeed = () => {
 				}
                 users.push(obj);
             }
-			setUsersList(users)
 			findFollowingUsers(users)
         });
 	}
@@ -64,29 +62,43 @@ const SocialFeed = () => {
 				for (const key in data) {
 					following.push(data[key].username);
 				}
-				console.log(array[0].posts)
-				following.forEach((item, index) => {
-					if(item === array[index].username) {
-						array[index].posts ? list.push(array[index].posts) : console.log("Nej")
+
+				console.log(array)
+				let j = 0;
+				for(let i = 0; j < array.length; i++){
+					if(array[i] == undefined) {
+						i = 0;
+						j += 1
 					}
-				})
-				getFollowingUserPosts(list)
+                    if(following[j] == array[i].username) {
+						list.push(array[i].posts)
+                        console.log("The same")
+					}
+				}
+
+				// following.forEach((item, index) => {
+				// 	console.log(item, array[index].posts)
+				// 	if(item.username === array[index].username) {
+				// 		list.push(array[index].posts)
+				// 	}
+				// 	console.log(index)
+				// })
+				// console.log(list)
+				// getFollowingUserPosts(list)
 			});
 	}
 
 	const getFollowingUserPosts = (array) => {
 		let userPosts = []
-		array.forEach((item, index) => {
+		array.forEach((item) => {
 			userPosts.push(item)
 
 		})
-		console.log(userPosts)
 		let list = makePostsList(userPosts)
 		setFollowingPostsList(list)
 	}
 
 	const makePostsList = (array) => {
-        console.log(array[0])
 		let postsList = []
 		array.forEach((item, index) => {
 			for(const key in item) {
@@ -123,22 +135,22 @@ const SocialFeed = () => {
 
 return(
 
-	<div>
-		<h1>Hej</h1>
+	<LikedPostsElement>
+		<h2>Recent posts from people you follow</h2>
 		{followingPostsList ? followingPostsList.map((item, index) => {
             return (
                 <UserPostCard
-                key={index}
-                username={item.username}
-                content={item.content}
-                timestamp={item.timestamp}
-                liked={item.liked}
-                likeCount={item.likeCount}
-                // handleChange={handleChange}
+                    key={index}
+                    username={item.username}
+                    content={item.content}
+                    timestamp={item.timestamp}
+                    liked={item.liked}
+                    likeCount={item.likeCount}
+                    // handleChange={handleChange}
                 />
             )
         }) : 'No liked posts'}
-	</div>
+	</LikedPostsElement>
 
     // <LikedPostsElement>
     //     <h1>Liked posts</h1>

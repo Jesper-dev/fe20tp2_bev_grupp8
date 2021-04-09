@@ -28,118 +28,17 @@ import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
 
+// import {getOrgColor, setColorPalette} from './components/shared/functions/colorTheme';
+
 const App = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
 
-	const root = document.querySelector(':root');
-
-	const [primaryColorValues, setPrimaryColorValues] = useState([231, 89, 64]);
-
-	useEffect(() => {
-     /*    if(!user) return  */
-		if (user && user.organization) {
-			getColor();
-		} else if (user) {
-			getColorPalette(primaryColorValues);
-		}
-    }, []);
-
-    const getColor = () => {
-        firebase
-            .organization(user.organization)
-            .child('/colors')
-            .on('value', (snapshot) => {
-                const data = snapshot.val();
-                const h = data.primaryColor.h;
-                const s = data.primaryColor.s;
-                const l = data.primaryColor.l;
-
-				setPrimaryColorValues([h, s, l]);
-				getColorPalette([h, s, l]);
-            });
-    };
-
-    const getColorPalette = primaryColorValues => {
-        root.style.setProperty(
-            '--clr-primary',
-            setColor(primaryColorValues, 'primary')
-        );
-        root.style.setProperty(
-            '--clr-primary__brighter',
-            setColor(primaryColorValues, 'primary__brighter')
-        );
-        root.style.setProperty(
-            '--clr-primary__dimmer',
-            setColor(primaryColorValues, 'primary__dimmer')
-        );
-
-        root.style.setProperty(
-            '--clr-primary-light',
-            setColor(primaryColorValues, 'primary-light')
-        );
-        root.style.setProperty(
-            '--clr-primary-light__dimmer',
-            setColor(primaryColorValues, 'primary-light__dimmer')
-        );
-
-        console.log(
-            `--clr-primary: ${window
-                .getComputedStyle(root)
-                .getPropertyValue('--clr-primary')}`
-        );
-        console.log(
-            `--clr-primary__brighter: ${window
-                .getComputedStyle(root)
-                .getPropertyValue('--clr-primary__brighter')}`
-        );
-        console.log(
-            `--clr-primary__dimmer: ${window
-                .getComputedStyle(root)
-                .getPropertyValue('--clr-primary__dimmer')}`
-        );
-        console.log(
-            `--clr-primary-light: ${window
-                .getComputedStyle(root)
-                .getPropertyValue('--clr-primary-light')}`
-        );
-        console.log(
-            `--clr-primary-light__dimmer: ${window
-                .getComputedStyle(root)
-                .getPropertyValue('--clr-primary-light__dimmer')}`
-        );
-    };
-
-    const setColor = (primaryColorValues, str) => {
-        const [h, s, l] = primaryColorValues;
-
-        let newLightness;
-
-        switch (str) {
-            case 'primary':
-                newLightness = l;
-                break;
-            case 'primary__brighter':
-                newLightness = l + 4;
-                break;
-            case 'primary__dimmer':
-                newLightness = l - 4;
-                break;
-            case 'primary-light':
-                newLightness = 94;
-                break;
-            case 'primary-light__dimmer':
-                newLightness = 90;
-                break;
-            default:
-                newLightness = l;
-                break;
-        }
-
-        const hsl = `hsl(${h}, ${s}%, ${newLightness}%)`;
-
-        return hsl;
-    };
+	// useEffect(() => {
+	// 	if (user && user.organization) {
+    //         setColorPalette(getOrgColor(firebase));
+	// 	}
+    // }, []);
 
     return (
         <>
@@ -250,15 +149,15 @@ const GlobalStyle = createGlobalStyle`
     --clr-almost-white: hsl(0, 0%, 98%);
     --clr-almost-black: hsl(0, 0%, 16%);
 
-/* Default color scheme
+    /* Default color scheme */
 
-	--clr-primary: hsl(32, 89%, 51%);
-	--clr-primary__brighter: hsl(32, 89%, 55%);
-	--clr-primary__dimmer: hsl(32, 89%, 47%);
-	--clr-primary-light: hsl(32, 89%, 94%);
-	--clr-primary-light__dimmer: hsl(32, 89%, 90%);
+	--clr-primary: hsl(231, 89%, 64%);
+	--clr-primary__brighter: hsl(231, 89%, 68%);
+	--clr-primary__dimmer: hsl(231, 89%, 60%);
+	--clr-primary-light: hsl(231, 89%, 94%);
+	--clr-primary-light__dimmer: hsl(231, 89%, 90%);
 
-*/
+
 
     //Darkblue-Purple-ish
     --primary: #3E80DE;

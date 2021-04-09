@@ -6,7 +6,7 @@ import { ContentWrapper } from './CustomComponentsElements';
 import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
 
 const FollowingHome = ({ array }) => {
-    let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
+    let LabelsArr = [<i className="fas fa-globe"></i>, 'symbol', 'price', 'change 24h ▾'];
     return (
         <>
             <ContentWrapper>

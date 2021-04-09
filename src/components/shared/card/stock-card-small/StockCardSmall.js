@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardWrapper } from './StockCardElements';
+import { CardWrapper } from './StockCardSmallElements';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { chosenShare } from '../../../../redux/actions';
@@ -8,7 +8,7 @@ import UsFlag from '../../../svgs/flags/America';
 
 let chosenShareArray = [];
 
-const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
+const StockCardSmall = ({ name, cost, percent, fav, stocksList, amount }) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const setChosenStockOption = (name) => {
@@ -22,7 +22,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
 
     return (
         <CardWrapper id={name} onClick={() => setChosenStockOption(name)}>
-
+            <UsFlag />
             {/* <span>⭐</span> */}
             {!amount ? (
                 ''
@@ -35,7 +35,6 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
                     ></i>
                 </span>
             )}
-            <UsFlag />
             <span>{name}</span>
             <span>{cost ? cost.toFixed(2) : 20} $</span>
 
@@ -62,4 +61,4 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
     );
 };
 
-export default StockCard;
+export default StockCardSmall;

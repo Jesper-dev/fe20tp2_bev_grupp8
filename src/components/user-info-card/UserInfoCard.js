@@ -15,6 +15,7 @@ const UserInfoCard = () => {
     const [userData, setUserData] = useState();
     const [followed, setFollowed] = useState(false);
     const [uniId, setUniId] = useState('');
+    const [userPostsList, setUserPostsList] = useState('');
     useEffect(() => {
         const usersRef = firebase.users();
         usersRef
@@ -23,10 +24,22 @@ const UserInfoCard = () => {
             .on('child_added', (snapshot) => {
                 const data = snapshot.val();
                 setUserData(snapshot.val());
+                let postArray = makePostsList(data.posts)
+                setUserPostsList(postArray)
+                console.log(data)
                 checkIfFollowed(data.username);
                 findUser(data.username);
             });
     }, [firebase, id]); //changed!
+
+    const makePostsList = (array) => {
+        let lists = []
+        for(const key in array) {
+            lists.push(array[key])
+        }
+        console.log('Post List: ', lists)
+        return lists;
+    };
 
     const checkIfFollowed = (username) => {
         firebase
@@ -179,8 +192,8 @@ const UserInfoCard = () => {
                             {followed ? 'Unfollow' : 'follow'}
                         </GenericVestBtn>
                     </div>
-                    {userData.post.posts.length > 0 ? (
-                        userData.post.posts.map((postObj, index) => {
+                    {userPostsList.length > 0 ? (
+                        userPostsList.map((postObj, index) => {
                             return (
                                 // <div key={index} className="post-card">
                                 // 	<p>{postObj.content}</p>

@@ -19,6 +19,12 @@ const UserPostCard = ({
             .user(userId)
             .child('/posts')
             .on('value', (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val()
+                    console.log(childKey)
+
+                });
                 let data = snapshot.val();
             });
 
