@@ -38,12 +38,13 @@ const SocialFeed = () => {
         firebase.users().once('value', (snapshot) => {
             const data = snapshot.val();
             let users = [];
+			console.log(data)
             for (const key in data) {
 				const obj = {
 					id: key,
 					username: data[key].username,
 					email: data[key].email,
-					posts: data[key].posts
+					recentPost: data[key].recentPost
 				}
                 users.push(obj);
             }
@@ -62,8 +63,6 @@ const SocialFeed = () => {
 				for (const key in data) {
 					following.push(data[key].username);
 				}
-
-				console.log(array)
 				let j = 0;
 				for(let i = 0; j < array.length; i++){
 					if(array[i] == undefined) {
@@ -71,20 +70,10 @@ const SocialFeed = () => {
 						j += 1
 					}
                     if(following[j] == array[i].username) {
-						list.push(array[i].posts)
-                        console.log("The same")
+						list.push(array[i].recentPost)
 					}
 				}
-
-				// following.forEach((item, index) => {
-				// 	console.log(item, array[index].posts)
-				// 	if(item.username === array[index].username) {
-				// 		list.push(array[index].posts)
-				// 	}
-				// 	console.log(index)
-				// })
-				// console.log(list)
-				// getFollowingUserPosts(list)
+				getFollowingUserPosts(list)
 			});
 	}
 
@@ -92,7 +81,6 @@ const SocialFeed = () => {
 		let userPosts = []
 		array.forEach((item) => {
 			userPosts.push(item)
-
 		})
 		let list = makePostsList(userPosts)
 		setFollowingPostsList(list)
@@ -146,6 +134,7 @@ return(
                     timestamp={item.timestamp}
                     liked={item.liked}
                     likeCount={item.likeCount}
+					picture={item.picture}
                     // handleChange={handleChange}
                 />
             )

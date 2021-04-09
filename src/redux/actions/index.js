@@ -131,3 +131,21 @@ export const setFetchedStocks = (stocks) => {
         payload: stocks,
     };
 };
+export const setTotalAssets = (value) => {
+    return {
+        type: 'SETTOTALASSETS',
+        payload: value,
+    };
+};
+export const setTotalCrypto = (value) => {
+    return {
+        type: 'SETTOTALCRYPTO',
+        payload: value,
+    };
+};
+export const setTotalStocks = (value) => {
+    return {
+        type: 'SETTOTALSTOCKS',
+        payload: value,
+    };
+};

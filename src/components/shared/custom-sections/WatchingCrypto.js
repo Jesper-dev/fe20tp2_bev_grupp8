@@ -7,7 +7,7 @@ import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndi
 
 import { ContentWrapper } from './CustomComponentsElements';
 
-const WatchingCrypto = ({ cryptoList }) => {
+const WatchingCrypto = ({ cryptoList, gap }) => {
     let LabelsArr = ['icon', 'name', 'price', 'change 24h ▾', 'info'];
 
     const [cryptoData, setCryptoData] = useState(null);
@@ -54,7 +54,7 @@ const WatchingCrypto = ({ cryptoList }) => {
     }, [FollowingCrypto, cryptoList]); */
 
     return (
-        <ContentWrapper>
+        <ContentWrapper  gap={gap}>
             <h3>Watching Cryptocurrencies </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {cryptoList.map((item, index) => {

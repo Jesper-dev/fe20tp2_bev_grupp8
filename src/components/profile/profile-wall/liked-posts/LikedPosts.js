@@ -63,7 +63,8 @@ const LikedPosts = () => {
 	};
 
     return(
-		<LikedPostsElement>
+		<>bye anton</>
+/* 		<LikedPostsElement>
 			<h1>Liked posts</h1>
 			{likedPosts ? likedPosts.map((item, index) => {
 				return (
@@ -78,7 +79,7 @@ const LikedPosts = () => {
 					/>
 				)
 			}) : 'No liked posts'}
-    	</LikedPostsElement>
+    	</LikedPostsElement> */
 	);
 };
 

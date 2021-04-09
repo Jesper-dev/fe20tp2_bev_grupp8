@@ -3,11 +3,11 @@ import StockCard from '../card/stock-card/StockCard';
 import { ContentWrapper } from './CustomComponentsElements';
 import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
 
-const RecommendationHome = ({ MockData }) => {
+const RecommendationHome = ({ MockData, gap }) => {
     let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
     return (
         <>
-            <ContentWrapper>
+            <ContentWrapper gap={gap} >
                 <h3>Recommendations</h3>
                 <SectionDataIndicator LabelsArr={LabelsArr} />
                 {MockData.finance.result[0].quotes

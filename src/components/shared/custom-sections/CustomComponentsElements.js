@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ContentWrapper = styled.section`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: ${props => props.gap};
     width: 100%;
     max-width: 40rem;
     text-align: center;

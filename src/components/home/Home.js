@@ -30,6 +30,8 @@ import {
 } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
+import {setOrgColor} from '../shared/functions/colorTheme';
+
 const Home = () => {
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
@@ -88,6 +90,10 @@ const Home = () => {
         setFollowingArr(followingStocksList);
         setFollowingArrCrypto(followingCryptoList);
 
+		if (user && user.organization) {
+			setOrgColor(firebase, user);
+		}
+
         firebase
             .user(user.uid)
             .child('/currency')
@@ -107,6 +113,7 @@ const Home = () => {
 
     return (
         <>
+     {/*    <FetchUserAssets stocksPossesionState={stocksPossesionState} cryptoPossesionState={cryptoPossesionState} currency={currency} /> */}
             <ContentWrapper>
                 <MainWrapper>
                     <section>
@@ -129,16 +136,17 @@ const Home = () => {
                     )}
                     {watchingCryptos ? (
                         <WatchingCrypto
+                        gap="0.5rem"
                             cryptoList={followingArrCrypto.slice(0, 3)}
                         />
                     ) : (
                         ''
                     )}
                     {watchingSecuritys ? (
-                        <WatchingStocks array={followingArr} />
+                        <WatchingStocks stockscardsmall={false} gap="0.5rem" array={followingArr} />
                     ) : null}
 
-                    {rec ? <RecommendationHome MockData={MockData} /> : ''}
+                    {rec ? <RecommendationHome gap="0.5rem" MockData={MockData} /> : ''}
                 </MainWrapper>
             </ContentWrapper>
         </>

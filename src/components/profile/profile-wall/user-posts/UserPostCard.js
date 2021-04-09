@@ -1,56 +1,74 @@
-import React, { useContext } from 'react';
-import UserPostCardWrapper from './UserPostCardElement';
-import { FirebaseContext } from '../../../firebase/context';
+// import React, {useEffect, useState, useContext } from 'react';
+// import UserPostCardWrapper from './UserPostCardElement';
+// import { FirebaseContext } from '../../../firebase/context';
 
-const UserPostCard = ({
-    uid,
-    username,
-    content,
-    timestamp,
-    likeCount,
-    liked,
-}) => {
-    const firebase = useContext(FirebaseContext);
+// const UserPostCard = ({
+//     uid,
+//     username,
+//     content,
+//     timestamp,
+//     likeCount,
+//     liked,
+//     picture
+// }) => {
+//     const firebase = useContext(FirebaseContext);
 
-    const handleChange = (evt) => {
-        const userId = firebase.auth.currentUser.uid;
+//     const [posts, setPosts] = useState([]);
 
-        firebase
-            .user(userId)
-            .child('/posts')
-            .on('value', (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    var childKey = childSnapshot.key;
-                    var childData = childSnapshot.val()
-                    console.log(childKey)
+//     const user = JSON.parse(localStorage.getItem('authUser'));;
 
-                });
-                let data = snapshot.val();
-            });
+//     useEffect(() => {
+//         firebase
+//             .posts()
+//             .on("value", snapshot => {
+//                 const data = snapshot.val();
+//                 console.log(Object.values(data));
+//                 setPosts(Object.values(data));
+//             });
+//     }, [])
 
-        // toggle liked boolean on user/posts/uid
-        // update like count for user/posts && posts
-    };
+//     const handleChange = () => {
+//         const post = posts.find(post => post.uid => uid);
+//         const likedPostIndex = post.likedUsers.findIndex(user => user === userId);
 
-    return (
-        <UserPostCardWrapper>
-            <h2>{username}</h2>
-            <p>{content}</p>
-            <time>{new Date(timestamp).toLocaleDateString()}</time>
-            <div>
-                <label>
-                    <input
-                        className="checkbox"
-                        type="checkbox"
-                        checked={liked}
-                        onChange={handleChange}
-                    />
-                    <i className="fas fa-heart"></i>
-                </label>
-                <span className="likes">{likeCount}</span>
-            </div>
-        </UserPostCardWrapper>
-    );
-};
+//         if (likedPostIndex === -1) {
+//             post.likedUsers.push(userId);
+//             post.likeCount++;
+//         } else {
+//             post.likedUsers.splice(likedPostIndex, 1);
+//             post.likeCount--;
+//         }
 
-export default UserPostCard;
+//         updateData(post);
+//     };
+
+//     const updateData = posts => {
+
+//         firebase.posts().child(uid).update(
+//             post
+//         );
+//     }
+
+//     return (
+//         <UserPostCardWrapper>
+//             <h2>{username}</h2>
+//             <p>{content}</p>
+//             <img src={picture ? picture : ''} />
+//             <time>{new Date(timestamp).toLocaleDateString()}</time>
+//             <div>
+//                 <label>
+//                     <input
+//                         className="checkbox"
+//                         type="checkbox"
+//                         checked={liked}
+//                         onChange={handleChange}
+//                     />
+//                     <i className="fas fa-heart"></i>
+//                 </label>
+//                 <span className="likes">{likeCount}</span>
+//             </div>
+//         </UserPostCardWrapper>
+//     );
+// };
+
+// export default UserPostCard;

@@ -22,6 +22,12 @@ const UserPostCardWrapper = styled.article`
 		font-size: 0.875rem;
 	}
 
+	img {
+		width: 12%;
+		height: 12%;
+		border-radius: 10px;
+	}
+
 	& > div {
 		display: flex;
 		align-items: center;

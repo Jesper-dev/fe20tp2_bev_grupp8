@@ -1,7 +1,6 @@
-const user = JSON.parse(localStorage.getItem('authUser'));
 const root = document.querySelector(":root");
 
-export const getOrgColor = firebase => {
+export const setOrgColor = (firebase, user) => {
 	firebase
 		.organization(user.organization)
 		.child('/colors')
@@ -11,11 +10,12 @@ export const getOrgColor = firebase => {
 			const s = data.primaryColor.s;
 			const l = data.primaryColor.l;
 
-			return [h, s, l];
+			getColorPalette([h, s, l]);
 		});
 };
 
-export const setColorPalette = primaryColorValues => {
+const getColorPalette = primaryColorValues => {
+	console.log(primaryColorValues);
 	root.style.setProperty(
 		'--clr-primary',
 		setColor(primaryColorValues, 'primary')

@@ -18,6 +18,7 @@ import PossessionCrypto from './PossessionCrypto';
 import PossessionStocks from './PossessionStocks';
 import FetchedCryptoValues from './FetchedCryptoValues';
 import FetchedStockValues from './FetchedStockValues';
+import { TotalAssets, TotalCrypto, TotalStocks } from './Values'
 
 import { combineReducers } from 'redux';
 
@@ -41,6 +42,9 @@ const allReducers = combineReducers({
     PossessionStocks,
     FetchedCryptoValues,
     FetchedStockValues,
+    TotalAssets,
+    TotalCrypto,
+    TotalStocks,
     ProfileImgReducer,
 });
 

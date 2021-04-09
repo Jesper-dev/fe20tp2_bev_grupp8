@@ -19,6 +19,7 @@ const writeNewPost = (uid, username, picture, postData) => {
         liked: false,
         timestamp: Date.now(),
         uid: uid,
+        likedUsers: [''],
       //body: body,
       //title: title,
         //likes: 0,
@@ -37,6 +38,20 @@ const writeNewPost = (uid, username, picture, postData) => {
 
     firebase.users().update(updatesUser);
     return firebase.posts().update(updates);
+  }
+
+  const addToRecentPost = (uid, username, picture, postData) => {
+      firebase.user(uid).child('/recentPost/').set({
+        postData: {
+            username: username,
+            content: postData,
+            likeCount: 0,
+            liked: false,
+            timestamp: Date.now(),
+            uid: uid,
+            picture: picture,
+        },
+      })
   }
 
 
@@ -71,13 +86,14 @@ const writeNewPost = (uid, username, picture, postData) => {
             }
         });
 
-if (postData) {
+        if (postData) {
           writeNewPost(userData.uid, userData.username, profilePic, postData)
-/*             userPostsArr.push(postObj);
+            /*userPostsArr.push(postObj);
             updateData(userPostsArr); */
             setPostData('');
 			document.querySelector("textarea").classList.remove('not-empty');
         }
+        addToRecentPost(userData.uid, userData.username, profilePic, postData)
     };
 
     return (

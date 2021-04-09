@@ -5,17 +5,22 @@ export const CardWrapper = styled.article`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0.5rem 0.75rem;
+    padding: 0.1rem 0.9rem;
     border-radius: 0.25rem;
     box-shadow: var(--box-shadow-cards);
+    max-width: 20rem;
     width: 100%;
-    min-height: 3rem;
-    /* max-height: 48px; */
+    min-height: 2rem;
+    max-height: 48px;
     background: var(--body);
+
+    svg{
+        width: 20px;
+    }
 
     & > span {
         flex: 1;
-        font-size: 1rem;
+        font-size: 0.8rem;
         font-weight: 600;
         text-align: center;
         white-space: nowrap;
@@ -28,8 +33,8 @@ export const CardWrapper = styled.article`
         padding: 0.25rem;
         border-radius: 50%;
         outline: none;
-        width: 2rem;
-        height: 2rem;
+        width: 1rem;
+        height: 1rem;
         line-height: 0;
         text-decoration: none;
         user-select: none;

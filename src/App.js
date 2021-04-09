@@ -28,17 +28,17 @@ import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
 
-// import {getOrgColor, setColorPalette} from './components/shared/functions/colorTheme';
+import {setOrgColor} from './components/shared/functions/colorTheme';
 
 const App = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
 
-	// useEffect(() => {
-	// 	if (user && user.organization) {
-    //         setColorPalette(getOrgColor(firebase));
-	// 	}
-    // }, []);
+	useEffect(() => {
+		if (user && user.organization) {
+			setOrgColor(firebase, user);
+		}
+    }, []);
 
     return (
         <>
