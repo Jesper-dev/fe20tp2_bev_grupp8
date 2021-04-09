@@ -82,35 +82,37 @@ const Profile = () => {
 
                         <span>{username}</span>
                     </div>
-                    <div className="follow-info-wrapper">
-                        <div className="followers-wrapper">
-                            <span>
-                                {' '}
-                                {followerCount > 0 ? followerCount : 0}{' '}
-                            </span>
-                            <span>Followers</span>
-                        </div>
+                    <div className="btn-and-wollower-wrapper">
+                        <div className="follow-info-wrapper">
+                            <div className="followers-wrapper">
+                                <span>
+                                    {' '}
+                                    {followerCount > 0 ? followerCount : 0}{' '}
+                                </span>
+                                <span>Followers</span>
+                            </div>
 
-                        <div className="followers-wrapper">
-                            <span>
-                                {' '}
-                                {followerCount > 0 ? followerCount : 0}{' '}
-                            </span>
-                            <span>Following</span>
+                            <div className="followers-wrapper">
+                                <span>
+                                    {' '}
+                                    {followerCount > 0 ? followerCount : 0}{' '}
+                                </span>
+                                <span>Following</span>
+                            </div>
                         </div>
-                    </div>
-                    <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                        <i className="fas fa-user-edit"></i>
-                        Edit Profile
-                    </ProfileSettingsBtn>
-                    {isAdmin ? (
-                        <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
-                            <i className="fas fa-user-shield"></i>
-                            Edit Organization
+                        <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
+                            <i className="fas fa-user-edit"></i>
+                            Edit Profile
                         </ProfileSettingsBtn>
-                    ) : (
-                        ''
-                    )}
+                        {isAdmin ? (
+                            <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
+                                <i className="fas fa-user-shield"></i>
+                                Edit Organization
+                            </ProfileSettingsBtn>
+                        ) : (
+                            ''
+                        )}
+                    </div>
                 </section>
                 <TabBar tabs={tabs} />
             </HeaderWrapper>

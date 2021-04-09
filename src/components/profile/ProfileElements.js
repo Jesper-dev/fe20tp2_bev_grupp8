@@ -20,11 +20,18 @@ export const HeaderWrapper = styled.header`
     gap: 1.5rem;
 
     .follow-info-wrapper {
+        @media screen and (min-width: 1024px) {
+            width: 100%;
+            max-width: 16rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
         width: 100%;
-        max-width: 16rem;
+        max-width: 8rem;
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+        flex-direction: column;
+        /* justify-content: space-evenly; */
     }
 
     .followers-wrapper {
@@ -36,9 +43,28 @@ export const HeaderWrapper = styled.header`
         }
     }
 
+    .btn-and-wollower-wrapper {
+        @media screen and (min-width: 1024px) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 40rem;
+        }
+        display: flex;
+    }
+
     & > section {
+        @media screen and (min-width: 1024px) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 40rem;
+        }
         display: flex;
         justify-content: space-between;
+        flex-direction: column;
         align-items: center;
         width: 100%;
         max-width: 40rem;
