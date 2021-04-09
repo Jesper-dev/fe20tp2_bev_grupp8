@@ -4,6 +4,7 @@ import { FirebaseContext } from '../firebase/context'
 import UserCard from './UserCard'
 
 import SocialPost from './SocialPost';
+import SocialFeed from './SocialFeed'
 import SearchBar from '../shared/search-bar/SearchBar'
 
 import { setUsers } from '../../redux/actions';
@@ -49,7 +50,7 @@ const SocialPage = () => {
                         )
                     }) : <SocialPost />}
 
-
+                <SocialFeed />
                 </MainWrapper>
         </ContentWrapper>
     );
