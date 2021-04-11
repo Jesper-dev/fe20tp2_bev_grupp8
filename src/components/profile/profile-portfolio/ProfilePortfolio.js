@@ -13,7 +13,8 @@ import PossessionCrypto from './profile-possession/PossessionCrypto';
 import DistributionPortfolioChart from './profile-possession-chart/ProfilePossessionChart';
 import FetchedStockValues from '../../../redux/reducers/FetchedStockValues';
 
-import FetchUserAssets from '../../../api/user-api-components/FetchUserAssets'
+import FetchUserCrypto from '../../../api/user-api-components/FetchUserCrypto';
+import FetchUserStocks from '../../../api/user-api-components/FetchUserStocks';
 
 const ProfilePortfolio = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -98,17 +99,14 @@ const ProfilePortfolio = () => {
 
     return (
         <>
-            <FetchUserAssets stocksPossesionState={stocksPossesionState} cryptoPossesionState={cryptoPossesionState} currency={currency} />
+            <FetchUserCrypto />
+            <FetchUserStocks />
             <PortfolioOverview
                 total={currency.toLocaleString()}
                 stockvalue={valueStocks}
                 cryptovalue={valueCrypto}
             />
-            <DistributionPortfolioChart
-                cryptoPossesionState={cryptoPossesionState}
-                stocksPossesionState={stocksPossesionState}
-                currency={currency}
-            />
+            <DistributionPortfolioChart currency={currency} />
             <Possession stocksPossesionState={stocksPossesionState} />
             <PossessionCrypto cryptoPossesionState={cryptoPossesionState} />
         </>

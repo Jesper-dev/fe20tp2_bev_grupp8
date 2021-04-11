@@ -23,7 +23,6 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 //import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context';
-import { snapshotUserpath } from '../shared/functions/firebase-functions';
 
 import {
     setCryptoPossession,
@@ -33,7 +32,8 @@ import {
 } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-import FetchUserAssets from '../../api//user-api-components/FetchUserAssets';
+import FetchUserCrypto from '../../api//user-api-components/FetchUserCrypto';
+import FetchUserStocks from '../../api//user-api-components/FetchUserStocks';
 import { setOrgColor } from '../shared/functions/colorTheme';
 
 const Home = () => {
@@ -134,12 +134,8 @@ const Home = () => {
 
     return (
         <>
-            <FetchUserAssets
-                stocksPossessionState={stocksPossessionState}
-                cryptoPossessionState={cryptoPossessionState}
-                currency={totalCurrency}
-            />
-
+            <FetchUserCrypto currency={totalCurrency} />
+            <FetchUserStocks currency={totalCurrency} />
             <ContentWrapper>
                 <MainWrapper>
                     <section>
