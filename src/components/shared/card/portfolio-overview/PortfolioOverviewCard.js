@@ -1,15 +1,20 @@
 import React from 'react';
 import { PortOverviewWrapper } from './PortfolioOverviewCardElements';
 // import { ContentWrapper as AnotherWrapper } from '../../homepage-custom-sections/HomepageComponentsElements.js';
+import { useSelector } from 'react-redux';
 
-const PortfolioOverviewCard = ({
-    total,
-    difference,
-    percent,
-    stockvalue,
-    cryptovalue,
-}) => {
-    console.log(stockvalue);
+const PortfolioOverviewCard = ({ total, difference, percent }) => {
+    const TotalStocks = useSelector((state) => state.TotalStocks);
+    const TotalCrypto = useSelector((state) => state.TotalCrypto);
+
+    console.log(total);
+
+    let totalAssets = (
+        parseFloat(total) +
+        parseFloat(TotalCrypto) +
+        parseFloat(TotalStocks)
+    ).toFixed(2);
+
     return (
         <PortOverviewWrapper>
             <header>
@@ -30,13 +35,7 @@ const PortfolioOverviewCard = ({
                     {/*   Cash: <span>{total}$</span> */}
                     {/*        Crypto: <span>{cryptovalue.toFixed(2)}$</span>
                     Securities: <span>{stockvalue.toFixed(2)}$</span> */}
-                    Total assets:{' '}
-                    <span>
-                        {(parseFloat(total) + cryptovalue + stockvalue).toFixed(
-                            2
-                        )}
-                        $
-                    </span>
+                    Total assets: <span>{totalAssets}$</span>
                 </span>
             </header>
         </PortOverviewWrapper>

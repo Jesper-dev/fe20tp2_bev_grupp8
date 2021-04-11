@@ -23,19 +23,25 @@ import { withAuthorization } from '../session'; //must be logged in to see conte
 //import { useSelector } from 'react-redux';
 /* import firebase from 'firebase' */
 import { FirebaseContext } from '../firebase/context';
+import { snapshotUserpath } from '../shared/functions/firebase-functions';
+
 import {
-    setFollowing,
+    setCryptoPossession,
+    setStockPossession,
     setFollowingCrypto,
     setCurrency,
 } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-import {setOrgColor} from '../shared/functions/colorTheme';
+import FetchUserAssets from '../../api//user-api-components/FetchUserAssets';
+import { setOrgColor } from '../shared/functions/colorTheme';
 
 const Home = () => {
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
+    const [stocksPossessionState, setStocksPossesionState] = useState([]);
+    const [cryptoPossessionState, setCryptoPossesionState] = useState([]);
 
     const [rec, setRec] = useState(true);
     const [watchingCryptos, setWatchingCryptos] = useState(true);
@@ -44,6 +50,7 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const [didMount, setDidMount] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -90,9 +97,20 @@ const Home = () => {
         setFollowingArr(followingStocksList);
         setFollowingArrCrypto(followingCryptoList);
 
-		if (user && user.organization) {
-			setOrgColor(firebase, user);
-		}
+        let stocksPossession = [];
+        let cryptoPossession = [];
+
+        getFollowInfo('/possessionStocks', stocksPossession);
+        getFollowInfo('/possessionCrypto', cryptoPossession);
+
+        dispatch(setCryptoPossession(cryptoPossession));
+        dispatch(setStockPossession(stocksPossession));
+        setStocksPossesionState(stocksPossession);
+        setCryptoPossesionState(cryptoPossession);
+
+        if (user && user.organization) {
+            setOrgColor(firebase, user);
+        }
 
         firebase
             .user(user.uid)
@@ -104,7 +122,10 @@ const Home = () => {
                 }
                 setTotalCurrency(currencyData.currency);
                 dispatch(setCurrency(currencyData)); //behöver
+                console.log(currencyData.currency);
             });
+
+        setLoading(false);
 
         return () => {
             setDidMount(false);
@@ -113,15 +134,16 @@ const Home = () => {
 
     return (
         <>
-     {/*    <FetchUserAssets stocksPossesionState={stocksPossesionState} cryptoPossesionState={cryptoPossesionState} currency={currency} /> */}
+            <FetchUserAssets
+                stocksPossessionState={stocksPossessionState}
+                cryptoPossessionState={cryptoPossessionState}
+                currency={totalCurrency}
+            />
+
             <ContentWrapper>
                 <MainWrapper>
                     <section>
-                        <PortfolioOverview
-                            total={totalCurrency.toLocaleString()}
-                            difference={0}
-                            percent={0}
-                        />
+                        <PortfolioOverview total={totalCurrency} />
                     </section>
                     <MostBougthCrypto />
                     <MostBougthStocks />
@@ -136,17 +158,25 @@ const Home = () => {
                     )}
                     {watchingCryptos ? (
                         <WatchingCrypto
-                        gap="0.5rem"
+                            gap="0.5rem"
                             cryptoList={followingArrCrypto.slice(0, 3)}
                         />
                     ) : (
                         ''
                     )}
                     {watchingSecuritys ? (
-                        <WatchingStocks stockscardsmall={false} gap="0.5rem" array={followingArr} />
+                        <WatchingStocks
+                            stockscardsmall={false}
+                            gap="0.5rem"
+                            array={followingArr}
+                        />
                     ) : null}
 
-                    {rec ? <RecommendationHome gap="0.5rem" MockData={MockData} /> : ''}
+                    {rec ? (
+                        <RecommendationHome gap="0.5rem" MockData={MockData} />
+                    ) : (
+                        ''
+                    )}
                 </MainWrapper>
             </ContentWrapper>
         </>

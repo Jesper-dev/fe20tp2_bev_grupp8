@@ -14,12 +14,12 @@ export const MainWrapper = styled.main`
         /*    max-width: 40rem; */
         width: 100%;
     }
-
+    /* 
     @media screen and (min-width: 1064px) {
         flex-direction: row;
         justify-content: space-evenly;
         align-items: flex-start;
 
         gap: 2rem;
-    }
+    } */
 `;

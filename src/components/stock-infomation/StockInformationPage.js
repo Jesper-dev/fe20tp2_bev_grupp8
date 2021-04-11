@@ -69,6 +69,7 @@ const StockInformationPage = () => {
             await axios
                 .request(options)
                 .then((response) => {
+                    console.log(response.data);
                     setStockData(response.data);
                     setLoading(false);
                 })
@@ -142,8 +143,7 @@ const StockInformationPage = () => {
                         <h1>
                             {stockData.quoteType.shortName
                                 ? stockData.quoteType.shortName
-                                : stockData.quoteType.longName
-                            }
+                                : stockData.quoteType.longName}
                         </h1>
                         <div className="chart-topbar-wrapper">
                             <TradeBtns to={`/trade/${stockData.symbol}`}>
@@ -168,7 +168,9 @@ const StockInformationPage = () => {
                             <p>{stockData.symbol}</p>
                             <p>
                                 {/* Det fanns ingen .fmt i slutet */}
-                                Market price: {stockData.financialData.currentPrice.fmt}$
+                                {/*  Market price: {stockData.financialData.currentPrice.fmt} */}
+                                Market price:{' '}
+                                {stockData.price.regularMarketPrice.raw}$
                             </p>
                             {/* <p>
                                 Reg market change:{' '}

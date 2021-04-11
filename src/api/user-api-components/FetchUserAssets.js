@@ -1,120 +1,127 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setFetchedCryptos, setFetchedStocks, setTotalAssets, setTotalCrypto, setTotalStocks } from '../../redux/actions';
+import { FirebaseContext } from '../../components/firebase/context';
 
+import { useDispatch } from 'react-redux';
+import {
+    setFetchedCryptos,
+    setFetchedStocks,
+    setTotalAssets,
+    setTotalCrypto,
+    setTotalStocks,
+} from '../../redux/actions';
 
-const FetchUserAssets = ({ stocksPossesionState, cryptoPossesionState, currency  }) => {
+const FetchUserAssets = ({ currency }) => {
+    const firebase = useContext(FirebaseContext);
+    const user = JSON.parse(localStorage.getItem('authUser'));
     const dispatch = useDispatch();
 
     const [stockData, setStockData] = useState(null);
     const [cryptoData, setCryptoData] = useState(null);
-    const [stockValue, setStockValue] = useState(0);
- /*    const [currentCryptoValue, setCurrentCryptoValue] = useState(250);
-    const [currentStockValue, setCurrentStockValue] = useState(250); */
 
-    const PossessionStocks = useSelector((state) => state.PossessionStocks);
-    const PossessionCrypto = useSelector((state) => state.PossessionCrypto);
+    const [stockValue, setStockValue] = useState(0);
+    const [cryptoValue, setCryptoValue] = useState(0);
+
+    const [stockPossession, setStockPossession] = useState(0);
+    const [cryptoPossession, setCryptoPossession] = useState(0);
+
     const [loading, setLoading] = useState(true);
 
+    const [cryptoStrings, setCryptoStrings] = useState(null);
+    const [stocksStrings, setStocksStrings] = useState(null);
+
+    const getFirebaseSnaphot = (dir, arr) => {
+        firebase
+            .user(user.uid)
+            .child(dir)
+            .once('value', (snapshot) => {
+                let data = snapshot.val();
+                for (const key in data) {
+                    arr.push({ ...data[key] });
+                }
+                return arr;
+            });
+    };
+
+    const getRandomInt = (max) => {
+        return Math.floor(Math.random() * max);
+    };
+
+    let letsVestObj = {
+        image: 'LV-CrY',
+        name: 'lets-vest-CrY',
+        symbol: 'LV',
+        regularMarketPrice: getRandomInt(350),
+        usd_24h_change: getRandomInt(100),
+        amount: 1,
+    };
 
     useEffect(() => {
-        let cryptoIds = '';
+        let stocksPosArr = [];
+        let cryptoPosArr = [];
 
-        cryptoPossesionState.forEach((item) => {
-            if (item.name == 'lets-vest-CrY') return;
-            cryptoIds += item.name + ',';
-        });
+        let crypto;
+        let stocks;
 
-        if (cryptoIds) {
-            (async () => {
-                await axios
-                    .get(
-                        `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
-                    )
-                    .then((response) => {
-                        setCryptoData(response.data);
-                        console.log(response.data);
-                        setLoading(false);
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            })();
-        }
+        firebase
+            .user(user.uid)
+            .once('value')
+            .then(function (snapshot) {
+                crypto = snapshot.child('/possessionCrypto').val();
+                stocks = snapshot.child('/possessionStocks').val();
+            })
+            .then(() => {
+                for (const key in stocks) {
+                    stocksPosArr.push({ ...stocks[key] });
+                }
+                for (const key in crypto) {
+                    cryptoPosArr.push({ ...crypto[key] });
+                }
+                console.log(stocksPosArr);
+                return stocksPosArr, cryptoPosArr;
+            })
+            .then(() => {
+                setCryptoPossession(cryptoPosArr);
+                setStockPossession(stocksPosArr);
 
-        return () => {};
-    }, [cryptoPossesionState, PossessionCrypto]);
+                let stocksIds = '';
+                let cryptoIds = '';
 
-    useEffect(() => {
-        let stocksIds = '';
-
-        stocksPossesionState.forEach((item) => {
-            if (item.symbol == 'LV') return;
-            stocksIds += item.symbol + ',';
-        });
-
-        console.log(stocksIds);
-
-        /*         return; */
-        if (stocksIds) {
-            const options = {
-                method: 'GET',
-                url:
-                    'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes',
-                params: { region: 'US', symbols: stocksIds },
-                headers: {
-                    'x-rapidapi-key':
-                        '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
-                    'x-rapidapi-host':
-                        'apidojo-yahoo-finance-v1.p.rapidapi.com',
-                },
-            };
-
-            axios
-                .request(options)
-                .then(function (response) {
-                    console.log(response.data);
-                    setStockData(response.data.quoteResponse.result);
-                })
-                .catch(function (error) {
-                    console.error(error);
+                stocksPosArr.forEach((item) => {
+                    if (item.symbol == 'LV') return;
+                    stocksIds += item.symbol + ',';
                 });
-        }
 
-        return () => {};
-    }, [stocksPossesionState, PossessionStocks]);
+                cryptoPosArr.forEach((item) => {
+                    if (item.name == 'lets-vest-CrY') return;
+                    cryptoIds += item.name + ',';
+                });
 
-    useEffect(() => {
-        if (!stockData || !PossessionStocks) return;
+                setStocksStrings(stocksIds);
+                setCryptoStrings(cryptoIds);
+
+                stocksCall(stocksIds, stocksPosArr);
+                cryptoCall(cryptoIds, cryptoPosArr);
+            });
+    }, []);
+
+    const CalcStocks = (stockDataProp, stockPosArr) => {
         let stockDataArray = [];
 
-        for (let i = 0; i < PossessionStocks.length; i++) {
-            if (PossessionStocks[i].symbol == 'LV') continue;
-            let index = stockData.findIndex(
-                (x) => x.symbol == PossessionStocks[i].symbol
+        for (let i = 0; i < stockPosArr.length; i++) {
+            if (stockPosArr[i].symbol == 'LV') continue;
+            let index = stockDataProp.findIndex(
+                (x) => x.symbol == stockPosArr[i].symbol
             );
-            stockData[index]['amount'] = PossessionStocks[i].amount;
-            stockData[index]['name'] = PossessionStocks[i].symbol;
-        }
-        console.log(stockData);
-        for (const key in stockData) {
-            stockDataArray.push({ ...stockData[key] });
+            stockDataProp[index]['amount'] = stockPosArr[i].amount;
+            stockDataProp[index]['name'] = stockPosArr[i].symbol;
         }
 
-        const getRandomInt = (max) => {
-            return Math.floor(Math.random() * max);
-        };
+        for (const key in stockDataProp) {
+            stockDataArray.push({ ...stockDataProp[key] });
+        }
 
-        let letsVestObj = {
-            image: 'LV-CrY',
-            name: 'lets-vest-CrY',
-            symbol: 'LV',
-            regularMarketPrice: getRandomInt(350),
-            usd_24h_change: getRandomInt(100),
-            amount: 1,
-        };
         stockDataArray.unshift(letsVestObj);
 
         let totalStockAssets = 0;
@@ -126,37 +133,27 @@ const FetchUserAssets = ({ stocksPossesionState, cryptoPossesionState, currency 
         }
         dispatch(setFetchedStocks(stockDataArray));
 
-        dispatch(setTotalStocks(totalStockAssets.toFixed(2)))
-        setStockValue(totalStockAssets)
+        dispatch(setTotalStocks(totalStockAssets.toFixed(2)));
+        setStockValue(totalStockAssets);
 
-     /*    setCurrentStockValue(totalStockAssets.toFixed(2)); */
+        /*    setCurrentStockValue(totalStockAssets.toFixed(2)); */
+    };
 
-        return () => {};
-    }, [stockData]);
-
-    useEffect(() => {
-        if (!cryptoData || !PossessionCrypto) return;
-
+    const CalcCrypto = (cryptoDataProp, cryptoPosArr) => {
         let cryptoDataArray = [];
 
-        for (let i = 0; i < PossessionCrypto.length; i++) {
-            if (PossessionCrypto[i].name == 'lets-vest-CrY') continue;
-            cryptoData[PossessionCrypto[i].name]['amount'] =
-                PossessionCrypto[i].amount;
-            cryptoData[PossessionCrypto[i].name]['name'] =
-                PossessionCrypto[i].name;
-            cryptoData[PossessionCrypto[i].name]['image'] =
-                PossessionCrypto[i].image;
+        for (let i = 0; i < cryptoPosArr.length; i++) {
+            if (cryptoPosArr[i].name == 'lets-vest-CrY') continue;
+            cryptoDataProp[cryptoPosArr[i].name]['amount'] =
+                cryptoPosArr[i].amount;
+            cryptoDataProp[cryptoPosArr[i].name]['name'] = cryptoPosArr[i].name;
+            cryptoDataProp[cryptoPosArr[i].name]['image'] =
+                cryptoPosArr[i].image;
         }
 
-        for (const key in cryptoData) {
-            cryptoDataArray.push({ ...cryptoData[key] });
+        for (const key in cryptoDataProp) {
+            cryptoDataArray.push({ ...cryptoDataProp[key] });
         }
-
-        const getRandomInt = (max) => {
-            return Math.floor(Math.random() * max);
-        };
-
         let letsVestObj = {
             image: 'LV-CrY',
             name: 'lets-vest-CrY',
@@ -164,6 +161,7 @@ const FetchUserAssets = ({ stocksPossesionState, cryptoPossesionState, currency 
             usd_24h_change: getRandomInt(100),
             amount: 1,
         };
+
         cryptoDataArray.unshift(letsVestObj);
 
         let totalCryptoValue = 0;
@@ -176,17 +174,53 @@ const FetchUserAssets = ({ stocksPossesionState, cryptoPossesionState, currency 
 
         dispatch(setFetchedCryptos(cryptoDataArray));
 
-        dispatch(setTotalCrypto(totalCryptoValue.toFixed(2)))
+        setCryptoValue(totalCryptoValue);
 
-        dispatch(setTotalAssets((totalCryptoValue + stockValue + currency).toFixed(2)))
+        dispatch(setTotalCrypto(totalCryptoValue.toFixed(2)));
+    };
 
+    const cryptoCall = (cryptoIds, cryptoPosArr) => {
+        (async () => {
+            await axios
+                .get(
+                    `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
+                )
+                .then((response) => {
+                    setCryptoData(response.data);
+                    CalcCrypto(response.data, cryptoPosArr);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        })();
+    };
 
-        return () => {};
-    }, [cryptoData]);
+    const stocksCall = (stocksIds, stocksPosArr) => {
+        const options = {
+            method: 'GET',
+            url:
+                'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes',
+            params: { region: 'US', symbols: stocksIds },
+            headers: {
+                'x-rapidapi-key':
+                    '70d9b752c8mshe5814dbaa3e86c2p180291jsn0d7793015c2f',
+                'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
+            },
+        };
 
+        axios
+            .request(options)
+            .then(function (response) {
+                setStockData(response.data.quoteResponse.result);
+                CalcStocks(response.data.quoteResponse.result, stocksPosArr);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    };
 
-    return null
-}
+    return null;
+};
 
-
-export default FetchUserAssets
+export default FetchUserAssets;

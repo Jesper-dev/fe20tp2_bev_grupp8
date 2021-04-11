@@ -103,7 +103,7 @@ class Firebase {
                 ...usersObject[key],
                 uid: key,
             }));
-			console.log(usersList);
+            console.log(usersList);
             this.setState({
                 users: usersList,
                 loading: false,
@@ -121,6 +121,51 @@ class Firebase {
         this.db.ref(`organizations/${organization}`);
 
     users = () => this.db.ref('users');
+
+    /* Snapshot shortcut */
+
+    snapshot = (uid, path) =>
+        this.db
+            .ref(`users/${uid + path}`)
+            .once('value')
+            .then(function (snapshot) {
+                let data = snapshot.val();
+                return data;
+            });
+    snapshotToArr = (uid, path) =>
+        this.db
+            .ref(`users/${uid + path}`)
+            .once('value')
+            .then(function (snapshot) {
+                let arr = [];
+                let data = snapshot.val();
+                for (const key in data) {
+                    arr.push({ ...data[key] });
+                }
+                return arr;
+            });
+
+    snapshotToArrayOrg = (organization, path) =>
+        this.db
+            .ref(`organizations/${organization + path}`)
+            .once('value')
+            .then(function (snapshot) {
+                let arr = [];
+                let data = snapshot.val();
+                for (const key in data) {
+                    arr.push({ ...data[key] });
+                }
+                return arr;
+            });
+
+    snapshotOrganization = (organization, path) =>
+        this.db
+            .ref(`organizations/${organization + path}`)
+            .once('value')
+            .then(function (snapshot) {
+                let data = snapshot.val();
+                return data;
+            });
 
     // *** Post API ***
 
