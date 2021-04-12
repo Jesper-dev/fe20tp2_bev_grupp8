@@ -2,17 +2,21 @@ import React from 'react';
 import StockCard from '../card/stock-card/StockCard';
 import StockCardSmall from '../card/stock-card-small/StockCardSmall';
 
-
 import { ContentWrapper } from './CustomComponentsElements';
 
 import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndicator';
 
 const FollowingHome = ({ array, gap, stockscardsmall }) => {
-    let LabelsArr = [<i className="fas fa-globe"></i>, 'symbol', 'price', 'change 24h ▾'];
+    let LabelsArr = [
+        <i className="fas fa-globe"></i>,
+        'symbol',
+        'price',
+        'change 24h ▾',
+    ];
     return (
         <>
-            <ContentWrapper  gap={gap}>
-                <h3>Watching Securitys</h3>
+            <ContentWrapper gap={gap}>
+                <h3>Watching Securities</h3>
                 <SectionDataIndicator LabelsArr={LabelsArr} />
                 {array.length === 0 ? (
                     <p>
@@ -24,37 +28,36 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
                     ''
                 )}
                 {stockscardsmall ? (
-                <>
-             {array.slice(0, 3).map((item, index) => {
-                    return (
-                        <StockCardSmall
-                            stocksList={array}
-                            key={index}
-                            name={item.symbol}
-                            cost={item.regularMarketPrice.raw}
-                            percent={item.regularMarketChangePercent}
-                        />
-                    );
-                })}
-                </>
+                    <>
+                        {array.slice(0, 3).map((item, index) => {
+                            return (
+                                <StockCardSmall
+                                    stocksList={array}
+                                    key={index}
+                                    name={item.symbol}
+                                    cost={item.regularMarketPrice.raw}
+                                    percent={item.regularMarketChangePercent}
+                                />
+                            );
+                        })}
+                    </>
                 ) : (
-<>
-          {array.slice(0, 3).map((item, index) => {
-                    return (
-                        <StockCard
-                            stocksList={array}
-                            key={index}
-                            name={item.symbol}
-                            cost={item.regularMarketPrice.raw}
-                            percent={item.regularMarketChangePercent}
-                        />
-                    );
-                })}
-</>
-
+                    <>
+                        {array.slice(0, 3).map((item, index) => {
+                            return (
+                                <StockCard
+                                    stocksList={array}
+                                    key={index}
+                                    name={item.symbol}
+                                    cost={item.regularMarketPrice.raw}
+                                    percent={item.regularMarketChangePercent}
+                                />
+                            );
+                        })}
+                    </>
                 )}
 
-          {/*       {array.slice(0, 3).map((item, index) => {
+                {/*       {array.slice(0, 3).map((item, index) => {
                     return (
                         <StockCard
                             stocksList={array}

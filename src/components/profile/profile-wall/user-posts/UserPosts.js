@@ -13,39 +13,45 @@ const UserPosts = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        firebase
-            .posts()
-            .on('value', (snapshot) => {
-                const data = snapshot.val();
-                const dataArray = Object.values(data);
-                setPosts(dataArray);
-				setUserPosts(dataArray.filter(item => item.uid === user.uid));
-            });
+        firebase.posts().on('value', (snapshot) => {
+            const data = snapshot.val();
+            const dataArray = Object.values(data);
+            setPosts(dataArray);
+            setUserPosts(dataArray.filter((item) => item.uid === user.uid));
+            //console.log(dataArray.filter((item) => item.uid === user.uid));
+        });
     }, []);
 
     return (
-		<>
-		    <h1>Hej Anton!</h1>
-		</>
-        // <UserPostsElement>
-        //     <h1>Posts</h1>
-        //     {userPosts
-        //         ? userPosts.map((post, index) => {
-        //               return (
-        //                   <UserPostCard
-        //                       key={index}
-        //                       uid={arr[0]}
-        //                       username={post.username}
-        //                       content={post.content}
-        //                       timestamp={post.timestamp}
-        //                       likeCount={post.likeCount}
-        //                       liked={post.likedUsers.findIndex(user => user => uid) === -1 ? false : true}
-        //                       picture={post.picture}
-        //                   />
-        //               );
-        //           })
-        //         : 'No posts, post something from the Social page'}
-        // </UserPostsElement>
+        // <>
+        //     <h1>Hej Anton!</h1>
+        // </>
+        <UserPostsElement>
+            <h1>Posts</h1>
+            {userPosts
+                ? userPosts.map((post, index) => {
+                      return (
+                          <UserPostCard
+                              key={index}
+                              //uid={arr[0]}
+
+                              username={post.username}
+                              content={post.content}
+                              timestamp={post.timestamp}
+                              likeCount={post.likeCount}
+                              //   liked={
+                              //       post.likedUsers.findIndex((user) => (user) =>
+                              //           user.uid
+                              //       ) === -1
+                              //           ? false
+                              //           : true
+                              //   }
+                              picture={post.picture}
+                          />
+                      );
+                  })
+                : 'No posts, post something from the Social page'}
+        </UserPostsElement>
     );
 };
 

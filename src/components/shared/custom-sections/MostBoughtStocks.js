@@ -46,8 +46,6 @@ const MostBoughtStocks = () => {
     };
 
     const makeBoughtArray = (arr) => {
-        console.log(arr);
-
         let orgStockPossessionArr = [];
         let j = 0;
         let i = 0;

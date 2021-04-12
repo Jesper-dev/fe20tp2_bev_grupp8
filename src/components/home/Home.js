@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 // import StockCard from '../shared/card/stock-card/StockCard';
 
-import { MainWrapper } from './HomeElements';
+import { MainWrapper, HomeWrapper } from './HomeElements';
 
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 
@@ -128,7 +128,6 @@ const Home = () => {
                 }
                 setTotalCurrency(currencyData.currency);
                 dispatch(setCurrency(currencyData)); //behöver
-                console.log(currencyData.currency);
             });
 
         setLoading(false);
@@ -146,45 +145,55 @@ const Home = () => {
             {TotalStocks == 0 ? (
                 <FetchUserStocks currency={totalCurrency} />
             ) : null}
+            {/* 
+    <main>
+        <section> --> left
+        <section> --> recent
+*/}
             <ContentWrapper>
                 <MainWrapper>
-                    <section>
-                        <PortfolioOverview total={totalCurrency} />
-                    </section>
-                    <MostBougthCrypto />
-                    <MostBougthStocks />
+                    <div>
+                        <section>
+                            <PortfolioOverview total={totalCurrency} />
+                        </section>
+                        <MostBougthCrypto />
+                        <MostBougthStocks />
 
-                    {news ? (
-                        <News
-                            News
-                            array={MockNewsList.items.result.slice(0, 1)}
-                        />
-                    ) : (
-                        ''
-                    )}
-                    {watchingCryptos ? (
-                        <WatchingCrypto
-                            gap="0.5rem"
-                            cryptoList={followingArrCrypto.slice(0, 3)}
-                        />
-                    ) : (
-                        ''
-                    )}
-                    {watchingSecuritys ? (
-                        <WatchingStocks
-                            stockscardsmall={false}
-                            gap="0.5rem"
-                            array={followingArr}
-                        />
-                    ) : null}
+                        {news ? (
+                            <News
+                                News
+                                array={MockNewsList.items.result.slice(0, 1)}
+                            />
+                        ) : (
+                            ''
+                        )}
+                        {watchingCryptos ? (
+                            <WatchingCrypto
+                                gap="0.5rem"
+                                cryptoList={followingArrCrypto.slice(0, 3)}
+                            />
+                        ) : (
+                            ''
+                        )}
+                        {watchingSecuritys ? (
+                            <WatchingStocks
+                                stockscardsmall={false}
+                                gap="0.5rem"
+                                array={followingArr}
+                            />
+                        ) : null}
 
-                    {rec ? (
-                        <RecommendationHome gap="0.5rem" MockData={MockData} />
-                    ) : (
-                        ''
-                    )}
+                        {rec ? (
+                            <RecommendationHome
+                                gap="0.5rem"
+                                MockData={MockData}
+                            />
+                        ) : (
+                            ''
+                        )}
+                    </div>
+                    <CompanyOverviewHome />
                 </MainWrapper>
-                <CompanyOverviewHome />
             </ContentWrapper>
         </>
     );

@@ -2,28 +2,25 @@ import React from 'react';
 import { CardWrapper } from './StockCardSmallElements';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { chosenShare } from '../../../../redux/actions';
 
 import UsFlag from '../../../svgs/flags/America';
 
-let chosenShareArray = [];
-
-const StockCardSmall = ({ name, cost, percent, fav, stocksList, amount }) => {
-    const dispatch = useDispatch();
+const StockCardSmall = ({ name, cost, percent, amount, i }) => {
     let history = useHistory();
     const setChosenStockOption = (name) => {
-        /*         let filterName = name.trim();
-            chosenShareArray = stocksList.filter(function (item) {
-                return item.symbol === filterName;
-            });
-        dispatch(chosenShare(chosenShareArray)); */
         history.push(`/info/${name}`);
     };
+    /* 
+    const CheckColor = () => {
+        if (key % 2 == 0) return true;
+        false;
+    };
+
+    let color = CheckColor(); */
 
     return (
-        <CardWrapper id={name} onClick={() => setChosenStockOption(name)}>
+        <CardWrapper i={i} id={name} onClick={() => setChosenStockOption(name)}>
             <UsFlag />
-            {/* <span>⭐</span> */}
             {!amount ? (
                 ''
             ) : (
@@ -52,11 +49,6 @@ const StockCardSmall = ({ name, cost, percent, fav, stocksList, amount }) => {
                     <i className="fas fa-caret-right"></i>
                 </span>
             </Link>
-            {/*  <Link to="/info">
-                <span>
-                    <i className="fas fa-caret-right"></i>
-                </span>
-            </Link> */}
         </CardWrapper>
     );
 };

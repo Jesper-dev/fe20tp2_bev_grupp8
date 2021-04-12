@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Route } from 'react-router';
+import Picker, {
+    SKIN_TONE_NEUTRAL,
+    SKIN_TONE_LIGHT,
+    SKIN_TONE_MEDIUM_LIGHT,
+} from 'emoji-picker-react';
 import * as ROUTES from '../../constants/routes';
 
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
+import { fetchUserSnapshotObject } from '../shared/functions/firebase-functions';
 
 import { FirebaseContext } from '../firebase/context';
 import { withAuthorization } from '../session';
+import { GenericVestBtn } from '../shared/button/ButtonElements';
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import {
     HeaderWrapper,
@@ -28,14 +35,46 @@ const Profile = () => {
     const [username, setUsername] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const [followerCount, setFollowerCount] = useState(false);
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+    const [showEmoji, setShowEmoji] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        let emoji;
+        console.log(emojiObject);
+        if (emojiObject.activeSkinTone == undefined) {
+            emoji = {
+                activeSkinTone: 'neutral',
+                emoji: emojiObject.emoji,
+                names: emojiObject.names,
+                originalUnified: emojiObject.originalUnified,
+                unified: emojiObject.unified,
+            };
+
+            firebase.user(userData.uid).child('/').update({
+                emoji: emoji,
+            });
+        } else {
+            firebase.user(userData.uid).child('/').update({
+                emoji: emojiObject,
+            });
+        }
+        setShowEmoji(false);
+    };
+
     useEffect(() => {
         // const theUserId = firebase.auth.currentUser.uid;
         // console.log(`THE USER ID --> ${theUserId}`);
+        fetchUserSnapshotObject(
+            firebase,
+            userData.uid,
+            '/emoji',
+            setChosenEmoji
+        );
 
         const user = firebase.user(userData.uid);
         user.on('value', (snapshot) => {
@@ -81,7 +120,40 @@ const Profile = () => {
                         )}
 
                         <span>{username}</span>
+                        {chosenEmoji ? <span>{chosenEmoji.emoji}</span> : ''}
+                        <GenericVestBtn
+                            onClick={() => setShowEmoji(!showEmoji)}
+                            pad={'8px'}
+                            border={'1px solid var(--clr-primary)'}
+                            br={'10px'}
+                            bg={'none'}
+                            co={'var(--clr-primary)'}
+                        >
+                            {showEmoji ? 'Mood (close)' : 'Mood (open)'}
+                        </GenericVestBtn>
                     </div>
+                    <div
+                        style={
+                            showEmoji
+                                ? { display: 'block' }
+                                : { display: 'none' }
+                        }
+                    >
+                        <Picker
+                            className="emoji-picker-wrapper"
+                            onEmojiClick={onEmojiClick}
+                            groupVisibility={{
+                                symbols: false,
+                                objects: false,
+                                activities: false,
+                                travel_places: false,
+                                animals_nature: false,
+                                food_drink: false,
+                                recently_used: false,
+                            }}
+                        />
+                    </div>
+
                     <div className="btn-and-wollower-wrapper">
                         <div className="follow-info-wrapper">
                             <div className="followers-wrapper">

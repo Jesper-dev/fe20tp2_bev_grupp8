@@ -4,21 +4,9 @@ import { useSelector } from 'react-redux';
 
 import { ContentWrapper } from './ProfilePossessionChartElements.js';
 
-const DistributionPortfolioChart = ({
-    stocksPossesionState,
-    cryptoPossesionState,
-    currency,
-}) => {
-
-    const TotalStocks = useSelector(state => state.TotalStocks)
-    const TotalCrypto = useSelector(state => state.TotalCrypto)
-
-/*     useEffect(() => {
-        return () => {
-
-        }
-    }, []) */
-
+const DistributionPortfolioChart = ({ currency }) => {
+    const TotalStocks = useSelector((state) => state.TotalStocks);
+    const TotalCrypto = useSelector((state) => state.TotalCrypto);
 
     let data = {
         labels: ['available cash', 'Securities', 'cryptocurrencies'],
@@ -51,10 +39,10 @@ const DistributionPortfolioChart = ({
 
     return (
         <>
-        <ContentWrapper>
-            <h1>Possesion distribution</h1>
-            <Doughnut data={data} options={options} />
-        </ContentWrapper>
+            <ContentWrapper>
+                <h1>Possesion distribution</h1>
+                <Doughnut data={data} options={options} />
+            </ContentWrapper>
         </>
     );
 };

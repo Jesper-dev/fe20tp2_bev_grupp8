@@ -65,7 +65,6 @@ const FetchUserStocks = () => {
     }, []);
 
     useEffect(() => {
-        console.log('I RUN NOW!');
         if (!stockData) return;
         let ids = '';
 
@@ -91,7 +90,6 @@ const FetchUserStocks = () => {
                 await axios
                     .request(options)
                     .then(function (response) {
-                        console.log(response.data);
                         CalcStocks(
                             response.data.quoteResponse.result,
                             stockData

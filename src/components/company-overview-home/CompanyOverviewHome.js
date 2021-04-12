@@ -1,12 +1,21 @@
 import React from 'react';
 
-import ContentWrapper from '../shared/wrappers/ContentWrapper';
+import { ContentWrapper } from './CompanyOverviewHomeElements';
 import CompHottestStocks from './comp-hottest-stocks/CompHottestStocks';
+import CompRecentlyPosted from './comp-recently-posted/CompRecentlyPosted';
 
 const CompanyOverviewHome = () => {
     return (
         <ContentWrapper>
-            <CompHottestStocks />
+            <h1>Swedbank recently</h1>
+            <div>
+                <CompRecentlyPosted />
+                <CompHottestStocks />
+                <CompHottestStocks />
+                <CompHottestStocks />
+                <CompHottestStocks />
+                <CompHottestStocks />
+            </div>
         </ContentWrapper>
     );
 };

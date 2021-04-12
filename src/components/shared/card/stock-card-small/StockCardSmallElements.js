@@ -6,15 +6,16 @@ export const CardWrapper = styled.article`
     align-items: center;
     justify-content: space-around;
     padding: 0.1rem 0.9rem;
-    border-radius: 0.25rem;
+    /*     border-radius: 0.25rem; */
     box-shadow: var(--box-shadow-cards);
     max-width: 20rem;
     width: 100%;
     min-height: 2rem;
     max-height: 48px;
-    background: var(--body);
+    background-color: ${({ i }) =>
+        i % 2 === 0 ? 'var(--body)' : 'var(--body-third)'};
 
-    svg{
+    svg {
         width: 20px;
     }
 

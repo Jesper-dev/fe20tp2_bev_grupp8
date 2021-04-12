@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const ContentWrapper = styled.section`
     display: flex;
     flex-direction: column;
-    gap: ${props => props.gap};
+    gap: ${(props) => props.gap};
     width: 100%;
-    max-width: 40rem;
+    max-width: 75%;
     text-align: center;
 
     h3 {
@@ -22,7 +22,7 @@ export const ContentWrapper = styled.section`
 export const SectionWrapper = styled.section`
     display: flex;
     flex-direction: column;
-    max-width: 40rem;
+    max-width: 75%;
     width: 100%;
     gap: 0.5rem;
     text-align: center;

@@ -13,8 +13,6 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
 
     const [toggleOpen, setToggleOpen] = useState(false);
 
-    console.log(total);
-
     let totalAssets = (
         parseFloat(total) +
         parseFloat(TotalCrypto) +

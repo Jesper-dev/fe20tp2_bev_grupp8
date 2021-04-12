@@ -45,7 +45,7 @@ const MostBoughtCrypto = () => {
                     i++;
                     continue;
                 }
-                console.log(arr[j].possessionCrypto[keys[i]].name);
+
                 orgStockPossessionArr.push({
                     symbol: arr[j].possessionCrypto[keys[i]].symbol,
                     amount: arr[j].possessionCrypto[keys[i]].amount,
@@ -65,7 +65,6 @@ const MostBoughtCrypto = () => {
             reducedArray.reverse().splice(3, reducedArray.length);
 
             setOrgBoughtData(reducedArray);
-            console.log(reducedArray);
         }
     };
 

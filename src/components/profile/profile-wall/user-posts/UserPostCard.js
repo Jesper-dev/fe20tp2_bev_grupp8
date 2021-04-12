@@ -1,35 +1,35 @@
-import React, {useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import UserPostCardWrapper from './UserPostCardElement';
 import { FirebaseContext } from '../../../firebase/context';
 
 const UserPostCard = ({
-    uid,
+    uid, // postId
     username,
     content,
     timestamp,
     likeCount,
     liked,
-    picture
+    picture,
 }) => {
     const firebase = useContext(FirebaseContext);
 
     const [posts, setPosts] = useState([]);
 
-    const userData = JSON.parse(localStorage.getItem('authUser'));;
+    const userData = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        firebase
-            .posts()
-            .on("value", snapshot => {
-                const data = snapshot.val();
-                console.log(Object.values(data));
-                setPosts(Object.values(data));
-            });
-    }, [])
+        firebase.posts().on('value', (snapshot) => {
+            const data = snapshot.val();
+            // console.log(Object.values(data));
+            setPosts(Object.values(data));
+        });
+    }, []);
 
     const handleChange = () => {
-        const post = posts.find(post => post.uid == uid);
-        const likedPostIndex = post.likedUsers.findIndex(user => user === userData.uid);
+        const post = posts.find((post) => post.uid == uid);
+        const likedPostIndex = post.likedUsers.findIndex(
+            (user) => user === userData.uid
+        );
 
         if (likedPostIndex === -1) {
             post.likedUsers.push(userData.uid);
@@ -42,12 +42,9 @@ const UserPostCard = ({
         updateData(post);
     };
 
-    const updateData = posts => {
-
-        firebase.posts().child(uid).update(
-            posts
-        );
-    }
+    const updateData = (posts) => {
+        firebase.posts().child(uid).update(posts);
+    };
 
     return (
         <UserPostCardWrapper>

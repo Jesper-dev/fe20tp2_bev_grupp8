@@ -1,44 +1,49 @@
-const root = document.querySelector(":root");
+const root = document.querySelector(':root');
 
 export const setOrgColor = (firebase, user) => {
-	firebase
-		.organization(user.organization)
-		.child('/colors')
-		.on('value', (snapshot) => {
-			const data = snapshot.val();
-			const h = data.primaryColor.h;
-			const s = data.primaryColor.s;
-			const l = data.primaryColor.l;
+    firebase
+        .organization(user.organization)
+        .child('/colors')
+        .on('value', (snapshot) => {
+            const data = snapshot.val();
 
-			getColorPalette([h, s, l]);
-		});
+            if (!data) {
+                return;
+            }
+
+            const h = data.primaryColor.h;
+            const s = data.primaryColor.s;
+            const l = data.primaryColor.l;
+
+            getColorPalette([h, s, l]);
+        });
 };
 
-const getColorPalette = primaryColorValues => {
-	console.log(primaryColorValues);
-	root.style.setProperty(
-		'--clr-primary',
-		setColor(primaryColorValues, 'primary')
-	);
-	root.style.setProperty(
-		'--clr-primary__brighter',
-		setColor(primaryColorValues, 'primary__brighter')
-	);
-	root.style.setProperty(
-		'--clr-primary__dimmer',
-		setColor(primaryColorValues, 'primary__dimmer')
-	);
+const getColorPalette = (primaryColorValues) => {
+    /* 	console.log(primaryColorValues); */
+    root.style.setProperty(
+        '--clr-primary',
+        setColor(primaryColorValues, 'primary')
+    );
+    root.style.setProperty(
+        '--clr-primary__brighter',
+        setColor(primaryColorValues, 'primary__brighter')
+    );
+    root.style.setProperty(
+        '--clr-primary__dimmer',
+        setColor(primaryColorValues, 'primary__dimmer')
+    );
 
-	root.style.setProperty(
-		'--clr-primary-light',
-		setColor(primaryColorValues, 'primary-light')
-	);
-	root.style.setProperty(
-		'--clr-primary-light__dimmer',
-		setColor(primaryColorValues, 'primary-light__dimmer')
-	);
+    root.style.setProperty(
+        '--clr-primary-light',
+        setColor(primaryColorValues, 'primary-light')
+    );
+    root.style.setProperty(
+        '--clr-primary-light__dimmer',
+        setColor(primaryColorValues, 'primary-light__dimmer')
+    );
 
-	console.log(
+    /* 	console.log(
 		`--clr-primary: ${window
 			.getComputedStyle(root)
 			.getPropertyValue('--clr-primary')}`
@@ -62,36 +67,36 @@ const getColorPalette = primaryColorValues => {
 		`--clr-primary-light__dimmer: ${window
 			.getComputedStyle(root)
 			.getPropertyValue('--clr-primary-light__dimmer')}`
-	);
+	); */
 };
 
 const setColor = (primaryColorValues, str) => {
-	const [h, s, l] = primaryColorValues;
+    const [h, s, l] = primaryColorValues;
 
-	let newLightness;
+    let newLightness;
 
-	switch (str) {
-		case 'primary':
-			newLightness = l;
-			break;
-		case 'primary__brighter':
-			newLightness = l + 4;
-			break;
-		case 'primary__dimmer':
-			newLightness = l - 4;
-			break;
-		case 'primary-light':
-			newLightness = 94;
-			break;
-		case 'primary-light__dimmer':
-			newLightness = 90;
-			break;
-		default:
-			newLightness = l;
-			break;
-	}
+    switch (str) {
+        case 'primary':
+            newLightness = l;
+            break;
+        case 'primary__brighter':
+            newLightness = l + 4;
+            break;
+        case 'primary__dimmer':
+            newLightness = l - 4;
+            break;
+        case 'primary-light':
+            newLightness = 94;
+            break;
+        case 'primary-light__dimmer':
+            newLightness = 90;
+            break;
+        default:
+            newLightness = l;
+            break;
+    }
 
-	const hsl = `hsl(${h}, ${s}%, ${newLightness}%)`;
+    const hsl = `hsl(${h}, ${s}%, ${newLightness}%)`;
 
-	return hsl;
+    return hsl;
 };

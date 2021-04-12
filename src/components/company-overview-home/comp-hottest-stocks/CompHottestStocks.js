@@ -29,8 +29,6 @@ const CompHottestStocks = () => {
     }, []);
 
     useEffect(() => {
-        console.log(stockData);
-
         let boughtStocksArr = MakeOneArrayOrganization(stockData);
 
         if (!boughtStocksArr) return;
@@ -40,21 +38,27 @@ const CompHottestStocks = () => {
         reducedArray.reverse().splice(3, reducedArray.length);
 
         setHottestStocks(reducedArray);
-        console.log(reducedArray);
     }, [stockData]);
 
     return (
-        <>
+        <ContentWrapper>
             {!hottestStocks ? null : (
-                <ContentWrapper>
-                    <h4>Comp. hottest</h4>
-
-                    {hottestStocks.map((item, i) => {
-                        return <StockCardSmall key={i} name={item.symbol} />;
-                    })}
-                </ContentWrapper>
+                <>
+                    <div>
+                        <h4>Comp. hottest</h4>
+                        {hottestStocks.map((item, i) => {
+                            return (
+                                <StockCardSmall
+                                    key={i}
+                                    i={i}
+                                    name={item.symbol}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
             )}
-        </>
+        </ContentWrapper>
     );
 };
 

@@ -2,24 +2,15 @@ import styled from 'styled-components';
 
 export const MainWrapper = styled.main`
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    gap: 3.5rem;
 
-    section {
-        /*    display: flex;
+    & > div {
+        flex: 1;
+        display: flex;
         flex-direction: column;
-        align-items: center; */
-        /*    max-width: 40rem; */
-        width: 100%;
-    }
-    /* 
-    @media screen and (min-width: 1064px) {
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: flex-start;
+        align-items: center;
 
-        gap: 2rem;
-    } */
+        & > section {
+            width: 75%;
+        }
+    }
 `;

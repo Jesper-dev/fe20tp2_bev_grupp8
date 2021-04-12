@@ -115,7 +115,7 @@ class Firebase {
 
     user = (uid) => this.db.ref(`users/${uid}`);
 
-    admin = (uid, organization) => this.db.ref(`organizations/`);
+    admin = () => this.db.ref(`organizations/`);
 
     organization = (organization) =>
         this.db.ref(`organizations/${organization}`);
@@ -143,6 +143,15 @@ class Firebase {
                     arr.push({ ...data[key] });
                 }
                 return arr;
+            });
+
+    snapshotToObj = (uid, path) =>
+        this.db
+            .ref(`users/${uid + path}`)
+            .once('value')
+            .then(function (snapshot) {
+                const data = snapshot.val();
+                return data;
             });
 
     snapshotToArrayOrg = (organization, path) =>

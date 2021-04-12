@@ -19,6 +19,14 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     gap: 1.5rem;
 
+    .emoji-picker-react {
+        @media screen and (min-width: 1024px) {
+            width: 50%;
+            margin: 0 auto;
+        }
+        width: 100%;
+    }
+
     .follow-info-wrapper {
         @media screen and (min-width: 1024px) {
             width: 100%;
@@ -91,6 +99,7 @@ export const HeaderWrapper = styled.header`
 export const MainWrapper = styled.main`
     display: flex;
     flex-direction: column;
+    padding-top: 2rem;
 `;
 
 export const ProfileSettingsBtn = styled(Link)`

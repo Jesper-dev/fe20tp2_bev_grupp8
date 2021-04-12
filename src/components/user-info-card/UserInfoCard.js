@@ -24,20 +24,20 @@ const UserInfoCard = () => {
             .on('child_added', (snapshot) => {
                 const data = snapshot.val();
                 setUserData(snapshot.val());
-                let postArray = makePostsList(data.posts)
-                setUserPostsList(postArray)
-                console.log(data)
+                let postArray = makePostsList(data.posts);
+                setUserPostsList(postArray);
+                console.log(data);
                 checkIfFollowed(data.username);
                 findUser(data.username);
             });
     }, [firebase, id]); //changed!
 
     const makePostsList = (array) => {
-        let lists = []
-        for(const key in array) {
-            lists.push(array[key])
+        let lists = [];
+        for (const key in array) {
+            lists.push(array[key]);
         }
-        console.log('Post List: ', lists)
+        console.log('Post List: ', lists);
         return lists;
     };
 
@@ -70,12 +70,12 @@ const UserInfoCard = () => {
         if (e.target.textContent === 'follow') {
             addUser(username, email);
             addFollowerCount(uniId);
-            followerName(uniId, true)
+            followerName(uniId, true);
             setFollowed(true);
         } else {
             removeUser(username);
             removeFollowerCount(uniId);
-            followerName(uniId, false)
+            followerName(uniId, false);
             setFollowed(false);
         }
     };
@@ -110,22 +110,18 @@ const UserInfoCard = () => {
     };
 
     const followerName = (id, add) => {
-        if(add === true) {
+        if (add === true) {
             firebase
-            .user(id)
-            .child('/followers')
-            .update({
-                [user.username]: {
-                    username: user.username
-                }
-            });
+                .user(id)
+                .child('/followers')
+                .update({
+                    [user.username]: {
+                        username: user.username,
+                    },
+                });
         } else {
-            firebase
-            .user(id)
-            .child(`/followers/${user.username}`)
-            .remove();
+            firebase.user(id).child(`/followers/${user.username}`).remove();
         }
-
     };
 
     const removeFollowerCount = (id) => {
@@ -168,7 +164,12 @@ const UserInfoCard = () => {
             ) : (
                 <>
                     <img src={userData.picture.profile_pic} alt="profile pic" />
-                    <h1>{userData.username}</h1>
+                    <h1>
+                        {userData.username}{' '}
+                        <span>
+                            {userData.emoji ? userData.emoji.emoji : ''}
+                        </span>
+                    </h1>
                     <p>{userData.currency.currency.toLocaleString()}$</p>
                     <p>{userData.email}</p>
                     <p>{userData.bio ? userData.bio : ''}</p>

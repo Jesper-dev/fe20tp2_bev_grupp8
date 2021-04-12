@@ -2,10 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import StockCard from '../../../../shared/card/stock-card/StockCard';
 
-import {
-    sortArrayOfObjByLargetsNumber,
-    ReduceArrayDuplicateAndMerge,
-} from '../../../../shared/functions/ArrayManipulationFuncs';
+import { sortArrayOfObjByLargetsNumber } from '../../../../shared/functions/ArrayManipulationFuncs';
 
 import { FirebaseContext } from '../../../../firebase/context';
 import { ContentWrapper } from './BoughtStocksElements';
@@ -14,8 +11,6 @@ const BoughtStocks = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
-
-    let orgStockPossessionArr = [];
 
     useEffect(() => {
         let orgDataArr = [];
@@ -32,21 +27,6 @@ const BoughtStocks = () => {
         });
     }, []);
 
-    /*     const ReduceArrayDuplicateAndMerge = (arr, dupkey, mergekey) => {
-        let result = [];
-        arr.forEach((a) => {
-            if (!this[a[dupkey]]) {
-                this[a[dupkey]] = {
-                    [dupkey]: a[dupkey],
-                    [mergekey]: 0,
-                };
-                result.push(this[a[dupkey]]);
-            }
-            this[a[dupkey]][mergekey] += a[mergekey];
-        }, Object.create(null));
-        return result;
-    };
- */
     const ReduceFunc = (arr) => {
         let result = [];
         arr.forEach(function (a) {
@@ -76,11 +56,7 @@ const BoughtStocks = () => {
                 });
                 i++;
             }
-            const sortByAmount = (arr) => {
-                arr.sort(function (a, b) {
-                    return a.amount - b.amount;
-                });
-            };
+
             let reducedArray = ReduceFunc(orgStockPossessionArr);
 
             sortArrayOfObjByLargetsNumber(reducedArray);
