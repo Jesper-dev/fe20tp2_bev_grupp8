@@ -26,18 +26,13 @@ const UserPostCard = ({
     }, []);
 
     const handleChange = () => {
-<<<<<<< HEAD
         const post = posts.find((post) => post.uid == uid);
         const likedPostIndex = post.likedUsers.findIndex(
             (user) => user === userData.uid
         );
-=======
-        const post = posts.find(post => post.uid == uid);
-        const likedPostIndex = post.likedUsers.findIndex(user => user == uid);
->>>>>>> bc34813d8edd6032cdcaf1f390adfdd1f4439b67
 
         if (likedPostIndex === -1) {
-            post.likedUsers.push(uid);
+            post.likedUsers.push(userData.uid);
             post.likeCount++;
         } else {
             post.likedUsers.splice(likedPostIndex, 1);
