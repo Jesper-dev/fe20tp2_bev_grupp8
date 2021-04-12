@@ -6,15 +6,12 @@ import { FirebaseContext } from '../firebase/context';
 const SocialFeed = () => {
 	const userData = JSON.parse(localStorage.getItem('authUser'));
 	const firebase = useContext(FirebaseContext);
-	const [followingList, setFollowingList] = useState([])
 	const [followingPostsList, setFollowingPostsList] = useState([])
 	const [mounted, setMounted] = useState(true)
 
     useEffect(() => {
 		setMounted(false)
 		getPostsFromFollowing()
-		// findFollowingUsers()
-		// getFollowingUserPosts(usersList, followingList)
 		// firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
 		// 	let data = snapshot.val();
 		// 	setUserPost(data);
@@ -83,6 +80,7 @@ const SocialFeed = () => {
 			userPosts.push(item)
 		})
 		let list = makePostsList(userPosts)
+		console.log(list)
 		setFollowingPostsList(list)
 	}
 
@@ -121,10 +119,10 @@ const SocialFeed = () => {
 
 
 
-return(
+    return(
 
 	<LikedPostsElement>
-		<h2>Recent posts from people you follow</h2>
+		<h1>Recent posts from people you follow</h1>
 		{followingPostsList ? followingPostsList.map((item, index) => {
             return (
                 <UserPostCard
@@ -157,7 +155,7 @@ return(
     //         )
     //     }) : 'No liked posts'}
     // </LikedPostsElement>
-);
+    );
 };
 
 export default SocialFeed;
