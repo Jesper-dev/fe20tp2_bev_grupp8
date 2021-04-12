@@ -9,10 +9,13 @@ const SearchBar = ({ onSearchedStock }) => {
     const dispatch = useDispatch();
     const users = useSelector((state) => state.Users);
     let newArray = [];
+    let searchTerm;
     //*Function: searching for users
     const onFilterUsers = (e) => {
         newArray = [];
-        let searchTerm = e.target.value.toLowerCase();
+
+        searchTerm = e.target.value.toLowerCase();
+        console.log(searchTerm)
         newArray = users.filter((item) =>
             item.username.toLowerCase().includes(searchTerm)
         );
@@ -45,6 +48,7 @@ const SearchBar = ({ onSearchedStock }) => {
                 <input
                     className="input"
                     type="search"
+                    value={searchTerm}
                     onChange={(event) => {
                         onFilterUsers(event);
                     }}

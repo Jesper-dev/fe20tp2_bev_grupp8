@@ -39,13 +39,13 @@ const UserPosts = () => {
                               content={post.content}
                               timestamp={post.timestamp}
                               likeCount={post.likeCount}
-                              //   liked={
-                              //       post.likedUsers.findIndex((user) => (user) =>
-                              //           user.uid
-                              //       ) === -1
-                              //           ? false
-                              //           : true
-                              //   }
+                              // liked={
+                              //     post.likedUsers.findIndex((user) => (user) =>
+                              //         user
+                              //     ) === -1
+                              //         ? false
+                              //         : true
+                              // }
                               picture={post.picture}
                           />
                       );

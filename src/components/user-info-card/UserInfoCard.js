@@ -10,6 +10,7 @@ import { GenericVestBtn } from '../shared/button/ButtonElements';
 
 const UserInfoCard = () => {
     const { id } = useParams();
+    const siteId = id;
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
     const [userData, setUserData] = useState();
@@ -180,7 +181,7 @@ const UserInfoCard = () => {
                                 ? userData.followerCount
                                 : ''}
                         </p>
-                        <GenericVestBtn
+                        {id == user.username ? '' : <GenericVestBtn
                             onClick={(e) =>
                                 followUser(e, userData.username, userData.email)
                             }
@@ -191,7 +192,8 @@ const UserInfoCard = () => {
                             co="black"
                         >
                             {followed ? 'Unfollow' : 'follow'}
-                        </GenericVestBtn>
+                        </GenericVestBtn>}
+
                     </div>
                     {userPostsList.length > 0 ? (
                         userPostsList.map((postObj, index) => {
