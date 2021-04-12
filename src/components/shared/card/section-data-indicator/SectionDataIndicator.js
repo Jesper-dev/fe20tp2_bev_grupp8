@@ -10,7 +10,7 @@ const SectionDataIndicator = ({ LabelsArr }) => {
                     <thead>
                         <tr>
                             {LabelsArr.map((item, i) => {
-                                return <th>{item}</th>;
+                                return <th key={i}>{item}</th>;
                             })}
                         </tr>
                     </thead>

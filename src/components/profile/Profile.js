@@ -133,14 +133,14 @@ const Profile = () => {
                         </GenericVestBtn>
                     </div>
                     <div
+                        className="emoji-picker-wrapper"
                         style={
                             showEmoji
-                                ? { display: 'block' }
+                                ? { display: 'flex' }
                                 : { display: 'none' }
                         }
                     >
                         <Picker
-                            className="emoji-picker-wrapper"
                             onEmojiClick={onEmojiClick}
                             groupVisibility={{
                                 symbols: false,

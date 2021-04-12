@@ -7,7 +7,6 @@ import UserPostCard from './UserPostCard';
 const UserPosts = () => {
     const firebase = useContext(FirebaseContext);
 
-    const [posts, setPosts] = useState([]);
     const [userPosts, setUserPosts] = useState([]);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -15,38 +14,36 @@ const UserPosts = () => {
     useEffect(() => {
         firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
-            const dataArray = Object.values(data);
-            setPosts(dataArray);
-            setUserPosts(dataArray.filter((item) => item.uid === user.uid));
-            //console.log(dataArray.filter((item) => item.uid === user.uid));
+            let dataArray = [];
+
+			for (const key in data) {
+				const obj = {
+				  postId: key,
+				  postData: data[key]
+				};
+	
+				dataArray.push(obj);
+			}
+
+			setUserPosts(dataArray.filter(obj => obj.postData.userId == user.uid));
         });
     }, []);
 
     return (
-        // <>
-        //     <h1>Hej Anton!</h1>
-        // </>
         <UserPostsElement>
             <h1>Posts</h1>
             {userPosts
-                ? userPosts.map((post, index) => {
+                ? userPosts.map((obj, index) => {
                       return (
                           <UserPostCard
                               key={index}
-                              //uid={arr[0]}
-
-                              username={post.username}
-                              content={post.content}
-                              timestamp={post.timestamp}
-                              likeCount={post.likeCount}
-                              // liked={
-                              //     post.likedUsers.findIndex((user) => (user) =>
-                              //         user
-                              //     ) === -1
-                              //         ? false
-                              //         : true
-                              // }
-                              picture={post.picture}
+                              postId={obj.postId}
+                              username={obj.postData.username}
+                              content={obj.postData.content}
+                              timestamp={obj.postData.timestamp}
+                              likeCount={obj.postData.likeCount}
+                              liked={obj.postData.likedUsers.includes(user.uid) ? true : false}
+                              picture={obj.postData.picture}
                           />
                       );
                   })

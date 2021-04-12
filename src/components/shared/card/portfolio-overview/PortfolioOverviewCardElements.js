@@ -93,6 +93,7 @@ export const PortfolioTopbarWrapper = styled.article`
     }
     article {
         padding: 1rem;
+        border-radius: 0.25rem;
         box-shadow: var(--box-shadow-cards);
         background-color: white;
     }

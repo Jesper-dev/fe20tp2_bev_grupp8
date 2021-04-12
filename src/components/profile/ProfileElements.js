@@ -19,10 +19,24 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     gap: 1.5rem;
 
-    .emoji-picker-react {
+    .emoji-picker-wrapper {
         @media screen and (min-width: 1024px) {
-            width: 50%;
-            margin: 0 auto;
+            justify-content: flex-end;
+        }
+    }
+
+    .emoji-picker-react {
+        @media screen and (min-width: 1600px) {
+            right: 100;
+            width: 20%;
+            position: absolute;
+            top: 10;
+        }
+        @media screen and (min-width: 1400px) {
+            right: 100;
+            width: 20%;
+            position: absolute;
+            top: 10;
         }
         width: 100%;
     }

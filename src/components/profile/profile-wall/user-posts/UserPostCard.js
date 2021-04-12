@@ -3,7 +3,7 @@ import UserPostCardWrapper from './UserPostCardElement';
 import { FirebaseContext } from '../../../firebase/context';
 
 const UserPostCard = ({
-    uid, // postId
+    postId,
     username,
     content,
     timestamp,
@@ -15,42 +15,62 @@ const UserPostCard = ({
 
     const [posts, setPosts] = useState([]);
 
-    const userData = JSON.parse(localStorage.getItem('authUser'));
+    const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
         firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
-            // console.log(Object.values(data));
-            setPosts(Object.values(data));
+            const entries = Object.entries(data);
+
+            let dataArray = [];
+
+            entries.forEach((entry) => {
+                const postId = entry[0];
+                const postData = entry[1];
+
+				// prefer to have uid as key of the postdata, but hard to reach it later?
+                let newObj = {
+                    postId,
+                    postData,
+                };
+			
+                dataArray.push(newObj);
+            });
+			setPosts(dataArray);
         });
     }, []);
 
     const handleChange = () => {
-        const post = posts.find((post) => post.uid == uid);
-        const likedPostIndex = post.likedUsers.findIndex(
-            (user) => user === userData.uid
+        const post = posts.find((post) => post.postId == postId);
+        const likedPostIndex = post.postData.likedUsers.findIndex(
+            (userId) => userId == user.uid
         );
 
         if (likedPostIndex === -1) {
-            post.likedUsers.push(userData.uid);
-            post.likeCount++;
+            post.postData.likedUsers.push(user.uid);
         } else {
-            post.likedUsers.splice(likedPostIndex, 1);
-            post.likeCount--;
+            post.postData.likedUsers.splice(likedPostIndex, 1);
         }
 
+        post.postData.likeCount = post.postData.likedUsers.length - 1;
+        console.log(post.postData.likeCount);
         updateData(post);
     };
 
-    const updateData = (posts) => {
-        firebase.posts().child(uid).update(posts);
+    const updateData = (post) => {
+        firebase.posts().child(post.postId).update({
+            likedUsers: post.postData.likedUsers,
+            likeCount: post.postData.likeCount,
+        });
     };
 
     return (
         <UserPostCardWrapper>
-            <h2>{username}</h2>
+            <div>
+                <img src={picture ? picture : ''} />
+                <h2>{username}</h2>
+            </div>
             <p>{content}</p>
-            <img src={picture ? picture : ''} />
             <time>{new Date(timestamp).toLocaleDateString()}</time>
             <div>
                 <label>

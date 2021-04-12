@@ -10,19 +10,16 @@ const SocialPost = () => {
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
+
 const writeNewPost = (uid, username, picture, postData) => {
     // A post entry.
     var postData = {
+        userId: uid,
         username: username,
         content: postData,
         likeCount: 0,
-        liked: false,
-        timestamp: Date.now(),
-        uid: uid,
         likedUsers: [''],
-      //body: body,
-      //title: title,
-        //likes: 0,
+        timestamp: Date.now(),
         picture: picture
     };
 

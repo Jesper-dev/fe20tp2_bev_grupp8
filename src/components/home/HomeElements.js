@@ -11,6 +11,7 @@ export const MainWrapper = styled.main`
 
         & > section {
             width: 75%;
+            margin-top: 16px;
         }
     }
 `;

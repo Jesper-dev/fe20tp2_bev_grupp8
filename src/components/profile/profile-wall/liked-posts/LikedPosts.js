@@ -6,80 +6,51 @@ import { FirebaseContext } from '../../../firebase/context';
 const LikedPosts = () => {
 	const firebase = useContext(FirebaseContext);
 
-	const [userPost, setUserPost] = useState('');
-	const [likedPosts, setLikedPosts] = useState('');
+	const [likedPosts, setLikedPosts] = useState([]);
 
-	const userData = JSON.parse(localStorage.getItem('authUser'));
+	const user = JSON.parse(localStorage.getItem('authUser'));
 
-	useEffect(() => {
+    useEffect(() => {
+        firebase.posts().on('value', (snapshot) => {
+            const data = snapshot.val();
+            const entries = Object.entries(data);
 
-		firebase.db.ref('users/' + userData.uid + '/post/posts').on('value', (snapshot) => {
-			let data = snapshot.val();
-			setUserPost(data);
-		});
+            let dataArray = [];
 
-		firebase.db.ref('users/' + userData.uid + '/likedPosts').on('value', (snapshot) => {
-			let data = snapshot.val();
-			if (typeof data === "undefined" || data === null) {
-				setLikedPosts([])
-			} else {
-				setLikedPosts(data);
-			}
-		});
-	}, [firebase.db, userData.uid]);
+            entries.forEach((entry) => {
+                const postId = entry[0];
+                const postData = entry[1];
 
-	const updateData = (postData, likeData) => {
-		let userId = firebase.auth.currentUser.uid;
-
-		firebase.db.ref("users/" + userId + "/post/posts").set(
-			postData
-		);
-
-		firebase.db.ref("users/" + userId + "/likedPosts").set(
-			likeData
-		);
-	};
-
-	const handleChange = (e) => {
-		let index = userPost.findIndex(item => item.timestamp == e.target.value);
-		if (userPost[index].liked) {
-			userPost[index].likeCount--;
-			userPost[index].liked = false;
-            // remove userPost[index] from likedArray
-			let likeIndex = likedPosts.findIndex(item => item.timestamp === e.target.value);
-			likedPosts.splice(likeIndex, 1);
-		} else {
-			userPost[index].likeCount++;
-			userPost[index].liked = true;
-            // add userPost[index] to likedArray
-			likedPosts.push(userPost[index]);
-		}
-
-		// console.log(`ClickedPostContent: ${userPost[index].content}`)
-		// console.log(`Liked: ${userPost[index].liked}`);
-		// console.log(`LikeCount: ${userPost[index].likeCount}`);
-
-		updateData(userPost, likedPosts);
-	};
+				// prefer to have uid as key of the postdata, but hard to reach it later?
+                let newObj = {
+                    postId,
+                    postData,
+                };
+			
+                dataArray.push(newObj);
+            });
+			setLikedPosts(dataArray.filter(obj => obj.postData.likedUsers.includes(user.uid)));
+        });
+    }, []);
 
     return(
-		<>bye anton</>
-/* 		<LikedPostsElement>
+		<LikedPostsElement>
 			<h1>Liked posts</h1>
-			{likedPosts ? likedPosts.map((item, index) => {
+			{likedPosts ? likedPosts.map((obj, index) => {
 				return (
 					<UserPostCard
-					key={index}
-					username={item.username}
-					content={item.content}
-					timestamp={item.timestamp}
-					liked={item.liked}
-					likeCount={item.likeCount}
-					handleChange={handleChange}
+						key={index}
+						postId={obj.postId}
+						username={obj.postData.username}
+						content={obj.postData.content}
+						timestamp={obj.postData.timestamp}
+						likeCount={obj.postData.likeCount}
+						liked={true}
+						picture={obj.postData.picture}
 					/>
 				)
 			}) : 'No liked posts'}
-    	</LikedPostsElement> */
+    	</LikedPostsElement>
 	);
 };
 

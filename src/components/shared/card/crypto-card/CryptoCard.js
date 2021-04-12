@@ -1,30 +1,40 @@
-import React from 'react';
+import React,{ useEffect, useState} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { chosenCrypto } from '../../../../redux/actions';
 
 import { CardWrapper } from './CryptoCardElements';
 
 import Coin from '../../../svgs/Coin';
 
-let chosenCryptoArray = [];
 
-const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
-    const dispatch = useDispatch();
+const CryptoCard = ({ name, price, img, percent, amount }) => {
     let history = useHistory();
+    const [showName, setShowName] = useState(true)
 
     const setChosenCryptoOption = (name) => {
         history.push(`/info/crypto/${name}`);
-        /*        let filterName = name.trim();
-        chosenCryptoArray = cryptoList.filter(function (item) {
-            return item.name === filterName;
-        }); */
-        /* 
-        dispatch(chosenCrypto(chosenCryptoArray)); */
     };
 
     let newName = name.substring(0, 3);
+
     let percentInt = parseFloat(percent);
+
+    const checkSize = () => {
+        if(window.innerWidth > 600){
+            setShowName(true)
+            
+        } else{
+
+            setShowName(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', checkSize);
+
+        return () => {
+          window.removeEventListener('resize', checkSize);
+        };
+    }, [])
 
     return (
         <>
@@ -45,7 +55,7 @@ const CryptoCard = ({ name, price, img, percent, cryptoList, amount }) => {
                 ) : (
                     <img src={img ? img : ''} alt="Icon of crypto" />
                 )}
-                <span>{newName + '...'}</span>
+                <span>{!showName ? newName + '...' : name}</span>
                 {/*  <span>{name}</span> */}
                 <span>{price.toLocaleString()}$</span>
                 <span

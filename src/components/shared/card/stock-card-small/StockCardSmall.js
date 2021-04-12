@@ -33,7 +33,7 @@ const StockCardSmall = ({ name, cost, percent, amount, i }) => {
                 </span>
             )}
             <span>{name}</span>
-            <span>{cost ? cost.toFixed(2) : 20} $</span>
+            <span>{cost ? cost.toFixed(2) : 20} </span>
 
             <span
                 style={
@@ -42,7 +42,7 @@ const StockCardSmall = ({ name, cost, percent, amount, i }) => {
                         : { color: 'var(--lighter-red)' }
                 }
             >
-                {percent ? parseFloat(percent).toFixed(2) : 0}%
+                {percent ? parseFloat(percent).toFixed(2) : 0}
             </span>
             <Link to={`/info/${name}`}>
                 <span>

@@ -1,22 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FirebaseContext } from '../firebase/context';
-import UserInfoCardElement from './UserInfoCardElement';
 
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import UserPostCard from '../profile/profile-wall/user-posts/UserPostCard';
-
 import Backbutton from '../shared/button/back-button/BackButton';
 import { GenericVestBtn } from '../shared/button/ButtonElements';
 
+import UserInfoCardElement from './UserInfoCardElement';
+
 const UserInfoCard = () => {
     const { id } = useParams();
-    const siteId = id;
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
+
+    const [countFollow, setCountFollow] = useState(0)
     const [userData, setUserData] = useState();
     const [followed, setFollowed] = useState(false);
     const [uniId, setUniId] = useState('');
     const [userPostsList, setUserPostsList] = useState('');
+    const [userFollowerList, setUserFollowerList] = useState('');
+
     useEffect(() => {
         const usersRef = firebase.users();
         usersRef
@@ -24,21 +28,33 @@ const UserInfoCard = () => {
             .equalTo(id)
             .on('child_added', (snapshot) => {
                 const data = snapshot.val();
-                setUserData(snapshot.val());
+                setUserData(data);
+
                 let postArray = makePostsList(data.posts);
+                let followersArray = makeFollowersArray(data.followers);
                 setUserPostsList(postArray);
-                console.log(data);
+                setUserFollowerList(postArray);
                 checkIfFollowed(data.username);
                 findUser(data.username);
+                setCountFollow(data.followerCount)
             });
     }, [firebase, id]); //changed!
 
-    const makePostsList = (array) => {
+    const makePostsList = obj => {
         let lists = [];
-        for (const key in array) {
-            lists.push(array[key]);
+        for (const key in obj) {
+            lists.push(obj[key]);
         }
         console.log('Post List: ', lists);
+        return lists;
+    };
+
+    const makeFollowersArray = obj => {
+        let lists = [];
+        for (const key in obj) {
+            lists.push(obj[key]);
+        }
+        console.log('Follower List: ', lists);
         return lists;
     };
 
@@ -46,7 +62,7 @@ const UserInfoCard = () => {
         firebase
             .user(user.uid)
             .child('/following')
-            .once('value', (snapshot) => {
+            .on('value', (snapshot) => {
                 const data = snapshot.val();
                 console.log(data);
                 let users = [];
@@ -68,12 +84,14 @@ const UserInfoCard = () => {
 
     const followUser = (e, username, email) => {
         console.log(e.target.textContent);
-        if (e.target.textContent === 'follow') {
+        if (e.target.textContent.toLowerCase() === 'follow') {
+            setCountFollow(countFollow + 1)
             addUser(username, email);
             addFollowerCount(uniId);
             followerName(uniId, true);
             setFollowed(true);
         } else {
+            setCountFollow(countFollow - 1)
             removeUser(username);
             removeFollowerCount(uniId);
             followerName(uniId, false);
@@ -103,6 +121,7 @@ const UserInfoCard = () => {
             .child('/followerCount')
             .once('value', (snapshot) => {
                 let count = snapshot.val();
+                console.log(count)
                 let newFollowerCount = (count += 1);
                 firebase.user(id).child('/').update({
                     followerCount: newFollowerCount,
@@ -131,9 +150,10 @@ const UserInfoCard = () => {
             .child('/followerCount')
             .once('value', (snapshot) => {
                 let count = snapshot.val();
+                console.log(count)
                 let newFollowerCount = (count -= 1);
                 firebase.user(id).child('/').update({
-                    followerCount: newFollowerCount,
+                    followerCount: newFollowerCount, 
                 });
             });
     };
@@ -158,69 +178,58 @@ const UserInfoCard = () => {
     };
 
     return (
-        <UserInfoCardElement>
-            <Backbutton />
-            {userData == null ? (
-                <p>Loading user data...</p>
-            ) : (
-                <>
-                    <img src={userData.picture.profile_pic} alt="profile pic" />
-                    <h1>
-                        {userData.username}{' '}
-                        <span>
-                            {userData.emoji ? userData.emoji.emoji : ''}
-                        </span>
-                    </h1>
-                    <p>{userData.currency.currency.toLocaleString()}$</p>
-                    <p>{userData.email}</p>
-                    <p>{userData.bio ? userData.bio : ''}</p>
-                    <div className="followerWrapper">
-                        <p>
-                            Followers:{' '}
-                            {userData.followerCount
-                                ? userData.followerCount
-                                : ''}
-                        </p>
-                        {id == user.username ? '' : <GenericVestBtn
-                            onClick={(e) =>
-                                followUser(e, userData.username, userData.email)
-                            }
-                            pad="8px"
-                            border="1px solid black"
-                            br="10px"
-                            bg="none"
-                            co="black"
-                        >
-                            {followed ? 'Unfollow' : 'follow'}
-                        </GenericVestBtn>}
-
+        <ContentWrapper>
+            <UserInfoCardElement>
+                <Backbutton />
+                {userData == null ? (
+                    <p>Loading user data...</p>
+                ) : (
+                    <>
+                    <div className="container">
+                        <img src={userData.picture.profile_pic} alt="profile pic" />    
+                        <div> 
+                            <h1>
+                                {userData.username}{' '}
+                                <span>
+                                    {userData.emoji ? userData.emoji.emoji : ''}
+                                </span>
+                            </h1>
+                            <p className="currency">{userData.currency.currency.toLocaleString()}$</p>
+                        </div>
                     </div>
-                    {userPostsList.length > 0 ? (
-                        userPostsList.map((postObj, index) => {
-                            return (
-                                // <div key={index} className="post-card">
-                                // 	<p>{postObj.content}</p>
-                                // 	<p>Likes: {postObj.likeCount}</p>
-                                // 	<p>Liked: {postObj.liked ? "True" : "False"}</p>
-                                // 	<p>{new Date(postObj.timestamp).toLocaleDateString()}</p>
-                                // </div>
-                                <UserPostCard
-                                    key={index}
-                                    username={postObj.username}
-                                    content={postObj.content}
-                                    timestamp={postObj.timestamp}
-                                    liked={postObj.liked}
-                                    likeCount={postObj.likeCount}
-                                    /* handleChange={handleChange} */
-                                />
-                            );
-                        })
-                    ) : (
-                        <p>{userData.username} has not posted anything</p>
-                    )}
-                </>
-            )}
-        </UserInfoCardElement>
+
+                    {id == user.username ? "" :
+                    <label>
+                        <button onClick={(e) =>
+                            followUser(e, userData.username, userData.email)
+                        }>{followed ? 'Unfollow' : 'Follow'}</button>
+                        <span>
+                            {countFollow}
+                        </span>
+                    </label>}
+                        <p>{userData.bio ? userData.bio : ''}</p>
+                        <hr/>
+                        <h2>Posts</h2>
+                        {userPostsList.length > 0 ? (
+                            userPostsList.map((postObj, index) => {
+                                return (
+                                    <UserPostCard
+                                        key={index}
+                                        username={postObj.username}
+                                        content={postObj.content}
+                                        timestamp={postObj.timestamp}
+                                        liked={postObj.liked}
+                                        likeCount={postObj.likeCount}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <p>{userData.username} has not posted anything :/</p>
+                        )}
+                    </>
+                )}
+            </UserInfoCardElement>
+        </ContentWrapper>
     );
 };
 

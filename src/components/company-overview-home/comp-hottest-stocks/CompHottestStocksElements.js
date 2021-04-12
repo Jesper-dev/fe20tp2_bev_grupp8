@@ -8,6 +8,7 @@ export const ContentWrapper = styled.article`
     margin-top: 1rem;
 
     h4 {
+        text-align: center;
         margin: 0 0 8px 0;
     }
 `;

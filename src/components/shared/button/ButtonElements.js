@@ -58,12 +58,17 @@ export const ButtonPrimary = styled(Link)`
 `;
 
 export const GenericVestBtn = styled.button`
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: ${(props) => props.pad};
     border: ${(props) => props.border};
     border-radius: ${(props) => props.br};
     background-color: ${(props) => props.bg};
     color: ${(props) => props.co};
+    width: ${(props) => props.wid};
+    height: ${(props) => props.hei};
+    font-size: ${(props) => props.fz};
     font-family: inherit;
     font-weight: 500;
     cursor: pointer;
@@ -72,6 +77,6 @@ export const GenericVestBtn = styled.button`
 
     &:hover {
         background-color: ${(props) => props.hovbg};
-        color: var(--body);
+        color: ${(props) => props.co} !important;
     }
 `;

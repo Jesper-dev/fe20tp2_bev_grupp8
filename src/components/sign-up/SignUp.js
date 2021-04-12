@@ -19,6 +19,16 @@ const INITIAL_STATE = {
     usernameTaken: false,
     username: '',
     organization: '',
+    colors: {
+        primaryColor: {
+            h: 38,
+            l: 50,
+            s: 100,
+        },
+    },
+    Logo: {
+        Logo: '',
+    },
     currency: {
         currency: 100000,
     },
@@ -78,11 +88,11 @@ const INITIAL_STATE = {
     following: {
         LetsVest: {
             email: 'letsvest@vest.com',
-            username: 'Vest'
+            username: 'Vest',
         },
     },
     picture: {
-        profile_pic: 'null'
+        profile_pic: 'null',
     },
     email: '',
 
@@ -175,6 +185,8 @@ class SignUpFormBase extends Component {
             list,
             userSettings,
             likedPosts,
+            colors,
+            Logo,
         } = this.state;
 
         if (partOfOrganization) {
@@ -236,6 +248,10 @@ class SignUpFormBase extends Component {
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
                     if (isAdmin) {
+                        this.props.firebase.organization(organization).update({
+                            colors,
+                            Logo,
+                        });
                         this.props.firebase
                             .organization(
                                 organization + '/users/' + authUser.user.uid
