@@ -78,12 +78,7 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
                 <div className="quick-cards-wrapper">
                     <article>
                         <h2>Total assets</h2>
-                        <h3>
-                            {parseFloat(TotalCrypto) +
-                                parseFloat(TotalStocks) +
-                                total}
-                            $
-                        </h3>
+                        <h3>{totalAssets}$</h3>
                     </article>
                     {/*           <article>
                         <h2>Crypto value</h2>

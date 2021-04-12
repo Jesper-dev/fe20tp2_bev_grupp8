@@ -21,6 +21,8 @@ const ProfilePortfolio = () => {
     const firebase = useContext(FirebaseContext);
     const dispatch = useDispatch();
 
+    const TotalStocks = useSelector((state) => state.TotalStocks);
+    const TotalCrypto = useSelector((state) => state.TotalCrypto);
     const FetchedStockValues = useSelector((state) => state.FetchedStockValues);
     const FetchedCryptoValues = useSelector(
         (state) => state.FetchedCryptoValues
@@ -99,8 +101,8 @@ const ProfilePortfolio = () => {
 
     return (
         <>
-            <FetchUserCrypto />
-            <FetchUserStocks />
+            {TotalCrypto == 0 ? <FetchUserCrypto currency={currency} /> : null}
+            {TotalStocks == 0 ? <FetchUserStocks currency={currency} /> : null}
             <PortfolioOverview
                 total={currency.toLocaleString()}
                 stockvalue={valueStocks}

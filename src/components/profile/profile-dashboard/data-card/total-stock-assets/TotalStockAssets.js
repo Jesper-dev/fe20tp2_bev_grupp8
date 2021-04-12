@@ -7,7 +7,7 @@ const TotalStockAssets = () => {
     const OrganizationData = useSelector((state) => state.OrganizationData);
 
     const [stockData, setStockData] = useState(null);
-    const [stockValues, setStockValues] = useState(0)
+    const [stockValues, setStockValues] = useState(0);
     const [amountArray, setAmountArray] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const TotalStockAssets = () => {
         unique.splice(0, 1).join();
 
         let symbols = unique.join();
-
+        /* 
             const options = {
             method: 'GET',
             url:
@@ -38,20 +38,20 @@ const TotalStockAssets = () => {
             })
             .catch(function (error) {
                 console.error(error);
-            });
+            }); */
 
         return () => {};
     }, []);
 
     useEffect(() => {
         let total = 0;
-    
+
         amountArray.forEach((item, i) => {
             /*      let index = stockData.findIndex((x) => x.symbol == item.symbol); */
             return (total += stockData[i].regularMarketPrice * item.amount);
         });
-        
-       setStockValues(total.toFixed(2))
+
+        setStockValues(total.toFixed(2));
 
         return () => {};
     }, [stockData]);

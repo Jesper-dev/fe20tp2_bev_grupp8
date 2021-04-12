@@ -30,13 +30,19 @@ import {
     setFollowingCrypto,
     setCurrency,
 } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CompanyOverviewHome from '../company-overview-home/CompanyOverviewHome';
 
 import FetchUserCrypto from '../../api//user-api-components/FetchUserCrypto';
 import FetchUserStocks from '../../api//user-api-components/FetchUserStocks';
 import { setOrgColor } from '../shared/functions/colorTheme';
+import TotalCompValue from '../profile/profile-dashboard/data-card/company-overview/CompanyOverview';
 
 const Home = () => {
+    const TotalStocks = useSelector((state) => state.TotalStocks);
+    const TotalCrypto = useSelector((state) => state.TotalCrypto);
+
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
     const [followingArrCrypto, setFollowingArrCrypto] = useState([]);
@@ -134,8 +140,12 @@ const Home = () => {
 
     return (
         <>
-            <FetchUserCrypto currency={totalCurrency} />
-            <FetchUserStocks currency={totalCurrency} />
+            {TotalCrypto == 0 ? (
+                <FetchUserCrypto currency={totalCurrency} />
+            ) : null}
+            {TotalStocks == 0 ? (
+                <FetchUserStocks currency={totalCurrency} />
+            ) : null}
             <ContentWrapper>
                 <MainWrapper>
                     <section>
@@ -174,6 +184,7 @@ const Home = () => {
                         ''
                     )}
                 </MainWrapper>
+                <CompanyOverviewHome />
             </ContentWrapper>
         </>
     );

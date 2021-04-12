@@ -31,13 +31,11 @@ const MostBoughtCrypto = () => {
     };
 
     const makeBoughtArray = (arr) => {
-        return
-        if(!arr) return
+        if (!arr) return;
         let orgStockPossessionArr = [];
         let j = 0;
         let i = 0;
         while (j < arr.length) {
-
             let keys = Object.keys(arr[j].possessionCrypto);
             if (arr[j].possessionCrypto[keys[i]] === undefined) {
                 i = 0;
