@@ -23,21 +23,16 @@ const UserPostCard = ({
     useEffect(() => {
         firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
-            const entries = Object.entries(data);
-
             let dataArray = [];
 
-            entries.forEach((entry) => {
-                const postId = entry[0];
-                const postData = entry[1];
-
-                let newObj = {
-                    postId,
-                    postData,
+            for (const key in data) {
+                const obj = {
+                    postId: key,
+                    postData: data[key]
                 };
 
-                dataArray.push(newObj);
-            });
+                dataArray.push(obj);
+            }
 
             setPosts(dataArray);
         });
@@ -48,9 +43,6 @@ const UserPostCard = ({
         const likedPostIndex = post.postData.likedUsers.findIndex(
             (userId) => userId == user.uid
         );
-
-        console.log(post.postData.userId);
-        console.log(user.uid);
 
         if (likedPostIndex === -1) {
             post.postData.likedUsers.push(user.uid);

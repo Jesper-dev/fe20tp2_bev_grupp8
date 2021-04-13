@@ -151,6 +151,7 @@ const Profile = () => {
                                 food_drink: false,
                                 recently_used: false,
                             }}
+                            preload={true}
                         />
                     </div>
 

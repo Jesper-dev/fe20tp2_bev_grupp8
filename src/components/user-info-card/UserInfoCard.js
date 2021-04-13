@@ -19,7 +19,6 @@ const UserInfoCard = () => {
     const [userData, setUserData] = useState();
     const [followed, setFollowed] = useState(false);
     const [uniId, setUniId] = useState('');
-    const [userPostsList, setUserPostsList] = useState('');
     const [userFollowerList, setUserFollowerList] = useState('');
 
     useEffect(() => {
@@ -33,31 +32,29 @@ const UserInfoCard = () => {
 
                 let postArray = makePostsList(data.posts);
                 let followersArray = makeFollowersArray(data.followers);
-                setUserPostsList(postArray);
                 setUserFollowerList(postArray);
                 checkIfFollowed(data.username);
                 findUser(data.username);
                 setCountFollow(data.followerCount)
-                console.log(snapshot.val());
             });
 
         firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
             let dataArray = [];
 
-			for (const key in data) {
-				const obj = {
-				  postId: key,
-				  postData: data[key]
-				};
+            for (const key in data) {
+                const obj = {
+                    postId: key,
+                    postData: data[key]
+                };
 
-				dataArray.unshift(obj);
-			}
+                dataArray.unshift(obj);
+            }
 
-			setUserPosts(dataArray.filter(obj => obj.postData.username.includes(id)));
+            setUserPosts(dataArray.filter(obj => obj.postData.username == id));
         });
 
-    }, [firebase, id]);
+    }, [firebase, id]); //changed!
 
     const makePostsList = obj => {
         let lists = [];

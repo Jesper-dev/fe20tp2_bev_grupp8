@@ -54,6 +54,16 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
                 for (const key in data) {
                     arr.push({ ...data[key] });
                 }
+                if(arr.length == 1 || arr.length == 2) {
+                    for(let i = 0; i < 1; i++) {
+                        newList.push(arr[i])
+
+                    }
+                    setInitArr(newList)
+                    setWatching(newList)
+                    setFirstArr(newList)
+                    return;
+                }
                 setInitArr(arr)
                 for(let i = 0; i < 3; i++) {
                     newList.push(arr[i])

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserPostCard from '../shared/card/user-post-card/UserPostCard';
-import LikedPostsElement from '../profile/profile-wall/liked-posts/LikedPostsElement';
+import Wrapper from '../profile/profile-wall/liked-posts/LikedPostsElement';
 import { FirebaseContext } from '../firebase/context';
 
 const SocialFeed = () => {
@@ -117,8 +117,8 @@ const SocialFeed = () => {
     // };
 
     return (
-        <LikedPostsElement>
-            {/* 		<h1>Recent posts from people you follow</h1> */}
+        <Wrapper>
+            <h1>Recent posts from people you follow</h1>
             {followingPostsList
                 ? followingPostsList.map((item, index) => {
                       return (
@@ -130,29 +130,11 @@ const SocialFeed = () => {
                               liked={item.liked}
                               likeCount={item.likeCount}
                               picture={item.picture}
-                              // handleChange={handleChange}
                           />
                       );
                   })
-                : 'No liked posts'}
-        </LikedPostsElement>
-
-        // <LikedPostsElement>
-        //     <h1>Liked posts</h1>
-        //     {likedPosts ? likedPosts.map((item, index) => {
-        //         return (
-        //             <UserPostCard
-        //             key={index}
-        //             username={item.username}
-        //             content={item.content}
-        //             timestamp={item.timestamp}
-        //             liked={item.liked}
-        //             likeCount={item.likeCount}
-        //             handleChange={handleChange}
-        //             />
-        //         )
-        //     }) : 'No liked posts'}
-        // </LikedPostsElement>
+                : 'Follow people to see their posts!'}
+        </Wrapper>
     );
 };
 

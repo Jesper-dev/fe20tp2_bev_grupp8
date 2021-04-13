@@ -86,6 +86,10 @@ const writeNewPost = (uid, username, picture, postData) => {
 
     const handleSubmitPost = (e) => {
         e.preventDefault();
+        if(postInOrg == true) {
+            postInOrgFunc(userData.organization, userData.uid, userData.username, profilePic, postData)
+            return;
+        }
 
 		const profilePicObj = firebase.user(`${userData.uid}/picture/profile_pic`);
 
@@ -104,12 +108,12 @@ const writeNewPost = (uid, username, picture, postData) => {
             updateData(userPostsArr); */
             setPostData('');
 			document.querySelector("textarea").classList.remove('not-empty');
+            document.querySelector("textarea").style.backgroundColor = "red";
+            setTimeout(() => {
+                document.querySelector("textarea").style.backgroundColor = "transparent";
+            }, 2500);
         }
         addToRecentPost(userData.uid, userData.username, profilePic, postData)
-
-        if(postInOrg == true) {
-            postInOrgFunc(userData.organization, userData.uid, userData.username, profilePic, postData)
-        }
     };
 
     return (

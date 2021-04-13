@@ -48,9 +48,11 @@ const SocialPage = () => {
                                 total={item.currency ? item.currency.currency : 20}
                             />
                         )
-                    }) : <SocialPost />}
-
-                <SocialFeed />
+                    }) :
+                    <>
+                        <SocialPost />
+                        <SocialFeed />
+                    </>}
                 </MainWrapper>
         </ContentWrapper>
     );

@@ -11,27 +11,20 @@ const LikedPosts = () => {
 	const user = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        firebase.posts().on('value', (snapshot) => {
+		firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
-            const entries = Object.entries(data);
-
             let dataArray = [];
 
-            entries.forEach((entry) => {
-                const postId = entry[0];
-                const postData = entry[1];
-
-				// prefer to have uid as key of the postdata, but hard to reach it later?
-				// or maybe have firebase data differently
-                let newObj = {
-                    postId,
-                    postData,
+            for (const key in data) {
+                const obj = {
+                    postId: key,
+                    postData: data[key]
                 };
-			
-                dataArray.push(newObj);
-            });
 
-			setLikedPosts(dataArray.filter(obj => obj.postData.likedUsers.includes(user.uid)));
+                dataArray.push(obj);
+            }
+
+            setLikedPosts(dataArray.filter(obj => obj.postData.likedUsers.includes(user.uid)));
         });
     }, []);
 

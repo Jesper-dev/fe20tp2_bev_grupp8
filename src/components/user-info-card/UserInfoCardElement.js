@@ -5,19 +5,16 @@ const UserInfoCardElement = styled.section`
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+
     hr {
         width: 90%;
         border: none;
         max-width: 700px;
-    height: 1px;
-    /* Set the hr color */
-    color: #8e8e88; /* old IE */
-    background-color: #dbdbdb; /* Modern Browsers */
-
-/*         @media screen and (max-width: 768px){
-            width: 100%;
-        } */
+        height: 1px;
+        color: #8e8e88; /* old IE */
+        background-color: #dbdbdb; /* Modern Browsers */
     }
+
     p {
         max-width: 700px;
     }

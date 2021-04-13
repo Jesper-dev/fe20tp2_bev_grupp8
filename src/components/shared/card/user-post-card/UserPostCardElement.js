@@ -11,8 +11,23 @@ const UserPostCardWrapper = styled.article`
     width: 100%;
     background-color: var(--body);
 
+    & > a {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.375rem 0.5rem;
+        border-radius: 0.25rem;
+        max-width: min-content;
+        text-decoration: none;
+        color: var(--clr-primary);
+
+        &:hover {
+            background-color: #e8e8e8;
+        }
+    }
+
     h2 {
-        margin: 0;
+        margin: 0 0 0 1rem;
         color: #383838;
         font-size: 1.25rem;
         font-weight: 600;
@@ -24,9 +39,14 @@ const UserPostCardWrapper = styled.article`
     }
 
     img {
-        width: 2rem;
-        height: 2rem;
+        width: 4rem;
+        height: 4rem;
         border-radius: 50%;
+        background-color: rgb(200, 0, 0, 0.9);
+    }
+
+    img:hover{
+        background-color: rgb(200, 0, 0, 0.5);
     }
 
     & > div {
