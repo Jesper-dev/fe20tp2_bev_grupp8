@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import UserPostCardWrapper from './UserPostCardElement';
 import { FirebaseContext } from '../../../firebase/context';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UserPostCard = ({
     postId,
@@ -12,8 +14,10 @@ const UserPostCard = ({
     picture,
 }) => {
     const firebase = useContext(FirebaseContext);
+    const { id } = useParams();
 
     const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
@@ -28,15 +32,37 @@ const UserPostCard = ({
                 const postId = entry[0];
                 const postData = entry[1];
 
-				// prefer to have uid as key of the postdata, but hard to reach it later?
                 let newObj = {
                     postId,
                     postData,
                 };
-			
+
                 dataArray.push(newObj);
             });
-			setPosts(dataArray);
+
+            setPosts(dataArray);
+        });
+
+        firebase.users().on('value', (snapshot) => {
+            const data = snapshot.val();
+            const entries = Object.entries(data);
+
+            let dataArray = [];
+
+            entries.forEach((entry) => {
+                const userId = entry[0];
+                const userData = entry[1];
+
+                let newObj = {
+                    userId,
+                    userData,
+                };
+
+                dataArray.push(newObj);
+            });
+
+            console.log(dataArray);
+            setUsers(dataArray);
         });
     }, []);
 
@@ -84,6 +110,14 @@ const UserPostCard = ({
                 </label>
                 <span className="likes">{likeCount}</span>
             </div>
+            {id === username ? (
+                ''
+            ) : (
+                <Link to={`/user/${username}`}>
+                    Profile
+                    <i className="fas fa-user"></i>
+                </Link>
+            )}
         </UserPostCardWrapper>
     );
 };

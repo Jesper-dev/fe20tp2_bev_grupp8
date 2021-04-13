@@ -43,7 +43,7 @@ const UserInfoCard = () => {
     const makePostsList = obj => {
         let lists = [];
         for (const key in obj) {
-            lists.push(obj[key]);
+            lists.unshift(obj[key]);
         }
         console.log('Post List: ', lists);
         return lists;
@@ -153,7 +153,7 @@ const UserInfoCard = () => {
                 console.log(count)
                 let newFollowerCount = (count -= 1);
                 firebase.user(id).child('/').update({
-                    followerCount: newFollowerCount, 
+                    followerCount: newFollowerCount,
                 });
             });
     };
@@ -186,8 +186,8 @@ const UserInfoCard = () => {
                 ) : (
                     <>
                     <div className="container">
-                        <img src={userData.picture.profile_pic} alt="profile pic" />    
-                        <div> 
+                        <img src={userData.picture.profile_pic} alt="profile pic" />
+                        <div>
                             <h1>
                                 {userData.username}{' '}
                                 <span>
@@ -220,6 +220,7 @@ const UserInfoCard = () => {
                                         timestamp={postObj.timestamp}
                                         liked={postObj.liked}
                                         likeCount={postObj.likeCount}
+                                        picture={postObj.picture}
                                     />
                                 );
                             })

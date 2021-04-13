@@ -1,19 +1,15 @@
 import styled from 'styled-components';
 
 const UserPostCardWrapper = styled.article`
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    /* margin-top: 1.25rem; */
-    /* background-color: var(--body); */
-    background-color: #fff;
     padding: 1rem;
     border-radius: 0.25rem;
-    width: 80%;
-	max-width: 50rem;
-    box-sizing: border-box;
-    /*   box-shadow: var(--box-shadow-cards); */
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.14), 1px 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--box-shadow-cards);
+    width: 100%;
+    background-color: var(--body);
 
     h2 {
         margin: 0;
@@ -28,8 +24,8 @@ const UserPostCardWrapper = styled.article`
     }
 
     img {
-        width: 30px;
-        height: 30px;
+        width: 2rem;
+        height: 2rem;
         border-radius: 50%;
     }
 
