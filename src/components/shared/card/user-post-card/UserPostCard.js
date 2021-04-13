@@ -17,7 +17,6 @@ const UserPostCard = ({
     const { id } = useParams();
 
     const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
 
@@ -42,28 +41,6 @@ const UserPostCard = ({
 
             setPosts(dataArray);
         });
-
-        firebase.users().on('value', (snapshot) => {
-            const data = snapshot.val();
-            const entries = Object.entries(data);
-
-            let dataArray = [];
-
-            entries.forEach((entry) => {
-                const userId = entry[0];
-                const userData = entry[1];
-
-                let newObj = {
-                    userId,
-                    userData,
-                };
-
-                dataArray.push(newObj);
-            });
-
-            console.log(dataArray);
-            setUsers(dataArray);
-        });
     }, []);
 
     const handleChange = () => {
@@ -71,6 +48,9 @@ const UserPostCard = ({
         const likedPostIndex = post.postData.likedUsers.findIndex(
             (userId) => userId == user.uid
         );
+
+        console.log(post.postData.userId);
+        console.log(user.uid);
 
         if (likedPostIndex === -1) {
             post.postData.likedUsers.push(user.uid);

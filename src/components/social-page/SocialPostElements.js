@@ -51,4 +51,9 @@ export const ContentWrapper = styled.div`
 			background-color: var(--clr-primary__brighter);
 		}
     }
+
+    div {
+        display: flex;
+        align-items: center;
+    }
 `;

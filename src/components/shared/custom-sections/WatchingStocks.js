@@ -78,7 +78,7 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
             <ContentWrapper gap={gap}>
                 <h3>Watching Securities</h3>
                 <SectionDataIndicator LabelsArr={LabelsArr} />
-                {array.length === 0 ? (
+                {watching.length === 0 ? (
                     <p>
                         You are not following any stocks or cryptocurrencies at
                         the moment! Use the Discover page to find stocks and

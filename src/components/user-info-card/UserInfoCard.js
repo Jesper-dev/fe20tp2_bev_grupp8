@@ -5,7 +5,6 @@ import { FirebaseContext } from '../firebase/context';
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import UserPostCard from '../shared/card/user-post-card/UserPostCard';
 import Backbutton from '../shared/button/back-button/BackButton';
-import { GenericVestBtn } from '../shared/button/ButtonElements';
 
 import UserInfoCardElement from './UserInfoCardElement';
 
@@ -13,6 +12,8 @@ const UserInfoCard = () => {
     const { id } = useParams();
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
+
+    const [userPosts, setUserPosts] = useState([]);
 
     const [countFollow, setCountFollow] = useState(0)
     const [userData, setUserData] = useState();
@@ -37,8 +38,26 @@ const UserInfoCard = () => {
                 checkIfFollowed(data.username);
                 findUser(data.username);
                 setCountFollow(data.followerCount)
+                console.log(snapshot.val());
             });
-    }, [firebase, id]); //changed!
+
+        firebase.posts().on('value', (snapshot) => {
+            const data = snapshot.val();
+            let dataArray = [];
+
+			for (const key in data) {
+				const obj = {
+				  postId: key,
+				  postData: data[key]
+				};
+
+				dataArray.unshift(obj);
+			}
+
+			setUserPosts(dataArray.filter(obj => obj.postData.username.includes(id)));
+        });
+
+    }, [firebase, id]);
 
     const makePostsList = obj => {
         let lists = [];
@@ -194,6 +213,7 @@ const UserInfoCard = () => {
                                     {userData.emoji ? userData.emoji.emoji : ''}
                                 </span>
                             </h1>
+                            {userData.organization ? <p>{userData.organization}</p> : ''}
                             <p className="currency">{userData.currency.currency.toLocaleString()}$</p>
                         </div>
                     </div>
@@ -210,17 +230,18 @@ const UserInfoCard = () => {
                         <p>{userData.bio ? userData.bio : ''}</p>
                         <hr/>
                         <h2>Posts</h2>
-                        {userPostsList.length > 0 ? (
-                            userPostsList.map((postObj, index) => {
+                        {userPosts.length > 0 ? (
+                            userPosts.map((obj, index) => {
                                 return (
                                     <UserPostCard
                                         key={index}
-                                        username={postObj.username}
-                                        content={postObj.content}
-                                        timestamp={postObj.timestamp}
-                                        liked={postObj.liked}
-                                        likeCount={postObj.likeCount}
-                                        picture={postObj.picture}
+                                        postId={obj.postId}
+                                        username={obj.postData.username}
+                                        content={obj.postData.content}
+                                        timestamp={obj.postData.timestamp}
+                                        likeCount={obj.postData.likeCount}
+                                        liked={obj.postData.likedUsers.includes(user.uid) ? true : false}
+                                        picture={obj.postData.picture}
                                     />
                                 );
                             })

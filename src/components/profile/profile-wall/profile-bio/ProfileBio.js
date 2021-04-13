@@ -57,19 +57,15 @@ const ProfileBio = () => {
                     )}
                 </GenericVestBtn>
             </div>
-            <div>
-                {editable ? (
-                    <textarea
-                        value={bio}
-                        placeholder="Write your biography..."
-                        onChange={(e) => setBio(e.target.value)}
-                        cols="35"
-                        rows="5"
-                    ></textarea>
-                ) : (
-                    <p>{bio}</p>
-                )}
-            </div>
+            {editable ? (
+                <textarea
+                    value={bio}
+                    placeholder="Write your biography..."
+                    onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+            ) : (
+                <p>{bio}</p>
+            )}
         </Wrapper>
     );
 };

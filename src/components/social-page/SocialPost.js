@@ -7,6 +7,7 @@ import { ContentWrapper } from './SocialPostElements';
 const SocialPost = () => {
     const firebase = useContext(FirebaseContext);
     const [postData, setPostData] = useState('');
+    const [postInOrg, setPostInOrg] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
@@ -69,6 +70,20 @@ const writeNewPost = (uid, username, picture, postData) => {
         });
     };
 
+    const postInOrgFunc = (org, uid, username, picture, postData) => {
+        firebase.organization(org).child('/recentlyPosted/').set({
+            postData: {
+                username: username,
+                content: postData,
+                likeCount: 0,
+                liked: false,
+                timestamp: Date.now(),
+                uid: uid,
+                picture: picture,
+            },
+          })
+    };
+
     const handleSubmitPost = (e) => {
         e.preventDefault();
 
@@ -91,6 +106,10 @@ const writeNewPost = (uid, username, picture, postData) => {
 			document.querySelector("textarea").classList.remove('not-empty');
         }
         addToRecentPost(userData.uid, userData.username, profilePic, postData)
+
+        if(postInOrg == true) {
+            postInOrgFunc(userData.organization, userData.uid, userData.username, profilePic, postData)
+        }
     };
 
     return (
@@ -104,6 +123,10 @@ const writeNewPost = (uid, username, picture, postData) => {
                 ></textarea>
                 <button type="submit">Post</button>
             </form>
+            <div>
+                <p>Post in org: </p>
+                <input type="checkbox" onClick={() => setPostInOrg(!postInOrg)}/>
+            </div>
             {/* POSTS FROM PEOPLE YOU FOLLOW */}
         </ContentWrapper>
     );

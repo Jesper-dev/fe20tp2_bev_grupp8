@@ -189,7 +189,7 @@ const GlobalStyle = createGlobalStyle`
 
     --box-shadow-focus: 0 0 0 0.125rem #90CAF9, 0 0 0 0.375rem #E3F2FD;
 
-    --box-shadow-cards: 1px 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.16);
+    --box-shadow-cards: 1px 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.08);
 
 	--typefaces: "Inter", sans-serif;
   }

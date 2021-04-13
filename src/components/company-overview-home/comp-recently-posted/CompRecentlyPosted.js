@@ -13,7 +13,7 @@ const CompRecentlyPosted = () => {
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-        fetchOrgSnapshot(firebase, user.organization, '/recentlyPosted', setPostData)
+        fetchOrgSnapshot(firebase, user.organization, '/recentlyPosted/postData', setPostData)
     }, [])
 
     console.log(postData)
@@ -24,7 +24,7 @@ const CompRecentlyPosted = () => {
 
             <UserPostCard
             //uid={arr[0]}
-            
+
             username={postData.username}
             content={postData.content}
             timestamp={postData.timestamp}

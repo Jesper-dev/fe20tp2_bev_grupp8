@@ -3,17 +3,10 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.5rem;
     margin: auto;
     width: 100%;
     max-width: 40rem;
-    max-height: 60vh;
-    overflow: auto;
-    padding-bottom: 1rem;
-
-    h1 {
-        margin: 2rem 0 0 0;
-    }
 
     & > div {
         display: flex;
@@ -22,13 +15,34 @@ export const Wrapper = styled.div`
     }
 
     textarea {
-        font-family: var(--typefaces);
-        width: 100%;
-        border-radius: 4px;
-        resize: none;
-        border: 2px solid #cccfc9;
-        /*     border: none; */
+        padding: 0.5rem;
+        border: 0.1rem solid #ddd;
+        border-radius: 0.25rem;
         outline: none;
+        background: none;
+        font-family:inherit;
+        resize: none;
+        transition: border-color 125ms linear, box-shadow 125ms linear;
+
+        &::placeholder {
+            color: grey;
+            opacity: 1;
+        }
+
+        &:focus {
+            border-color: var(--clr-primary__brighter);
+            box-shadow: 0 0 0 0.1875rem var(--clr-primary-light__dimmer);
+        }
+    }
+
+    h2 {
+        margin: 0;
+    }
+    }
+
+    & > p {
+        max-height: 8rem;
+        overflow-y: auto;
     }
 
     button {
@@ -43,9 +57,5 @@ export const Wrapper = styled.div`
 
     button:hover {
         color: black;
-    }
-
-    .editable {
-        border: 1px solid var(--clr-primary__brighter);
     }
 `;

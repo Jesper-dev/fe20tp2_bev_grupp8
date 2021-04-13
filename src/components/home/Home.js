@@ -146,7 +146,7 @@ const Home = () => {
             {TotalStocks == 0 ? (
                 <FetchUserStocks currency={totalCurrency} />
             ) : null}
-            {/* 
+            {/*
     <main>
         <section> --> left
         <section> --> recent
@@ -171,7 +171,7 @@ const Home = () => {
                         {watchingCryptos ? (
                             <WatchingCrypto
                                 gap="0.5rem"
-                                cryptoList={followingArrCrypto.slice(0, 3)}
+                                // cryptoList={followingArrCrypto}
                             />
                         ) : (
                             ''
@@ -180,7 +180,7 @@ const Home = () => {
                             <WatchingStocks
                                 stockscardsmall={false}
                                 gap="0.5rem"
-                                array={followingArr}
+                                // array={followingArr}
                             />
                         ) : null}
 
