@@ -108,6 +108,7 @@ const writeNewPost = (uid, username, picture, postData) => {
             updateData(userPostsArr); */
             setPostData('');
 			document.querySelector("textarea").classList.remove('not-empty');
+
             document.querySelector("textarea").style.backgroundColor = "red";
             setTimeout(() => {
                 document.querySelector("textarea").style.backgroundColor = "transparent";

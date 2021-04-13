@@ -42,12 +42,10 @@ const UserPostCardWrapper = styled.article`
         width: 4rem;
         height: 4rem;
         border-radius: 50%;
-        background-color: rgb(200, 0, 0, 0.9);
+
     }
 
-    img:hover{
-        background-color: rgb(200, 0, 0, 0.5);
-    }
+
 
     & > div {
         display: flex;
