@@ -26,8 +26,22 @@ const UserPostCardWrapper = styled.article`
         }
     }
 
+    a {
+        text-decoration: none;
+        color: var(--clr-primary);
+        text-underline-offset: 0.25rem;
+        transition: text-underline-offset 125ms linear;
+
+        &:hover{
+            text-decoration: underline;
+            text-decoration-thickness: 0.125rem;
+            text-decoration-skip-ink: none;
+            text-underline-offset: 0.4375rem;
+        }
+    }
+
     h2 {
-        margin: 0 0 0 1rem;
+        margin: -3rem 0rem 2rem 6rem;
         color: #383838;
         font-size: 1.25rem;
         font-weight: 600;
@@ -43,8 +57,10 @@ const UserPostCardWrapper = styled.article`
         height: 4rem;
         border-radius: 50%;
 
+        &:hover {
+            opacity: 0.7;
+        }
     }
-
 
 
     & > div {
@@ -65,8 +81,8 @@ const UserPostCardWrapper = styled.article`
         transition: background-color 125ms linear;
 
         &:hover,
-        &:active {
-            background-color: rgb(200, 0, 0, 0.1);
+        &:active{
+            background-color: rgb(200, 0, 0, 0.9);
         }
 
         .checkbox {

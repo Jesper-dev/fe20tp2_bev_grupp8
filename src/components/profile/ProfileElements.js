@@ -7,6 +7,34 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     gap: 1.5rem;
 
+    .btn-and-follower-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0.75rem 0;
+        width: 100%;
+
+        .follower-wrapper {
+            flex: 1 1 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+
+            span {
+                font-size: 1rem;
+            }
+        }
+
+        .btn-wrapper {
+            flex: 1 1 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+
     .emoji-picker-wrapper {
         @media screen and (min-width: 1024px) {
             justify-content: flex-end;
@@ -27,41 +55,6 @@ export const HeaderWrapper = styled.header`
             top: 10;
         }
         width: 100%;
-    }
-
-    .follow-info-wrapper {
-        @media screen and (min-width: 1024px) {
-            width: 100%;
-            max-width: 16rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-        }
-        width: 100%;
-        max-width: 8rem;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: space-evenly; */
-    }
-
-    .followers-wrapper {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        span:nth-child(2) {
-            font-size: 0.8rem;
-        }
-    }
-
-    .btn-and-wollower-wrapper {
-        @media screen and (min-width: 1024px) {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 40rem;
-        }
-        display: flex;
     }
 
     & > section {
@@ -95,6 +88,14 @@ export const HeaderWrapper = styled.header`
                 font-weight: 500;
             }
         }
+    }
+
+    .achievments-wrapper{
+        display: flex;
+    }
+
+    .fa-money-bill-wave{
+        color: goldenrod;
     }
 `;
 

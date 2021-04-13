@@ -33,14 +33,50 @@ const Profile = () => {
     const firebase = useContext(FirebaseContext);
     const dispatch = useDispatch();
     const [username, setUsername] = useState('');
+    const [userInfo, setUserInfo] = useState({});
+    const [millionaire, setMillionaire] = useState(false);
+    const [bitcoin, setBitcoin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [followerCount, setFollowerCount] = useState(false);
+    const [followingCount, setFollowingCount] = useState(false);
     const [chosenEmoji, setChosenEmoji] = useState(null);
     const [showEmoji, setShowEmoji] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
+
+    const checkUser = (currency, arr) => {
+        let list = []
+        if(currency >= 100000000) {
+            setMillionaire(true)
+            firebase.user(userData.uid).child('/achievments').update({
+                millionaire: true
+            })
+        }
+
+        for (const key in arr) {
+            list.push({ ...arr[key] });
+        }
+        list.forEach((item) => {
+            if(item.symbol === 'btc') {
+                if(item.amount >= 10) {
+                    setBitcoin(true)
+                    firebase.user(userData.uid).child('/achievments').update({
+                        bitcoin: true
+                    })
+                }
+            }
+        })
+    }
+
+    const checkFollowingCount = (arr) => {
+        let list = []
+        for (const key in arr) {
+            list.push({ ...arr[key] });
+        }
+        setFollowingCount(list.length)
+    }
 
     const onEmojiClick = (event, emojiObject) => {
         setChosenEmoji(emojiObject);
@@ -80,9 +116,11 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setFollowerCount(data.followerCount);
+            checkFollowingCount(data.following)
             setUsername(data.username);
+            setUserInfo(data)
             if (!data.picture) return;
-
+            checkUser(data.currency.currency, data.possessionCrypto)
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink));
             if (!data.roles) return;
@@ -123,11 +161,12 @@ const Profile = () => {
                         {chosenEmoji ? <span>{chosenEmoji.emoji}</span> : ''}
                         <GenericVestBtn
                             onClick={() => setShowEmoji(!showEmoji)}
-                            pad={'8px'}
-                            border={'1px solid var(--clr-primary)'}
-                            br={'10px'}
+                            pad={'0.5rem'}
+                            border={'0.0925rem solid var(--clr-primary)'}
+                            br={'0.375rem'}
                             bg={'none'}
                             co={'var(--clr-primary)'}
+                            hovbg={"var(--clr-primary-light)"}
                         >
                             {showEmoji ? 'Mood (close)' : 'Mood (open)'}
                         </GenericVestBtn>
@@ -154,37 +193,35 @@ const Profile = () => {
                             preload={true}
                         />
                     </div>
-
-                    <div className="btn-and-wollower-wrapper">
-                        <div className="follow-info-wrapper">
-                            <div className="followers-wrapper">
-                                <span>
-                                    {' '}
-                                    {followerCount > 0 ? followerCount : 0}{' '}
-                                </span>
-                                <span>Followers</span>
-                            </div>
-
-                            <div className="followers-wrapper">
-                                <span>
-                                    {' '}
-                                    {followerCount > 0 ? followerCount : 0}{' '}
-                                </span>
-                                <span>Following</span>
-                            </div>
+                    <div className="achievments-wrapper">
+                        <p>{millionaire ? <i className="fas fa-money-bill-wave"></i> : ''}</p>
+                        <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
+                    </div>
+                    <div className="btn-and-follower-wrapper">
+                        <div className="follower-wrapper">
+                            <span>
+                                <span>Follower: </span>
+                                {followerCount > 0 ? followerCount : 0}
+                            </span>
+                            <span>
+                                <span>Following: </span>
+                                {followingCount > 0 ? followingCount : 0}
+                            </span>
                         </div>
-                        <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                            <i className="fas fa-user-edit"></i>
-                            Edit Profile
-                        </ProfileSettingsBtn>
-                        {isAdmin ? (
-                            <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
-                                <i className="fas fa-user-shield"></i>
-                                Edit Organization
+                        <div className="btn-wrapper">
+                            <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
+                                <i className="fas fa-user-edit"></i>
+                                Edit Profile
                             </ProfileSettingsBtn>
-                        ) : (
-                            ''
-                        )}
+                            {isAdmin ? (
+                                <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
+                                    <i className="fas fa-user-shield"></i>
+                                    Edit Organization
+                                </ProfileSettingsBtn>
+                            ) : (
+                                ''
+                            )}
+                        </div>
                     </div>
                 </section>
                 <TabBar tabs={tabs} />

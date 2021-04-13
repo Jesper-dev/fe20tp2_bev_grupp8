@@ -16,6 +16,8 @@ const UserInfoCard = () => {
     const [userPosts, setUserPosts] = useState([]);
 
     const [countFollow, setCountFollow] = useState(0)
+    const [millionaire, setMillionaire] = useState(false);
+    const [bitcoin, setBitcoin] = useState(false);
     const [userData, setUserData] = useState();
     const [followed, setFollowed] = useState(false);
     const [uniId, setUniId] = useState('');
@@ -29,7 +31,7 @@ const UserInfoCard = () => {
             .on('child_added', (snapshot) => {
                 const data = snapshot.val();
                 setUserData(data);
-
+                checkUser(data.currency.currency, data.possessionCrypto)
                 let postArray = makePostsList(data.posts);
                 let followersArray = makeFollowersArray(data.followers);
                 setUserFollowerList(postArray);
@@ -55,6 +57,27 @@ const UserInfoCard = () => {
         });
 
     }, [firebase, id]); //changed!
+
+    const checkUser = (currency, arr) => {
+        let list = []
+        if(currency >= 100000000) {
+            setMillionaire(true)
+        }
+
+        for (const key in arr) {
+            list.push({ ...arr[key] });
+        }
+        list.forEach((item) => {
+            if(item.symbol === 'btc') {
+                if(item.amount >= 10) {
+                    setBitcoin(true)
+                    firebase.user(user.uid).child('/achievments').update({
+                        bitcoin: true
+                    })
+                }
+            }
+        })
+    };
 
     const makePostsList = obj => {
         let lists = [];
@@ -210,6 +233,10 @@ const UserInfoCard = () => {
                                     {userData.emoji ? userData.emoji.emoji : ''}
                                 </span>
                             </h1>
+                        <div className="achievments-wrapper">
+                            <p>{millionaire ? <i className="fas fa-money-bill-wave" style={{color: 'goldenrod'}}></i> : ''}</p>
+                            <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
+                        </div>
                             {userData.organization ? <p>{userData.organization}</p> : ''}
                             <p className="currency">{userData.currency.currency.toLocaleString()}$</p>
                         </div>

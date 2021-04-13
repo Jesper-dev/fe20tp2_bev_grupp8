@@ -25,6 +25,10 @@ const UserInfoCardElement = styled.section`
         height: 8rem;
     }
 
+    .achievments-wrapper{
+        display: flex;
+    }
+
     .currency {
         font-size: 1.125rem;
         font-weight: 500;

@@ -65,8 +65,17 @@ const UserPostCard = ({
     return (
         <UserPostCardWrapper>
             <div>
-                <img src={picture ? picture : ''} />
-                <h2>{username}</h2>
+            {id === username ? (
+                ''
+            ) : (
+                <Link to={`/user/${username}`}>
+                        <img src={picture ? picture : ''} />
+                        <h2>{username}</h2>
+               {/*  <i className="fas fa-user"></i> */}
+                </Link>
+            )}
+                {/* <img src={picture ? picture : ''} /> */}
+               {/*  <h2>{username}</h2> */}
             </div>
             <p>{content}</p>
             <time>{new Date(timestamp).toLocaleDateString()}</time>
@@ -82,14 +91,14 @@ const UserPostCard = ({
                 </label>
                 <span className="likes">{likeCount}</span>
             </div>
-            {id === username ? (
+{/*             {id === username ? (
                 ''
             ) : (
                 <Link to={`/user/${username}`}>
                     Profile
                     <i className="fas fa-user"></i>
                 </Link>
-            )}
+            )} */}
         </UserPostCardWrapper>
     );
 };
