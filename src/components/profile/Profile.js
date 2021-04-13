@@ -200,7 +200,7 @@ const Profile = () => {
                     <div className="btn-and-follower-wrapper">
                         <div className="follower-wrapper">
                             <span>
-                                <span>Follower: </span>
+                                <span>Followers: </span>
                                 {followerCount > 0 ? followerCount : 0}
                             </span>
                             <span>

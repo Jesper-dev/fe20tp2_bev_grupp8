@@ -82,7 +82,7 @@ const UserPostCardWrapper = styled.article`
 
         &:hover,
         &:active{
-            background-color: rgb(200, 0, 0, 0.9);
+            background-color: rgb(200, 0, 0, 0.1);
         }
 
         .checkbox {

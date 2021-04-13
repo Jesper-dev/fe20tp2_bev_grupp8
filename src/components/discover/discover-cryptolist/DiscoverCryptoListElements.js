@@ -15,7 +15,7 @@ export const CryptoListElement = styled.section`
         align-items: center;
         gap: 0.75rem;
         font-size: 1.75rem;
-        margin: 2rem 0 0 0;
+        margin: 1.5rem 0 0 0;
         transition: font-size 250ms linear;
 
         @media screen and (max-width: 480px) {

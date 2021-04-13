@@ -13,6 +13,11 @@ const MainWrapper = styled.main`
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+
+    h3 {
+        margin-top: 1.5rem;
+    }
 
     @media screen and (min-width: 1064px) {
         flex-direction: row;

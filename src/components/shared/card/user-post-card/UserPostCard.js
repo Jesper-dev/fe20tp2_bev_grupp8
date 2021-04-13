@@ -65,8 +65,10 @@ const UserPostCard = ({
     return (
         <UserPostCardWrapper>
             <div>
-            {id === username ? (
-                ''
+            {/* <img src={picture ? picture : ''} /> */}
+            {id == username ? (
+               <img src={picture ? picture : ''} />  //''
+
             ) : (
                 <Link to={`/user/${username}`}>
                         <img src={picture ? picture : ''} />

@@ -8,6 +8,7 @@ export const MainWrapper = styled.main`
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
 
         & > section {
             width: 75%;
