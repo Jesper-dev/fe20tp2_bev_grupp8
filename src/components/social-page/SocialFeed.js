@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import UserPostCard from '../profile/profile-wall/user-posts/UserPostCard';
+import UserPostCard from '../shared/card/user-post-card/UserPostCard';
 import LikedPostsElement from '../profile/profile-wall/liked-posts/LikedPostsElement';
 import { FirebaseContext } from '../firebase/context';
 

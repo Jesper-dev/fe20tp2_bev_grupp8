@@ -5,7 +5,7 @@ import {
 } from '../../shared/functions/firebase-functions';
 import { FirebaseContext } from '../../firebase/context';
 
-import UserPostCard from '../../profile/profile-wall/user-posts/UserPostCard';
+import UserPostCard from '../../shared/card/user-post-card/UserPostCard';
 
 const CompRecentlyPosted = () => {
     const [postData, setPostData] = useState(null);

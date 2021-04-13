@@ -7,9 +7,8 @@ const LikedPostsElement = styled.section`
     margin: auto;
     width: 100%;
     max-width: 40rem;
-    max-height: 60vh;
-    padding-top: 1rem;
-    /* 	overflow: auto; */
+    max-height: 75vh;
+	overflow-y: auto;
 
     h1 {
         margin: 2rem 0 0 0;

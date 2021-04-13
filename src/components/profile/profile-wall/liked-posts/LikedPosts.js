@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import UserPostCard from '../user-posts/UserPostCard';
+import UserPostCard from '../../../shared/card/user-post-card/UserPostCard';
 import LikedPostsElement from "./LikedPostsElement";
 import { FirebaseContext } from '../../../firebase/context';
 
@@ -22,6 +22,7 @@ const LikedPosts = () => {
                 const postData = entry[1];
 
 				// prefer to have uid as key of the postdata, but hard to reach it later?
+				// or maybe have firebase data differently
                 let newObj = {
                     postId,
                     postData,
@@ -29,6 +30,7 @@ const LikedPosts = () => {
 			
                 dataArray.push(newObj);
             });
+
 			setLikedPosts(dataArray.filter(obj => obj.postData.likedUsers.includes(user.uid)));
         });
     }, []);

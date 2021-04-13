@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { FirebaseContext } from '../firebase/context';
 
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
-import UserPostCard from '../profile/profile-wall/user-posts/UserPostCard';
+import UserPostCard from '../shared/card/user-post-card/UserPostCard';
 import Backbutton from '../shared/button/back-button/BackButton';
 import { GenericVestBtn } from '../shared/button/ButtonElements';
 
