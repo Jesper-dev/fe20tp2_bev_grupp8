@@ -8,6 +8,8 @@ import { fetchUserSnapshotArray } from '../functions/firebase-functions';
 
 import { FirebaseContext } from '../../firebase/context';
 
+import { GenericVestBtn } from '../button/ButtonElements'
+
 import { ContentWrapper } from './CustomComponentsElements';
 
 const WatchingCrypto = ({ cryptoList, gap }) => {
@@ -16,21 +18,16 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
 
     const [cryptoData, setCryptoData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    // const [num, setNum] = useState(0);
+    const [loadmore, setLoadmore] = useState(true);
     const [watching, setWatching] = useState([]);
-    const [listTwo, setListTwo] = useState([]);
+    const [initArr, setInitArr] = useState([]);
+    const [firstArr, setFirstArr] = useState([]);
+    const [list, setList] = useState([]);
     const FollowingCrypto = useSelector((state) => state.FollowingCrypto);
 
-    let cryptoIds = '';
-    let num = 0;
-
     useEffect(() => {
-    //     console.log(watching)
-        loadCryptos()
-    //     setListTwo(list)
-    //     console.log(list)
-            
+    loadCryptosInit()
+
         //  (async () => {
         //         await axios
         //             .get(
@@ -50,29 +47,38 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
         // }
     }, []);
 
-    const loadCryptos = () => {
+    const loadCryptosInit = () => {
         firebase.user(user.uid).child('/followingCrypto').once('value', (snapshot) => {
             const data = snapshot.val()
-            console.log(data)
             let arr = []
             let newList = []
             for (const key in data) {
                 arr.push({ ...data[key] });
             }
-            if(arr.length == num) {
-                num += 0
+            setInitArr(arr)
+            for(let i = 0; i < 3; i++) {
+                newList.push(arr[i])
             }
-            let list = arr;
-            num += 2
-            
-            console.log(arr)
-            console.log(num)
-
-            newList = list.splice(0, num);
-            console.log(newList)
             setWatching(newList)
+            setFirstArr(newList)
         })
-        
+
+
+
+    };
+
+    const loadCryptos = (init, first) => {
+
+        let newList = []
+        if(loadmore == true) {
+            setWatching(init)
+        } else {
+            setWatching(first)
+        }
+        console.log(newList)
+        setLoadmore(!loadmore)
+
+
     };
 
 
@@ -88,7 +94,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
         <ContentWrapper gap={gap}>
             <h3>Watching Cryptocurrencies </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
-            {cryptoList.map((item, index) => {
+            {watching.map((item, index) => {
                 return (
                     <CryptoCard
                         key={index}
@@ -99,7 +105,18 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
                     />
                 );
             })}
-            <button onClick={() => loadCryptos()}>Show more</button>
+            <GenericVestBtn
+            onClick={() => loadCryptos(initArr, firstArr)}
+            pad='8px'
+            border='1px solid black'
+            br='10px'
+            bg='var(---clr-primary)'
+            co='var(---clr-secondary)'
+            wid='10%'
+            fz='0.9rem'
+            >
+                {loadmore ? 'Show more' : 'Show Less'}
+            </GenericVestBtn>
         </ContentWrapper>
     );
 };
