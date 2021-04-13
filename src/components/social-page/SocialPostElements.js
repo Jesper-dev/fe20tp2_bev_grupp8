@@ -56,4 +56,22 @@ export const ContentWrapper = styled.div`
         display: flex;
         align-items: center;
     }
+
+	.toast {
+		position: absolute;
+		right: 0;
+		left: 0;
+		bottom: 5rem;
+		border-radius: 0.25rem;
+		box-shadow: var(--box-shadow-cards);
+		margin: auto;
+		width: 15rem;
+		height: 2.75rem;
+		line-height: 2.75rem;
+		background-color: var(--clr-primary);
+		color: var(--clr-almost-white);
+		font-weight: 500;
+		text-align: center;
+		transition: transform 150ms linear;
+	}
 `;

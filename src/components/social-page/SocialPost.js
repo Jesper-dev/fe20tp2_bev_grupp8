@@ -109,9 +109,9 @@ const writeNewPost = (uid, username, picture, postData) => {
             setPostData('');
 			document.querySelector("textarea").classList.remove('not-empty');
 
-            document.querySelector("textarea").style.backgroundColor = "red";
+            document.querySelector(".toast").style.transform = "scale(1)";
             setTimeout(() => {
-                document.querySelector("textarea").style.backgroundColor = "transparent";
+                document.querySelector(".toast").style.transform = "scale(0)";
             }, 2500);
         }
         addToRecentPost(userData.uid, userData.username, profilePic, postData)
@@ -132,7 +132,7 @@ const writeNewPost = (uid, username, picture, postData) => {
                 <p>Post in org: </p>
                 <input type="checkbox" onClick={() => setPostInOrg(!postInOrg)}/>
             </div>
-            {/* POSTS FROM PEOPLE YOU FOLLOW */}
+			<p className="toast" style={{transform: "scale(0)"}}>Posted successfully!</p>
         </ContentWrapper>
     );
 };
