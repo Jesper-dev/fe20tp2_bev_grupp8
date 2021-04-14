@@ -15,6 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOrganizationData } from '../../../redux/actions';
 
 import { FirebaseContext } from '../../firebase/context';
+import * as ROUTES from '../../../constants/routes';
+
+import {
+    ProfileSettingsBtn,
+} from '../ProfileElements';
 
 import {
     Wrapper,
@@ -77,9 +82,19 @@ const ProfileDashboard = () => {
             {admin || employee ? (
                 <>
                     <SectionWrapper>
-                        <h1>
-                            Weekly report <span>▾</span>
-                        </h1>
+                        <div className="flex-wrapper">
+                            <h1>
+                                Weekly report <span>▾</span>
+                            </h1>
+                            {admin ? (
+                                    <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
+                                        <i className="fas fa-user-shield"></i>
+                                        Edit Organization
+                                    </ProfileSettingsBtn>
+                                ) : (
+                                    ''
+                                )}
+                        </div>
                         <Wrapper>
                             <div className="quick-cards-wrapper">
                                 <CompanyOverview />

@@ -1,16 +1,18 @@
 import styled from 'styled-components'
 
 export const SignOutBtnElement = styled.button`
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
     background: none;
     color: var(--clr-primary);
-    font-size: 1.1rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 125ms linear;
 
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-	cursor: pointer;
-
-    :hover{
-        color: coral;
+    &:hover {
+        background-color: #e8e8e8;
     }
 `

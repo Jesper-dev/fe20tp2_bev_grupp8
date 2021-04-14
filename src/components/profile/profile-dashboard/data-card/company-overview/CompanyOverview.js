@@ -67,7 +67,7 @@ const TotalCompValue = () => {
     return (
         <CompanyOverviewWrapper>
             <TotalStockAssets />
-            {/* <article>
+            {/*      <article>
                 <h2>Wallet</h2>
                 <h3>{totalOrgCurrency.toLocaleString()}$</h3>
             </article> */}

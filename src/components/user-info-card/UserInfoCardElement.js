@@ -20,6 +20,7 @@ const UserInfoCardElement = styled.section`
     }
 
     img {
+        align-self: center;
         border-radius: 50%;
         width: 8rem;
         height: 8rem;
@@ -29,31 +30,65 @@ const UserInfoCardElement = styled.section`
         display: flex;
     }
 
-    .currency {
-        font-size: 1.125rem;
-        font-weight: 500;
+    .org-name {
+        color: grey;;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
     }
 
     .container {
         display: flex;
-        /* flex-wrap: wrap; */
-        flex-direction: column;
+        flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
-        gap: 1rem 3rem;
+        /* align-items: center; */
+        gap: 1rem 3.5rem;
 
         & > div {
            display: flex;
            flex-direction: column;
-           align-items: center;
-           gap: 0.75rem;
+           justify-content: space-evenly;
+
+           & > div {
+               display: flex;
+               flex-direction: column;
+               gap: 0.0625rem;
+           }
         }
     }
 
-    & > label {
+    .quick-stat-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 0.75rem 2.5rem;
+        margin-bottom: 0.75rem;
+        width: 100%;
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            & > h3 {
+                color: grey;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .currency {
+                font-size: 1.25rem;
+                font-weight: 500;
+            }
+        }
+    }
+
+    label {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-top: 0.75rem;
 
         & > button {
             background: var(--clr-primary);

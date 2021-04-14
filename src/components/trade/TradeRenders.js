@@ -1,5 +1,5 @@
-import { GenericVestBtn } from '../../shared/button/ButtonElements';
-import ApprovalSymbol from '../../svgs/ApprovalSymbol';
+import { GenericVestBtn } from '../shared/button/ButtonElements';
+import ApprovalSymbol from '../svgs/ApprovalSymbol';
 import Confetti from 'react-confetti';
 
 export const TradeConfirmRender = ({
@@ -13,6 +13,7 @@ export const TradeConfirmRender = ({
     totalCost,
     img,
     name,
+    history
 }) => {
     return (
         <>
@@ -31,14 +32,15 @@ export const TradeConfirmRender = ({
                         <div className="brokage-wrapper"></div>
 
                         <GenericVestBtn
-                            bg="var(--primary)"
-                            hovbg="var(--lighter-green)"
+                            bg="var(--clr-primary)"
+                            hovbg="var(--clr-primary__dimmer)"
                             co="var(--body)"
                             br="2rem"
-                            border="0.125rem solid var(--primary)"
+                            border="0.125rem solid var(--clr-primary)"
                             pad="0.6rem 3rem"
+                            onClick={() => history.push('/profile')}
                         >
-                            Take me home!
+                            continue
                         </GenericVestBtn>
                         <Confetti
                             width={window.innerWidth}
@@ -62,18 +64,18 @@ export const TradeConfirmRender = ({
                     </div>
                     <div className="brokage-wrapper">
                         <span>Trading Fee</span>
-                        <span>{(numOfCoins / 2).toFixed(2)}$</span>
+                        <span>{(numOfCoins / 20).toFixed(2)}$</span>
                     </div>
                     <div className="amountWrapper">
                         <span>Total Amount</span>
                         <span>{totalCost.toFixed(2)} $</span>
                     </div>
                     <GenericVestBtn
-                        bg="var(--primary)"
-                        hovbg="var(--lighter-green)"
+                        bg="var(--clr-primary)"
+                        hovbg="var(--clr-primary__dimmer)"
                         co="var(--body)"
                         br="2rem"
-                        border="0.125rem solid var(--primary)"
+                        border="0.125rem solid var(--clr-primary)"
                         pad="0.6rem 3rem"
                         onClick={() => onClickConfirm(numOfCoins)}
                     >

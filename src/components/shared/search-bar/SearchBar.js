@@ -14,6 +14,7 @@ const SearchBar = ({ onSearchedStock }) => {
     const onFilterUsers = (e) => {
         newArray = [];
 
+       
         searchTerm = e.target.value.toLowerCase();
         console.log(searchTerm)
         newArray = users.filter((item) =>
@@ -29,6 +30,8 @@ const SearchBar = ({ onSearchedStock }) => {
             e.target.classList.add('not-empty');
         } else {
             e.target.classList.remove('not-empty');
+            newArray = [null];
+            
         }
     };
 

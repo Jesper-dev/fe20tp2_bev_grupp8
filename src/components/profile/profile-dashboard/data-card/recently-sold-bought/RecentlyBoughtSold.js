@@ -3,73 +3,65 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from '../../../../firebase/context';
 import { ContentWrapper } from './RecentlyBoughtSoldElements';
 
+import { fetchUsersOrgSnapshotArray } from '../../../../shared/functions/firebase-functions'
+
 const RecentlyBought = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const [bought, setBought] = useState({});
-    const [dataDB, setDataDB] = useState({});
+    const [bought, setBought] = useState(null);
+    const [boughtCrypto, setBoughtCrypto] = useState(null);
+    const [sold, setSold] = useState(null);
+    const [soldCrypto, setSoldCrypto] = useState(null);
+
     const [didMount, setDidMount] = useState(false);
 
     useEffect(() => {
         setDidMount(true);
-        let dataListBougth = [];
-        let dataListSold = [];
-        firebase
-            .organization(user.organization)
-            .child('/recentlyBought')
-            .once('value', (snapshot) => {
-                const bought = snapshot.val();
-                for (const key in bought) {
-                    dataListBougth.push({ ...bought[key] });
-                }
-                setBought(dataListBougth[0]);
-            });
+ 
+        fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setBought)
+        fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBoughtCrypto', setBoughtCrypto)
+        fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setSold)
+        fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySoldCrypto', setSoldCrypto)
 
-        firebase
-            .organization(user.organization)
-            .child('/recentlySold')
-            .once('value', (snapshot) => {
-                const sold = snapshot.val();
-                for (const key in sold) {
-                    dataListSold.push({ ...sold[key] });
-                }
-                setDataDB(dataListSold[0]);
-            });
         return () => {
             setDidMount(false);
         };
-    }, [didMount, firebase, user.organization]);
+    }, []);
 
     return (
         <ContentWrapper>
-            <Table
+            {!bought || !sold || !boughtCrypto || !soldCrypto ? ( null ) : (
+<>
+                <Table
                 title="Recently bought stock"
-                user={bought.user}
-                symbol={bought.symbol}
-                amount={bought.amount}
-                price={bought.price}
+                user={bought[0].user}
+                symbol={bought[0].symbol}
+                amount={bought[0].amount}
+                price={bought[0].price}
+                />
+            <Table
+            title="Recently sold stock"
+            user={sold[0].user}
+            symbol={sold[0].symbol}
+            amount={sold[0].amount}
+            price={sold[0].price}
             />
             <Table
-                title="Recently sold stock"
-                user={dataDB.user}
-                symbol={dataDB.symbol}
-                amount={dataDB.amount}
-                price={dataDB.price}
+            title="Recently bought cryptocurrency"
+            user={boughtCrypto[0].user}
+            symbol={boughtCrypto[0].symbol}
+            amount={boughtCrypto[0].amount}
+            price={boughtCrypto[0].price}
             />
             <Table
-                title="Recently bought cryptocurrency"
-                user={dataDB.user}
-                symbol={dataDB.symbol}
-                amount={dataDB.amount}
-                price={dataDB.price}
-            />
-            <Table
-                title="Recently sold cryptocurrency"
-                user={dataDB.user}
-                symbol={dataDB.symbol}
-                amount={dataDB.amount}
-                price={dataDB.price}
-            />
+        title="Recently sold cryptocurrency"
+        user={soldCrypto[0].user}
+        symbol={soldCrypto[0].symbol}
+        amount={soldCrypto[0].amount}
+        price={soldCrypto[0].price}
+         />
+    </>
+    )}
         </ContentWrapper>
     );
 };

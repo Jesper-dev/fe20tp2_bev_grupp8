@@ -55,7 +55,7 @@ export const ContentWrapper = styled.div`
         transition: all 1s ease-in-out;
     }
 
-    input[type='checkbox'] {
+    /*     input[type='checkbox'] {
         height: 24px;
         width: 24px;
         outline: none;
@@ -92,7 +92,7 @@ export const ContentWrapper = styled.div`
         100% {
             transform: scale(1);
         }
-    }
+    } */
 `;
 
 export const WatchStockButton = styled.button`
@@ -113,9 +113,9 @@ export const WatchStockButton = styled.button`
 export const TradeBtns = styled(Link)`
     text-decoration: none;
     padding: 0.25rem 1rem;
-    color: var(--secondary);
+    color: var(--clr-primary);
     background: none;
-    border: 0.125rem solid var(--secondary);
+    border: 0.125rem solid var(--clr-primary);
     outline: none;
     border-radius: 0.25rem;
     cursor: pointer;
@@ -124,6 +124,11 @@ export const TradeBtns = styled(Link)`
     //margin-left: 15px;
     margin: 15px;
 
+    transition: background-color 150ms linear, color 100ms linear;
+    &:hover{
+        background: var(--clr-primary);
+        color: var(--body);
+    }
     a:focus {
         box-shadow: var(--box-shadow-focus);
     }

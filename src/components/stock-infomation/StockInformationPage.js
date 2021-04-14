@@ -150,9 +150,10 @@ const StockInformationPage = () => {
                                 TRADE
                             </TradeBtns>
                             <WatchStockButton
+                            title={checked ? 'Remove from watchlist' : 'Add to watchlist' }
                                 eyecolor={
                                     checked
-                                        ? 'var(--secondary)'
+                                        ? 'var(--clr-primary)'
                                         : 'var(--body-fourth)'
                                 }
                                 onClick={onFollow}

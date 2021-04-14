@@ -29,8 +29,9 @@ export const Wrapper = styled.div`
     article {
         padding: 1rem;
         border-radius: 0.25rem;
-        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.04),
-            1px 1px 1px rgba(0, 0, 0, 0.04);
+        /*     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.04),
+            1px 1px 1px rgba(0, 0, 0, 0.04); */
+        box-shadow: var(--box-shadow-cards);
         background-color: white;
     }
 `;
@@ -40,12 +41,17 @@ export const SectionWrapper = styled.section`
     width: 100%;
     & > h1 {
         font-size: 1.25rem;
-        margin: 2rem 0 1.25rem 0;
         cursor: pointer;
         & > span {
             vertical-align: middle;
             color: grey;
         }
+    }
+
+    .flex-wrapper{
+        margin: 2rem 0 1.25rem 0;
+        display: flex;
+        justify-content: space-between;
     }
 `;
 

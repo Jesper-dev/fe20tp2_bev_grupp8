@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
-import { FirebaseContext } from '../../firebase/context';
+import { FirebaseContext } from '../firebase/context';
 // import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
 import { MainWrapper, ConfirmTrade } from './TradeElements';
-import { GenericVestBtn } from '../../shared/button/ButtonElements';
+import { GenericVestBtn } from '../shared/button/ButtonElements';
 // import { parse } from '@fortawesome/fontawesome-svg-core';
-import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
-import ContentWrapper from '../../shared/wrappers/ContentWrapper';
+import { ReusabelInputField } from '../shared/reusable-elements/ReusableElements';
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 
 import { TradeConfirmRender } from './TradeRenders';
 
@@ -24,6 +24,8 @@ const TradeCrypto = () => {
     let buyMeACoin = false;
     const user = JSON.parse(localStorage.getItem('authUser'));
     let cryptoIncludes;
+
+    let history = useHistory()
 
     const [didMount, setDidMount] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -246,7 +248,6 @@ const TradeCrypto = () => {
             setBuy(true);
             setSell(false);
         } else if (buyMeACoin === true) {
-            console.log('Hit kommer vi');
             if (userData === null) return;
             let currency = userData.currency.currency;
             let funds = updateUserCurrency(
@@ -279,6 +280,7 @@ const TradeCrypto = () => {
                     changePercent,
                     user.organization,
                     firebase,
+                    '/recentlyBoughtCrypto',
                     cryptoData.image.large
                 );
             }
@@ -339,7 +341,8 @@ const TradeCrypto = () => {
                     user.username,
                     changePercent,
                     user.organization,
-                    firebase
+                    firebase,
+                    '/recentlySoldCrypto'
                 );
                 setSell(false);
             }
@@ -350,7 +353,7 @@ const TradeCrypto = () => {
         let targetVal = e.target.value;
         let price = cryptoData.market_data.current_price.usd;
         let amountStock = targetVal;
-        let brokerage = targetVal / 2;
+        let brokerage = targetVal / 2 / 10;
 
         if (e.target.id == 'amount-dollar') {
             let calcAmountStock = Math.floor(targetVal / price);
@@ -383,6 +386,7 @@ const TradeCrypto = () => {
                                 finalStep={finalStep}
                                 price={cryptoData.market_data.current_price.usd}
                                 totalCost={totalCost}
+                                history={history}
                             />
                         ) : (
                             <section>
@@ -465,7 +469,9 @@ const TradeCrypto = () => {
 
                                 <div className="brokage-wrapper">
                                     <span>Trading Fee</span>
-                                    <span>{(numOfCoins / 2).toFixed(2)}$</span>
+                                    <span>
+                                        {(numOfCoins / 2 / 10).toFixed(2)}$
+                                    </span>
                                 </div>
                                 <div className="amountWrapper">
                                     <span>Total Amount</span>
@@ -473,11 +479,11 @@ const TradeCrypto = () => {
                                 </div>
                                 <div className="buttonWrapper">
                                     <GenericVestBtn
-                                        bg="var(--primary)"
+                                        bg="var(--clr-primary)"
                                         hovbg="var(--lighter-green)"
                                         co="var(--body)"
                                         br="2rem"
-                                        border="0.125rem solid var(--primary)"
+                                        border="0.125rem solid var(--clr-primary)"
                                         pad="0.6rem 3rem"
                                         onClick={onButtonClick}
                                     >
@@ -486,9 +492,11 @@ const TradeCrypto = () => {
                                     <GenericVestBtn
                                         bg="white"
                                         hovbg="var(--lighter-red)"
-                                        co="var(--primary)"
+                                        hovco="#fff"
+                                      /*   hovbg="var(--clr-primary)" */
+                                        co="var(--clr-primary)"
                                         br="2rem"
-                                        border="0.125rem solid var(--primary)"
+                                        border="0.125rem solid var(--clr-primary)"
                                         pad="0.6rem 3rem"
                                         onClick={onButtonClick}
                                     >

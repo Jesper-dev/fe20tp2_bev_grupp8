@@ -51,6 +51,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
 
         firebase.user(user.uid).child('/followingCrypto').once('value', (snapshot) => {
             const data = snapshot.val()
+            if(!data) return;
             let arr = []
             let newList = []
             for (const key in data) {
@@ -107,6 +108,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
                     <CryptoCard
                         key={index}
                         img={item.image}
+                        id={item.id}
                         name={item.name}
                         price={item.regularMarketPrice}
                         percent={item.regularMarketChangePercent}

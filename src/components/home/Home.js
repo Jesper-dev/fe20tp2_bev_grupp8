@@ -171,7 +171,7 @@ const Home = () => {
                         {watchingCryptos ? (
                             <WatchingCrypto
                                 gap="0.5rem"
-                                // cryptoList={followingArrCrypto}
+                                cryptoList={followingArrCrypto}
                             />
                         ) : (
                             ''

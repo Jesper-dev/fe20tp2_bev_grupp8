@@ -227,32 +227,48 @@ const UserInfoCard = () => {
                     <div className="container">
                         <img src={userData.picture.profile_pic} alt="profile pic" />
                         <div>
-                            <h1>
-                                {userData.username}{' '}
+                            <div>
+                                {userData.organization ? <span className="org-name">{userData.organization}</span> : ''}
+                                <h1>
+                                    {userData.username}
+                                    <span>
+                                        &nbsp;
+                                        {userData.emoji ? userData.emoji.emoji : ''}
+                                    </span>
+                                </h1>
+                                <div className="achievments-wrapper">
+                                    <p>{millionaire ? <i className="fas fa-money-bill-wave" style={{color: 'goldenrod'}}></i> : ''}</p>
+                                    <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
+                                </div>
+                            </div>
+                            {id == user.username ? "" :
+                            <label>
+                                <button onClick={(e) =>
+                                    followUser(e, userData.username, userData.email)
+                                }>{followed ? 'Unfollow' : 'Follow'}</button>
                                 <span>
-                                    {userData.emoji ? userData.emoji.emoji : ''}
+                                    {countFollow}
                                 </span>
-                            </h1>
-                        <div className="achievments-wrapper">
-                            <p>{millionaire ? <i className="fas fa-money-bill-wave" style={{color: 'goldenrod'}}></i> : ''}</p>
-                            <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
-                        </div>
-                            {userData.organization ? <p>{userData.organization}</p> : ''}
-                            <p className="currency">{userData.currency.currency.toLocaleString()}$</p>
+                            </label>}      
                         </div>
                     </div>
+                    <div className="quick-stat-info">
+                        <div>
+                            <h3>Wallet</h3>
+                            <span className="currency">{userData.currency.currency.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <h3>Change</h3>
+                            <span className="currency">{userData.currency.currency.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <h3>ROI</h3>
+                            <span className="currency">{userData.currency.currency.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <p>{userData.bio ? userData.bio : ''}</p>
+                    <hr/>
 
-                    {id == user.username ? "" :
-                    <label>
-                        <button onClick={(e) =>
-                            followUser(e, userData.username, userData.email)
-                        }>{followed ? 'Unfollow' : 'Follow'}</button>
-                        <span>
-                            {countFollow}
-                        </span>
-                    </label>}
-                        <p>{userData.bio ? userData.bio : ''}</p>
-                        <hr/>
                         <h2>Posts</h2>
                         {userPosts.length > 0 ? (
                             userPosts.map((obj, index) => {

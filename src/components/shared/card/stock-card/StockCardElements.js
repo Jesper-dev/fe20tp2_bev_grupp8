@@ -12,6 +12,10 @@ export const CardWrapper = styled.article`
     min-height: 3rem;
     /* max-height: 48px; */
     background: var(--body);
+    &:hover {
+        box-shadow: var(--box-shadow-cards-hover);
+        cursor: pointer;
+    }
 
     & > span {
         flex: 1;

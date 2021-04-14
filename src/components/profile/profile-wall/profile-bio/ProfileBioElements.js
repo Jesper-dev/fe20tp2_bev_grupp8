@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
         border-radius: 0.25rem;
         outline: none;
         background: none;
-        font-family:inherit;
+        font-family: inherit;
         resize: none;
         transition: border-color 125ms linear, box-shadow 125ms linear;
 

@@ -7,22 +7,43 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     gap: 1.5rem;
 
-    .btn-and-follower-wrapper {
+    .emoji {
+        gap: 0;
+        cursor: pointer;
+    }
+
+    /* .btn-and-follower-wrapper {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         margin: 0.75rem 0;
         width: 100%;
+    } */
 
-        .follower-wrapper {
+    .main-wrapper {
+        gap: 2.75rem;
+    }
+
+    .follower-wrapper {
             flex: 1 1 auto;
+            flex-direction: row;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
 
-            span {
-                font-size: 1rem;
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            div > p {
+                font-size: 1.25rem;
+            }
+
+            div > span {
+                font-size: 0.80rem;
             }
         }
 
@@ -33,7 +54,6 @@ export const HeaderWrapper = styled.header`
             justify-content: center;
             gap: 1rem;
         }
-    }
 
     .emoji-picker-wrapper {
         @media screen and (min-width: 1024px) {
@@ -60,10 +80,11 @@ export const HeaderWrapper = styled.header`
     & > section {
         @media screen and (min-width: 1024px) {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-evenly;
             align-items: center;
             width: 100%;
             max-width: 40rem;
+            flex-direction: column;
         }
         display: flex;
         justify-content: space-between;
@@ -75,12 +96,11 @@ export const HeaderWrapper = styled.header`
         & > div {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
 
             img {
                 margin: 0%;
-                width: 4rem;
-                height: 4rem;
+                width: 5rem;
+                height: 5rem;
             }
 
             span {
@@ -90,11 +110,11 @@ export const HeaderWrapper = styled.header`
         }
     }
 
-    .achievments-wrapper{
+    .achievments-wrapper {
         display: flex;
     }
 
-    .fa-money-bill-wave{
+    .fa-money-bill-wave {
         color: goldenrod;
     }
 `;

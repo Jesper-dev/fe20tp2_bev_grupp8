@@ -1,5 +1,8 @@
-import React, { useContext } from 'react';
-import { ContentWrapper } from './ProfileSettingsElements';
+import React, { useContext, useEffect, useState } from 'react';
+
+import { ButtonWrapper } from './ProfileSettingsElements';
+
+import ContentWrapper from '../../shared/wrappers/ContentWrapper';
 
 import ProfileImgChoose from './profile-img/ProfileChooseImg';
 import CustomizeHomepage from './customize-homepage/CustomizeHomepage';
@@ -13,7 +16,7 @@ const ProfileSettings = () => {
 
     const deleteAccount = () => {
         const userId = firebase.auth.currentUser.uid;
-        const userRef = firebase.db.ref('users/' + userId);
+        const userRef = firebase.user(userId);
 
         if (
             window.confirm(
@@ -40,17 +43,15 @@ const ProfileSettings = () => {
     };
 
     return (
-        <>
-            <ContentWrapper>
-                <h1>Profile Settings</h1>
-                <ProfileImgChoose />
-                <CustomizeHomepage />
-                <div>
-                    <SignOutButton />
-                    <button onClick={deleteAccount}>DELETE ACCOUNT</button>
-                </div>
-            </ContentWrapper>
-        </>
+        <ContentWrapper>
+            <h1>Profile Settings</h1>
+            <ProfileImgChoose />
+            <CustomizeHomepage />
+            <ButtonWrapper>
+                <SignOutButton />
+                <button className="delete-account-btn " onClick={deleteAccount}>Delete account</button>
+            </ButtonWrapper>
+        </ContentWrapper>
     );
 };
 

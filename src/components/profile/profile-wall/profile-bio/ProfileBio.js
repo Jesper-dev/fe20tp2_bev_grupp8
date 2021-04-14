@@ -41,6 +41,7 @@ const ProfileBio = () => {
                     br="10px"
                     bg="none"
                     co="var(--clr-primary)"
+                    hovco="var(--clr-primary)"
                     hovbg="#E8E8E8"
                     wid="90px !important"
                     hei="35px !important"

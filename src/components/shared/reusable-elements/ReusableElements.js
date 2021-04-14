@@ -14,13 +14,12 @@ export const ReusabelInputField = styled.input`
     text-indent: 0.375rem;
     transition: border-color 125ms linear, box-shadow 125ms linear;
     &:hover {
-        border-color: var(--third);
+        border-color: var(--clr-primary-light);
     }
 
     &:focus {
-        border-color: var(--third);
-        box-shadow: 0 0 0 0.1875rem #ddeafd;
-    }
+        border-color: var(--clr-primary__dimmer);
+        box-shadow: 0 0 0 0.1875rem var(--clr-primary-light);
 
     &:invalid {
         border-color: #e68e8e;

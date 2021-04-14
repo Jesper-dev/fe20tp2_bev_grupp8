@@ -77,6 +77,8 @@ export const GenericVestBtn = styled.button`
 
     &:hover {
         background-color: ${(props) => props.hovbg};
-        color: ${(props) => props.co} !important;
+        color: ${(props) => props.hovco} !important;
+        border: ${(props) => props.hovbor};
+        
     }
 `;

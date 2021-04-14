@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import 'firebase/database';
-import { FirebaseContext } from '../../firebase/context';
+import { FirebaseContext } from '../firebase/context';
 // import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
 import { MainWrapper, ConfirmTrade } from './TradeElements';
-import { GenericVestBtn } from '../../shared/button/ButtonElements';
+import { GenericVestBtn } from '../shared/button/ButtonElements';
 // import { parse } from '@fortawesome/fontawesome-svg-core';
-import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
-import ContentWrapper from '../../shared/wrappers/ContentWrapper';
+import { ReusabelInputField } from '../shared/reusable-elements/ReusableElements';
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 
-import UsFlag from '../../svgs/flags/America';
+import { TradeConfirmRender } from './TradeRenders'
+
+import UsFlag from '../svgs/flags/America';
 
 import {
     checkIfTooManyStocks,
@@ -22,11 +24,16 @@ import {
 
 const Trade = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
+    let buyMeACoin = false;
     let stockIncludes;
+
+    let history = useHistory()
 
     const [didMount, setDidMount] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [finalStep, setFinalStep] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [confirmBuy, setConfirmBuy] = useState(false);
     const [sell, setSell] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
@@ -254,12 +261,16 @@ const Trade = () => {
     };
 
     const onBuy = (numOfStocks) => {
+        if (numOfStocks === 0 || totalCost > userData.currency) {
+            return;
+        }
+        console.log(buyMeACoin)
         if (buy === false) {
-            // setBuy(true);
+            setConfirmBuy(true);
             setConfirm(true);
+            setBuy(true);
             setSell(false);
-            //*ConfirmTrade
-        } else if (buy === true) {
+        } else if (buyMeACoin === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
             let funds = updateUserCurrency(
@@ -290,20 +301,35 @@ const Trade = () => {
                     user.username,
                     changePercent,
                     user.organization,
-                    firebase
+                    firebase,
+                    '/recentlyBought'
                 );
             }
-            setNumOfStocks(0);
+
             setBuy(false);
         }
     };
 
+    const onClickConfirm = (numOfCoins) => {
+        buyMeACoin = true;
+        let sellMeACoin = true;
+        if (confirmBuy == true) {
+            onBuy(numOfCoins, buyMeACoin);
+        } else {
+            onSell(numOfCoins, sellMeACoin);
+        }
+
+        setFinalStep(true);
+    };
+
     //*When we sell a stock
-    const onSell = (numOfStocks) => {
+    const onSell = (numOfStocks, sellMeACoin) => {
         if (sell === false) {
+            setConfirmBuy(false);
+            setConfirm(true);
             setSell(true);
             setBuy(false);
-        } else if (sell === true) {
+        } else if (sellMeACoin === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
             let tooMany = checkIfTooManyStocks(numOfStocks, holding);
@@ -334,9 +360,9 @@ const Trade = () => {
                     user.username,
                     changePercent,
                     user.organization,
-                    firebase
+                    firebase,
+                    '/recentlySold'
                 );
-                setNumOfStocks(0);
                 setSell(false);
             }
         }
@@ -368,19 +394,34 @@ const Trade = () => {
             ) : (
                 <ContentWrapper>
                     <MainWrapper>
-                        <section>
+                        {confirm ? (
+                               <TradeConfirmRender
+                       /*         img={cryptoData.image.large} */
+                               name={symbol}
+                               ConfirmTrade={ConfirmTrade}
+                               setConfirm={setConfirm}
+                               onClickConfirm={onClickConfirm}
+                               numOfCoins={numOfStocks}
+                               finalStep={finalStep}
+                               price={price}
+                               totalCost={totalCost}
+                               history={history}
+                           />
+                         ) : (
+                             
+                             <section>
                             <div className="stock-overview-wrapper">
                                 <span
                                     style={
                                         changePercent < 0
-                                            ? { color: 'var(--lighter-red)' }
-                                            : { color: 'var(--lighter-green)' }
+                                        ? { color: 'var(--lighter-red)' }
+                                        : { color: 'var(--lighter-green)' }
                                     }
-                                >
+                                    >
                                     {changePercent > 0 ? (
                                         <i className="fas fa-long-arrow-alt-up"></i>
-                                    ) : (
-                                        <i className="fas fa-long-arrow-alt-down"></i>
+                                        ) : (
+                                            <i className="fas fa-long-arrow-alt-down"></i>
                                     )}
                                     {changePercent.toFixed(2)}%
                                 </span>
@@ -407,7 +448,7 @@ const Trade = () => {
                                     type="number"
                                     onChange={setValuesDom}
                                     value={amountInDollar}
-                                />
+                                    />
                             </label>
 
                             <label>
@@ -419,7 +460,7 @@ const Trade = () => {
                                     type="number"
                                     onChange={setValuesDom}
                                     value={numOfStocks}
-                                />
+                                    />
                             </label>
 
                             <div className="brokage-wrapper">
@@ -432,29 +473,32 @@ const Trade = () => {
                             </div>
                             <div className="buttonWrapper">
                                 <GenericVestBtn
-                                    bg="var(--primary)"
-                                    hovbg="var(--lighter-green)"
-                                    co="var(--body)"
-                                    br="2rem"
-                                    border="0.125rem solid var(--primary)"
-                                    pad="0.6rem 3rem"
-                                    onClick={onButtonClick}
+                                bg="var(--clr-primary)"
+                                hovbg="var(--lighter-green)"
+                                co="var(--body)"
+                                br="2rem"
+                                border="0.125rem solid var(--clr-primary)"
+                                pad="0.6rem 3rem"
+                                onClick={onButtonClick}
                                 >
                                     BUY
                                 </GenericVestBtn>
                                 <GenericVestBtn
-                                    bg="white"
-                                    hovbg="var(--lighter-red)"
-                                    co="var(--primary)"
-                                    br="2rem"
-                                    border="0.125rem solid var(--primary)"
-                                    pad="0.6rem 3rem"
-                                    onClick={onButtonClick}
-                                >
+                                         bg="white"
+                                         hovbg="var(--lighter-red)"
+                                         hovco="#fff"
+                                         /*   hovbg="var(--clr-primary)" */
+                                         co="var(--clr-primary)"
+                                         br="2rem"
+                                         border="0.125rem solid var(--clr-primary)"
+                                         pad="0.6rem 3rem"
+                                         onClick={onButtonClick}
+                                         >
                                     SELL
                                 </GenericVestBtn>
                             </div>
                         </section>
+                            )}
                     </MainWrapper>
                 </ContentWrapper>
             )}

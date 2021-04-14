@@ -53,12 +53,14 @@ export const addToRecentlyBought = (
     user,
     percent,
     org,
-    firebase
+    firebase,
+    path,
+    image
 ) => {
     let amountNum = parseFloat(amountOfStocks);
     firebase
         .organization(org)
-        .child('/recentlyBought')
+        .child(path)
         .set({
             [symbol]: {
                 name,
@@ -79,12 +81,13 @@ export const addToRecentlySold = (
     user,
     percent,
     org,
-    firebase
+    firebase,
+    path
 ) => {
     let amountNum = parseFloat(amountOfStocks);
     firebase
         .organization(org)
-        .child('/recentlySold')
+        .child(path)
         .set({
             [symbol]: {
                 name,

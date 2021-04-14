@@ -9,8 +9,8 @@ import Toolbar from './components/shared/toolbar-bottom/Toolbar';
 import NavbarLeft from './components/shared/navbar-left/NavbarLeft';
 
 import StockInfoPage from './components/stock-infomation/StockInformationPage';
-import Trade from './components/stock-infomation/trade/Trade';
-import TradeCrypto from './components/stock-infomation/trade/TradeCrypto';
+import Trade from './components/trade/Trade';
+import TradeCrypto from './components/trade/TradeCrypto';
 import CryptoInfoPage from './components/crypto-information/CryptoInformationPage';
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
@@ -29,16 +29,16 @@ import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
 
-import {setOrgColor} from './components/shared/functions/colorTheme';
+import { setOrgColor } from './components/shared/functions/colorTheme';
 
 const App = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
 
-	useEffect(() => {
-		if (user && user.organization) {
-			setOrgColor(firebase, user);
-		}
+    useEffect(() => {
+        if (user && user.organization) {
+            setOrgColor(firebase, user);
+        }
     }, []);
 
     return (
@@ -191,7 +191,8 @@ const GlobalStyle = createGlobalStyle`
 
     --box-shadow-focus: 0 0 0 0.125rem #90CAF9, 0 0 0 0.375rem #E3F2FD;
 
-    --box-shadow-cards: 1px 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.08);
+    --box-shadow-cards: 1px 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+    --box-shadow-cards-hover: 1px 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.3);
 
 	--typefaces: "Inter", sans-serif;
   }
@@ -200,6 +201,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: var(--typefaces);
     background-color: var(--clr-almost-white);
+  /*   background-color: #F0F2F5; */
 
     &::-webkit-scrollbar-track
     {-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

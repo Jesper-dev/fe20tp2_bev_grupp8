@@ -47,36 +47,36 @@ const Profile = () => {
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
     const checkUser = (currency, arr) => {
-        let list = []
-        if(currency >= 100000000) {
-            setMillionaire(true)
+        let list = [];
+        if (currency >= 100000000) {
+            setMillionaire(true);
             firebase.user(userData.uid).child('/achievments').update({
-                millionaire: true
-            })
+                millionaire: true,
+            });
         }
 
         for (const key in arr) {
             list.push({ ...arr[key] });
         }
         list.forEach((item) => {
-            if(item.symbol === 'btc') {
-                if(item.amount >= 10) {
-                    setBitcoin(true)
+            if (item.symbol === 'btc') {
+                if (item.amount >= 10) {
+                    setBitcoin(true);
                     firebase.user(userData.uid).child('/achievments').update({
-                        bitcoin: true
-                    })
+                        bitcoin: true,
+                    });
                 }
             }
-        })
-    }
+        });
+    };
 
     const checkFollowingCount = (arr) => {
-        let list = []
+        let list = [];
         for (const key in arr) {
             list.push({ ...arr[key] });
         }
-        setFollowingCount(list.length)
-    }
+        setFollowingCount(list.length);
+    };
 
     const onEmojiClick = (event, emojiObject) => {
         setChosenEmoji(emojiObject);
@@ -116,15 +116,14 @@ const Profile = () => {
         user.on('value', (snapshot) => {
             const data = snapshot.val();
             setFollowerCount(data.followerCount);
-            checkFollowingCount(data.following)
+            checkFollowingCount(data.following);
             setUsername(data.username);
-            setUserInfo(data)
+            setUserInfo(data);
             if (!data.picture) return;
-            checkUser(data.currency.currency, data.possessionCrypto)
+            checkUser(data.currency.currency, data.possessionCrypto);
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink));
             if (!data.roles) return;
-            data.roles.ADMIN ? setIsAdmin(true) : setIsAdmin(false);
         });
     }, [dispatch, firebase, userData.uid]); //varning!
 
@@ -147,6 +146,20 @@ const Profile = () => {
         <ContentWrapper>
             <HeaderWrapper>
                 <section>
+                    <div style={{gap: '0.3rem'}}>
+                        <h2>{username}</h2>
+                        {chosenEmoji ? (
+                            <span
+                                className="emoji"
+                                onClick={() => setShowEmoji(!showEmoji)}
+                            >
+                                {chosenEmoji.emoji}
+                            </span>
+                        ) : (
+                            <span>+</span>
+                        )}
+                    </div>
+                    <div className="main-wrapper">
                     <div>
                         {ProfileImgReducer == 'null' ? (
                             <ProfileSvg
@@ -157,20 +170,20 @@ const Profile = () => {
                             <ProfileImg img={ProfileImgReducer} />
                         )}
 
-                        <span>{username}</span>
-                        {chosenEmoji ? <span>{chosenEmoji.emoji}</span> : ''}
-                        <GenericVestBtn
-                            onClick={() => setShowEmoji(!showEmoji)}
-                            pad={'0.5rem'}
-                            border={'0.0925rem solid var(--clr-primary)'}
-                            br={'0.375rem'}
-                            bg={'none'}
-                            co={'var(--clr-primary)'}
-                            hovbg={"var(--clr-primary-light)"}
-                        >
-                            {showEmoji ? 'Mood (close)' : 'Mood (open)'}
-                        </GenericVestBtn>
+                       
                     </div>
+                    <div className="follower-wrapper">
+                        <div>
+                            <p>{followerCount > 0 ? followerCount : 0}</p>
+                            <span>Followers</span>
+                        </div>
+                        <div>
+                            <p>{followingCount > 0 ? followingCount : 0}</p>
+                            <span>Following</span>
+                            
+                        </div>
+                    </div>
+                    
                     <div
                         className="emoji-picker-wrapper"
                         style={
@@ -191,38 +204,39 @@ const Profile = () => {
                                 recently_used: false,
                             }}
                             preload={true}
-                        />
+                        ></Picker>
                     </div>
-                    <div className="achievments-wrapper">
-                        <p>{millionaire ? <i className="fas fa-money-bill-wave"></i> : ''}</p>
-                        <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
-                    </div>
-                    <div className="btn-and-follower-wrapper">
-                        <div className="follower-wrapper">
-                            <span>
-                                <span>Followers: </span>
-                                {followerCount > 0 ? followerCount : 0}
-                            </span>
-                            <span>
-                                <span>Following: </span>
-                                {followingCount > 0 ? followingCount : 0}
-                            </span>
-                        </div>
-                        <div className="btn-wrapper">
+                    {/* <div className="achievments-wrapper">
+                        <p>
+                            {millionaire ? (
+                                <i className="fas fa-money-bill-wave"></i>
+                            ) : (
+                                ''
+                            )}
+                        </p>
+                        <p>
+                            {bitcoin ? (
+                                <i
+                                    className="fab fa-bitcoin"
+                                    style={{ color: 'gold' }}
+                                ></i>
+                            ) : (
+                                ''
+                            )}
+                        </p>
+                    </div> */}
+                    {/* <div className="btn-and-follower-wrapper">
+                       
+                        
+                    </div> */}
+                    <div className="btn-wrapper">
                             <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
                                 <i className="fas fa-user-edit"></i>
                                 Edit Profile
                             </ProfileSettingsBtn>
-                            {isAdmin ? (
-                                <ProfileSettingsBtn to={ROUTES.ADMIN_SETTINGS}>
-                                    <i className="fas fa-user-shield"></i>
-                                    Edit Organization
-                                </ProfileSettingsBtn>
-                            ) : (
-                                ''
-                            )}
                         </div>
                     </div>
+                    
                 </section>
                 <TabBar tabs={tabs} />
             </HeaderWrapper>

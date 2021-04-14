@@ -90,8 +90,11 @@ const CryptoChart = ({ id, img, name, onFollow, checked, symbol }) => {
             <div className="chart-topbar-wrapper">
                 <TradeBtns to={`/trade/crypto/${id}`}>TRADE</TradeBtns>
                 <WatchStockButton
+
+                    title={checked ? 'Remove from watchlist' : 'Add to watchlist' }
+                  
                     eyecolor={
-                        checked ? 'var(--secondary)' : 'var(--body-fourth)'
+                        checked ? 'var(--clr-primary)' : 'var(--body-fourth)'
                     }
                     onClick={() => {
                         onFollow();

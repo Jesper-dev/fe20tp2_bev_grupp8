@@ -121,6 +121,7 @@ const CryptoInformationPage = ({ symbol }) => {
                         regularMarketChangePercent: cryptoData.market_data.price_change_percentage_24h.toFixed(
                             2
                         ),
+                        id: cryptoData.id,
                         name: cryptoData.name,
                         image: cryptoData.image.small,
                     },
