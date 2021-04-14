@@ -15,6 +15,7 @@ import CryptoInfoPage from './components/crypto-information/CryptoInformationPag
 import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
+import PageNotFound from './components/404/PageNotFound';
 // import ProfileWall from './components/profile/profile-wall/ProfileWall';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
@@ -135,6 +136,7 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    <Route component={PageNotFound} />
                 </Switch>
             </Router>
         </>

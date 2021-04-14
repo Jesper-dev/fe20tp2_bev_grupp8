@@ -11,57 +11,57 @@ const SocialPost = () => {
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
-
-const writeNewPost = (uid, username, picture, postData) => {
-    // A post entry.
-    var postData = {
-        userId: uid,
-        username: username,
-        content: postData,
-        likeCount: 0,
-        likedUsers: [''],
-        timestamp: Date.now(),
-        picture: picture
-    };
-
-    // Get a key for a new Post.
-    let newPostKey = firebase.post(uid).child("posts").push().key;
-/*     var newPostKey = firebase.db().ref('posts').push().key; */
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    let updates = {};
-    let updatesUser = {};
-    updates[newPostKey] = postData;
-    updatesUser[uid + '/posts/' + newPostKey] = postData;
-
-    firebase.users().update(updatesUser);
-    return firebase.posts().update(updates);
-  }
-
-  const addToRecentPost = (uid, username, picture, postData) => {
-      firebase.user(uid).child('/recentPost/').set({
-        postData: {
+    const writeNewPost = (uid, username, picture, postData) => {
+        // A post entry.
+        var postData = {
+            userId: uid,
             username: username,
             content: postData,
             likeCount: 0,
-            liked: false,
+            likedUsers: [''],
             timestamp: Date.now(),
-            uid: uid,
             picture: picture,
-        },
-      })
-  }
+        };
 
+        // Get a key for a new Post.
+        let newPostKey = firebase.post(uid).child('posts').push().key;
+        /*     var newPostKey = firebase.db().ref('posts').push().key; */
 
+        // Write the new post's data simultaneously in the posts list and the user's post list.
+        let updates = {};
+        let updatesUser = {};
+        updates[newPostKey] = postData;
+        updatesUser[uid + '/posts/' + newPostKey] = postData;
+
+        firebase.users().update(updatesUser);
+        return firebase.posts().update(updates);
+    };
+
+    const addToRecentPost = (uid, username, picture, postData) => {
+        firebase
+            .user(uid)
+            .child('/recentPost/')
+            .set({
+                postData: {
+                    username: username,
+                    content: postData,
+                    likeCount: 0,
+                    liked: false,
+                    timestamp: Date.now(),
+                    uid: uid,
+                    picture: picture,
+                },
+            });
+    };
 
     const onChangeText = (evt) => {
         setPostData(evt.target.value);
 
-		if (evt.target.value.length > 0) {
-			evt.target.classList.add('not-empty');
-		} else {
-			evt.target.classList.remove('not-empty');
-		}
+        if (evt.target.value.length > 0) {
+            evt.target.classList.add('not-empty');
+        } else {
+            evt.target.classList.remove('not-empty');
+        }
     };
 
     const updateData = (posts) => {
@@ -71,50 +71,61 @@ const writeNewPost = (uid, username, picture, postData) => {
     };
 
     const postInOrgFunc = (org, uid, username, picture, postData) => {
-        firebase.organization(org).child('/recentlyPosted/').set({
-            postData: {
-                username: username,
-                content: postData,
-                likeCount: 0,
-                liked: false,
-                timestamp: Date.now(),
-                uid: uid,
-                picture: picture,
-            },
-          })
+        firebase
+            .organization(org)
+            .child('/recentlyPosted/')
+            .set({
+                postData: {
+                    username: username,
+                    content: postData,
+                    likeCount: 0,
+                    liked: false,
+                    timestamp: Date.now(),
+                    uid: uid,
+                    picture: picture,
+                },
+            });
     };
 
     const handleSubmitPost = (e) => {
         e.preventDefault();
-        if(postInOrg == true) {
-            postInOrgFunc(userData.organization, userData.uid, userData.username, profilePic, postData)
+        if (postInOrg == true) {
+            postInOrgFunc(
+                userData.organization,
+                userData.uid,
+                userData.username,
+                profilePic,
+                postData
+            );
             return;
         }
 
-		const profilePicObj = firebase.user(`${userData.uid}/picture/profile_pic`);
+        const profilePicObj = firebase.user(
+            `${userData.uid}/picture/profile_pic`
+        );
 
-		let profilePic;
+        let profilePic;
 
         profilePicObj.once('value', (snapshot) => {
             profilePic = snapshot.val();
             if (profilePic == null) {
-                profilePic = 'I Have NO Pic!'
+                profilePic = 'I Have NO Pic!';
             }
         });
 
         if (postData) {
-          writeNewPost(userData.uid, userData.username, profilePic, postData)
+            writeNewPost(userData.uid, userData.username, profilePic, postData);
             /*userPostsArr.push(postObj);
             updateData(userPostsArr); */
             setPostData('');
-			document.querySelector("textarea").classList.remove('not-empty');
+            document.querySelector('textarea').classList.remove('not-empty');
 
-            document.querySelector(".toast").style.transform = "scale(1)";
+            document.querySelector('.toast').style.transform = 'scale(1)';
             setTimeout(() => {
-                document.querySelector(".toast").style.transform = "scale(0)";
+                document.querySelector('.toast').style.transform = 'scale(0)';
             }, 2500);
         }
-        addToRecentPost(userData.uid, userData.username, profilePic, postData)
+        addToRecentPost(userData.uid, userData.username, profilePic, postData);
     };
 
     return (
@@ -128,15 +139,44 @@ const writeNewPost = (uid, username, picture, postData) => {
                 ></textarea>
                 <button type="submit">Post</button>
             </form>
-            <div>
-                <p>Post in org: </p>
-                <input type="checkbox" onClick={() => setPostInOrg(!postInOrg)}/>
-            </div>
-			<p className="toast" style={{transform: "scale(0)"}}>Posted successfully!</p>
+            <label>
+                Post only in organization
+                <input
+                    type="checkbox"
+                    className="checkbox"
+                    onClick={() => setPostInOrg(!postInOrg)}
+                />
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <rect
+                        x="4.75"
+                        y="4.75"
+                        width="14.5"
+                        height="14.5"
+                        rx="0.75"
+                        fill="black"
+                        stroke="black"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M7.75 12.25L10.75 15.25L16.75 9.25"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </label>
+            <p className="toast" style={{ transform: 'scale(0)' }}>
+                Posted successfully!
+            </p>
         </ContentWrapper>
     );
 };
 
 export default SocialPost;
-
-

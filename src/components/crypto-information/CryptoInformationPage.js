@@ -18,7 +18,7 @@ import { FirebaseContext } from '../firebase/context';
 
 //let following = []; // remove?
 
-const CryptoInformationPage = () => {
+const CryptoInformationPage = ({ symbol }) => {
     const [checked, setChecked] = useState(false); //remove?
     //const dispatch = useDispatch();//remove?
     //const chosenCrypto = useSelector((state) => state.ChosenCrypto);//remove?
@@ -170,6 +170,7 @@ const CryptoInformationPage = () => {
                         onFollow={onFollow}
                         onChange={onChange}
                         checked={checked}
+                        symbol={cryptoData.symbol}
                     />
                     <div className="information-wrapper">
                         <p>

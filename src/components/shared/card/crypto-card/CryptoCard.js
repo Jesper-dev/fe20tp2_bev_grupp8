@@ -6,13 +6,13 @@ import { CardWrapper } from './CryptoCardElements';
 import Coin from '../../../svgs/Coin';
 
 
-const CryptoCard = ({ name, price, img, percent, amount }) => {
+const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
+    console.log(id)
     let history = useHistory();
     const [showName, setShowName] = useState(true)
     
-    const setChosenCryptoOption = (name) => {
-
-        history.push(`/info/crypto/${name.replace(/ /g,'').toLowerCase()}`);
+    const setChosenCryptoOption = () => {
+        history.push(`/info/crypto/${id}`);
     };
 
     let newName = name.substring(0, 3);
@@ -39,7 +39,7 @@ const CryptoCard = ({ name, price, img, percent, amount }) => {
 
     return (
         <>
-            <CardWrapper onClick={() => setChosenCryptoOption(name)}>
+            <CardWrapper onClick={() => setChosenCryptoOption()}>
                 {!amount ? (
                     ''
                 ) : (
@@ -68,7 +68,7 @@ const CryptoCard = ({ name, price, img, percent, amount }) => {
                 >
                     {percentInt ? percentInt.toFixed(2) : 0}%
                 </span>
-                <Link to={`/info/crypto/${name.replace(/ /g,'').toLowerCase()}`}>
+                <Link to={`/info/crypto/${id}`}>
                     <span>
                         <i className="fas fa-caret-right"></i>
                     </span>

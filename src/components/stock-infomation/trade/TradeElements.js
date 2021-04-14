@@ -73,3 +73,39 @@ export const MainWrapper = styled.main`
         }
     }
 `;
+
+export const ConfirmTrade = styled.section`
+    display: ${(props) => (props.confirm ? 'flex' : 'none')};
+    justify-content: space-evenly;
+    padding: 2rem !important;
+    gap: 1rem !important;
+
+    min-width: 15rem;
+
+    span {
+        text-align: center;
+    }
+    .approval-icon {
+        max-height: 8rem;
+    }
+
+    .img-name-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 30px;
+            padding: 0.5rem;
+        }
+    }
+
+    .cancel-btn {
+        all: unset;
+        margin: 0 auto;
+        cursor: pointer;
+        width: 6rem;
+        text-align: center;
+    }
+`;

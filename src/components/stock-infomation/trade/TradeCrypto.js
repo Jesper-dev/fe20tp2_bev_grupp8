@@ -5,11 +5,13 @@ import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
 // import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
-import { MainWrapper } from './TradeElements';
+import { MainWrapper, ConfirmTrade } from './TradeElements';
 import { GenericVestBtn } from '../../shared/button/ButtonElements';
 // import { parse } from '@fortawesome/fontawesome-svg-core';
 import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
 import ContentWrapper from '../../shared/wrappers/ContentWrapper';
+
+import { TradeConfirmRender } from './TradeRenders';
 
 import {
     checkIfTooManyStocks,
@@ -19,12 +21,15 @@ import {
 } from './TradeFunctions';
 
 const TradeCrypto = () => {
+    let buyMeACoin = false;
     const user = JSON.parse(localStorage.getItem('authUser'));
     let cryptoIncludes;
 
     const [didMount, setDidMount] = useState(false);
     const [loading, setLoading] = useState(true);
     const [sell, setSell] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+    const [finalStep, setFinalStep] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
     const [numOfCoins, setNumOfCoins] = useState(0);
     const [totalCost, setTotalCost] = useState(0);
@@ -229,11 +234,17 @@ const TradeCrypto = () => {
             }
         }
     };
-    const onBuy = (numOfCoins) => {
+    const onBuy = (numOfCoins, buyMeACoin) => {
+        if (numOfCoins === 0) {
+            alert('You need to buy some coins you fool');
+            return;
+        }
         if (buy === false) {
+            setConfirm(true);
             setBuy(true);
             setSell(false);
-        } else if (buy === true) {
+        } else if (buyMeACoin === true) {
+            console.log('Hit kommer vi');
             if (userData === null) return;
             let currency = userData.currency.currency;
             let funds = updateUserCurrency(
@@ -269,9 +280,17 @@ const TradeCrypto = () => {
                     cryptoData.image.large
                 );
             }
-            setNumOfCoins(0);
+
+            /*      setNumOfCoins(0); */
             setBuy(false);
+            // setConfirm(false);
         }
+    };
+
+    const onClickConfirm = (numOfCoins) => {
+        buyMeACoin = true;
+        onBuy(numOfCoins, buyMeACoin);
+        setFinalStep(true);
     };
 
     //*When we sell a stock
@@ -312,7 +331,6 @@ const TradeCrypto = () => {
                     user.organization,
                     firebase
                 );
-                setNumOfCoins(0);
                 setSell(false);
             }
         }
@@ -344,109 +362,131 @@ const TradeCrypto = () => {
             ) : (
                 <ContentWrapper>
                     <MainWrapper>
-                        <section>
-                            <div className="stock-overview-wrapper">
-                                <img
-                                    className="coin-img"
-                                    src={cryptoData.image.large}
-                                />
-                                <span
-                                    style={
-                                        cryptoData.market_data
-                                            .price_change_percentage_24h < 0
-                                            ? { color: 'var(--lighter-red)' }
-                                            : { color: 'var(--lighter-green)' }
-                                    }
-                                >
-                                    {cryptoData.market_data
-                                        .price_change_percentage_24h > 0 ? (
-                                        <i className="fas fa-long-arrow-alt-up"></i>
-                                    ) : (
-                                        <i className="fas fa-long-arrow-alt-down"></i>
-                                    )}
-                                    {cryptoData.market_data.price_change_percentage_24h.toFixed(
-                                        2
-                                    )}
-                                    %
-                                </span>
-                                <h2>{cryptoData.id}</h2>
-                                <span>
-                                    {cryptoData.market_data.current_price.usd.toFixed(
-                                        2
-                                    )}{' '}
-                                    $
-                                </span>
-                                <span>Your holding: {holding.toFixed(2)}</span>
-                            </div>
-
-                            <label>
-                                Wallet
-                                <div className="wallet-wrapper">
-                                    {!userData.currency
-                                        ? 'Loading...'
-                                        : userData.currency.currency.toLocaleString()}{' '}
-                                    $
+                        {confirm ? (
+                            <TradeConfirmRender
+                                img={cryptoData.image.large}
+                                name={cryptoData.id}
+                                ConfirmTrade={ConfirmTrade}
+                                setConfirm={setConfirm}
+                                onClickConfirm={onClickConfirm}
+                                numOfCoins={numOfCoins}
+                                finalStep={finalStep}
+                                price={cryptoData.market_data.current_price.usd}
+                                totalCost={totalCost}
+                            />
+                        ) : (
+                            <section>
+                                <div className="stock-overview-wrapper">
+                                    <img
+                                        className="coin-img"
+                                        src={cryptoData.image.large}
+                                    />
+                                    <span
+                                        style={
+                                            cryptoData.market_data
+                                                .price_change_percentage_24h < 0
+                                                ? {
+                                                      color:
+                                                          'var(--lighter-red)',
+                                                  }
+                                                : {
+                                                      color:
+                                                          'var(--lighter-green)',
+                                                  }
+                                        }
+                                    >
+                                        {cryptoData.market_data
+                                            .price_change_percentage_24h > 0 ? (
+                                            <i className="fas fa-long-arrow-alt-up"></i>
+                                        ) : (
+                                            <i className="fas fa-long-arrow-alt-down"></i>
+                                        )}
+                                        {cryptoData.market_data.price_change_percentage_24h.toFixed(
+                                            2
+                                        )}
+                                        %
+                                    </span>
+                                    <h2>{cryptoData.id}</h2>
+                                    <span>
+                                        {cryptoData.market_data.current_price.usd.toFixed(
+                                            2
+                                        )}{' '}
+                                        $
+                                    </span>
+                                    <span>
+                                        Your holding: {holding.toFixed(2)}
+                                    </span>
                                 </div>
-                            </label>
 
-                            <label>
-                                Total amount in dollar
-                                <ReusabelInputField
-                                    id="amount-dollar"
-                                    min="0"
-                                    placeholder="Total amount"
-                                    type="number"
-                                    onChange={setValuesDom}
-                                    value={amountInDollar}
-                                />
-                            </label>
+                                <label>
+                                    Wallet
+                                    <div className="wallet-wrapper">
+                                        {!userData.currency
+                                            ? 'Loading...'
+                                            : userData.currency.currency.toLocaleString()}{' '}
+                                        $
+                                    </div>
+                                </label>
 
-                            <label>
-                                Amount of coins
-                                <ReusabelInputField
-                                    step=".01"
-                                    min="0"
-                                    max="999"
-                                    placeholder="Amount"
-                                    type="number"
-                                    onChange={setValuesDom}
-                                    value={numOfCoins}
-                                />
-                            </label>
+                                <label>
+                                    Total amount in dollar
+                                    <ReusabelInputField
+                                        id="amount-dollar"
+                                        min="0"
+                                        placeholder="Total amount"
+                                        type="number"
+                                        onChange={setValuesDom}
+                                        value={amountInDollar}
+                                    />
+                                </label>
 
-                            <div className="brokage-wrapper">
-                                <span>Trading Fee</span>
-                                <span>{(numOfCoins / 2).toFixed(2)}$</span>
-                            </div>
-                            <div className="amountWrapper">
-                                <span>Total Amount</span>
-                                <span>{totalCost.toFixed(2)} $</span>
-                            </div>
-                            <div className="buttonWrapper">
-                                <GenericVestBtn
-                                    bg="var(--primary)"
-                                    hovbg="var(--lighter-green)"
-                                    co="var(--body)"
-                                    br="2rem"
-                                    border="0.125rem solid var(--primary)"
-                                    pad="0.6rem 3rem"
-                                    onClick={onButtonClick}
-                                >
-                                    BUY
-                                </GenericVestBtn>
-                                <GenericVestBtn
-                                    bg="white"
-                                    hovbg="var(--lighter-red)"
-                                    co="var(--primary)"
-                                    br="2rem"
-                                    border="0.125rem solid var(--primary)"
-                                    pad="0.6rem 3rem"
-                                    onClick={onButtonClick}
-                                >
-                                    SELL
-                                </GenericVestBtn>
-                            </div>
-                        </section>
+                                <label>
+                                    Amount of coins
+                                    <ReusabelInputField
+                                        step=".01"
+                                        min="0"
+                                        max="999"
+                                        placeholder="Amount"
+                                        type="number"
+                                        onChange={setValuesDom}
+                                        value={numOfCoins}
+                                    />
+                                </label>
+
+                                <div className="brokage-wrapper">
+                                    <span>Trading Fee</span>
+                                    <span>{(numOfCoins / 2).toFixed(2)}$</span>
+                                </div>
+                                <div className="amountWrapper">
+                                    <span>Total Amount</span>
+                                    <span>{totalCost.toFixed(2)} $</span>
+                                </div>
+                                <div className="buttonWrapper">
+                                    <GenericVestBtn
+                                        bg="var(--primary)"
+                                        hovbg="var(--lighter-green)"
+                                        co="var(--body)"
+                                        br="2rem"
+                                        border="0.125rem solid var(--primary)"
+                                        pad="0.6rem 3rem"
+                                        onClick={onButtonClick}
+                                    >
+                                        BUY
+                                    </GenericVestBtn>
+                                    <GenericVestBtn
+                                        bg="white"
+                                        hovbg="var(--lighter-red)"
+                                        co="var(--primary)"
+                                        br="2rem"
+                                        border="0.125rem solid var(--primary)"
+                                        pad="0.6rem 3rem"
+                                        onClick={onButtonClick}
+                                    >
+                                        SELL
+                                    </GenericVestBtn>
+                                </div>
+                            </section>
+                        )}
                     </MainWrapper>
                 </ContentWrapper>
             )}

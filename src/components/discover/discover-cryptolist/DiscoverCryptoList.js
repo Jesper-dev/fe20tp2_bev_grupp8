@@ -33,8 +33,10 @@ const DiscoverCryptoList = () => {
                     <CryptoCard
                         key={index}
                         name={item.name}
+                        id={item.id}
                         price={item.current_price}
                         img={item.image}
+                        symbol={item.symbol}
                         percent={item.price_change_percentage_24h}
                         cryptoList={MockCrypto}
                     />

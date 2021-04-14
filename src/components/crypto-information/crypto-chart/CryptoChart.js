@@ -8,7 +8,7 @@ import { ContentWrapper, InLineDiv } from './CryptoChartElements';
 import { WatchStockButton } from '../../stock-infomation/StockInfromationElements';
 import { TradeBtns } from '../../stock-infomation/StockInfromationElements';
 
-const CryptoChart = ({ id, img, name, onFollow, checked }) => {
+const CryptoChart = ({ id, img, name, onFollow, checked, symbol }) => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const [cryptoInfo, setCryptoInfo] = useState([]); //remove?
     const [labelsSate, setLabelState] = useState([]);
@@ -85,8 +85,8 @@ const CryptoChart = ({ id, img, name, onFollow, checked }) => {
             <InLineDiv>
                 <img src={img} alt="Logo of crypto" />
                 <h1>{name}</h1>
+                <h1>({symbol.toUpperCase()})</h1>
             </InLineDiv>
-
             <div className="chart-topbar-wrapper">
                 <TradeBtns to={`/trade/crypto/${id}`}>TRADE</TradeBtns>
                 <WatchStockButton

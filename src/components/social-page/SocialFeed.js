@@ -9,6 +9,8 @@ const SocialFeed = () => {
     const [followingPostsList, setFollowingPostsList] = useState([]);
     const [mounted, setMounted] = useState(true);
 
+    const [hotPosts, setHotPosts] = useState([]);
+
     useEffect(() => {
         setMounted(false);
         getPostsFromFollowing();
@@ -25,6 +27,28 @@ const SocialFeed = () => {
         // 		setLikedPosts(data);
         // 	}
         // });
+
+        firebase.posts().on('value', (snapshot) => {
+            const data = snapshot.val();
+            let dataArray = [];
+
+            for (const key in data) {
+                const obj = {
+                    postId: key,
+                    postData: data[key],
+                };
+
+                dataArray.push(obj);
+            }
+
+            dataArray.sort(
+                (obj1, obj2) =>
+                    obj2.postData.likedUsers.length -
+                    obj1.postData.likedUsers.length
+            );
+
+            setHotPosts(dataArray.slice(0, 5));
+        });
 
         return () => {
             setMounted(true);
@@ -117,24 +141,51 @@ const SocialFeed = () => {
     // };
 
     return (
-        <Wrapper>
-            <h1>Recent posts from people you follow</h1>
-            {followingPostsList
-                ? followingPostsList.map((item, index) => {
-                      return (
-                          <UserPostCard
-                              key={index}
-                              username={item.username}
-                              content={item.content}
-                              timestamp={item.timestamp}
-                              liked={item.liked}
-                              likeCount={item.likeCount}
-                              picture={item.picture}
-                          />
-                      );
-                  })
-                : 'Follow people to see their posts!'}
-        </Wrapper>
+        <>
+            <Wrapper>
+                <h1>Recent posts from people you follow</h1>
+                {followingPostsList
+                    ? followingPostsList.map((item, index) => {
+                          return (
+                              <UserPostCard
+                                  key={index}
+                                  username={item.username}
+                                  content={item.content}
+                                  timestamp={item.timestamp}
+                                  liked={item.liked}
+                                  likeCount={item.likeCount}
+                                  picture={item.picture}
+                              />
+                          );
+                      })
+                    : 'Follow people to see their posts!'}
+            </Wrapper>
+            <Wrapper>
+                <h1>Hot posts</h1>
+                {hotPosts
+                    ? hotPosts.map((obj, index) => {
+                          return (
+                              <UserPostCard
+                                  key={index}
+                                  postId={obj.postId}
+                                  username={obj.postData.username}
+                                  content={obj.postData.content}
+                                  timestamp={obj.postData.timestamp}
+                                  likeCount={obj.postData.likeCount}
+                                  liked={
+                                      obj.postData.likedUsers.includes(
+                                          userData.uid
+                                      )
+                                          ? true
+                                          : false
+                                  }
+                                  picture={obj.postData.picture}
+                              />
+                          );
+                      })
+                    : 'No hot posts'}
+            </Wrapper>
+        </>
     );
 };
 

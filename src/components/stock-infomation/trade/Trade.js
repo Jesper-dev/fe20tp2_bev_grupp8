@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import 'firebase/database';
 import { FirebaseContext } from '../../firebase/context';
 // import { SearchBarElement } from '../../shared/search-bar/SearchBarElements';
-import { MainWrapper } from './TradeElements';
+import { MainWrapper, ConfirmTrade } from './TradeElements';
 import { GenericVestBtn } from '../../shared/button/ButtonElements';
 // import { parse } from '@fortawesome/fontawesome-svg-core';
 import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
@@ -23,6 +23,7 @@ const Trade = () => {
     let stockIncludes;
 
     const [didMount, setDidMount] = useState(false);
+    const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(true);
     const [sell, setSell] = useState(false);
     const [amountInDollar, setAmountInDollar] = useState(0);
@@ -249,10 +250,15 @@ const Trade = () => {
             }
         }
     };
+
     const onBuy = (numOfStocks) => {
+
+
         if (buy === false) {
-            setBuy(true);
+            // setBuy(true);
+            setConfirm(true)
             setSell(false);
+            //*ConfirmTrade
         } else if (buy === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
