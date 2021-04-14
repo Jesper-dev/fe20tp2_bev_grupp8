@@ -9,9 +9,10 @@ import Coin from '../../../svgs/Coin';
 const CryptoCard = ({ name, price, img, percent, amount }) => {
     let history = useHistory();
     const [showName, setShowName] = useState(true)
-
+    
     const setChosenCryptoOption = (name) => {
-        history.push(`/info/crypto/${name}`);
+
+        history.push(`/info/crypto/${name.replace(/ /g,'').toLowerCase()}`);
     };
 
     let newName = name.substring(0, 3);
@@ -67,7 +68,7 @@ const CryptoCard = ({ name, price, img, percent, amount }) => {
                 >
                     {percentInt ? percentInt.toFixed(2) : 0}%
                 </span>
-                <Link to={`/info/crypto/${name}`}>
+                <Link to={`/info/crypto/${name.replace(/ /g,'').toLowerCase()}`}>
                     <span>
                         <i className="fas fa-caret-right"></i>
                     </span>

@@ -68,12 +68,6 @@ export const PortfolioTopbarWrapper = styled.article`
         flex: 1;
         display: flex;
         justify-content: flex-start;
-
-        border-radius: 0.25rem;
-        /*   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.04),
-            1px 1px 1px rgba(0, 0, 0, 0.04); */
-        /*         box-shadow: var(--box-shadow-cards);
-        background-color: white; */
         flex-direction: row;
         width: 100%;
         gap: 0.5rem;

@@ -41,7 +41,7 @@ const CryptoInformationPage = () => {
         (async () => {
             await axios
                 .get(
-                    `https://api.coingecko.com/api/v3/coins/${id.toLowerCase()}?localization=true&tickers=true&market_data=true&developer_data=true&sparkline=true`
+                    `https://api.coingecko.com/api/v3/coins/${id.toLowerCase().trim()}?localization=true&tickers=true&market_data=true&developer_data=true&sparkline=true`
                 )
                 .then((response) => {
                     setCryptoData(response.data);
