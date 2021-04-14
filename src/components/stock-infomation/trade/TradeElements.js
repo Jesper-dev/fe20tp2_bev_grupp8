@@ -81,12 +81,21 @@ export const ConfirmTrade = styled.section`
     gap: 1rem !important;
 
     min-width: 15rem;
+    text-align: center;
 
-    span {
-        text-align: center;
+    h2 {
+        @media screen and (max-width: 480px) {
+            font-size: 1rem;
+        }
     }
+
     .approval-icon {
         max-height: 8rem;
+
+        @media screen and (max-width: 480px) {
+            max-height: 100px;
+            width: auto;
+        }
     }
 
     .img-name-wrapper {
@@ -94,6 +103,7 @@ export const ConfirmTrade = styled.section`
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-left: -38px;
 
         img {
             width: 30px;

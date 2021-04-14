@@ -35,6 +35,7 @@ const TradeCrypto = () => {
     const [totalCost, setTotalCost] = useState(0);
     // const [includes, setIncludes] = useState(false);
     const [buy, setBuy] = useState(false);
+    const [confirmBuy, setConfirmBuy] = useState(false);
     const [holding, setHolding] = useState(0);
 
     const [symbol, setSymbol] = useState('');
@@ -240,6 +241,7 @@ const TradeCrypto = () => {
             return;
         }
         if (buy === false) {
+            setConfirmBuy(true);
             setConfirm(true);
             setBuy(true);
             setSell(false);
@@ -289,16 +291,24 @@ const TradeCrypto = () => {
 
     const onClickConfirm = (numOfCoins) => {
         buyMeACoin = true;
-        onBuy(numOfCoins, buyMeACoin);
+        let sellMeACoin = true;
+        if (confirmBuy == true) {
+            onBuy(numOfCoins, buyMeACoin);
+        } else {
+            onSell(numOfCoins, sellMeACoin);
+        }
+
         setFinalStep(true);
     };
 
     //*When we sell a stock
-    const onSell = (numOfCoins) => {
+    const onSell = (numOfCoins, sellMeACoin) => {
         if (sell === false) {
+            setConfirmBuy(false);
+            setConfirm(true);
             setSell(true);
             setBuy(false);
-        } else if (sell === true) {
+        } else if (sellMeACoin === true) {
             if (userData === null) return;
             let currency = userData.currency.currency;
             let tooMany = checkIfTooManyStocks(numOfCoins, holding);

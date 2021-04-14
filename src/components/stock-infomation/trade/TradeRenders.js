@@ -26,7 +26,7 @@ export const TradeConfirmRender = ({
                         <ApprovalSymbol className="approval-icon" />
                         <h2>Your order was to concluded!</h2>
                         <span>
-                            You have bought {numOfCoins} coins of {name}
+                            You have bought {numOfCoins} {name}
                         </span>
                         <div className="brokage-wrapper"></div>
 
@@ -37,11 +37,8 @@ export const TradeConfirmRender = ({
                             br="2rem"
                             border="0.125rem solid var(--primary)"
                             pad="0.6rem 3rem"
-                            onClick={() =>
-                                window.history.pushState({}, '', '/discover')
-                            }
                         >
-                            Take me HOME! (Country roads)
+                            Take me home!
                         </GenericVestBtn>
                         <Confetti
                             width={window.innerWidth}

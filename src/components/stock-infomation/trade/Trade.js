@@ -11,6 +11,8 @@ import { GenericVestBtn } from '../../shared/button/ButtonElements';
 import { ReusabelInputField } from '../../shared/reusable-elements/ReusableElements';
 import ContentWrapper from '../../shared/wrappers/ContentWrapper';
 
+import UsFlag from '../../svgs/flags/America';
+
 import {
     checkIfTooManyStocks,
     addToRecentlyBought,
@@ -252,11 +254,9 @@ const Trade = () => {
     };
 
     const onBuy = (numOfStocks) => {
-
-
         if (buy === false) {
             // setBuy(true);
-            setConfirm(true)
+            setConfirm(true);
             setSell(false);
             //*ConfirmTrade
         } else if (buy === true) {

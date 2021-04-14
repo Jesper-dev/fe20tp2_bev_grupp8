@@ -1,21 +1,21 @@
 const createImage = (url) =>
     new Promise((resolve, reject) => {
-        const image = new Image()
-        image.addEventListener('load', () => resolve(image))
-        image.addEventListener('error', error => reject(error))
-        image.setAttribute('crossOrigin', 'anonymous')
-        image.src = url
-    })
+        const image = new Image();
+        image.addEventListener('load', () => resolve(image));
+        image.addEventListener('error', (error) => reject(error));
+        image.setAttribute('crossOrigin', 'anonymous');
+        image.src = url;
+    });
 
 export const getCroppedImg = async (imageSrc, crop) => {
-    const image = await createImage(imageSrc)
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+    const image = await createImage(imageSrc);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
     /* setting canvas width & height allows us to
     resize from the original image resolution */
-    canvas.width = 250
-    canvas.height = 250
+    canvas.width = 250;
+    canvas.height = 250;
 
     ctx.drawImage(
         image,
@@ -27,17 +27,17 @@ export const getCroppedImg = async (imageSrc, crop) => {
         0,
         canvas.width,
         canvas.height
-    )
+    );
 
-    let jpegFile = canvas.toDataURL("image/jpeg");
+    let jpegFile = canvas.toDataURL('image/jpeg');
 
-/*     console.log(jpegFile) */
+    /*     console.log(jpegFile) */
 
-    return jpegFile
+    return jpegFile;
 
-/*     return new Promise((resolve) => {
+    /*     return new Promise((resolve) => {
         canvas.toBlob((blob) => {
             resolve(blob)
         }, 'image/jpeg')
     }) */
-}
+};
