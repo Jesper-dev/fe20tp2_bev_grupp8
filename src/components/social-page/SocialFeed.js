@@ -62,11 +62,11 @@ const SocialFeed = () => {
 
 			followingArray.forEach(obj => {
 				if (Date.now() - obj.postData.timestamp <= 86400000) {
-					recentPostsArray.unshift(obj);
+					recentPostsArray.push(obj);
 				}
 			});
 
-			setRecentPosts(recentPostsArray);
+			setRecentPosts(recentPostsArray.sort((a, b) => b.postData.timestamp - a.postData.timestamp));
 
 			// get most liked posts globablly
 			const hotPostsArray = dataArray.sort(
