@@ -89,9 +89,12 @@ export const ContentWrapper = styled.div`
         /*     border: 0.09375rem solid #c8c8c8; */
             border-radius: 0.25rem;
             min-height: 16px;
-            text-indent: 0.375rem;
+            text-indent: ${props => props.partOfOrg ? '0.375rem' : '-10rem'};
+         /*    text-indent: 0.375rem; */
+            overflow: hidden;
 
             transition: all 1s ease-in-out;
+/*      /*        transition:  1s ease-in-out; */ 
 
             border: ${props => props.partOfOrg ? '0.09375rem solid  #58D7AC' : '0.09375rem solid #c8c8c8'};
             box-shadow: ${props => props.partOfOrg ? '0 0 0 0.1875rem  rgba(88, 215, 172, 0.2)' : 'none'};

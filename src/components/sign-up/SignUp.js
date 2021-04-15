@@ -150,7 +150,7 @@ class SignUpFormBase extends Component {
 
     checkUsernameTaken = (str) => {
         this.setState({ usernameTaken: false });
-
+       /*  console.log('heete') */
         const usersRef = this.props.firebase.users();
         // const usersRef = this.props.firebase.db.ref('users/');
 
@@ -163,29 +163,36 @@ class SignUpFormBase extends Component {
             .orderByChild('username')
             .equalTo(str)
             .on('child_added', () => {
-   /*              console.log('Username already in use!'); */
+         /*        console.log('Username already in use!'); */
                 this.setState({ usernameTaken: true });
             });
     };
 
     checkIfPartOfOrg = (str) => {
         const companysRef = this.props.firebase.admin();
+        this.setState({ partOfOrganization: false })
+        this.setState({ organization: '' })
+
+        let orgStatus = false
         let orgName = ''
         companysRef
         .orderByChild('emailList/email')
         .equalTo(str)
-        .once('value', function(snapshot) {
+        .on('value', function(snapshot) {
             if(!snapshot.val()) return;
             let org = [];
             for(const key in snapshot.val()) {
                 org.push({key})
             }
-        /*     console.log(org[0].key) */
+
             orgName = org[0].key
+            orgStatus = true
+            
         })
+        if(orgStatus){
             this.setState({ organization: orgName })
             this.setState({ partOfOrganization: true });
-
+        }
     };
 
     componentDidMount = async () => {
@@ -392,7 +399,6 @@ class SignUpFormBase extends Component {
         }
 
         if(event.target.type == 'email'){
-            this.setState({ partOfOrganization: false })
             this.checkIfPartOfOrg(event.target.value)
         }
 
