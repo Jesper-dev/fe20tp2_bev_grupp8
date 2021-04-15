@@ -8,16 +8,16 @@ import { fetchUsersOrgSnapshotArray } from '../../../../shared/functions/firebas
 const RecentlyBought = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const [bought, setBought] = useState(null);
-    const [boughtCrypto, setBoughtCrypto] = useState(null);
-    const [sold, setSold] = useState(null);
-    const [soldCrypto, setSoldCrypto] = useState(null);
+    const [bought, setBought] = useState([]);
+    const [boughtCrypto, setBoughtCrypto] = useState([]);
+    const [sold, setSold] = useState([]);
+    const [soldCrypto, setSoldCrypto] = useState([]);
 
     const [didMount, setDidMount] = useState(false);
 
     useEffect(() => {
         setDidMount(true);
- 
+
         fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setBought)
         fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBoughtCrypto', setBoughtCrypto)
         fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setSold)
@@ -28,9 +28,12 @@ const RecentlyBought = () => {
         };
     }, []);
 
+
+    console.log(bought)
+
     return (
         <ContentWrapper>
-            {!bought || !sold || !boughtCrypto || !soldCrypto ? ( null ) : (
+            {bought.length == 0 || sold.length == 0 || boughtCrypto.length == 0 || soldCrypto.length == 0 ? ( null ) : (
 <>
                 <Table
                 title="Recently bought stock"

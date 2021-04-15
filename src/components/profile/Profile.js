@@ -10,6 +10,7 @@ import * as ROUTES from '../../constants/routes';
 import ProfilePortfolio from './profile-portfolio/ProfilePortfolio';
 import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
+import AchievmentsBoard from './profile-achievments/AchievmentsBoard';
 import { fetchUserSnapshotObject } from '../shared/functions/firebase-functions';
 
 import { FirebaseContext } from '../firebase/context';
@@ -49,9 +50,9 @@ const Profile = () => {
     const checkUser = (currency, arr) => {
         let list = [];
         if (currency >= 100000000) {
-            setMillionaire(true);
-            firebase.user(userData.uid).child('/achievments').update({
-                millionaire: true,
+            // setMillionaire(true);
+            firebase.user(userData.uid).child('/achievments/millionaire').update({
+                done: true,
             });
         }
 
@@ -60,10 +61,10 @@ const Profile = () => {
         }
         list.forEach((item) => {
             if (item.symbol === 'btc') {
-                if (item.amount >= 10) {
-                    setBitcoin(true);
-                    firebase.user(userData.uid).child('/achievments').update({
-                        bitcoin: true,
+                if (item.amount >= 5) {
+                    // setBitcoin(true);
+                    firebase.user(userData.uid).child('/achievments/bitcoin').update({
+                        done: true,
                     });
                 }
             }
@@ -170,7 +171,7 @@ const Profile = () => {
                             <ProfileImg img={ProfileImgReducer} />
                         )}
 
-                       
+
                     </div>
                     <div className="follower-wrapper">
                         <div>
@@ -180,10 +181,10 @@ const Profile = () => {
                         <div>
                             <p>{followingCount > 0 ? followingCount : 0}</p>
                             <span>Following</span>
-                            
+
                         </div>
                     </div>
-                    
+
                     <div
                         className="emoji-picker-wrapper"
                         style={
@@ -205,29 +206,12 @@ const Profile = () => {
                             }}
                             preload={true}
                         ></Picker>
+
                     </div>
-                    {/* <div className="achievments-wrapper">
-                        <p>
-                            {millionaire ? (
-                                <i className="fas fa-money-bill-wave"></i>
-                            ) : (
-                                ''
-                            )}
-                        </p>
-                        <p>
-                            {bitcoin ? (
-                                <i
-                                    className="fab fa-bitcoin"
-                                    style={{ color: 'gold' }}
-                                ></i>
-                            ) : (
-                                ''
-                            )}
-                        </p>
-                    </div> */}
+
                     {/* <div className="btn-and-follower-wrapper">
-                       
-                        
+
+
                     </div> */}
                     <div className="btn-wrapper">
                             <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
@@ -236,7 +220,24 @@ const Profile = () => {
                             </ProfileSettingsBtn>
                         </div>
                     </div>
-                    
+                    <AchievmentsBoard />
+                    {/* <div className="achievments-wrapper">
+                        <p>
+                            {millionaire ? (
+                               'Selfmade Millionaire'
+                            ) : (
+                                ''
+                            )}
+                        </p>
+                        <p>
+                            {bitcoin ? (
+                                <p>Bitcoin Enthusiast</p>
+                            ) : (
+                                ''
+                            )}
+                        </p>
+                    </div> */}
+
                 </section>
                 <TabBar tabs={tabs} />
             </HeaderWrapper>

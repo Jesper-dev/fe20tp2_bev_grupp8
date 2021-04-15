@@ -22,6 +22,18 @@ export const HeaderWrapper = styled.header`
 
     .main-wrapper {
         gap: 2.75rem;
+
+
+    }
+
+    .achievments-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .achievments-wrapper > p {
+        font-size: 0.80rem;
+        background: none;
     }
 
     .follower-wrapper {
@@ -110,9 +122,7 @@ export const HeaderWrapper = styled.header`
         }
     }
 
-    .achievments-wrapper {
-        display: flex;
-    }
+
 
     .fa-money-bill-wave {
         color: goldenrod;

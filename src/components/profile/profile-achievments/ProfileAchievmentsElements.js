@@ -9,7 +9,6 @@ export const ContentWrapper = styled.div`
     div {
         height: 60%;
         width: 40%;
-        border: 1px solid black;
     }
 `
 
@@ -28,7 +27,7 @@ export const AchievmentsCardWrapper = styled.article`
     background: var(--body);
     cursor: pointer;
     margin-top: 8px;
-    opacity: ${props => props.done ? '100%' : '50%'};
+    opacity: ${props => props.done ? '100%' : '40%'};
 
     & > span {
         /* flex: 1; */

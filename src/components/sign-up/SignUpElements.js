@@ -84,6 +84,21 @@ export const ContentWrapper = styled.div`
             }
         }
 
+        .part-of-org-wrapper {
+            padding: 0.5rem 0.375rem 0.5rem 0;
+        /*     border: 0.09375rem solid #c8c8c8; */
+            border-radius: 0.25rem;
+            min-height: 16px;
+            text-indent: 0.375rem;
+
+            transition: all 1s ease-in-out;
+
+            border: ${props => props.partOfOrg ? '0.09375rem solid  #58D7AC' : '0.09375rem solid #c8c8c8'};
+            box-shadow: ${props => props.partOfOrg ? '0 0 0 0.1875rem limegreen' : 'none'};
+          /*   border-color: var(--third); */
+            /* box-shadow: 0 0 0 0.1875rem #ddeafd; */
+        }
+
         button {
             padding: 0.5rem 0.75rem;
             border: none;

@@ -10,6 +10,7 @@ const AchievmentsBoard = () => {
     useEffect(() => {
         firebase.user(userData.uid).child('/achievments').once('value', (snapshot) => {
             const data = snapshot.val()
+            if(!data) return;
             setMillionaire(data.millionaire.show)
             setBitcoin(data.bitcoin.show)
         })
@@ -18,20 +19,18 @@ const AchievmentsBoard = () => {
     return (
 
         <div className="achievments-wrapper">
-            <p>
+
             {millionaire ? (
-                'Selfmade Millionaire'
+                <p>Selfmade Millionaire</p>
             ) : (
                 ''
             )}
-                </p>
-                    <p>
-                        {bitcoin ? (
-                            <p>Bitcoin Enthusiast</p>
-                        ) : (
-                            ''
-                        )}
-                </p>
+            {bitcoin ? (
+                <p>Bitcoin Enthusiast</p>
+            ) : (
+                ''
+            )}
+
         </div>
 
     )

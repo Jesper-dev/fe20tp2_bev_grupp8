@@ -13,6 +13,7 @@ const ProfileAchievments = () => {
 
         firebase.user(userData.uid).child('/achievments').once('value', (snapshot) => {
             const data = snapshot.val()
+            if(!data) return;
             let list = []
             for(const key in data) {
                 list.push(data[key])

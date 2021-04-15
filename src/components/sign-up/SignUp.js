@@ -15,8 +15,8 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-    // partOfOrg: 0, // why not just default to true?
-    partOfOrg: false, // why not just default to true?
+    partOfOrg: 0, // why not just default to true?
+    // partOfOrg: false, // why not just default to true?
     usernameTaken: false,
     username: '',
     organization: '',
@@ -92,16 +92,34 @@ const INITIAL_STATE = {
             username: 'Vest',
         },
     },
+    achievments: {
+        bitcoin: {
+            name: 'Bitcoin Enthusiast',
+            done: false,
+            desc: 'Own five bitcoins',
+            show: false,
+            id: 'bitcoin'
+        },
+        millionaire: {
+            name: 'Selfmade Millionaire',
+            done: false,
+            desc: 'Earn your first million',
+            show: false,
+            id: 'millionaire'
+        },
+    },
     picture: {
         profile_pic: 'null',
     },
     email: '',
 
-    list: [
+  /*   list: [
         {
             email: 'letsvest@vest.com',
         },
-    ],
+    ], */
+    emailList: { email: 'letsvest@vest.com'},
+
     passwordOne: '',
     passwordTwo: '',
     error: null,
@@ -145,41 +163,36 @@ class SignUpFormBase extends Component {
             .orderByChild('username')
             .equalTo(str)
             .on('child_added', () => {
-                console.log('Username already in use!');
+   /*              console.log('Username already in use!'); */
                 this.setState({ usernameTaken: true });
             });
     };
 
     checkIfPartOfOrg = (str) => {
-    
-   /*      const companysRef = this.props.firebase.db.ref('list');
+        const companysRef = this.props.firebase.admin();
+        let orgName = ''
+        companysRef
+        .orderByChild('emailList/email')
+        .equalTo(str)
+        .once('value', function(snapshot) {
+            if(!snapshot.val()) return;
+            let org = [];
+            for(const key in snapshot.val()) {
+                org.push({key})
+            }
+        /*     console.log(org[0].key) */
+            orgName = org[0].key
+        })
+            this.setState({ organization: orgName })
+            this.setState({ partOfOrganization: true });
 
-
-        console.log(companysRef)
-
-        companysRef.once('value', function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                let childkey = childSnapshot.key;
-                let childData = childSnapshot.val();
-                console.log(childData)
-            })
-        }) */
-
-        // companysRef
-        // .orderByChild('/emails/list')
-        // .equalTo(str)
-        // .on('child_added', () => {
-        //     console.log('Email exists!!!');
-        //   /*   this.setState({ usernameTaken: true }); */
-        // });
-    
-    }
+    };
 
     componentDidMount = async () => {
         const activeOrganizationsFirebase = await this.props.firebase.admin(
             'organizations/'
         );
-    
+
 
         activeOrganizationsFirebase.on('value', (snapshot) => {
             activeOrganizations = snapshot.val();
@@ -189,7 +202,7 @@ class SignUpFormBase extends Component {
                 activeOrganizationsName.push({ key });
             }
         });
-        console.log(activeOrganizationsName)
+        /* console.log(activeOrganizationsName) */
     };
 
     onSubmit = (event) => {
@@ -209,11 +222,12 @@ class SignUpFormBase extends Component {
             organization,
             organizationname,
             partOfOrganization,
-            list,
+            emailList,
             userSettings,
             likedPosts,
             colors,
             Logo,
+            achievments
         } = this.state;
 
         if (partOfOrganization) {
@@ -271,6 +285,7 @@ class SignUpFormBase extends Component {
                         organization,
                         userSettings,
                         likedPosts,
+                        achievments
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
@@ -297,10 +312,12 @@ class SignUpFormBase extends Component {
                                 organization,
                                 userSettings,
                                 likedPosts,
+                                achievments
                             });
                         this.props.firebase
-                            .organization(organization + '/emails')
-                            .set({ list });
+                            // .organization(organization + '/emails')
+                            .organization(organization)
+                            .update({ emailList });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
                             email,
@@ -315,6 +332,7 @@ class SignUpFormBase extends Component {
                             organization,
                             userSettings,
                             likedPosts,
+                            achievments
                         });
                     } else {
                         this.props.firebase
@@ -335,6 +353,7 @@ class SignUpFormBase extends Component {
                                 organization: organizationname,
                                 userSettings,
                                 likedPosts,
+                                achievments
                             });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
@@ -350,6 +369,7 @@ class SignUpFormBase extends Component {
                             userSettings,
                             organization: organizationname,
                             likedPosts,
+                            achievments
                         });
                     }
                 }
@@ -372,6 +392,7 @@ class SignUpFormBase extends Component {
         }
 
         if(event.target.type == 'email'){
+            this.setState({ partOfOrganization: false })
             this.checkIfPartOfOrg(event.target.value)
         }
 
@@ -416,7 +437,7 @@ class SignUpFormBase extends Component {
             this.state.usernameTaken;
 
         return (
-            <ContentWrapper>
+            <ContentWrapper partOfOrg={partOfOrganization} >
                 {/*     <h1>Let's Vest</h1> */}
                 <LogoLets className="logo-lets" />
                 {this.state.loading ? (
@@ -465,6 +486,11 @@ class SignUpFormBase extends Component {
                                     placeholder="Confirm password"
                                 />
                             </label>
+                                <label>
+                                     {' '}
+                                     Organization{' '}
+                                    <div className="part-of-org-wrapper" > {organization}</div>
+                                 </label>
                             <label className="side-by-side">
                                 Create an organization
                                 <input
@@ -487,40 +513,16 @@ class SignUpFormBase extends Component {
                             ) : (
                                 ''
                             )}
-
-                            <label className="side-by-side">
-                                Part of an organization
-                                <input
-                                    name="partOfOrganization"
-                                    type="checkbox"
-                                    checked={partOfOrganization}
-                                    onChange={this.onChangeCheckbox}
-                                />
-                            </label>
-                            {partOfOrganization ? (
+                        {/*     {partOfOrganization ? (
                                 <label>
                                     {' '}
-                                    Which organization?{' '}
-                                    <select
-                                        name="organizationname"
-                                        value={organizationname}
-                                        onChange={this.onChange}
-                                    >
-                                        <option>Select company...</option>
-                                        {activeOrganizationsName.map(
-                                            (item, i) => {
-                                                return (
-                                                    <option key={i}>
-                                                        {item.key}
-                                                    </option>
-                                                );
-                                            }
-                                        )}
-                                    </select>
+                                    Organization{' '}
+                                   <div className="part-of-org-wrapper" > {organization}</div>
                                 </label>
+
                             ) : (
-                                ''
-                            )}
+                                null
+                            )} */}
 
                             <button disabled={isInvalid} type="submit">
                                 Sign Up
