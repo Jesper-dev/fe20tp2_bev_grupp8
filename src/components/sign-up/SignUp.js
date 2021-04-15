@@ -173,6 +173,7 @@ class SignUpFormBase extends Component {
         this.setState({ partOfOrganization: false })
         this.setState({ organization: '' })
 
+
         let orgStatus = false
         let orgName = ''
         companysRef
@@ -187,7 +188,7 @@ class SignUpFormBase extends Component {
 
             orgName = org[0].key
             orgStatus = true
-            
+
         })
         if(orgStatus){
             this.setState({ organization: orgName })
@@ -492,10 +493,9 @@ class SignUpFormBase extends Component {
                                     placeholder="Confirm password"
                                 />
                             </label>
-                                <label>
-                                     {' '}
-                                     Organization{' '}
-                                    <div className="part-of-org-wrapper" > {organization}</div>
+                                <label className="label-part-of-org">
+                                     Organization
+                                    <input className="part-of-org-wrapper" disabled value={organization} />
                                  </label>
                             <label className="side-by-side">
                                 Create an organization

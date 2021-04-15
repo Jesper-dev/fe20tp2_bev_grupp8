@@ -18,8 +18,8 @@ const AchievmentsBoard = () => {
 
     return (
 
-        <div className="achievments-wrapper">
-
+        // <div className="achievments-wrapper">
+<>
             {millionaire ? (
                 <p>Selfmade Millionaire</p>
             ) : (
@@ -30,8 +30,8 @@ const AchievmentsBoard = () => {
             ) : (
                 ''
             )}
-
-        </div>
+</>
+        // </div>
 
     )
 }

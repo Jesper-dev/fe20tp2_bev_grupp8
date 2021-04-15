@@ -102,7 +102,7 @@ const ProfilePortfolio = () => {
     return (
         <>
             {TotalCrypto == 0 ? <FetchUserCrypto currency={currency} /> : null}
-            {TotalStocks == 0 ? <FetchUserStocks currency={currency} /> : null}
+          {/*   {TotalStocks == 0 ? <FetchUserStocks currency={currency} /> : null} */}
             <PortfolioOverview
                 total={currency.toLocaleString()}
                 stockvalue={valueStocks}

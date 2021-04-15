@@ -20,10 +20,20 @@ export const HeaderWrapper = styled.header`
         width: 100%;
     } */
 
+    .first-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
     .main-wrapper {
         gap: 2.75rem;
+    }
 
-
+    .name-emoji{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0%;
     }
 
     .achievments-wrapper {
@@ -134,6 +144,11 @@ export const MainWrapper = styled.main`
     flex-direction: column;
     gap: 1.5rem;
     margin: 2rem 0;
+
+    @media screen and (min-width: 1400px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        }
 `;
 
 export const ProfileSettingsBtn = styled(Link)`

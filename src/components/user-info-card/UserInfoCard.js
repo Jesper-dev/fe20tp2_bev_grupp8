@@ -5,6 +5,7 @@ import { FirebaseContext } from '../firebase/context';
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import UserPostCard from '../shared/card/user-post-card/UserPostCard';
 import Backbutton from '../shared/button/back-button/BackButton';
+import UserAchievments from './UserAchievments'
 
 import UserInfoCardElement from './UserInfoCardElement';
 
@@ -237,8 +238,7 @@ const UserInfoCard = () => {
                                     </span>
                                 </h1>
                                 <div className="achievments-wrapper">
-                                    <p>{millionaire ? <i className="fas fa-money-bill-wave" style={{color: 'goldenrod'}}></i> : ''}</p>
-                                    <p>{bitcoin ? <i className="fab fa-bitcoin" style={{color: 'gold'}}></i> : ''}</p>
+                                    <UserAchievments userData={userData} />
                                 </div>
                             </div>
                             {id == user.username ? "" :
@@ -249,7 +249,7 @@ const UserInfoCard = () => {
                                 <span>
                                     {countFollow}
                                 </span>
-                            </label>}      
+                            </label>}
                         </div>
                     </div>
                     <div className="quick-stat-info">

@@ -48,13 +48,14 @@ const SocialFeed = () => {
 			let followingArray = [];
 
 			firebase.user(userData.uid).child("following").once("value", snapshot => {
+                if(!snapshot.val()) return;
 				usernameArray = Object.values(snapshot.val()).map(obj => obj.username);
 			});
 
 			dataArray.forEach(obj => {
 				if (usernameArray.some(el => obj.postData.username.includes(el))) {
 					followingArray.push(obj);
-				}		
+				}
 			});
 
 			// get recent posts from people you follow (last 24hours)

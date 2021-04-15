@@ -21,7 +21,7 @@ const LikedPosts = () => {
                     postData: data[key]
                 };
 
-                dataArray.push(obj);
+                dataArray.unshift(obj);
             }
 
             setLikedPosts(dataArray.filter(obj => obj.postData.likedUsers.includes(user.uid)));

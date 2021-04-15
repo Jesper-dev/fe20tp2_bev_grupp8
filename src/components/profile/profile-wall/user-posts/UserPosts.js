@@ -21,8 +21,8 @@ const UserPosts = () => {
 				  postId: key,
 				  postData: data[key]
 				};
-	
-				dataArray.push(obj);
+
+				dataArray.unshift(obj);
 			}
 
 			setUserPosts(dataArray.filter(obj => obj.postData.userId == user.uid));

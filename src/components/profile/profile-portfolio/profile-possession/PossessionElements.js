@@ -4,6 +4,7 @@ export const ContentWrapper = styled.section`
     margin: auto;
     width: 100%;
     max-width: 40rem;
+    text-align: center;
 
 
     & > div {

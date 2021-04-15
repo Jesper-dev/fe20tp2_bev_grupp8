@@ -48,11 +48,11 @@ const SocialPage = () => {
                                 total={item.currency ? item.currency.currency : 20}
                             />
                         )
-                    }) :
+                    }) : usersArray = []}
                     <>
                         <SocialPost />
                         <SocialFeed />
-                    </>}
+                    </>
                 </MainWrapper>
         </ContentWrapper>
     );

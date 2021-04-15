@@ -2,6 +2,8 @@ import React from 'react';
 import CryptoCard from '../../../shared/card/crypto-card/CryptoCard';
 import { ContentWrapper } from './PossessionElements';
 
+import { sortArrayOfObjByLargetsNumber } from '../../../shared/functions/ArrayManipulationFuncs'
+
 import { useSelector } from 'react-redux';
 
 const PossessionCrypto = ({ cryptoPossesionState }) => {
@@ -12,13 +14,17 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
         (state) => state.PossessionCrypto
     );
 
+    sortArrayOfObjByLargetsNumber(FetchedCryptoValues, 'amount')
+
+    console.log(PossessionCrypto.reverse())
+
     return (
         <>
             <ContentWrapper>
                 <h1>Possession cryptocurrencies</h1>
                 <div>
                     {FetchedCryptoValues.length > 0 ? (
-                        FetchedCryptoValues.map((item, index) => {
+                        FetchedCryptoValues.reverse().map((item, index) => {
                             return (
                                 <CryptoCard
                                     key={index}

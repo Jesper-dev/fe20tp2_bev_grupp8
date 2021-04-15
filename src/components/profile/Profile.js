@@ -147,18 +147,21 @@ const Profile = () => {
         <ContentWrapper>
             <HeaderWrapper>
                 <section>
-                    <div style={{gap: '0.3rem'}}>
-                        <h2>{username}</h2>
-                        {chosenEmoji ? (
-                            <span
-                                className="emoji"
-                                onClick={() => setShowEmoji(!showEmoji)}
-                            >
-                                {chosenEmoji.emoji}
-                            </span>
-                        ) : (
-                            <span>+</span>
-                        )}
+                    <div className="first-wrapper">
+                        <div className="name-emoji">
+                            <h2>{username}</h2>
+                            {chosenEmoji ? (
+                                <span
+                                    className="emoji"
+                                    onClick={() => setShowEmoji(!showEmoji)}
+                                >
+                                    {chosenEmoji.emoji}
+                                </span>
+                            ) : (
+                                <span>+</span>
+                            )}
+                        </div>
+                        <AchievmentsBoard />
                     </div>
                     <div className="main-wrapper">
                     <div>
@@ -220,7 +223,7 @@ const Profile = () => {
                             </ProfileSettingsBtn>
                         </div>
                     </div>
-                    <AchievmentsBoard />
+
                     {/* <div className="achievments-wrapper">
                         <p>
                             {millionaire ? (

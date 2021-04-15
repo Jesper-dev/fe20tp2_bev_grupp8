@@ -37,7 +37,7 @@ export const SearchBarElement = styled.form`
 		}
 
 		&::-webkit-search-cancel-button {
-			display: none;
+			//display: none;
 		}
 
         &:focus, &.not-empty {

@@ -1,4 +1,4 @@
-import React from 'react'; //changed!
+import React, { useEffect, useCallback }from 'react'; //changed!
 
 import { SearchBarElement } from './SearchBarElements';
 import { filterUsers } from '../../../redux/actions';
@@ -10,11 +10,14 @@ const SearchBar = ({ onSearchedStock }) => {
     const users = useSelector((state) => state.Users);
     let newArray = [];
     let searchTerm;
+
+
+
     //*Function: searching for users
-    const onFilterUsers = (e) => {
+    const onFilterUsers = (e) => {//useCallback((e) => {
         newArray = [];
 
-        e.preventDefault();
+        //e.preventDefault();
         searchTerm = e.target.value.toLowerCase();
         console.log(searchTerm)
         newArray = users.filter((item) =>
@@ -30,9 +33,20 @@ const SearchBar = ({ onSearchedStock }) => {
             e.target.classList.add('not-empty');
         } else {
             e.target.classList.remove('not-empty');
+            //form.reset();
 
         }
-    };
+    };//, [])
+
+/*     useEffect(() => {
+
+        window.addEventListener("mousedown", onFilterUsers);
+
+        return () => {
+          window.removeEventListener("mousedown", onFilterUsers);
+        };
+      }, []); */
+
 
     return (
         <SearchBarElement>

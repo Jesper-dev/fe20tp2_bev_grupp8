@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { FirebaseContext } from '../firebase/context';
 import { ContentWrapper } from './SocialPostElements';
+import * as ROUTES from "../../constants/routes";
+import {Link} from "react-router-dom";
 // import 'firebase/database';
 // import { withAuthorization } from '../session';
 
@@ -114,15 +116,16 @@ const SocialPost = () => {
         });
 
         if (postData) {
+            const toast = document.querySelector(".toast");
             writeNewPost(userData.uid, userData.username, profilePic, postData);
             /*userPostsArr.push(postObj);
             updateData(userPostsArr); */
             setPostData('');
             document.querySelector('textarea').classList.remove('not-empty');
 
-            document.querySelector('.toast').style.transform = 'scale(1)';
+            toast.style.transform = 'scale(1)';
             setTimeout(() => {
-                document.querySelector('.toast').style.transform = 'scale(0)';
+                toast.style.transform = 'scale(0)';
             }, 2500);
         }
         addToRecentPost(userData.uid, userData.username, profilePic, postData);
@@ -174,6 +177,7 @@ const SocialPost = () => {
             </label>
             <p className="toast" style={{ transform: 'scale(0)' }}>
                 Posted successfully!
+                <Link to={ROUTES.PROFILE_WALL}>Show post</Link>
             </p>
         </ContentWrapper>
     );

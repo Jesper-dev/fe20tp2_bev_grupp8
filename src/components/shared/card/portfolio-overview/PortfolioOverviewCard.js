@@ -4,6 +4,7 @@ import {
     PortfolioTopbarWrapper,
 } from './PortfolioOverviewCardElements';
 
+import DistributionPortfolioChart from '../../../profile/profile-portfolio/profile-possession-chart/ProfilePossessionChart'
 // import { ContentWrapper as AnotherWrapper } from '../../homepage-custom-sections/HomepageComponentsElements.js';
 import { useSelector } from 'react-redux';
 
@@ -20,81 +21,23 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
     ).toFixed(2);
 
     return (
-        <>
-            <PortOverviewWrapper>
-                <header>
-                    <h2>
-                        <i className="fas fa-wallet"></i> My Wallet
-                    </h2>
-                    {/*       <article>
-                        <h2>Aviable cash</h2>
-                        <h3>{total}$</h3>
-                    </article> */}
-                    <span className="total">
-                        {/*            <span
-                            className="percent"
-                            style={
-                                15 > 0
-                                    ? { color: '#58D7AC' }
-                                    : { color: '#DD577D' }
-                            }
-                        >
-                            {15}%
-                        </span> */}
-                        <i
-                            className="fas fa-chevron-down"
-                            onClick={() => setToggleOpen(!toggleOpen)}
-                        ></i>
-                    </span>
-
-                    {/*            {toggleOpen ? (
-                        <>
-                            <article>
-                                <h2>Total assets</h2>
-                                <h3>{994545}$</h3>
-                            </article>
-
-                            <article>
-                                <h2>Crypto value</h2>
-                                <h3>{994545}$</h3>
-                            </article>
-
-                            <article>
-                                <h2>Security value</h2>
-                                <h3>{994545}$</h3>
-                            </article>
-                        </>
-                    ) : null} */}
-
-                    {/*   Cash: <span>{total}$</span> */}
-                    {/*        Crypto: <span>{cryptovalue.toFixed(2)}$</span>
-                    Securities: <span>{stockvalue.toFixed(2)}$</span> */}
-                    {/*  Total assets: <span>{totalAssets}$</span> */}
-                </header>
-            </PortOverviewWrapper>
-            <PortfolioTopbarWrapper>
-                <div className="quick-cards-wrapper">
+        <PortOverviewWrapper>
+            <summary>
+                <h1><i className="fas fa-wallet"></i> Wallet</h1>
+                <div>
                     <article>
                         <h2>Total assets</h2>
                         <h3>{totalAssets}$</h3>
                     </article>
-                    {/*           <article>
-                        <h2>Crypto value</h2>
-                        <h3>{TotalCrypto}$</h3>
-                    </article>
-                    <article>
-                        <h2>Security value</h2>
-                        <h3>{TotalStocks}$</h3>
-                    </article> */}
                     <article>
                         <h2>Change</h2>
                         <h3
                             style={
                                 percent >= 0
-                                    ? { color: 'var(--lighter-green)' }
-                                    : { color: 'var(--lighter-red)' }
+                                ? { color: 'var(--lighter-green)' }
+                                : { color: 'var(--lighter-red)' }
                             }
-                        >
+                            >
                             {/* {!Infinity ? 'Loading' : change.toFixed(2)}% */}
                             {15}%
                         </h3>
@@ -104,8 +47,10 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
                         <h3>{2550}$</h3>
                     </article>
                 </div>
-            </PortfolioTopbarWrapper>
-        </>
+            </summary>
+            <DistributionPortfolioChart />
+        </PortOverviewWrapper>
+
     );
 };
 
