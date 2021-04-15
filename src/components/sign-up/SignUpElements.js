@@ -94,7 +94,7 @@ export const ContentWrapper = styled.div`
             transition: all 1s ease-in-out;
 
             border: ${props => props.partOfOrg ? '0.09375rem solid  #58D7AC' : '0.09375rem solid #c8c8c8'};
-            box-shadow: ${props => props.partOfOrg ? '0 0 0 0.1875rem limegreen' : 'none'};
+            box-shadow: ${props => props.partOfOrg ? '0 0 0 0.1875rem  rgba(88, 215, 172, 0)' : 'none'};
           /*   border-color: var(--third); */
             /* box-shadow: 0 0 0 0.1875rem #ddeafd; */
         }
