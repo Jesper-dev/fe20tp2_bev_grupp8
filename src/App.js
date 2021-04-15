@@ -21,6 +21,7 @@ import PageNotFound from './components/404/PageNotFound';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
 import OrganizationSettings from './components/profile/profile-dashboard/admin/OrganizationSettings';
+import ProfileAchievments from './components/profile/profile-achievments/ProfileAchievments';
 import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -30,6 +31,7 @@ import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
 
 import { setOrgColor } from './components/shared/functions/colorTheme';
+
 
 const App = () => {
     const firebase = useContext(FirebaseContext);
@@ -135,6 +137,11 @@ const App = () => {
                         <OrganizationSettings />
                         <NavbarLeft />
                         <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.PROFILE_ACHIEVMENTS}>
+                        <ProfileAchievments />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
                     </Route>
                     <Route component={PageNotFound} />
                 </Switch>
