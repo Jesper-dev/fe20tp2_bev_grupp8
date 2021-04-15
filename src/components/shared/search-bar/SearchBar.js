@@ -30,7 +30,6 @@ const SearchBar = ({ onSearchedStock }) => {
             e.target.classList.add('not-empty');
         } else {
             e.target.classList.remove('not-empty');
-            newArray = [null];
             
         }
     };

@@ -17,8 +17,6 @@ export const CardWrapper = styled.article`
 
     &:hover {
         box-shadow: var(--box-shadow-cards-hover);
-        /*     background-color: rgb(232, 232, 232, 0.5); */
-        /*       color: red; */
     }
 
     .lv-coin {
