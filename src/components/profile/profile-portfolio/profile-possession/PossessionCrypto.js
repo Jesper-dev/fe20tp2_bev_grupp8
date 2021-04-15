@@ -16,7 +16,6 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
 
     sortArrayOfObjByLargetsNumber(FetchedCryptoValues, 'amount')
 
-    console.log(PossessionCrypto.reverse())
 
     return (
         <>

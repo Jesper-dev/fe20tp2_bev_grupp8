@@ -108,7 +108,7 @@ const ProfilePortfolio = () => {
                 stockvalue={valueStocks}
                 cryptovalue={valueCrypto}
             />
-            <DistributionPortfolioChart currency={currency} />
+         {/*    <DistributionPortfolioChart currency={currency} /> */}
             <Possession stocksPossesionState={stocksPossesionState} />
             <PossessionCrypto cryptoPossesionState={cryptoPossesionState} />
         </>
