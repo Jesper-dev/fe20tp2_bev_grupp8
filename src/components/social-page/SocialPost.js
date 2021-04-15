@@ -161,14 +161,14 @@ const SocialPost = () => {
                         rx="0.75"
                         fill="black"
                         stroke="black"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                     />
                     <path
                         d="M7.75 12.25L10.75 15.25L16.75 9.25"
                         stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                     />
                 </svg>
             </label>

@@ -9,6 +9,7 @@ const SocialFeed = () => {
     const [followingPostsList, setFollowingPostsList] = useState([]);
     const [mounted, setMounted] = useState(true);
 
+	const [recentPosts, setRecentPosts] = useState([]);
     const [hotPosts, setHotPosts] = useState([]);
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const SocialFeed = () => {
         // 	}
         // });
 
+		// get all posts
         firebase.posts().on('value', (snapshot) => {
             const data = snapshot.val();
             let dataArray = [];
@@ -41,13 +43,39 @@ const SocialFeed = () => {
                 dataArray.push(obj);
             }
 
-            dataArray.sort(
+			// get list of people you follow
+			let usernameArray = [];
+			let followingArray = [];
+
+			firebase.user(userData.uid).child("following").once("value", snapshot => {
+				usernameArray = Object.values(snapshot.val()).map(obj => obj.username);
+			});
+
+			dataArray.forEach(obj => {
+				if (usernameArray.some(el => obj.postData.username.includes(el))) {
+					followingArray.push(obj);
+				}		
+			});
+
+			// get recent posts from people you follow (last 24hours)
+			let recentPostsArray = [];
+
+			followingArray.forEach(obj => {
+				if (Date.now() - obj.postData.timestamp <= 86400000) {
+					recentPostsArray.unshift(obj);
+				}
+			});
+
+			setRecentPosts(recentPostsArray);
+
+			// get most liked posts globablly
+			const hotPostsArray = dataArray.sort(
                 (obj1, obj2) =>
                     obj2.postData.likedUsers.length -
                     obj1.postData.likedUsers.length
             );
 
-            setHotPosts(dataArray.slice(0, 5));
+            setHotPosts(hotPostsArray.slice(0, 5));
         });
 
         return () => {
@@ -142,7 +170,7 @@ const SocialFeed = () => {
 
     return (
         <>
-            <Wrapper>
+{/*             <Wrapper>
                 <h1>Recent posts from people you follow</h1>
                 {followingPostsList
                     ? followingPostsList.map((item, index) => {
@@ -159,6 +187,31 @@ const SocialFeed = () => {
                           );
                       })
                     : 'Follow people to see their posts!'}
+            </Wrapper> */}
+			<Wrapper>
+                <h1>Recent posts</h1>
+                {recentPosts
+                    ? recentPosts.map((obj, index) => {
+                          return (
+                              <UserPostCard
+                                  key={index}
+                                  postId={obj.postId}
+                                  username={obj.postData.username}
+                                  content={obj.postData.content}
+                                  timestamp={obj.postData.timestamp}
+                                  likeCount={obj.postData.likeCount}
+                                  liked={
+                                      obj.postData.likedUsers.includes(
+                                          userData.uid
+                                      )
+                                          ? true
+                                          : false
+                                  }
+                                  picture={obj.postData.picture}
+                              />
+                          );
+                      })
+                    : 'No recent posts'}
             </Wrapper>
             <Wrapper>
                 <h1>Hot posts</h1>
