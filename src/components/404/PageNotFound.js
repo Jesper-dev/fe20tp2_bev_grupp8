@@ -1,11 +1,17 @@
 import React from 'react'
+import BackButton from '../shared/button/back-button/BackButton'
+import {ContentWrapper} from './PageNotFoundElements'
 
 const error = () => {
     return (
-        <div>
+        <ContentWrapper>
+            <BackButton />
+            <div>
             <h1>Ooops, something went wrong... Sorry.</h1>
-            <p>(404 error)</p>
-        </div>
+            <h3>(404 error)</h3>
+            </div>
+
+        </ContentWrapper>
     )
 }
 
