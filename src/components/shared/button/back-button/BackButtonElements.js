@@ -19,8 +19,8 @@ export const BackButtonElement = styled.button`
         background-color: #e8e8e8;
     }
 
-    @media screen and (min-width: 1000px) {
+    /* @media screen and (min-width: 1000px) {
         transform: scale(0);
-    }
+    } */
 
 `

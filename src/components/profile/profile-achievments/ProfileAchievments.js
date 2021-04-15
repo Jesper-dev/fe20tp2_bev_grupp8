@@ -1,10 +1,14 @@
 import React from 'react'
+import {ContentWrapper} from './ProfileAchievmentsElements'
 
 const ProfileAchievments = () => {
     return (
-        <div>
-            <h1>This is the profile achievments page</h1>
-        </div>
+        <ContentWrapper>
+            <h1>Achievments</h1>
+            <div className="achievments-wrapper">
+
+            </div>
+        </ContentWrapper>
     )
 }
 

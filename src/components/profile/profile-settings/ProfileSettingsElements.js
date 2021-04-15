@@ -7,6 +7,10 @@ export const ButtonWrapper = styled.div`
 	gap: 1rem;
 	margin-bottom: 1rem;
 
+	.primary{
+		color: black;
+	}
+
 	.delete-account-btn {
 		padding: 0.75rem 1rem;
 		border: 0.125rem solid red;

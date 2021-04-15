@@ -12,6 +12,7 @@ export const PROFILE = '/profile';
 export const PROFILE_WALL = '/profile/wall';
 export const PROFILE_DASHBOARD = '/profile/dashboard';
 export const PROFILE_SETTINGS = '/profile/settings';
+export const PROFILE_ACHIEVMENTS = '/profile/achievments';
 export const ADMIN_SETTINGS = '/profile/admin-settings';
 
 export const INFO_CRYPTO = '/info/crypto/:id';

@@ -7,6 +7,7 @@ import ContentWrapper from '../../shared/wrappers/ContentWrapper';
 import ProfileImgChoose from './profile-img/ProfileChooseImg';
 import CustomizeHomepage from './customize-homepage/CustomizeHomepage';
 import SignOutButton from '../../sign-out/SignOut';
+import { ButtonPrimary } from '../../shared/button/ButtonElements'
 
 import * as ROUTES from '../../../constants/routes';
 import { FirebaseContext } from '../../firebase/context';
@@ -48,6 +49,7 @@ const ProfileSettings = () => {
             <ProfileImgChoose />
             <CustomizeHomepage />
             <ButtonWrapper>
+                <ButtonPrimary className="primary" to={ROUTES.PROFILE_ACHIEVMENTS}>Achievments</ButtonPrimary>
                 <SignOutButton />
                 <button className="delete-account-btn " onClick={deleteAccount}>Delete account</button>
             </ButtonWrapper>
