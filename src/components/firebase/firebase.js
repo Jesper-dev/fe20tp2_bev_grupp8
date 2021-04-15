@@ -132,6 +132,27 @@ class Firebase {
                 let data = snapshot.val();
                 return data;
             });
+    snapshotGeneral = (path) =>
+        this.db
+            .ref()
+            .once('value')
+            .then(function (snapshot) {
+                let data = snapshot.val();
+                return data;
+            });
+    snapshotGeneralToArray = (path) =>
+        this.db
+            .ref()
+            .once('value')
+            .then(function (snapshot) {
+                let arr = [];
+                let data = snapshot.val();
+                for (const key in data) {
+                    arr.push({ ...data[key] });
+                }
+                return arr;
+            });
+
     snapshotToArr = (uid, path) =>
         this.db
             .ref(`users/${uid + path}`)

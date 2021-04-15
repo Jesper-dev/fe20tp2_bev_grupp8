@@ -15,7 +15,8 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-    partOfOrg: 0, // why not just default to true
+    // partOfOrg: 0, // why not just default to true?
+    partOfOrg: false, // why not just default to true?
     usernameTaken: false,
     username: '',
     organization: '',
@@ -149,11 +150,36 @@ class SignUpFormBase extends Component {
             });
     };
 
-    componentDidMount = () => {
-        /*   console.log('hello') */
-        const activeOrganizationsFirebase = this.props.firebase.db.ref(
+    checkIfPartOfOrg = (str) => {
+    
+   /*      const companysRef = this.props.firebase.db.ref('list');
+
+
+        console.log(companysRef)
+
+        companysRef.once('value', function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                let childkey = childSnapshot.key;
+                let childData = childSnapshot.val();
+                console.log(childData)
+            })
+        }) */
+
+        // companysRef
+        // .orderByChild('/emails/list')
+        // .equalTo(str)
+        // .on('child_added', () => {
+        //     console.log('Email exists!!!');
+        //   /*   this.setState({ usernameTaken: true }); */
+        // });
+    
+    }
+
+    componentDidMount = async () => {
+        const activeOrganizationsFirebase = await this.props.firebase.admin(
             'organizations/'
         );
+    
 
         activeOrganizationsFirebase.on('value', (snapshot) => {
             activeOrganizations = snapshot.val();
@@ -163,6 +189,7 @@ class SignUpFormBase extends Component {
                 activeOrganizationsName.push({ key });
             }
         });
+        console.log(activeOrganizationsName)
     };
 
     onSubmit = (event) => {
@@ -342,6 +369,10 @@ class SignUpFormBase extends Component {
             // It has any kind of whitespace
             // göra error
             return;
+        }
+
+        if(event.target.type == 'email'){
+            this.checkIfPartOfOrg(event.target.value)
         }
 
         // console.log(event.target.value)
