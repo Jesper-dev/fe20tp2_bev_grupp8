@@ -15,6 +15,13 @@ export const CardWrapper = styled.article`
     background-color: ${({ i }) =>
         i % 2 === 0 ? 'var(--body)' : 'var(--body-third)'};
 
+    cursor: pointer;
+
+    &:hover > a > span > i {
+        transition: color 250ms ease-in-out;
+      color: var(--clr-primary);
+    }
+
     img {
         width: 20px;
     }

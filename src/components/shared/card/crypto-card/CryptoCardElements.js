@@ -14,6 +14,7 @@ export const CardWrapper = styled.article`
     min-height: 3rem;
     background: var(--body);
     cursor: pointer;
+    transition: box-shadow 180ms ease-in-out;
 
     &:hover {
         box-shadow: var(--box-shadow-cards-hover);

@@ -21,6 +21,8 @@ import TabBar from '../shared/tab-bar/TabBar';
 import MostBougthStocks from '../shared/custom-sections/MostBoughtStocks';
 import MostBougthCrypto from '../shared/custom-sections/MostBoughtCrypto';
 
+import FetchAllCrypto from '../../api/user-api-components/FetchAllCrypto'
+
 import { useSelector } from 'react-redux';
 
 const Discover = () => {
@@ -46,6 +48,7 @@ const Discover = () => {
 
     return (
         <ContentWrapper>
+            <FetchAllCrypto />
             <HeaderWrapper>
                 <DiscoverSearch />
                 {!Searching ? <TabBar tabs={tabs} /> : null}
