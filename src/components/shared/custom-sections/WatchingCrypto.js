@@ -104,6 +104,9 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
 
     const findIndex = (item) => {
         let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.id == item.id)]
+  /*       if(index == -1 ){
+            return index = 0
+        } */
         return index
     }
 
@@ -114,7 +117,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
             {watching.map((item, index) => {
                 return (
                     <>
-                    {!FetchedCryptoList ? null : (
+                    {FetchedCryptoList.length > 0 || watching.length > 0 ? null : (
 <>
                         {item.name == 'lets-vest-Cry' ? (
                             <CryptoCard

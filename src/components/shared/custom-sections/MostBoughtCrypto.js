@@ -81,18 +81,22 @@ const findIndex = (item) => {
                 <i className="fas fa-fire-alt" style={{ color: 'orange' }}></i>
             </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
-            {orgBoughtData.map((item, index) => {
-                return (
-                    <CryptoCard
+            {!FetchedCryptoList.length > 0 || !orgBoughtData.length > 0 ? null : (
+<>
+                {orgBoughtData.map((item, index) => {
+                    return (
+                        <CryptoCard
                         key={index}
                         name={findIndex(item).name}
                         symbol={findIndex(item).symbol}
                         price={findIndex(item).current_price}
                         percent={findIndex(item).price_change_percentage_24h}
                         img={findIndex(item).image}
-                    />
-                );
-            })}
+                        />
+                        );
+                    })}
+                    </>
+                    ) }
         </SectionWrapper>
     );
 };

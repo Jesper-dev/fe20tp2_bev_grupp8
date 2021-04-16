@@ -57,7 +57,8 @@ const FetchAllStocks = () => {
                 await axios
                     .request(options)
                     .then(function (response) {
-                        console.log(response.data.quoteResponse.result);
+                  /*       let res = response.data.quoteResponse.result */
+            /*             console.log(response.data.quoteResponse.result); */
                         dispatch(setFetchedStockList(response.data.quoteResponse.result))
                     })
                     .catch(function (error) {

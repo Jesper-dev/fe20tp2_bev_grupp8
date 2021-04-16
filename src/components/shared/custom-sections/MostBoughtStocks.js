@@ -75,14 +75,22 @@ const MostBoughtStocks = () => {
             reducedArray.reverse().splice(3, reducedArray.length);
 
             setOrgBoughtData(reducedArray);
+
+            
         }
     };
 
+    console.log(orgBoughtData)
     const findIndex = (item) => {
-    console.log(item)
         let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
+        if(index == -1 ){
+            return index = 0
+        }
+        console.log(orgBoughtData)
+
         return index
     }
+
 
     return (
         <SectionWrapper>
@@ -91,16 +99,22 @@ const MostBoughtStocks = () => {
                 <i className="fas fa-fire-alt" style={{ color: 'orange' }}></i>
             </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
-            {orgBoughtData.map((item, index) => {
-                return (
-                    <StockCard
+            {!FetchedStockList.length > 0 || !orgBoughtData.length > 0 ? null : (
+<>
+                {orgBoughtData.map((item, index) => {
+                    return (
+                        <StockCard
                         key={index}
                         name={findIndex(item).symbol}
                         shortname={findIndex(item).shortName}
-                        /*        amount={item.amount} */
-                    />
-                );
-            })}
+                        cost={findIndex(item).regularMarketPrice}
+                        percent={findIndex(item).regularMarketChangePercent}
+                     /*           amount={item.amount} */
+                        />
+                        );
+                    })}
+</>                    
+                    )}
         </SectionWrapper>
     );
 };
