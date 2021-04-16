@@ -117,7 +117,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
             {watching.map((item, index) => {
                 return (
                     <>
-                    {FetchedCryptoList.length > 0 || watching.length > 0 ? null : (
+                    {!FetchedCryptoList.length > 0 || !watching.length > 0 ? null : (
 <>
                         {item.name == 'lets-vest-Cry' ? (
                             <CryptoCard
