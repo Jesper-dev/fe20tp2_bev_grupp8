@@ -139,12 +139,15 @@ const StockInformationPage = () => {
             ) : (
                 <ContentWrapper>
                     <BackButton />
+                    <div className="container">
                     <div className="stockinfo-map-wrapper">
                         <h1>
                             {stockData.quoteType.shortName
                                 ? stockData.quoteType.shortName
                                 : stockData.quoteType.longName}
                         </h1>
+                        
+                        <div>
                         <div className="chart-topbar-wrapper">
                             <TradeBtns to={`/trade/${stockData.symbol}`}>
                                 TRADE
@@ -162,9 +165,8 @@ const StockInformationPage = () => {
                                 <i className="far fa-eye"></i>
                             </WatchStockButton>
                         </div>
-
                         <LineChart />
-
+                        </div>
                         <div className="informationContainer">
                             <p>{stockData.symbol}</p>
                             <p>
@@ -190,11 +192,9 @@ const StockInformationPage = () => {
                             <p>
                                 {stockData.summaryProfile.longBusinessSummary}
                             </p>
-                            {/*       <p className="holds-in-share">
-                                Your holding in this share is:{' '}
-                                {clickedStock.amount ? clickedStock.amount : 0}
-                            </p> */}
-                        </div>
+                            </div>
+                            
+                            </div>
                     </div>
                 </ContentWrapper>
             )}

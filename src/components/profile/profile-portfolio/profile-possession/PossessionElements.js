@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.section`
-    margin: auto;
-    width: 100%;
-    max-width: 40rem;
+    flex: 1;
+    margin: 0 auto;
     text-align: center;
 
 
@@ -12,8 +11,8 @@ export const ContentWrapper = styled.section`
         flex-direction: column;
         gap: 1.25rem;
         max-height: 30vh;
-        overflow: auto;
-        scrollbar-width: thin;
+      /*   overflow: auto;
+        scrollbar-width: thin; */
 
         &::-webkit-scrollbar {
             width: 10px;
@@ -30,6 +29,7 @@ export const ContentWrapper = styled.section`
     ::-webkit-resizer — the draggable resizing handle that appears at the bottom corner of some elements.
 */
     h1 {
-        margin: 2rem 0 0.75rem 0;
+        margin: 1.5rem 0 1rem 0;
+        white-space: nowrap;
     }
 `;

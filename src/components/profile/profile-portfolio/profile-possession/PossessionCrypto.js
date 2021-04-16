@@ -30,6 +30,7 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
                                     img={item.image}
                                     amount={item.amount}
                                     name={item.name}
+                                    id={item.name}
                                     percent={item.usd_24h_change}
                                     price={item.usd}
                                     cost={item.price * item.amount}

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const ContentWrapper = styled.div`
-    min-height: 100vh;
+export const MainWrapper = styled.main`
+    /* min-height: 100vh; */
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     background-color: var(--body-secondary);
-    margin-bottom: 56px;
-    width: 100%;
+    /* margin-bottom: 56px; */
+    /* width: 100%; */
 
     .information-wrapper {
         width: 90vw;

@@ -398,6 +398,10 @@ class SignUpFormBase extends Component {
             // göra error
             return;
         }
+        const pattern = /[^A-Za-z0-9]/;
+        if(pattern.test(event.target.value)) {
+            return;
+        }
 
         if(event.target.type == 'email'){
             this.checkIfPartOfOrg(event.target.value)

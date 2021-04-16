@@ -140,9 +140,9 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
                 })} */}
                 <GenericVestBtn
             onClick={() => loadStocks(initArr, firstArr)}
-            pad='8px'
+            pad='4px'
             border='1px solid black'
-            br='10px'
+            br='40px'
             bg='var(---clr-primary)'
             co='var(---clr-secondary)'
             wid='10%'

@@ -11,32 +11,6 @@ export const ContentWrapper = styled.div`
         width: 40%;
     }
 
-
-
-    .toast {
-        position: absolute;
-        right: 50;
-        left: 50;
-        bottom: 5rem;
-        border-radius: 0.25rem;
-        box-shadow: var(--box-shadow-cards);
-        margin: auto;
-        width: 20rem;
-        height: 2.75rem;
-        line-height: 2.75rem;
-        background-color: blue;
-        color: var(--clr-almost-white);
-        font-weight: 500;
-        text-align: center;
-        transition: transform 150ms linear;
-
-        a {
-            margin-left: 0.5rem;
-            color: var(--clr-almost-white);
-        }
-    }
-
-
 `
 
 export const AchievmentsCardWrapper = styled.article`

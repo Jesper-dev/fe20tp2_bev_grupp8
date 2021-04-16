@@ -13,9 +13,13 @@ import { ContentWrapper } from '../comp-hottest-stocks/CompHottestStocksElements
 
 import { FirebaseContext } from '../../firebase/context';
 
+import { useSelector } from 'react-redux'
+
 const CompHottestCrypto = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
+
+    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
 
     const [stockData, setStockData] = useState(null);
     const [hottestStocks, setHottestStocks] = useState(null);
@@ -46,6 +50,12 @@ const CompHottestCrypto = () => {
 
         setHottestStocks(reducedArray);
     }, [stockData]);
+
+
+    const findIndex = (item) => {
+        let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]
+        return index
+    }
     return (
         <>
             <ContentWrapper>
@@ -63,12 +73,13 @@ const CompHottestCrypto = () => {
                             {hottestStocks.map((item, i) => {
                                 return (
                                     <CryptoCardSmall
-                                        key={i}
-                                        i={i}
-                                        name={item.symbol}
-                                        price={20}
-                                        percent={20}
-                                        img={"https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579"}
+                                    key={i}
+                                    i={i}
+                                    name={findIndex(item).name}
+                                    symbol={findIndex(item).symbol}
+                                    price={findIndex(item).current_price}
+                                    percent={findIndex(item).price_change_percentage_24h}
+                                    img={findIndex(item).image}
                             
                                     />
                                 );

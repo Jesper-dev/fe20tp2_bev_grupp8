@@ -29,7 +29,7 @@ const ProfileAchievments = () => {
             <h1>Achievments</h1>
             {loading  ? 'loading...' : <div className="achievments-wrapper">
                 {achData ? achData.map((item, index) => {
-                    return <AchievmentsCard key={index} name={item.name} desc={item.desc} done={item.done} id={item.id}/>
+                    return <AchievmentsCard key={index} name={item.name} desc={item.desc} done={item.done} id={item.id} show={item.show}/>
                 }) : ''}
 
             </div>}

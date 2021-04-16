@@ -149,3 +149,10 @@ export const setTotalStocks = (value) => {
         payload: value,
     };
 };
+
+export const setFetchedCryptoList = (cryptos) => {
+    return {
+        type: 'CRYPTOLIST',
+        payload: cryptos,
+    };
+};

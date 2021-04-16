@@ -8,9 +8,9 @@ import CryptoChart from './crypto-chart/CryptoChart';
 
 //import { setFollowingCrypto } from '../../redux/actions'; //remove?
 //import { useDispatch } from 'react-redux'; //remove?
-
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import {
-    ContentWrapper,
+    MainWrapper,
     DescriptionWrapper,
 } from './CryptoInformationPageElements';
 import { FirebaseContext } from '../firebase/context';
@@ -97,13 +97,13 @@ const CryptoInformationPage = ({ symbol }) => {
             console.log('Hit kommer vi');
             firebase
                 .user(user.uid)
-                .child(`/followingCrypto/${cryptoData.name}`)
+                .child(`/followingCrypto/${cryptoData.id}`)
                 .remove();
             if (user.organization) {
                 firebase
                     .organization(user.organization)
                     .child(
-                        `/users/${user.uid}/followingCrypto/${cryptoData.name}`
+                        `/users/${user.uid}/followingCrypto/${cryptoData.id}`
                     )
                     .remove();
             }
@@ -159,107 +159,70 @@ const CryptoInformationPage = ({ symbol }) => {
     }
 
     return (
-        <>
+        <ContentWrapper>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ContentWrapper>
-                    <CryptoChart
-                        id={cryptoData ? cryptoData.id : 'bitcoin'}
-                        img={cryptoData ? cryptoData.image.large : ''}
-                        name={cryptoData ? cryptoData.name : ''}
-                        onFollow={onFollow}
-                        onChange={onChange}
-                        checked={checked}
-                        symbol={cryptoData.symbol}
-                    />
-                    <div className="information-wrapper">
-                        <p>
-                            Current Price:{' '}
-                            {cryptoData.market_data.current_price.usd
-                                ? cryptoData.market_data.current_price.usd.toLocaleString()
-                                : ''}
-                            $
-                        </p>
+            <MainWrapper>
+                <CryptoChart
+                    id={cryptoData ? cryptoData.id : 'bitcoin'}
+                    img={cryptoData ? cryptoData.image.large : ''}
+                    name={cryptoData ? cryptoData.name : ''}
+                    onFollow={onFollow}
+                    onChange={onChange}
+                    checked={checked}
+                    symbol={cryptoData.symbol}
+                />
+                <div className="information-wrapper">
+                    <p>
+                        Current Price:{' '}
+                        {cryptoData.market_data.current_price.usd
+                        ? cryptoData.market_data.current_price.usd.toLocaleString()
+                        : ''}
+                        $
+                    </p>
 
-                        <p>
-                            {' '}
-                            Total Volume:{' '}
-                            {cryptoData.market_data.total_volume.usd
-                                ? cryptoData.market_data.total_volume.usd.toLocaleString()
-                                : ''}{' '}
-                        </p>
+                    <p>
+                        {' '}
+                        Total Volume:{' '}
+                        {cryptoData.market_data.total_volume.usd
+                        ? cryptoData.market_data.total_volume.usd.toLocaleString()
+                        : ''}{' '}
+                    </p>
 
-                        <p>
-                            {' '}
-                            Price Change 24h:{' '}
-                            {cryptoData.market_data.price_change_percentage_24h.toFixed(
-                                2
-                            )}
-                            %{' '}
-                        </p>
+                    <p>
+                    {' '}
+                        Price Change 24h:{' '}
+                        {cryptoData.market_data.price_change_percentage_24h.toFixed(
+                        2
+                        )}
+                        %{' '}
+                    </p>
 
-                        <p>
-                            {' '}
-                            Total Supply:{' '}
-                            {cryptoData.market_data.total_supply
-                                ? cryptoData.market_data.total_supply.toLocaleString()
-                                : 0}
-                        </p>
+                    <p>
+                        {' '}
+                        Total Supply:{' '}
+                        {cryptoData.market_data.total_supply
+                        ? cryptoData.market_data.total_supply.toLocaleString()
+                        : 0}
+                    </p>
 
-                        <p>
-                            {' '}
-                            Market Cap Rank:{' '}
-                            {cryptoData.market_data.market_cap_rank}
-                        </p>
+                    <p>
+                        {' '}
+                        Market Cap Rank:{' '}
+                        {cryptoData.market_data.market_cap_rank}
+                    </p>
 
-                        <h2>About {cryptoData.name}</h2>
-                        <DescriptionWrapper
-                            onClick={() => setDescClicked(!descClicked)}
-                            descClicked={descClicked}
-                            dangerouslySetInnerHTML={createMarkup()}
-                        ></DescriptionWrapper>
-                    </div>
-                </ContentWrapper>
+                    <h2>About {cryptoData.name}</h2>
+                    <DescriptionWrapper
+                        onClick={() => setDescClicked(!descClicked)}
+                        descClicked={descClicked}
+                        dangerouslySetInnerHTML={createMarkup()}
+                    ></DescriptionWrapper>
+                </div>
+            </MainWrapper>
             )}
-        </>
-
-        // <ContentWrapper>
-
-        //     <CryptoChart
-        //         id={chosenCrypto[0] ? chosenCrypto[0].id : 'bitcoin'}
-        //         img={chosenCrypto[0] ? chosenCrypto[0].image : ''}
-        //         name={chosenCrypto[0] ? chosenCrypto[0].name : ''}
-        //         onFollow={onFollow}
-        //         /* onChange={onChange}
-        //         checked={checked} */
-        //     />
-        //     {chosenCrypto.map((item, index) => {
-        //         return (
-        //             <div className="information-wrapper" key={index}>
-        //                 {/* <h1>{item.name}</h1>
-        //                 <div className="imgWrapper">
-        //                     <img src={item.image} alt="logo of the crypto" />
-        //                 </div> */}
-        //                 <p>Current Price: {item.current_price.toLocaleString()}$</p>
-        //                 <p>
-        //                     Total Volume: {item.total_volume.toLocaleString()}
-        //                 </p>
-        //                 <p>
-        //                     Price Change 24h:{' '}
-        //                     {item.price_change_percentage_24h.toFixed(2)}%
-        //                 </p>
-        //                 <p>
-        //                     Total Supply:{' '}
-        //                     {item.total_supply
-        //                         ? item.total_supply.toLocaleString()
-        //                         : 0}
-        //                 </p>
-        //                 <p>Market Cap Rank: {item.market_cap_rank}</p>
-        //             </div>
-        //         );
-        //     })}
-        // </ContentWrapper>
+        </ContentWrapper>
     );
 };
 

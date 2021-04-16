@@ -8,6 +8,7 @@ import SectionDataIndicator from '../card/section-data-indicator/SectionDataIndi
 
 const MostBoughtCrypto = () => {
     const Users = useSelector((state) => state.Users);
+    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
 
     const [orgDataListState, setOrgDataListState] = useState([]);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
@@ -65,9 +66,15 @@ const MostBoughtCrypto = () => {
             reducedArray.reverse().splice(3, reducedArray.length);
 
             setOrgBoughtData(reducedArray);
+            console.log(reducedArray)
         }
     };
-
+/*     let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]; */
+const findIndex = (item) => {
+    let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]
+    return index
+}
+    
     return (
         <SectionWrapper>
             <h3>
@@ -79,12 +86,11 @@ const MostBoughtCrypto = () => {
                 return (
                     <CryptoCard
                         key={index}
-                        name={item.symbol}
-                        price={150}
-                        percent={299}
-                        img={
-                            'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579'
-                        }
+                        name={findIndex(item).name}
+                        symbol={findIndex(item).symbol}
+                        price={findIndex(item).current_price}
+                        percent={findIndex(item).price_change_percentage_24h}
+                        img={findIndex(item).image}
                     />
                 );
             })}

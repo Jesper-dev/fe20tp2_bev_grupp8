@@ -27,6 +27,8 @@ const FetchUserCrypto = () => {
             cryptoDataProp[cryptoPosArr[i].name]['name'] = cryptoPosArr[i].name;
             cryptoDataProp[cryptoPosArr[i].name]['image'] =
                 cryptoPosArr[i].image;
+     /*        cryptoDataProp[cryptoPosArr[i].id]['id'] =
+                cryptoPosArr[i].id; */
         }
 
         for (const key in cryptoDataProp) {

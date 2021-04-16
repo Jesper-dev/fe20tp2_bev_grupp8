@@ -141,14 +141,10 @@ export const HeaderWrapper = styled.header`
 
 export const MainWrapper = styled.main`
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 2rem 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem 2rem;
 
-    @media screen and (min-width: 1400px) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        }
 `;
 
 export const ProfileSettingsBtn = styled(Link)`

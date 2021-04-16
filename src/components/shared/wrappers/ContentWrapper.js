@@ -11,9 +11,6 @@ const ContentWrapper = styled.div`
     ); // https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/
     min-height: calc(100vh - 3.5rem);
 
-    /*     background-color: red; */
-    /* background-color: var(--clr-almost-white); */
-
     @media screen and (min-width: 1024px) {
         margin-left: calc(100vw - 100% + 14rem);
         margin-bottom: 0;

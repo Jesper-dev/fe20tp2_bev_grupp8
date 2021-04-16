@@ -7,7 +7,7 @@ import Coin from '../../../svgs/Coin';
 
 
 const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
-    console.log(id)
+
     let history = useHistory();
     const [showName, setShowName] = useState(true)
     
@@ -15,7 +15,14 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
         history.push(`/info/crypto/${id}`);
     };
 
-    let newName = name.substring(0, 3);
+
+    console.log(name)
+    const newName = () => {
+        if(!name) return
+        let newName = name.substring(0, 3);
+        return newName
+    }
+
 
     let percentInt = parseFloat(percent);
 
@@ -56,9 +63,9 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
                 ) : (
                     <img src={img ? img : ''} alt="Icon of crypto" />
                 )}
-                <span>{!showName ? newName + '...' : name}</span>
+                <span>{!showName ? newName() + '...' : name}</span>
                 {/*  <span>{name}</span> */}
-                <span>{price.toLocaleString()}$</span>
+                <span>{price ? price.toLocaleString() : 707}$</span>
                 <span
                     style={
                         percent > 0

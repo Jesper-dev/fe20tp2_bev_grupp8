@@ -12,6 +12,7 @@ import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 import AchievmentsBoard from './profile-achievments/AchievmentsBoard';
 import { fetchUserSnapshotObject } from '../shared/functions/firebase-functions';
+import FetchedCryptoList from '../../api/user-api-components/FetchAllCrypto'
 
 import { FirebaseContext } from '../firebase/context';
 import { withAuthorization } from '../session';
@@ -144,6 +145,8 @@ const Profile = () => {
     ];
 
     return (
+        <>
+        <FetchedCryptoList />
         <ContentWrapper>
             <HeaderWrapper>
                 <section>
@@ -158,7 +161,7 @@ const Profile = () => {
                                     {chosenEmoji.emoji}
                                 </span>
                             ) : (
-                                <span>+</span>
+                                <span className="emoji" onClick={() => setShowEmoji(!showEmoji)} >+</span>
                             )}
                         </div>
                         <AchievmentsBoard />
@@ -262,6 +265,7 @@ const Profile = () => {
                 />
             </MainWrapper>
         </ContentWrapper>
+        </>
     );
 };
 const condition = (authUser) => !!authUser; //if logged in is not true, send user to sign in page

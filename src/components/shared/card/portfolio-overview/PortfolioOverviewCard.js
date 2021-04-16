@@ -23,7 +23,7 @@ const PortfolioOverviewCard = ({ total, difference, percent }) => {
     return (
         <PortOverviewWrapper>
             <summary>
-                <h1><i className="fas fa-wallet"></i> Wallet</h1>
+                <h1>Wallet<i className="fas fa-chevron-right"></i></h1>
                 <div>
                     <article>
                         <h2>Total assets</h2>

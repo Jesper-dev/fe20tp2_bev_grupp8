@@ -4,6 +4,7 @@ export const CardWrapper = styled.article`
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    gap: 0.75rem;
     justify-content: space-around;
     padding: 0.5rem 0.75rem;
     border-radius: 0.25rem;

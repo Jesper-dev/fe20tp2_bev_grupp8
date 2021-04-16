@@ -11,7 +11,6 @@ import WatchingCrypto from '../shared/custom-sections/WatchingCrypto';
 import RecommendationHome from '../shared/custom-sections/Recommendation';
 import PortfolioOverview from '../shared/card/portfolio-overview/PortfolioOverviewCard';
 
-
 import MostBougthStocks from '../shared/custom-sections/MostBoughtStocks';
 import MostBougthCrypto from '../shared/custom-sections/MostBoughtCrypto';
 // import Mock from '../../api/Mock/Mock.json';
@@ -37,12 +36,14 @@ import CompanyOverviewHome from '../company-overview-home/CompanyOverviewHome';
 
 import FetchUserCrypto from '../../api//user-api-components/FetchUserCrypto';
 import FetchUserStocks from '../../api//user-api-components/FetchUserStocks';
+import FetchedAllCrypto from '../../api/user-api-components/FetchAllCrypto'
 import { setOrgColor } from '../shared/functions/colorTheme';
 import TotalCompValue from '../profile/profile-dashboard/data-card/company-overview/CompanyOverview';
 
 const Home = () => {
     const TotalStocks = useSelector((state) => state.TotalStocks);
     const TotalCrypto = useSelector((state) => state.TotalCrypto);
+    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
 
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
@@ -146,6 +147,9 @@ const Home = () => {
             {TotalStocks == 0 ? (
                 <FetchUserStocks currency={totalCurrency} />
             ) : null}
+            {FetchedCryptoList == 0 ? (
+                <FetchedAllCrypto />
+            ) : null}
             {/*
     <main>
         <section> --> left
@@ -193,7 +197,8 @@ const Home = () => {
                             ''
                         )}
                     </div>
-                    <CompanyOverviewHome />
+                    {user.organization ?  <CompanyOverviewHome /> : ''}
+                   
                 </MainWrapper>
             </ContentWrapper>
         </>

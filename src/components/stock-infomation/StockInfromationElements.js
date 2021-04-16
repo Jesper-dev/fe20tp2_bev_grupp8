@@ -16,6 +16,18 @@ export const ContentWrapper = styled.div`
         font-size: 1.8rem;
     }
 
+    .container {
+        @media screen and (min-width: 1024px) {
+            display: flex;
+            /* justify-content: space-evenly;
+            align-items: center; */
+            width: 100%;
+            max-width: 40rem;
+            flex-direction: row;
+        }
+
+    }
+
     .chartjs-render-monitor {
         width: inherit;
     }

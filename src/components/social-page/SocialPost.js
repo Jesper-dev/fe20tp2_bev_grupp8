@@ -126,7 +126,7 @@ const SocialPost = () => {
             toast.style.transform = 'scale(1)';
             setTimeout(() => {
                 toast.style.transform = 'scale(0)';
-            }, 2500);
+            }, 3000);
         }
         addToRecentPost(userData.uid, userData.username, profilePic, postData);
     };
@@ -142,7 +142,7 @@ const SocialPost = () => {
                 ></textarea>
                 <button type="submit">Post</button>
             </form>
-            <label>
+            {userData.organization ? <label>
                 Post only in organization
                 <input
                     type="checkbox"
@@ -174,7 +174,8 @@ const SocialPost = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
-            </label>
+            </label> : ''}
+            
             <p className="toast" style={{ transform: 'scale(0)' }}>
                 Posted successfully!
                 <Link to={ROUTES.PROFILE_WALL}>Show post</Link>

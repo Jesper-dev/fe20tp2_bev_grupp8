@@ -24,6 +24,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
     const [firstArr, setFirstArr] = useState([]);
     const [list, setList] = useState([]);
     const FollowingCrypto = useSelector((state) => state.FollowingCrypto);
+    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
 
     useEffect(() => {
     loadCryptosInit()
@@ -71,6 +72,8 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
             for(let i = 0; i < 3; i++) {
                 newList.push(arr[i])
             }
+
+
             setWatching(newList)
             setFirstArr(newList)
         })
@@ -99,27 +102,46 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
         }
     };
 
+    const findIndex = (item) => {       
+        let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.id == item.id)]
+        return index
+    }
+
     return (
         <ContentWrapper gap={gap}>
             <h3>Watching Cryptocurrencies </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {watching.map((item, index) => {
                 return (
-                    <CryptoCard
+        <>
+                    {item.name == 'lets-vest-Cry' ? (
+                        <CryptoCard
                         key={index}
-                        img={item.image}
-                        id={item.id}
                         name={item.name}
+                        item={console.log(item)}
                         price={item.regularMarketPrice}
                         percent={item.regularMarketChangePercent}
-                    />
-                );
+                        img={item.image}
+                        />
+                        ) : (
+                            <CryptoCard
+                            key={index}
+                            name={findIndex(item).name}
+                            symbol={findIndex(item).symbol}
+                            price={findIndex(item).current_price}
+                            percent={findIndex(item).price_change_percentage_24h}
+                            img={findIndex(item).image}
+                            id={findIndex(item).id}
+                            />
+                            )}
+                            </>
+                            )
             })}
             <GenericVestBtn
             onClick={() => loadCryptos(initArr, firstArr)}
-            pad='8px'
+            pad='4px'
             border='1px solid black'
-            br='10px'
+            br='40px'
             bg='var(---clr-primary)'
             co='var(---clr-secondary)'
             wid='10%'
