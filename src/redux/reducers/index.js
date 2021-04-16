@@ -18,6 +18,7 @@ import PossessionCrypto from './PossessionCrypto';
 import PossessionStocks from './PossessionStocks';
 import FetchedCryptoValues from './FetchedCryptoValues';
 import { FetchedCryptoList} from './FetchedCryptoValues';
+import { FetchedStockList} from './FetchedStockValues';
 import FetchedStockValues from './FetchedStockValues';
 import { TotalAssets, TotalCrypto, TotalStocks } from './Values'
 
@@ -47,6 +48,7 @@ const allReducers = combineReducers({
     TotalCrypto,
     TotalStocks,
     FetchedCryptoList,
+    FetchedStockList,
     ProfileImgReducer,
 });
 

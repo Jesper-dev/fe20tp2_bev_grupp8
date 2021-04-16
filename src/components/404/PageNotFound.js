@@ -7,7 +7,7 @@ const error = () => {
         <ContentWrapper>
             <BackButton />
             <div>
-            <h1>Ooops, something went wrong... Sorry.</h1>
+            <h1>Ooops, something went wrong... Sorry. This page probably does not exist! Soooo.. How are you today?</h1>
             <h3>(404 error)</h3>
             </div>
 

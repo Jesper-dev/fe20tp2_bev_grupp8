@@ -66,7 +66,6 @@ const MostBoughtCrypto = () => {
             reducedArray.reverse().splice(3, reducedArray.length);
 
             setOrgBoughtData(reducedArray);
-            console.log(reducedArray)
         }
     };
 /*     let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]; */
@@ -74,7 +73,7 @@ const findIndex = (item) => {
     let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]
     return index
 }
-    
+
     return (
         <SectionWrapper>
             <h3>

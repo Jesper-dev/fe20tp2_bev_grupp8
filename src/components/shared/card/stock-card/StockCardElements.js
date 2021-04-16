@@ -14,6 +14,12 @@ export const CardWrapper = styled.article`
     /* max-height: 48px; */
     background: var(--body);
     transition: box-shadow 180ms ease-in-out;
+
+    .short-name{
+        color: #383838;
+        font-size: 0.8rem;
+
+    }
     &:hover {
         box-shadow: var(--box-shadow-cards-hover);
         cursor: pointer;

@@ -102,7 +102,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
         }
     };
 
-    const findIndex = (item) => {       
+    const findIndex = (item) => {
         let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.id == item.id)]
         return index
     }
@@ -113,30 +113,33 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
             <SectionDataIndicator LabelsArr={LabelsArr} />
             {watching.map((item, index) => {
                 return (
-        <>
-                    {item.name == 'lets-vest-Cry' ? (
-                        <CryptoCard
-                        key={index}
-                        name={item.name}
-                        item={console.log(item)}
-                        price={item.regularMarketPrice}
-                        percent={item.regularMarketChangePercent}
-                        img={item.image}
-                        />
-                        ) : (
+                    <>
+                    {!FetchedCryptoList ? null : (
+<>
+                        {item.name == 'lets-vest-Cry' ? (
                             <CryptoCard
                             key={index}
-                            name={findIndex(item).name}
-                            symbol={findIndex(item).symbol}
-                            price={findIndex(item).current_price}
-                            percent={findIndex(item).price_change_percentage_24h}
-                            img={findIndex(item).image}
-                            id={findIndex(item).id}
+                            name={item.name}
+                            price={item.regularMarketPrice}
+                            percent={item.regularMarketChangePercent}
+                            img={item.image}
                             />
-                            )}
-                            </>
-                            )
-            })}
+                            ) : (
+                                <CryptoCard
+                                key={index}
+                                name={findIndex(item).name}
+                                symbol={findIndex(item).symbol}
+                                price={findIndex(item).current_price}
+                                percent={findIndex(item).price_change_percentage_24h}
+                                img={findIndex(item).image}
+                                id={findIndex(item).id}
+                                />
+                                )}
+</>
+                                )}
+                             </>
+                                )
+                            })}
             <GenericVestBtn
             onClick={() => loadCryptos(initArr, firstArr)}
             pad='4px'

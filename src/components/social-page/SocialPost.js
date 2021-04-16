@@ -91,22 +91,14 @@ const SocialPost = () => {
 
     const handleSubmitPost = (e) => {
         e.preventDefault();
-        if (postInOrg == true) {
-            postInOrgFunc(
-                userData.organization,
-                userData.uid,
-                userData.username,
-                profilePic,
-                postData
-            );
-            return;
-        }
+        let profilePic;
+
 
         const profilePicObj = firebase.user(
             `${userData.uid}/picture/profile_pic`
         );
 
-        let profilePic;
+
 
         profilePicObj.once('value', (snapshot) => {
             profilePic = snapshot.val();
@@ -117,7 +109,20 @@ const SocialPost = () => {
 
         if (postData) {
             const toast = document.querySelector(".toast");
+            if (postInOrg == true) {
+                postInOrgFunc(
+                    userData.organization,
+                    userData.uid,
+                    userData.username,
+                    profilePic,
+                    postData
+                );
+                setPostData('');
+                document.querySelector('textarea').classList.remove('not-empty');
+                return;
+            }
             writeNewPost(userData.uid, userData.username, profilePic, postData);
+
             /*userPostsArr.push(postObj);
             updateData(userPostsArr); */
             setPostData('');
@@ -175,7 +180,7 @@ const SocialPost = () => {
                     />
                 </svg>
             </label> : ''}
-            
+
             <p className="toast" style={{ transform: 'scale(0)' }}>
                 Posted successfully!
                 <Link to={ROUTES.PROFILE_WALL}>Show post</Link>

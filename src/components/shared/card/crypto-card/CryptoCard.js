@@ -10,13 +10,11 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
 
     let history = useHistory();
     const [showName, setShowName] = useState(true)
-    
+
     const setChosenCryptoOption = () => {
         history.push(`/info/crypto/${id}`);
     };
 
-
-    console.log(name)
     const newName = () => {
         if(!name) return
         let newName = name.substring(0, 3);
@@ -29,7 +27,7 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
     const checkSize = () => {
         if(window.innerWidth > 600){
             setShowName(true)
-            
+
         } else{
 
             setShowName(false)

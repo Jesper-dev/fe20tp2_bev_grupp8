@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 
 import StockCard from '../card/stock-card/StockCard';
-
+import { useSelector } from 'react-redux';
 import { setUsers } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { FirebaseContext } from '../../firebase/context';
@@ -16,6 +16,7 @@ const MostBoughtStocks = () => {
     const [orgDataListState, setOrgDataListState] = useState([]);
     const [orgBoughtData, setOrgBoughtData] = useState([]);
 
+    const FetchedStockList = useSelector(state => state.FetchedStockList)
     let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
 
     useEffect(() => {
@@ -77,6 +78,12 @@ const MostBoughtStocks = () => {
         }
     };
 
+    const findIndex = (item) => {
+    console.log(item)
+        let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
+        return index
+    }
+
     return (
         <SectionWrapper>
             <h3>
@@ -88,7 +95,8 @@ const MostBoughtStocks = () => {
                 return (
                     <StockCard
                         key={index}
-                        name={item.symbol}
+                        name={findIndex(item).symbol}
+                        shortname={findIndex(item).shortName}
                         /*        amount={item.amount} */
                     />
                 );

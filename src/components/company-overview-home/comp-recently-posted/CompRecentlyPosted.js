@@ -16,7 +16,6 @@ const CompRecentlyPosted = () => {
         fetchOrgSnapshot(firebase, user.organization, '/recentlyPosted/postData', setPostData)
     }, [])
 
-    console.log(postData)
 
     return (
         <>

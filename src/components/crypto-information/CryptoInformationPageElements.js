@@ -5,7 +5,7 @@ export const MainWrapper = styled.main`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: var(--body-secondary);
+    /* background-color: var(--body-secondary); */
     /* margin-bottom: 56px; */
     /* width: 100%; */
 

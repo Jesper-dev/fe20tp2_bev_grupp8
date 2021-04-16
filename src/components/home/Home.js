@@ -37,6 +37,7 @@ import CompanyOverviewHome from '../company-overview-home/CompanyOverviewHome';
 import FetchUserCrypto from '../../api//user-api-components/FetchUserCrypto';
 import FetchUserStocks from '../../api//user-api-components/FetchUserStocks';
 import FetchedAllCrypto from '../../api/user-api-components/FetchAllCrypto'
+import FetchedAllStocks from '../../api/user-api-components/FetchAllStocks'
 import { setOrgColor } from '../shared/functions/colorTheme';
 import TotalCompValue from '../profile/profile-dashboard/data-card/company-overview/CompanyOverview';
 
@@ -150,6 +151,9 @@ const Home = () => {
             {FetchedCryptoList == 0 ? (
                 <FetchedAllCrypto />
             ) : null}
+            {FetchedCryptoList == 0 ? (
+                <FetchedAllStocks />
+            ) : null}
             {/*
     <main>
         <section> --> left
@@ -198,7 +202,7 @@ const Home = () => {
                         )}
                     </div>
                     {user.organization ?  <CompanyOverviewHome /> : ''}
-                   
+
                 </MainWrapper>
             </ContentWrapper>
         </>

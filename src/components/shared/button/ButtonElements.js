@@ -79,6 +79,11 @@ export const GenericVestBtn = styled.button`
         background-color: ${(props) => props.hovbg};
         color: ${(props) => props.hovco} !important;
         border: ${(props) => props.hovbor};
-        
+
+    }
+
+    @media screen and (max-width: 500px) {
+        width: 40%;
+        padding: 8px;
     }
 `;

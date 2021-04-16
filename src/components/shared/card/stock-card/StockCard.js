@@ -8,7 +8,7 @@ import UsFlag from '../../../svgs/flags/America';
 
 let chosenShareArray = [];
 
-const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
+const StockCard = ({ name, cost, percent, fav, stocksList, amount, shortname }) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const setChosenStockOption = (name) => {
@@ -36,6 +36,7 @@ const StockCard = ({ name, cost, percent, fav, stocksList, amount }) => {
                 </span>
             )}
             <UsFlag />
+{/*             <span className="short-name">{shortname}</span> */}
             <span>{name}</span>
             <span>{cost ? cost.toFixed(2) : 20} $</span>
 

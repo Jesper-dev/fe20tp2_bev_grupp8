@@ -5,8 +5,9 @@ import 'firebase/database';
 import { FirebaseContext } from '../firebase/context';
 import BackButton from '../shared/button/back-button/BackButton';
 import { useParams } from 'react-router-dom';
+import ContentWrapper from '../shared/wrappers/ContentWrapper';
 import {
-    ContentWrapper,
+    MainWrapper,
     WatchStockButton,
     TradeBtns,
 } from './StockInfromationElements';
@@ -133,72 +134,69 @@ const StockInformationPage = () => {
     const onChange = () => setChecked(!checked);
 
     return (
-        <>
+        <ContentWrapper>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ContentWrapper>
+                <MainWrapper>
                     <BackButton />
-                    <div className="container">
-                    <div className="stockinfo-map-wrapper">
-                        <h1>
-                            {stockData.quoteType.shortName
-                                ? stockData.quoteType.shortName
-                                : stockData.quoteType.longName}
-                        </h1>
-                        
-                        <div>
-                        <div className="chart-topbar-wrapper">
-                            <TradeBtns to={`/trade/${stockData.symbol}`}>
-                                TRADE
-                            </TradeBtns>
-                            <WatchStockButton
-                            title={checked ? 'Remove from watchlist' : 'Add to watchlist' }
-                                eyecolor={
-                                    checked
-                                        ? 'var(--clr-primary)'
-                                        : 'var(--body-fourth)'
-                                }
-                                onClick={onFollow}
-                                onChange={onChange}
-                            >
-                                <i className="far fa-eye"></i>
-                            </WatchStockButton>
-                        </div>
-                        <LineChart />
-                        </div>
-                        <div className="informationContainer">
-                            <p>{stockData.symbol}</p>
-                            <p>
-                                {/* Det fanns ingen .fmt i slutet */}
-                                {/*  Market price: {stockData.financialData.currentPrice.fmt} */}
-                                Market price:{' '}
-                                {stockData.price.regularMarketPrice.raw}$
-                            </p>
-                            {/* <p>
-                                Reg market change:{' '}
-                                {item.regularMarketChange
-                                    ? item.regularMarketChange.toFixed(2)
-                                    : 200}
-                                %
-                            </p> */}
-                            <p>
-                                Market change percent:{' '}
-                                {stockData.price.regularMarketChangePercent.raw
-                                    ? stockData.price.regularMarketChangePercent
-                                          .fmt
-                                    : 2}
-                            </p>
-                            <p>
-                                {stockData.summaryProfile.longBusinessSummary}
-                            </p>
+                    {/* <div className="container"> */}
+                        {/* <div className="stockinfo-map-wrapper"> */}
+                            <h1>
+                                {stockData.quoteType.shortName
+                                    ? stockData.quoteType.shortName
+                                    : stockData.quoteType.longName}
+                            </h1>
+                            <div>
+                                <div className="chart-topbar-wrapper">
+                                    <TradeBtns to={`/trade/${stockData.symbol}`}>
+                                        TRADE
+                                    </TradeBtns>
+                                    <WatchStockButton
+                                        title={checked ? 'Remove from watchlist' : 'Add to watchlist' }
+                                            eyecolor={
+                                                checked
+                                                    ? 'var(--clr-primary)'
+                                                    : 'var(--body-fourth)'
+                                            }
+                                            onClick={onFollow}
+                                            onChange={onChange}
+                                        >
+                                        <i className="far fa-eye"></i>
+                                    </WatchStockButton>
+                                </div>
+                                <LineChart />
                             </div>
-                            
+                            <div className="info-container">
+                                <p>{stockData.symbol}</p>
+                                <p>
+                                    {/* Det fanns ingen .fmt i slutet */}
+                                    {/*  Market price: {stockData.financialData.currentPrice.fmt} */}
+                                    Market price: {stockData.price.regularMarketPrice.raw}$
+                                </p>
+                                {/* <p>
+                                    Reg market change:{' '}
+                                    {item.regularMarketChange
+                                        ? item.regularMarketChange.toFixed(2)
+                                        : 200}
+                                    %
+                                </p> */}
+                                <p>
+                                    Market change percent:
+                                    {stockData.price.regularMarketChangePercent.raw
+                                        ? stockData.price.regularMarketChangePercent
+                                            .fmt
+                                        : 2}
+                                </p>
+                                <p>
+                                    {stockData.summaryProfile.longBusinessSummary}
+                                </p>
                             </div>
-                    </div>
-                </ContentWrapper>
+                        {/* </div> */}
+                    {/* </div> */}
+                </MainWrapper>
             )}
-        </>
+        </ContentWrapper>
     );
 };
 

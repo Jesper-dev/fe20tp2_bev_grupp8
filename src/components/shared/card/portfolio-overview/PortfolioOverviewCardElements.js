@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PortOverviewWrapper = styled.details`
 
-    @media screen and (max-width: 640px) {
+    @media screen and (max-width: 768px) {
         h1 {
             flex: 1;
         }
@@ -56,10 +56,6 @@ export const PortOverviewWrapper = styled.details`
             gap: 1.5rem 0.5rem;
             justify-content: center;
             align-items: center;
-
-            & > .fa-chevron-down {
-                
-            }
 
             & > article {
                 flex: 1;

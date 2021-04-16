@@ -65,17 +65,15 @@ const InfopageLinechart = () => {
     };
 
     return (
-        <>
-            <Line
-                data={chartData}
-                options={{
-                    /* maintainAspectRatio: false, */
-                    legend: {
-                        display: false,
-                    },
-                }}
-            />
-        </>
+        <Line
+            data={chartData}
+            options={{
+                /* maintainAspectRatio: false, */
+                legend: {
+                    display: false,
+                },
+            }}
+        />
     );
 };
 
