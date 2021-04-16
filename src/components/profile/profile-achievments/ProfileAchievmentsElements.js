@@ -24,7 +24,7 @@ export const ContentWrapper = styled.div`
         width: 20rem;
         height: 2.75rem;
         line-height: 2.75rem;
-        background-color: crimson;
+        background-color: blue;
         color: var(--clr-almost-white);
         font-weight: 500;
         text-align: center;
@@ -67,6 +67,8 @@ export const AchievmentsCardWrapper = styled.article`
 
     input {
         display: ${props => props.done ? 'block' : 'none'};
+        padding: 8px;
+        cursor: pointer;
     }
 
 
