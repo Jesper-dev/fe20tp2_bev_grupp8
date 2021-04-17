@@ -1,4 +1,5 @@
 import React,{ useEffect, useContext, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import SectionDataIndicator from '../../shared/card/section-data-indicator/SectionDataIndicator'
 import StockCardSmall from '../../shared/card/stock-card-small/StockCardSmall';
@@ -15,19 +16,29 @@ const CompRecentlySoldStock = () => {
     const firebase = useContext(FirebaseContext);
     const [stockData, setStockData] = useState(null);
 
+    const FetchedStockList = useSelector(state => state.FetchedStockList)
+
     let LabelsArr = [<i className="fas fa-globe"></i>, 'name', '$', '% 24h ▾', <i className="fas fa-info"></i>];
 
     useEffect(() => {
         fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setStockData)
     }, [])
+
+    const findIndex = (item) => {
+        console.log(item.symbol)
+   /*      return */
+        let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
+        console.log(index)
+        return index
+    }
     return (
         <>
                     <ContentWrapper>
-            {!stockData ? null : (
+            {!stockData || !FetchedStockList.length > 0 ? null : (
                 <>
                     <div>
                         <h4>
-                            Recently bought
+                            Recently sold
                         </h4>
                         <SectionDataIndicator LabelsArr={LabelsArr} />
                         {stockData.map((item, i) => {
@@ -35,7 +46,10 @@ const CompRecentlySoldStock = () => {
                                 <StockCardSmall
                                     key={i}
                                     i={i}
-                                    name={item.symbol}
+                                    name={findIndex(item).symbol}
+                        shortname={findIndex(item).shortName}
+                        cost={findIndex(item).regularMarketPrice}
+                        percent={findIndex(item).regularMarketChangePercent}
                                 />
                             );
                         })}

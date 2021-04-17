@@ -45,6 +45,7 @@ const Home = () => {
     const TotalStocks = useSelector((state) => state.TotalStocks);
     const TotalCrypto = useSelector((state) => state.TotalCrypto);
     const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
+    const FetchedStockList = useSelector(state => state.FetchedStockList)
 
     const [totalCurrency, setTotalCurrency] = useState(0);
     const [followingArr, setFollowingArr] = useState([]);
@@ -151,7 +152,7 @@ const Home = () => {
             {FetchedCryptoList == 0 ? (
                 <FetchedAllCrypto />
             ) : null}
-            {FetchedCryptoList == 0 ? (
+            {FetchedStockList == 0 ? (
                 <FetchedAllStocks />
             ) : null}
             {/*

@@ -5,6 +5,8 @@ import { setFetchedStockList } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { FirebaseContext } from '../../components/firebase/context';
 
+import {fetchUsersOrgSnapshotArray} from '../../components/shared/functions/firebase-functions'
+
 const FetchAllStocks = () => {
         const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -13,6 +15,7 @@ const FetchAllStocks = () => {
     let possessionsArray = []
     let uniq;
 
+    const [data, setData] = useState()
     const dispatch = useDispatch()
 
     const FetchAllRelevantStocks = async () => {
@@ -25,6 +28,13 @@ const FetchAllStocks = () => {
                 possessionsArray.push(followingCrypto[key].id)
                 }
         })
+
+        let recentB = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setData)
+        let recentS = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setData)
+        possessionsArray.push(recentB[0].symbol)
+        possessionsArray.push(recentS[0].symbol)
+     
+
        await usersRef.on('child_added', function(snapshot) {
             let poss = (snapshot.val().possessionStocks)
           for(const key in poss) {

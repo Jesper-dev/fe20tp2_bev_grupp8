@@ -59,7 +59,7 @@ const CompHottestCrypto = () => {
     return (
         <>
             <ContentWrapper>
-                {!hottestStocks ? null : (
+                {!hottestStocks ||!FetchedCryptoList.length > 0 ? null : (
                     <>
                         <div>
                             <h4>

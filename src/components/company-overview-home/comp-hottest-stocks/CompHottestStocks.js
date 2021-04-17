@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useSelector } from 'react-redux'
 
 import {
     MakeOneArrayOrganization,
@@ -19,6 +20,7 @@ const CompHottestStocks = () => {
 
     const [stockData, setStockData] = useState(null);
     const [hottestStocks, setHottestStocks] = useState(null);
+    const FetchedStockList = useSelector(state => state.FetchedStockList)
 
     let LabelsArr = [<i className="fas fa-globe"></i>, 'name', '$', '% 24h ▾', <i className="fas fa-info"></i>];
 
@@ -46,9 +48,14 @@ const CompHottestStocks = () => {
         setHottestStocks(reducedArray);
     }, [stockData]);
 
+
+    const findIndex = (item) => {
+        let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
+        return index
+    }
     return (
         <ContentWrapper>
-            {!hottestStocks ? null : (
+            {!hottestStocks ||!FetchedStockList.length > 0 ? null : (
                 <>
                     <div>
                         <h4>
@@ -64,7 +71,10 @@ const CompHottestStocks = () => {
                                 <StockCardSmall
                                     key={i}
                                     i={i}
-                                    name={item.symbol}
+                                    name={findIndex(item).symbol}
+                                    shortname={findIndex(item).shortName}
+                                    cost={findIndex(item).regularMarketPrice}
+                                    percent={findIndex(item).regularMarketChangePercent}
                                 />
                             );
                         })}
