@@ -133,16 +133,26 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    <Route exact path={ROUTES.PROFILE_SETTINGS_CUSTOMIZE}>
+                        <ProfileSettings />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
+                    <Route exact path={ROUTES.PROFILE_SETTINGS_ACHIEVMENTS}>
+                        <ProfileSettings />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
                     <Route exact path={ROUTES.ADMIN_SETTINGS}>
                         <OrganizationSettings />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    <Route exact path={ROUTES.PROFILE_ACHIEVMENTS}>
+               {/*      <Route exact path={ROUTES.PROFILE_ACHIEVMENTS}>
                         <ProfileAchievments />
-                        {/* <NavbarLeft />
-                        <Toolbar /> */}
-                    </Route>
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route> */}
                     <Route component={PageNotFound} />
                 </Switch>
             </Router>

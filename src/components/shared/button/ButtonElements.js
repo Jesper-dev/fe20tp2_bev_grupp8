@@ -53,7 +53,7 @@ export const ButtonPrimary = styled(Link)`
     white-space: nowrap;
 
     &:focus {
-        box-shadow: 0 0 0 0.1875rem var(--third);
+        box-shadow: 0 0 0 0.1875rem var(--clr-primary__dimmer);
     }
 `;
 

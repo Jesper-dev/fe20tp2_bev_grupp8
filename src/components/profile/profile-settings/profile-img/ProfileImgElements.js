@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    /*  justify-content: center; */
     align-items: center;
 
     form {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        /*   justify-content: space-between; */
         align-items: center;
         gap: 0.5rem;
         width: 200px;
@@ -23,7 +23,7 @@ export const ContentWrapper = styled.div`
         padding: 8px;
         background: var(--clr-primary);
         color: var(--body);
-		cursor: pointer;
+        cursor: pointer;
     }
 
     input[type='file'] {
@@ -57,7 +57,7 @@ export const ProfileImgElement = styled.img`
 `;
 
 export const ProfileSettingsImg = styled.img`
-    margin: 15px auto;
+    /* margin: 15px auto; */
     width: 150px;
     height: 150px;
     border-radius: 50%;

@@ -86,8 +86,14 @@ const CustomizeHomepage = () => {
     };
     return (
         <ContentWrapper>
-            <h3>Customize your homepage</h3>
+            <h3>Customize Application</h3>
             {/* NOTE: Change whole div to only a label with an input */}
+            <hr />
+
+
+            <div className="home-wrapper">
+            <h4>Homepage</h4>
+            <hr />
             <div className="tgl">
                 <p>Show Recommended</p>
                 <input
@@ -142,6 +148,7 @@ const CustomizeHomepage = () => {
                     value="News"
                 />
                 <label htmlFor="news" className="toggle-btn"></label>
+            </div>
             </div>
         </ContentWrapper>
     );

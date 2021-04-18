@@ -4,14 +4,43 @@ export const ContentWrapper = styled.div`
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+/*     align-items: center; */
+/*     justify-content: center; */
     gap: 1rem;
-    padding: 1rem;
+    padding: 8rem;
+/*     padding: 6rem 8rem 8rem 8rem; */
+    width: 100%;
+    max-width: 40rem;
+
+    hr {
+        align-self: flex-start;
+        width: 100%;
+        border: none;
+        /* max-width: 500px; */
+        margin: 0;
+        height: 1px;
+        color: #8e8e88; /* old IE */
+        background-color: #dbdbdb; /* Modern Browsers */
+    }
+
+    .home-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid lightgrey;
+        border-radius: 0.25rem;
+        gap: 1rem;
+        padding: 1rem;
+    }
 
     h3 {
         margin: 0;
+        font-weight: 500;
         font-size: 1.25rem;
-        text-align: center;
+    }
+    h4 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1rem;
     }
 
 

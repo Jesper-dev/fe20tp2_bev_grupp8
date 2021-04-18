@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { FirebaseContext } from '../../../firebase/context'
+import { FirebaseContext } from '../../../firebase/context';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfileImage } from '../../../../redux/actions'
+import { setProfileImage } from '../../../../redux/actions';
 
-import 'firebase/database'
+import 'firebase/database';
 
 import {
     ContentWrapper,
@@ -16,12 +16,12 @@ import ProfileSvg from '../../../svgs/ProfileSvg';
 import ImageCropper from './ProfileImgCropper';
 
 const ProfileChooseImg = () => {
-    const firebase = useContext(FirebaseContext)
+    const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
-    const profileImg = useSelector((state) => state.ProfileImgReducer)
+    const profileImg = useSelector((state) => state.ProfileImgReducer);
 
     const [inputImg, setInputImg] = useState('');
 
@@ -30,17 +30,13 @@ const ProfileChooseImg = () => {
 
         route.once('value', (snapshot) => {
             const data = snapshot.val();
-    
+
             if (!data) return;
             dispatch(setProfileImage(data));
-    
-        })
-        
-        return () => {
-            
-        }
-    }, [])
+        });
 
+        return () => {};
+    }, []);
 
     const onInputChange = (e) => {
         // convert image file to base64 string
@@ -60,18 +56,20 @@ const ProfileChooseImg = () => {
         }
     };
 
-
     const updateUser = (userId, imageUrl) => {
         firebase.user(userId).child('/picture').set({
-            profile_pic: imageUrl
-        })
+            profile_pic: imageUrl,
+        });
 
-        if(user.organization) {
-            firebase.organization(user.organization).child(`/users/${userId}/picture`).set({
-                profile_pic: imageUrl
-            })
+        if (user.organization) {
+            firebase
+                .organization(user.organization)
+                .child(`/users/${userId}/picture`)
+                .set({
+                    profile_pic: imageUrl,
+                });
         }
-    }
+    };
 
     // const getImage = (userId) => {
     //     const myImg = firebase.db.ref('users/' + userId + '/picture');
@@ -82,23 +80,26 @@ const ProfileChooseImg = () => {
     // }
 
     const handleSubmitImage = (e) => {
-        // upload blob to firebase 'images' folder with filename 'image'
         e.preventDefault();
         setInputImg(null);
-        updateUser(user.uid, profileImg)
+        updateUser(user.uid, profileImg);
     };
-
-
 
     return (
         <>
             <ContentWrapper>
-                {!ProfileImgReducer || ProfileImgReducer == 'null' ? <ProfileSvg className="svg-avatar" fillColor="var(--clr-primary)" /> :
-            <ProfileSettingsImg src={ProfileImgReducer} />
-                }
+                {/*        <span>Profile Image</span> */}
+                {!ProfileImgReducer || ProfileImgReducer == 'null' ? (
+                    <ProfileSvg
+                        className="svg-avatar"
+                        fillColor="var(--clr-primary)"
+                    />
+                ) : (
+                    <ProfileSettingsImg src={ProfileImgReducer} />
+                )}
                 <form onSubmit={handleSubmitImage}>
                     <label htmlFor="file-upload" className="custom-file-upload">
-                   <i className="fas fa-cloud-upload-alt"></i> Upload Image
+                        <i className="fas fa-cloud-upload-alt"></i> Upload Image
                     </label>
                     <input
                         id="file-upload"
@@ -106,7 +107,7 @@ const ProfileChooseImg = () => {
                         accept="image/*"
                         onChange={onInputChange}
                     />
-                     <button type="submit">Save Image</button>
+                    <button type="submit">Save Image</button>
                     {inputImg && (
                         <CropperWrapper>
                             <ImageCropper
@@ -115,7 +116,6 @@ const ProfileChooseImg = () => {
                             />
                         </CropperWrapper>
                     )}
-
                 </form>
             </ContentWrapper>
         </>
