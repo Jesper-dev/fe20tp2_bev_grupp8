@@ -16,6 +16,9 @@ import SignUp from './components/sign-up/SignUp';
 import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
 import PageNotFound from './components/404/PageNotFound';
+
+import UserPosts from "./components/profile/profile-wall/user-posts/UserPosts";
+import LikedPosts from "./components/profile/profile-wall/liked-posts/LikedPosts";
 // import ProfileWall from './components/profile/profile-wall/ProfileWall';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
@@ -69,6 +72,7 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>
                         <Profile />
+
                         {/* <ProfilePortfolio /> */}
                         <NavbarLeft />
                         <Toolbar />
@@ -124,6 +128,7 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.PROFILE_WALL}>
                         <Profile />
+
                         {/* <ProfileWall /> */}
                         <NavbarLeft />
                         <Toolbar />

@@ -2,64 +2,93 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const MainWrapper = styled.main`
-    /* height: 100vh; */
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* flex-direction: column; */
+    /* align-items: center; */
     gap: 1rem;
-    /* background-color: var(--body); */
-    /* margin-bottom: 56px; */
-    /* width: 100%; */
 
     & > h1 {
+        width: 80%;
         margin: 0;
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         text-align: center;
     }
 
-    & > div {
-        width: 100%;
+    .chart-container {
+        flex: 0.75;
+        max-width: 100%;
 
         .chart-topbar-wrapper {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 1rem;
+            gap: 2rem;
+            margin: 0.75rem 0;
         }
     }
 
     .info-container {
-        p {
+        & > article {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0.5rem 0.375rem;
+            box-shadow: var(--box-shadow-cards);
+            margin-bottom: 2rem;
+
+            & > label > p {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                line-height: 1.4;
+            }
+
+            #expanded {
+                display: none;
+            }
+
+            #expanded:checked + label > p {
+                -webkit-line-clamp: unset;
+            }
+
+            & > label {
+                cursor: pointer;
+            }
+        }
+
+        p {
             box-shadow: var(--box-shadow-cards);
             border-radius: 0.25rem;
-            padding: 0.5rem;
-            margin: 0;
-            font-size: 1.125rem;
+            padding: 0.375rem;
+            margin: 0 0 0.75rem 0;
+            font-size: 1.125rem;;
         }
-    }
-
-    .buttonWrapper > input {
-        width: 20%;
-    }
-
-    label {
-        transition: all 1s ease-in-out;
     }
 `;
 
 export const WatchStockButton = styled.button`
-    transition: all 0.5s ease-in-out;
+    padding: 0.625rem;
+    border-radius: 50%;
+    transition: all 0.25s ease-in-out;
     color: ${(props) => props.eyecolor};
     background: none;
     border: none;
     outline: none;
-    margin-right: 18px;
+    margin: 0;
     cursor: pointer;
 
+    &:hover {
+        background-color: #e8e8e8;
+    }
+
     .fa-eye {
-        padding-left: 4px;
         font-size: 1.2rem;
     }
 `;
@@ -75,8 +104,7 @@ export const TradeBtns = styled(Link)`
     cursor: pointer;
     font-weight: 400;
     font-family: inherit;
-    //margin-left: 15px;
-    margin: 15px;
+    margin: 0;
 
     transition: background-color 150ms linear, color 100ms linear;
     &:hover{

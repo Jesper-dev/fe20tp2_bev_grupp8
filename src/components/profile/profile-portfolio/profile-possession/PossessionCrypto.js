@@ -23,7 +23,7 @@ const PossessionCrypto = ({ cryptoPossesionState }) => {
                 <h1>Possession cryptocurrencies</h1>
                 <div>
                     {FetchedCryptoValues.length > 0 ? (
-                        FetchedCryptoValues.reverse().map((item, index) => {
+                        FetchedCryptoValues.reverse().slice(0,10).map((item, index) => {
                             return (
                                 <CryptoCard
                                     key={index}

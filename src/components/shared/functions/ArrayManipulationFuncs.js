@@ -1,13 +1,14 @@
-/* This array sory an array of objects by a specific key. 
-Keyvalue is is supposed to be type of number . 
+/* This array sory an array of objects by a specific key.
+Keyvalue is is supposed to be type of number .
 Enter the array as first arg and then the key ypu want to sort by */
 export const sortArrayOfObjByLargetsNumber = (arr, keyname) => {
     arr.sort((a, b) => {
         return a[keyname] - b[keyname];
     });
+    return arr
 };
 
-/* Reduce func. Takes an array of objects and removes duplicates of chosen key and merge all/your chosen keyvalues. 
+/* Reduce func. Takes an array of objects and removes duplicates of chosen key and merge all/your chosen keyvalues.
     Takes the original array as argument and which key to checkfor duplicates. Then whcih keys to merge.
 */
 

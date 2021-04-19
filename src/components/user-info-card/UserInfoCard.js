@@ -259,11 +259,28 @@ const UserInfoCard = () => {
                         </div>
                         <div>
                             <h3>Change</h3>
-                            <span className="currency">{userData.currency.currency.toLocaleString()}</span>
+                            <span className="currency"
+                            style={
+                                    (
+                                        ((userData.currency.currency - 100000) /
+                                            100000) *
+                                        100
+                                    ).toFixed(2) > -0.1
+                                        ? { color: 'var(--lighter-green)' }
+                                        : { color: 'var(--lighter-red)' }
+                                }
+                                >
+                                    {(
+                                        ((userData.currency.currency - 100000) /
+                                            100000) *
+                                        100
+                                    ).toLocaleString()}
+                                    %
+                            </span>
                         </div>
                         <div>
                             <h3>ROI</h3>
-                            <span className="currency">{userData.currency.currency.toLocaleString()}</span>
+                            <span className="currency">{(userData.currency.currency - 100000).toLocaleString()}</span>
                         </div>
                     </div>
                     <p>{userData.bio ? userData.bio : ''}</p>

@@ -13,7 +13,7 @@ const Possession = ({ stocksPossesionState }) => {
             <h1>Possession Stocks</h1>
             <div>
             {stocksPossesionState.length > 0 ? (
-                stocksPossesionState.reverse().map((item, index) => {
+                stocksPossesionState.reverse().slice(0,10).map((item, index) => {
                     return (
                         <StockCard
                             key={index}

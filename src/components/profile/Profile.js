@@ -12,7 +12,8 @@ import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 import AchievmentsBoard from './profile-achievments/AchievmentsBoard';
 import { fetchUserSnapshotObject } from '../shared/functions/firebase-functions';
-import FetchedCryptoList from '../../api/user-api-components/FetchAllCrypto'
+import FetchAllCrypto from '../../api/user-api-components/FetchAllCrypto'
+import FetchStockList from '../../api/user-api-components/FetchAllStocks'
 
 import { FirebaseContext } from '../firebase/context';
 import { withAuthorization } from '../session';
@@ -45,6 +46,8 @@ const Profile = () => {
     const [showEmoji, setShowEmoji] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
+    const FetchedStockList= useSelector((state) => state.FetchedStockList);
+    const FetchedCryptoList = useSelector((state) => state.FetchedCryptoList);
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
@@ -146,7 +149,12 @@ const Profile = () => {
 
     return (
         <>
-        <FetchedCryptoList />
+        {FetchedCryptoList == 0 ? (
+                 <FetchAllCrypto />
+            ) : null}
+        {FetchedStockList == 0 ? (
+                <FetchStockList />
+            ) : null}
         <ContentWrapper>
             <HeaderWrapper>
                 <section>

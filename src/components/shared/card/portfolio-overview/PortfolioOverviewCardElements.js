@@ -34,6 +34,10 @@ export const PortOverviewWrapper = styled.details`
         user-select: none;
         -webkit-user-select: none;
 
+        &::marker, &::-webkit-details-marker {
+            display: none;
+        }
+
         h1 {
             /* flex: 1; */
             display: flex;

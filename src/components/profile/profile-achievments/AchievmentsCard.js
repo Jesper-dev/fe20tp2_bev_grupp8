@@ -21,9 +21,11 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
                 setShowCard(data);
                 if (data.show === true) {
                     setChecked(true);
+                } else {
+                    setChecked(false)
                 }
             });
-        console.log(name);
+/*         console.log(name); */
 
         firebase
             .user(userData.uid)
@@ -31,7 +33,7 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
             .on('value', (snapshot) => {
                 const data = snapshot.val();
                 let list = [];
-                console.log(data);
+     /*            console.log(data); */
                 for (const key in data) {
                     list.push(data[key]);
                 }
@@ -39,7 +41,6 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
             });
     }, [checked]);
     const onChangeFunc = (arr, id) => {
-        console.log(id);
         let showAch = checked;
         disableAchs(arr);
         setChecked(!checked);
@@ -50,6 +51,7 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
     };
 
     const disableAchs = (arr) => {
+        setChecked(showCard.show)
         arr.forEach((item) => {
             firebase
                 .user(userData.uid)
@@ -62,7 +64,7 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
 
     return (
         <>
-            <AchievmentsCardWrapper show={show} done={done}>
+            <AchievmentsCardWrapper show={show} done={done} checked={checked}>
                 <MillionareSvg />
                 {/*         <img>{svg}</img> */}
                 <section>
@@ -82,7 +84,7 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
                 >
                     <MoneyBagSvg className="moneybag" />
                 </button>
-                {/*    <input
+               {/*     <input
                     type="checkbox"
                     checked={showCard.show}
                     onClick={() => onChangeFunc(ach, id)}

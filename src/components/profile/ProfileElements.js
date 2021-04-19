@@ -141,6 +141,7 @@ export const HeaderWrapper = styled.header`
 
 export const MainWrapper = styled.main`
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.5rem 2rem;

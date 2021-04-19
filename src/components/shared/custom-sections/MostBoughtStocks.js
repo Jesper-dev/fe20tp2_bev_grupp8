@@ -14,7 +14,7 @@ const MostBoughtStocks = () => {
     const firebase = useContext(FirebaseContext);
     const dispatch = useDispatch();
     const [orgDataListState, setOrgDataListState] = useState([]);
-    const [orgBoughtData, setOrgBoughtData] = useState([]);
+    const [orgBoughtData, setOrgBoughtData] = useState(null);
 
     const FetchedStockList = useSelector(state => state.FetchedStockList)
     let LabelsArr = ['region', 'symbol', 'price', 'change 24h ▾'];
@@ -76,18 +76,19 @@ const MostBoughtStocks = () => {
 
             setOrgBoughtData(reducedArray);
 
-            
+
         }
     };
 
-    console.log(orgBoughtData)
+
     const findIndex = (item) => {
+  /*       console.log(item)
+        return */
+
         let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
         if(index == -1 ){
             return index = 0
         }
-        console.log(orgBoughtData)
-
         return index
     }
 
@@ -99,21 +100,20 @@ const MostBoughtStocks = () => {
                 <i className="fas fa-fire-alt" style={{ color: 'orange' }}></i>
             </h3>
             <SectionDataIndicator LabelsArr={LabelsArr} />
-            {!FetchedStockList.length > 0 || !orgBoughtData.length > 0 ? null : (
+            {!FetchedStockList.length > 0 || !orgBoughtData ? null : (
 <>
                 {orgBoughtData.map((item, index) => {
                     return (
                         <StockCard
-                        key={index}
-                        name={findIndex(item).symbol}
-                        shortname={findIndex(item).shortName}
-                        cost={findIndex(item).regularMarketPrice}
-                        percent={findIndex(item).regularMarketChangePercent}
-                     /*           amount={item.amount} */
-                        />
+                            key={index}
+                            name={findIndex(item)?.symbol ?? 'LV'}
+                            shortname={findIndex(item)?.shortName ?? 'Lets-vest'}
+                            cost={findIndex(item)?.regularMarketPrice ?? 250}
+                            percent={findIndex(item)?.regularMarketChangePercent ?? 2.25}
+                                />
                         );
                     })}
-</>                    
+</>
                     )}
         </SectionWrapper>
     );

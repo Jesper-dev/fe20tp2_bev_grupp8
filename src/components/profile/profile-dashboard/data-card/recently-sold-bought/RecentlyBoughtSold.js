@@ -29,7 +29,6 @@ const RecentlyBought = () => {
     }, []);
 
 
-    console.log(bought)
 
     return (
         <ContentWrapper>

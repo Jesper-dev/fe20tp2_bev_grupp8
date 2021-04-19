@@ -56,12 +56,17 @@ export const AchievmentsCardWrapper = styled.article`
     box-shadow: var(--box-shadow-cards);
     width: 100%;
     min-height: 3rem;
+    border: ${(props) => (props.checked ? '1px solid gold' : 'none')};
     background: var(--body);
     cursor: pointer;
     /*     margin-top: 8px; */
     opacity: ${(props) => (props.done ? '100%' : '40%')};
 
     transition: box-shadow 180ms ease-in-out;
+
+    button{
+        display: ${(props) => (props.done ? 'flex' : 'none')};
+    }
 
     .svg-btn {
         cursor: pointer;

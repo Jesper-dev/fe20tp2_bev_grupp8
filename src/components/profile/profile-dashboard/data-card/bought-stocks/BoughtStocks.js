@@ -59,11 +59,12 @@ const BoughtStocks = () => {
 
             let reducedArray = ReduceFunc(orgStockPossessionArr);
 
-            sortArrayOfObjByLargetsNumber(reducedArray);
+           sortArrayOfObjByLargetsNumber(reducedArray, 'amount');
 
             reducedArray.reverse().splice(5, reducedArray.length);
 
             setOrgBoughtData(reducedArray);
+
         }
     };
 

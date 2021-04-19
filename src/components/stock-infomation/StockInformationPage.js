@@ -140,14 +140,12 @@ const StockInformationPage = () => {
             ) : (
                 <MainWrapper>
                     <BackButton />
-                    {/* <div className="container"> */}
-                        {/* <div className="stockinfo-map-wrapper"> */}
                             <h1>
                                 {stockData.quoteType.shortName
                                     ? stockData.quoteType.shortName
                                     : stockData.quoteType.longName}
                             </h1>
-                            <div>
+                            <div className="chart-container">
                                 <div className="chart-topbar-wrapper">
                                     <TradeBtns to={`/trade/${stockData.symbol}`}>
                                         TRADE
@@ -188,12 +186,15 @@ const StockInformationPage = () => {
                                             .fmt
                                         : 2}
                                 </p>
-                                <p>
-                                    {stockData.summaryProfile.longBusinessSummary}
-                                </p>
+                                <article>
+                                    <input type="checkbox" id="expanded"/>
+                                    <label htmlFor="expanded" role="button">
+                                        <p>
+                                            {stockData.summaryProfile.longBusinessSummary}
+                                        </p>
+                                    </label>
+                                </article>
                             </div>
-                        {/* </div> */}
-                    {/* </div> */}
                 </MainWrapper>
             )}
         </ContentWrapper>

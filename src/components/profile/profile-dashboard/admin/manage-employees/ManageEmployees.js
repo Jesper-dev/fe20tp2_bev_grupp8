@@ -5,15 +5,19 @@ import EmployeeCard from './EmployeeCard';
 const AddEmployee = () => {
     const [open, setOpen] = useState(false);
     const [emailValue, setEmailValue] = useState('');
+    const [nameValue, setNameValue] = useState('');
     const [employeeList, setEmployeeList] = useState([]);
+    // const [employeeID, setEmployeeID] = useState('');
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
+    let employeeID = ''
+    let userData = {}
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!emailValue) return;
-        addEmailToDb(emailValue);
+        addEmailToDb(emailValue, nameValue);
     };
 
     const deleteEmailDb = (email) => {
@@ -44,18 +48,18 @@ const AddEmployee = () => {
     };
 
     const makeUserAdmin = (email) => {
-        let userData = findUser(email);
-        updateEmployee(userData.id);
+        findUser(email, 'makeAdmin');
+        console.log(userData)
     };
 
-    const findUser = (email) => {
+    const findUser = (email, makeAdmin) => {
         let users = [];
+        console.log('Email in findUser: ', email)
         firebase
             .organization(user.organization)
             .child('/users')
             .once('value', (snapshot) => {
                 const data = snapshot.val();
-                console.log(data);
                 let orgData = [];
 
                 for (const key in data) {
@@ -65,14 +69,24 @@ const AddEmployee = () => {
                     };
                     users.push(obj);
                 }
+
+                let index = users.findIndex((x) => x.email == email);
+
+                let foundObj = users[index];
+                employeeID = foundObj.id
+                if(makeAdmin == 'makeAdmin'){
+                    updateEmployee(foundObj.id)
+                }
+                console.log(foundObj)
+                userData = foundObj
+                return foundObj;
+
             });
 
-        let index = users.findIndex((x) => x.email === email);
-        let foundObj = users[index];
-        return foundObj;
     };
 
     const updateEmployee = (id) => {
+        console.log(id)
         firebase
             .organization(user.organization)
             .child(`/users/${id}/roles`)
@@ -91,43 +105,28 @@ const AddEmployee = () => {
         });
     };
 
-    const addEmailToDb = (email) => {
-        //TODO Gör om denna i sinom tid
-        const emailsData = firebase.db.ref(
-            'organizations/' + user.organization + '/emails/list'
-        );
-        if (emailsData === null) {
-            return;
-        }
-
-        let list = [];
-        emailsData.on('value', (snapshot) => {
-            list = snapshot.val();
-        });
-
-        const emailObj = {
-            email: email,
-        };
-
-        list.push(emailObj);
-        firebase.db.ref('organizations/' + user.organization + '/emails').set({
-            list,
-        });
+    const addEmailToDb = (email, name) => {
+        firebase.organization(user.organization).child('/emailList').update({
+            [name]: email
+        })
         setEmailValue('');
+        setNameValue('');
     };
 
     useEffect(() => {
         let orgData;
-        // firebase.organization(user.organization)
-        const organization = firebase.db.ref(
-            'organizations/' + user.organization
-        );
-        organization.on('value', (snapshot) => {
-            orgData = snapshot.val();
-            if (!orgData) return;
-            setEmployeeList(orgData.emails.list);
-        });
-    }, [firebase.db, user.organization]); //varning!
+        firebase.organization(user.organization).child('/emailList').once('value', (snapshot) => {
+            const data = snapshot.val()
+            if (!data) return;
+            let list = []
+
+            for(const key in data) {
+                list.push(data[key])
+            }
+            setEmployeeList(list);
+            console.log(list)
+        })
+    }, [firebase.db, user.organization, nameValue]); //varning!
 
     return (
         <ManageWrapper>
@@ -137,7 +136,7 @@ const AddEmployee = () => {
                     return (
                         <EmployeeCard
                             key={i}
-                            email={item.email}
+                            email={item}
                             i={i}
                             removeUser={removeUser}
                             makeUserAdmin={makeUserAdmin}
@@ -153,6 +152,15 @@ const AddEmployee = () => {
                         placeholder="Ex. employee@letsvest.com"
                         value={emailValue}
                         onChange={(e) => setEmailValue(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Add employee name:
+                    <input
+                        type="name"
+                        placeholder="Ex. Magnus"
+                        value={nameValue}
+                        onChange={(e) => setNameValue(e.target.value)}
                     />
                 </label>
                 <button>

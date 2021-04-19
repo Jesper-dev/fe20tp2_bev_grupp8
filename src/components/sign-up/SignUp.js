@@ -97,6 +97,7 @@ const INITIAL_STATE = {
             name: 'Bitcoin Enthusiast',
             done: false,
             desc: 'Own five bitcoins',
+            reward: "Title 'Bitcoin Enthusiast'",
             show: false,
             id: 'bitcoin'
         },
@@ -104,6 +105,7 @@ const INITIAL_STATE = {
             name: 'Selfmade Millionaire',
             done: false,
             desc: 'Earn your first million',
+            reward: "Title \"Selfmade Millionaire\"",
             show: false,
             id: 'millionaire'
         },
@@ -173,6 +175,10 @@ class SignUpFormBase extends Component {
         this.setState({ partOfOrganization: false })
         this.setState({ organization: '' })
 
+        companysRef.child('/emailList').on('value', (snapshot) => {
+            const data = snapshot.val()
+            console.log(data)
+        })
 
         let orgStatus = false
         let orgName = ''
@@ -183,9 +189,10 @@ class SignUpFormBase extends Component {
             if(!snapshot.val()) return;
             let org = [];
             for(const key in snapshot.val()) {
+                console.log(key)
                 org.push({key})
             }
-
+            console.log("Hit kommer vi")
             orgName = org[0].key
             orgStatus = true
 
@@ -403,14 +410,23 @@ class SignUpFormBase extends Component {
             return;
         }
 
-        if(event.target.type == 'email'){
-            this.checkIfPartOfOrg(event.target.value)
-        }
+        // if(event.target.type == 'email'){
+        //     this.checkIfPartOfOrg(event.target.value)
+        // }
 
         // console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
         this.checkUsernameTaken(event.target.value);
     };
+
+    onChangeEmail = (event) => {
+        console.log('Jag körs')
+        this.checkIfPartOfOrg(event.target.value)
+
+
+        // console.log(event.target.value)
+        this.setState({ [event.target.name]: event.target.value });
+    }
 
     onChangeCheckbox = (event) => {
         if (
@@ -472,7 +488,7 @@ class SignUpFormBase extends Component {
                                 <input
                                     name="email"
                                     value={email}
-                                    onChange={this.onChange}
+                                    onChange={this.onChangeEmail}
                                     type="email"
                                     placeholder="E-mail address"
                                 />
