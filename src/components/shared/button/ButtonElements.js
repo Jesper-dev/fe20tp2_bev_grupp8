@@ -84,6 +84,11 @@ export const GenericVestBtn = styled.button`
 
     @media screen and (max-width: 500px) {
         width: 40%;
-        padding: 8px;
+        padding: 4px;
+    }
+
+    @media screen and (max-width: 1500px) {
+        width: 20%;
+        padding: 4px;
     }
 `;

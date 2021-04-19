@@ -70,7 +70,7 @@ export const PortOverviewWrapper = styled.details`
                 gap: 0.1875rem;
                 padding: 0.875rem 1.375rem;
                 border-radius: 0.25rem;
-                background-color: var(--clr-almost-white);
+                /* background-color: var(--clr-almost-white); */
 
                 h2 {
                     margin: 0;

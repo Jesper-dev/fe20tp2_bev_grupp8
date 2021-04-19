@@ -29,12 +29,13 @@ const FetchAllStocks = () => {
                 }
         })
 
-        let recentB = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setData)
-        let recentS = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setData)
-        possessionsArray.push(recentB[0].symbol)
-        possessionsArray.push(recentS[0].symbol)
+		if (user.organization) {
+			let recentB = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setData)
+			let recentS = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setData)
+			possessionsArray.push(recentB[0].symbol)
+			possessionsArray.push(recentS[0].symbol)
+		}
      
-
        await usersRef.on('child_added', function(snapshot) {
             let poss = (snapshot.val().possessionStocks)
           for(const key in poss) {

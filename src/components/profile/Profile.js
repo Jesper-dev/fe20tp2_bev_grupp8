@@ -235,23 +235,6 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* <div className="achievments-wrapper">
-                        <p>
-                            {millionaire ? (
-                               'Selfmade Millionaire'
-                            ) : (
-                                ''
-                            )}
-                        </p>
-                        <p>
-                            {bitcoin ? (
-                                <p>Bitcoin Enthusiast</p>
-                            ) : (
-                                ''
-                            )}
-                        </p>
-                    </div> */}
-
                 </section>
                 <TabBar tabs={tabs} />
             </HeaderWrapper>

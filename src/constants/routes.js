@@ -10,7 +10,7 @@ export const SOCIAL = '/social';
 
 export const PROFILE = '/profile';
 export const PROFILE_WALL = '/profile/wall';
-export const PROFILE_POSTS = '/profile/wall/posts';
+export const PROFILE_POSTS = '/profile/wall';
 export const PROFILE_LIKED = '/profile/wall/liked';
 export const PROFILE_DASHBOARD = '/profile/dashboard';
 

@@ -8,7 +8,7 @@ const UserPostElement = styled.section`
     width: 100%;
     max-width: 40rem;
     max-height: 75vh;
-	overflow-y: auto;
+	overflow-y: none;
 
     scrollbar-width: thin;
     scrollbar-color: var(--clr-primary-light__dimmer) #cccccc;

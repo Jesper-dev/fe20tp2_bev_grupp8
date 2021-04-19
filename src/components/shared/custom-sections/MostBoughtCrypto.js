@@ -89,6 +89,7 @@ const findIndex = (item) => {
                         key={index}
                         name={findIndex(item).name}
                         symbol={findIndex(item).symbol}
+                        id={findIndex(item).id}
                         price={findIndex(item).current_price}
                         percent={findIndex(item).price_change_percentage_24h}
                         img={findIndex(item).image}

@@ -19,7 +19,7 @@ import PageNotFound from './components/404/PageNotFound';
 
 import UserPosts from "./components/profile/profile-wall/user-posts/UserPosts";
 import LikedPosts from "./components/profile/profile-wall/liked-posts/LikedPosts";
-// import ProfileWall from './components/profile/profile-wall/ProfileWall';
+import ProfileWall from './components/profile/profile-wall/ProfileWall';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
 import ProfileSettings from './components/profile/profile-settings/ProfileSettings';
@@ -27,7 +27,7 @@ import OrganizationSettings from './components/profile/profile-dashboard/admin/O
 import ProfileAchievments from './components/profile/profile-achievments/ProfileAchievments';
 import UserInfoCard from './components/user-info-card/UserInfoCard';
 import { createGlobalStyle } from 'styled-components';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
 import { withAuthentication } from './components/session';
@@ -126,13 +126,32 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    
                     <Route exact path={ROUTES.PROFILE_WALL}>
                         <Profile />
-
+                        {/* <UserPosts /> */}
+                        
                         {/* <ProfileWall /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
+                    
+                    <Route exact path={ROUTES.PROFILE_POSTS}>
+                        <Profile />
+                        {/* <ProfileWall /> */}
+                        {/* <UserPosts /> */}
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
+
+                    <Route exact path={ROUTES.PROFILE_LIKED}>
+                        <Profile />
+                        <ProfileWall />
+                        <LikedPosts />
+                        <NavbarLeft />
+                        <Toolbar />
+                    </Route>
+
                     <Route exact path={ROUTES.PROFILE_SETTINGS}>
                         <ProfileSettings />
                         <NavbarLeft />

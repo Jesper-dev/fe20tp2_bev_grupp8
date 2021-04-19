@@ -9,6 +9,12 @@ export const MainWrapper = styled.main`
     /* margin-bottom: 56px; */
     /* width: 100%; */
 
+	& > div > div > a {
+		height: 1.125rem;
+		padding: 0.5rem 0.75rem;
+		margin-right: 1.5rem;
+	}
+	
     .information-wrapper {
         width: 90vw;
         max-width: 700px;
@@ -79,9 +85,9 @@ export const DescriptionWrapper = styled.section`
 
     box-shadow: var(--box-shadow-cards);
     border-radius: 4px;
-    padding: 16px;
+	padding: 0.25rem;
     margin: 8px;
-    font-size: 0.9rem;
-    line-height: 1.35;
+    line-height: 1.45;
     cursor: pointer;
+	font-size: 1rem;
 `;

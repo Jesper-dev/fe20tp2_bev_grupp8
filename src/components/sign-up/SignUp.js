@@ -182,7 +182,7 @@ class SignUpFormBase extends Component {
         let orgStatus = false
         let orgName = ''
         companysRef
-        .orderByChild('/emailList/anton')
+        .orderByChild('/emailList')
         .equalTo(str)
         .on('value', function(snapshot) {
             console.log("Hit kommer vi 1")
@@ -520,11 +520,37 @@ class SignUpFormBase extends Component {
                             <label className="side-by-side">
                                 Create an organization
                                 <input
+									className="checkbox"
                                     name="isAdmin"
                                     type="checkbox"
                                     checked={isAdmin}
                                     onChange={this.onChangeCheckbox}
-                                />
+								/>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+								>
+								<rect
+									x="4.75"
+									y="4.75"
+									width="14.5"
+									height="14.5"
+									rx="0.75"
+									fill="black"
+									stroke="black"
+									strokeWidth="1.5"
+								/>
+								<path
+									d="M7.75 12.25L10.75 15.25L16.75 9.25"
+									stroke="white"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
+							</svg>
                             </label>
                             {isAdmin ? (
                                 <label>
@@ -534,6 +560,7 @@ class SignUpFormBase extends Component {
                                         name="organization"
                                         value={organization}
                                         onChange={this.onChange}
+										type="text"
                                     />{' '}
                                 </label>
                             ) : (

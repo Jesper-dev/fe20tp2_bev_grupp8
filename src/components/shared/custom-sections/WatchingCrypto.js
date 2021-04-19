@@ -129,7 +129,7 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
                             />
                             ) : (
                                 <CryptoCard
-                                key={index}
+                                key={item.name}
                                 name={findIndex(item).name}
                                 symbol={findIndex(item).symbol}
                                 price={findIndex(item).current_price}

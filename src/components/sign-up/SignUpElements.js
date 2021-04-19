@@ -2,8 +2,48 @@ import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
     .side-by-side {
+		position: relative;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        user-select: none;
+
+        .checkbox {
+            appearance: none;
+            position: absolute;
+			padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+			border: none;
+        }
+
+        .checkbox:checked ~ svg > rect {
+            fill: var(--clr-primary);
+        }
+
+        .checkbox:checked ~ svg > path {
+            stroke-dashoffset: 0;
+        }
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            rect {
+                fill: transparent;
+                stroke: var(--clr-primary);
+                transition: fill 75ms linear;
+            }
+
+            path {
+                stroke: var(--clr-almost-white);
+                stroke-dasharray: 20;
+                stroke-dashoffset: 20;
+                transition: stroke-dashoffset 150ms linear;
+            }
+        }
     }
 
     .logo-lets {
