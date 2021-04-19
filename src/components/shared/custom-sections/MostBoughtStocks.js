@@ -82,9 +82,6 @@ const MostBoughtStocks = () => {
 
 
     const findIndex = (item) => {
-  /*       console.log(item)
-        return */
-
         let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
         if(index == -1 ){
             return index = 0

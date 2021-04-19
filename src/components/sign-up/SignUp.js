@@ -175,17 +175,18 @@ class SignUpFormBase extends Component {
         this.setState({ partOfOrganization: false })
         this.setState({ organization: '' })
 
-        companysRef.child('/emailList').on('value', (snapshot) => {
+        companysRef.orderByChild('/emailList').equalTo(str).on('value', (snapshot) => {
             const data = snapshot.val()
-            console.log(data)
         })
 
         let orgStatus = false
         let orgName = ''
         companysRef
-        .orderByChild('emailList/email')
+        .orderByChild('/emailList/anton')
         .equalTo(str)
         .on('value', function(snapshot) {
+            console.log("Hit kommer vi 1")
+            console.log(snapshot.val())
             if(!snapshot.val()) return;
             let org = [];
             for(const key in snapshot.val()) {
@@ -420,7 +421,6 @@ class SignUpFormBase extends Component {
     };
 
     onChangeEmail = (event) => {
-        console.log('Jag körs')
         this.checkIfPartOfOrg(event.target.value)
 
 
