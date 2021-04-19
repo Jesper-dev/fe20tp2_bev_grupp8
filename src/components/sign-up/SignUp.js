@@ -175,25 +175,25 @@ class SignUpFormBase extends Component {
         this.setState({ partOfOrganization: false })
         this.setState({ organization: '' })
 
-        companysRef.orderByChild('/emailList').equalTo(str).on('value', (snapshot) => {
-            const data = snapshot.val()
-        })
+        // companysRef.orderByChild('/emailList').equalTo(str).on('value', (snapshot) => {
+        //     const data = snapshot.val()
+        // })
 
         let orgStatus = false
         let orgName = ''
         companysRef
-        .orderByChild('/emailList/anton')
+        // .orderByChild('/emailList')
         .equalTo(str)
         .on('value', function(snapshot) {
-            console.log("Hit kommer vi 1")
-            console.log(snapshot.val())
+            console.log("Hit kommer vi")
             if(!snapshot.val()) return;
+            console.log(snapshot.val())
             let org = [];
             for(const key in snapshot.val()) {
                 console.log(key)
                 org.push({key})
             }
-            console.log("Hit kommer vi")
+
             orgName = org[0].key
             orgStatus = true
 
@@ -205,9 +205,7 @@ class SignUpFormBase extends Component {
     };
 
     componentDidMount = async () => {
-        const activeOrganizationsFirebase = await this.props.firebase.admin(
-            'organizations/'
-        );
+        const activeOrganizationsFirebase = await this.props.firebase.admin();
 
 
         activeOrganizationsFirebase.on('value', (snapshot) => {
@@ -411,11 +409,8 @@ class SignUpFormBase extends Component {
             return;
         }
 
-        // if(event.target.type == 'email'){
-        //     this.checkIfPartOfOrg(event.target.value)
-        // }
+        this.checkIfPartOfOrg(event.target.value)
 
-        // console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
         this.checkUsernameTaken(event.target.value);
     };

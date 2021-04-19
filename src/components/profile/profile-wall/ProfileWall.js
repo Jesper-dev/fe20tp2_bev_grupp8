@@ -9,7 +9,6 @@ import { PostsWrapper } from './ProfileWallElements'
 const ProfileWall = () => {
     return(
     <>
-
         <ProfileBio />
         <PostsWrapper>
 
