@@ -5,51 +5,60 @@ import { setFetchedStockList } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { FirebaseContext } from '../../components/firebase/context';
 
-import {fetchUsersOrgSnapshotArray} from '../../components/shared/functions/firebase-functions'
+import { fetchUsersOrgSnapshotArray } from '../../components/shared/functions/firebase-functions';
 
 const FetchAllStocks = () => {
-        const firebase = useContext(FirebaseContext);
+    const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
     let usersRef = firebase.users();
     let userRef = firebase.user(user.uid);
-    let possessionsArray = []
+    let possessionsArray = [];
     let uniq;
 
-    const [data, setData] = useState()
-    const dispatch = useDispatch()
+    const [data, setData] = useState();
+    const dispatch = useDispatch();
 
     const FetchAllRelevantStocks = async () => {
-       await userRef.child('/followingStocks').once('value', (snapshot) => {
+        await userRef.child('/followingStocks').once('value', (snapshot) => {
             let followingCrypto = snapshot.val();
             if (!followingCrypto) return;
-            for(const key in followingCrypto) {
-                if(!followingCrypto[key].id) continue
-                console.log(followingCrypto[key].id)
-                possessionsArray.push(followingCrypto[key].id)
-                }
-        })
+            for (const key in followingCrypto) {
+                if (!followingCrypto[key].id) continue;
+                console.log(followingCrypto[key].id);
+                possessionsArray.push(followingCrypto[key].id);
+            }
+        });
 
-		if (user.organization) {
-			let recentB = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlyBought', setData)
-			let recentS = await fetchUsersOrgSnapshotArray(firebase, user.organization, '/recentlySold', setData)
-			possessionsArray.push(recentB[0].symbol)
-			possessionsArray.push(recentS[0].symbol)
-		}
-     
-       await usersRef.on('child_added', function(snapshot) {
-            let poss = (snapshot.val().possessionStocks)
-          for(const key in poss) {
-            possessionsArray.push(poss[key].symbol)
+        if (user.organization) {
+            let recentB = await fetchUsersOrgSnapshotArray(
+                firebase,
+                user.organization,
+                '/recentlyBought',
+                setData
+            );
+            let recentS = await fetchUsersOrgSnapshotArray(
+                firebase,
+                user.organization,
+                '/recentlySold',
+                setData
+            );
+            possessionsArray.push(recentB[0].symbol);
+            possessionsArray.push(recentS[0].symbol);
+        }
+
+        await usersRef.on('child_added', function (snapshot) {
+            let poss = snapshot.val().possessionStocks;
+            for (const key in poss) {
+                possessionsArray.push(poss[key].symbol);
             }
             uniq = [...new Set(possessionsArray)];
-            });
+        });
 
-            return uniq
-    }
-
+        return uniq;
+    };
 
     const stockCall = (uniq) => {
-        if(!uniq) return
+        if (!uniq) return;
 
         const options = {
             method: 'GET',
@@ -63,43 +72,37 @@ const FetchAllStocks = () => {
             },
         };
 
-
-            (async () => {
-                await axios
-                    .request(options)
-                    .then(function (response) {
-                  /*       let res = response.data.quoteResponse.result */
-            /*             console.log(response.data.quoteResponse.result); */
-                        dispatch(setFetchedStockList(response.data.quoteResponse.result))
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            })();
-
+        (async () => {
+            await axios
+                .request(options)
+                .then(function (response) {
+                    /*       let res = response.data.quoteResponse.result */
+                    /*             console.log(response.data.quoteResponse.result); */
+                    dispatch(
+                        setFetchedStockList(response.data.quoteResponse.result)
+                    );
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        })();
     };
 
-
-        useEffect(() => {
-
-            const FetchAllDataAsync = async () => {
-                await FetchAllRelevantStocks()
-                let index = uniq.indexOf('LV')
-                uniq.splice(index, 1)
-/*
+    useEffect(() => {
+        const FetchAllDataAsync = async () => {
+            await FetchAllRelevantStocks();
+            if (!uniq) return;
+            let index = uniq.indexOf('LV');
+            uniq.splice(index, 1);
+            /*
                 console.log(uniq.join())
                 return */
-                stockCall(uniq.join())
+            stockCall(uniq.join());
+        };
+        FetchAllDataAsync();
+    }, []);
 
-            }
-            FetchAllDataAsync()
+    return null;
+};
 
-
-
-        }, [])
-
-
-    return null
-}
-
-export default FetchAllStocks
+export default FetchAllStocks;
