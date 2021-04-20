@@ -197,7 +197,7 @@ class SignUpFormBase extends Component {
         });
 
         if (orgStatus) {
-            this.setState({ organization: orgName });
+            this.setState({ organizationname: orgName });
             this.setState({ partOfOrganization: true });
         }
     };
@@ -406,7 +406,7 @@ class SignUpFormBase extends Component {
             return;
         }
 
-        this.checkIfPartOfOrg(event.target.value);
+        /*         this.checkIfPartOfOrg(event.target.value); */
 
         this.setState({ [event.target.name]: event.target.value });
         this.checkUsernameTaken(event.target.value);
@@ -509,7 +509,7 @@ class SignUpFormBase extends Component {
                                 <input
                                     className="part-of-org-wrapper"
                                     disabled
-                                    value={organization}
+                                    value={organizationname}
                                 />
                             </label>
                             <label className="side-by-side">

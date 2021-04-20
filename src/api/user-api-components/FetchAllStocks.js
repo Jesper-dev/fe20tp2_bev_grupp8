@@ -42,6 +42,7 @@ const FetchAllStocks = () => {
                 '/recentlySold',
                 setData
             );
+            if (!recentB.length > 0 || !recentS.length > 0) return;
             possessionsArray.push(recentB[0].symbol);
             possessionsArray.push(recentS[0].symbol);
         }

@@ -7,25 +7,30 @@ import {
 } from '../../shared/functions/ArrayManipulationFuncs';
 import { fetchUsersOrgSnapshotArray } from '../../shared/functions/firebase-functions';
 
-import SectionDataIndicator from '../../shared/card/section-data-indicator/SectionDataIndicator'
+import SectionDataIndicator from '../../shared/card/section-data-indicator/SectionDataIndicator';
 import CryptoCardSmall from '../../shared/card/crypto-card-small/CryptoCardSmall';
 import { ContentWrapper } from '../comp-hottest-stocks/CompHottestStocksElements';
 
 import { FirebaseContext } from '../../firebase/context';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const CompHottestCrypto = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
 
-    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
+    const FetchedCryptoList = useSelector((state) => state.FetchedCryptoList);
 
     const [stockData, setStockData] = useState(null);
     const [hottestStocks, setHottestStocks] = useState(null);
 
-
-    let LabelsArr = [<i className="fab fa-bitcoin"></i>, 'name', '$', '% 24h ▾', <i className="fas fa-info"></i>];
+    let LabelsArr = [
+        <i className="fab fa-bitcoin"></i>,
+        'name',
+        '$',
+        '% 24h ▾',
+        <i className="fas fa-info"></i>,
+    ];
 
     useEffect(() => {
         fetchUsersOrgSnapshotArray(
@@ -51,15 +56,17 @@ const CompHottestCrypto = () => {
         setHottestStocks(reducedArray);
     }, [stockData]);
 
-
     const findIndex = (item) => {
-        let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.symbol == item.symbol)]
-        return index
-    }
+        let index =
+            FetchedCryptoList[
+                FetchedCryptoList.findIndex((x) => x.symbol == item.symbol)
+            ];
+        return index;
+    };
     return (
         <>
             <ContentWrapper>
-                {!hottestStocks ||!FetchedCryptoList.length > 0 ? null : (
+                {!hottestStocks || !FetchedCryptoList.length > 0 ? null : (
                     <>
                         <div>
                             <h4>
@@ -73,14 +80,19 @@ const CompHottestCrypto = () => {
                             {hottestStocks.map((item, i) => {
                                 return (
                                     <CryptoCardSmall
-                                    key={i}
-                                    i={i}
-                                    name={findIndex(item).name}
-                                    symbol={findIndex(item).symbol}
-                                    price={findIndex(item).current_price}
-                                    percent={findIndex(item).price_change_percentage_24h}
-                                    img={findIndex(item).image}
-                            
+                                        key={i}
+                                        i={i}
+                                        name={findIndex(item)?.name ?? 'LV'}
+                                        symbol={findIndex(item)?.symbol ?? 'LV'}
+                                        price={
+                                            findIndex(item)?.current_price ?? 99
+                                        }
+                                        percent={
+                                            findIndex(item)
+                                                ?.price_change_percentage_24h ??
+                                            99
+                                        }
+                                        img={findIndex(item)?.image ?? 'IMG'}
                                     />
                                 );
                             })}

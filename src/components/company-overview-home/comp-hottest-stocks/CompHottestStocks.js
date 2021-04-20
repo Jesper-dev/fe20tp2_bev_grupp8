@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import {
     MakeOneArrayOrganization,
@@ -8,7 +8,7 @@ import {
 } from '../../shared/functions/ArrayManipulationFuncs';
 import { fetchUsersOrgSnapshotArray } from '../../shared/functions/firebase-functions';
 
-import SectionDataIndicator from '../../shared/card/section-data-indicator/SectionDataIndicator'
+import SectionDataIndicator from '../../shared/card/section-data-indicator/SectionDataIndicator';
 import StockCardSmall from '../../shared/card/stock-card-small/StockCardSmall';
 import { ContentWrapper } from './CompHottestStocksElements';
 
@@ -20,9 +20,15 @@ const CompHottestStocks = () => {
 
     const [stockData, setStockData] = useState(null);
     const [hottestStocks, setHottestStocks] = useState(null);
-    const FetchedStockList = useSelector(state => state.FetchedStockList)
+    const FetchedStockList = useSelector((state) => state.FetchedStockList);
 
-    let LabelsArr = [<i className="fas fa-globe"></i>, 'name', '$', '% 24h ▾', <i className="fas fa-info"></i>];
+    let LabelsArr = [
+        <i className="fas fa-globe"></i>,
+        'name',
+        '$',
+        '% 24h ▾',
+        <i className="fas fa-info"></i>,
+    ];
 
     useEffect(() => {
         fetchUsersOrgSnapshotArray(
@@ -48,14 +54,18 @@ const CompHottestStocks = () => {
         setHottestStocks(reducedArray);
     }, [stockData]);
 
-
     const findIndex = (item) => {
-        let index = FetchedStockList[FetchedStockList.findIndex(x => x.symbol == item.symbol)]
-        return index
-    }
+        let index =
+            FetchedStockList[
+                FetchedStockList.findIndex((x) => x.symbol == item.symbol)
+            ];
+        return index;
+    };
     return (
         <ContentWrapper>
-            {!hottestStocks ||!FetchedStockList.length > 0 ? null : (
+            {!hottestStocks ||
+            !stockData ||
+            !FetchedStockList.length > 0 ? null : (
                 <>
                     <div>
                         <h4>
@@ -74,7 +84,10 @@ const CompHottestStocks = () => {
                                     name={findIndex(item).symbol}
                                     shortname={findIndex(item).shortName}
                                     cost={findIndex(item).regularMarketPrice}
-                                    percent={findIndex(item).regularMarketChangePercent}
+                                    percent={
+                                        findIndex(item)
+                                            .regularMarketChangePercent
+                                    }
                                 />
                             );
                         })}
