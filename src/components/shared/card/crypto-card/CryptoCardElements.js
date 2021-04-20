@@ -5,7 +5,7 @@ export const CardWrapper = styled.article`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap: 1rem;
+    gap: 0.75rem;
     /*    padding: 0 1rem; */
     padding: 0.5rem 0.75rem;
     border-radius: 0.25rem;
@@ -15,6 +15,10 @@ export const CardWrapper = styled.article`
     background: var(--body);
     cursor: pointer;
     transition: box-shadow 180ms ease-in-out;
+
+    /* @media screen and (max-width: 550px) {
+        padding: 0.75rem;
+    } */
 
     &:hover {
         box-shadow: var(--box-shadow-cards-hover);

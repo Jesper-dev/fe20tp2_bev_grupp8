@@ -14,6 +14,10 @@ export const ContentWrapper = styled.section`
       /*   overflow: auto;
         scrollbar-width: thin; */
 
+        @media screen and (max-width: 550px) {
+        max-height: 100vh;
+    }
+
         &::-webkit-scrollbar {
             width: 10px;
         }

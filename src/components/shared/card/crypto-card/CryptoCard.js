@@ -11,6 +11,19 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
     let history = useHistory();
     const [showName, setShowName] = useState(true)
 
+    useEffect(() => {
+        if(window.screen.width > 600) {
+            setShowName(true)
+        } else {
+            setShowName(false)
+        }
+        // window.addEventListener('resize', checkSize);
+
+        // return () => {
+        //   window.removeEventListener('resize', checkSize);
+        // };
+    }, [])
+
     const setChosenCryptoOption = () => {
         history.push(`/info/crypto/${id}`);
     };
@@ -25,22 +38,17 @@ const CryptoCard = ({ name, id, price, img, percent, amount, symbol }) => {
     let percentInt = parseFloat(percent);
 
     const checkSize = () => {
+        console.log("Hej")
         if(window.innerWidth > 600){
             setShowName(true)
-
+            console.log("Den är true")
         } else{
-
+            console.log("Den är false")
             setShowName(false)
         }
     }
 
-    useEffect(() => {
-        window.addEventListener('resize', checkSize);
 
-        return () => {
-          window.removeEventListener('resize', checkSize);
-        };
-    }, [])
 
     return (
         <>

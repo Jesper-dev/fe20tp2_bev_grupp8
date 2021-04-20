@@ -16,8 +16,6 @@ export const ContentWrapper = styled.div`
         padding: 0px;
     }
 
-
-
     hr {
         align-self: flex-start;
         width: 100%;
