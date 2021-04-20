@@ -12,6 +12,12 @@ export const ContentWrapper = styled.div`
     width: 100%;
     max-width: 40rem;
 
+    @media screen and (max-width: 550px) {
+        padding: 0px;
+    }
+
+
+
     hr {
         align-self: flex-start;
         width: 100%;

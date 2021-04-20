@@ -12,11 +12,19 @@ export const ContentWrapper = styled.div`
 
     padding: 6rem 8rem 8rem 8rem;
 
+    @media screen and (max-width: 550px) {
+        padding: 0px;
+    }
+
     .trophy {
         /*     z-index: -1;
         position: relative; */
         height: 80px;
         width: auto;
+
+        @media screen and (max-width: 550px) {
+        height: 50px;
+    }
     }
     .topbar-wrapper {
         width: 100%;

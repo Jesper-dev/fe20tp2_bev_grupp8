@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ContentWrapper } from './ProfileAchievmentsElements';
 import { FirebaseContext } from '../../firebase/context';
 import AchievmentsCard from './AchievmentsCard';
+import BackButton from '../../shared/button/back-button/BackButton'
 
 import TrophySvg from '../../svgs/achievements/TrophySvg';
 
@@ -31,6 +32,7 @@ const ProfileAchievments = () => {
     return (
         <>
             <ContentWrapper>
+            <BackButton />
                 <div className="topbar-wrapper">
                     <h1>Achievments</h1>
                     <TrophySvg className="trophy" />

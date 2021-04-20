@@ -159,13 +159,13 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_CUSTOMIZE}>
                         <ProfileSettings />
-                        <NavbarLeft />
-                        <Toolbar />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_ACHIEVMENTS}>
                         <ProfileSettings />
-                        <NavbarLeft />
-                        <Toolbar />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.ADMIN_SETTINGS}>
                         <OrganizationSettings />

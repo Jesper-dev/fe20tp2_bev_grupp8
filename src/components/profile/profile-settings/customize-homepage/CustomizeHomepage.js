@@ -4,6 +4,8 @@ import { ContentWrapper } from './CustomizeHomepageElements';
 
 import { FirebaseContext } from '../../../firebase/context';
 
+import BackButton from '../../../shared/button/back-button/BackButton'
+
 const CustomizeHomepage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
     const [checkedRec, setCheckedRec] = useState(true);
@@ -86,6 +88,7 @@ const CustomizeHomepage = () => {
     };
     return (
         <ContentWrapper>
+            <BackButton />
             <h3>Customize Application</h3>
             {/* NOTE: Change whole div to only a label with an input */}
             <hr />
