@@ -99,15 +99,15 @@ const INITIAL_STATE = {
             desc: 'Own five bitcoins',
             reward: "Title 'Bitcoin Enthusiast'",
             show: false,
-            id: 'bitcoin'
+            id: 'bitcoin',
         },
         millionaire: {
             name: 'Selfmade Millionaire',
             done: false,
             desc: 'Earn your first million',
-            reward: "Title \"Selfmade Millionaire\"",
+            reward: 'Title "Selfmade Millionaire"',
             show: false,
-            id: 'millionaire'
+            id: 'millionaire',
         },
     },
     picture: {
@@ -115,12 +115,12 @@ const INITIAL_STATE = {
     },
     email: '',
 
-  /*   list: [
+    /*   list: [
         {
             email: 'letsvest@vest.com',
         },
     ], */
-    emailList: { email: 'letsvest@vest.com'},
+    emailList: { email: 'letsvest@vest.com' },
 
     passwordOne: '',
     passwordTwo: '',
@@ -152,7 +152,7 @@ class SignUpFormBase extends Component {
 
     checkUsernameTaken = (str) => {
         this.setState({ usernameTaken: false });
-       /*  console.log('heete') */
+        /*  console.log('heete') */
         const usersRef = this.props.firebase.users();
         // const usersRef = this.props.firebase.db.ref('users/');
 
@@ -165,48 +165,45 @@ class SignUpFormBase extends Component {
             .orderByChild('username')
             .equalTo(str)
             .on('child_added', () => {
-         /*        console.log('Username already in use!'); */
+                /*        console.log('Username already in use!'); */
                 this.setState({ usernameTaken: true });
             });
     };
 
     checkIfPartOfOrg = (str) => {
         const companysRef = this.props.firebase.admin();
-        this.setState({ partOfOrganization: false })
-        this.setState({ organization: '' })
+        this.setState({ partOfOrganization: false });
+        this.setState({ organization: '' });
 
-        // companysRef.orderByChild('/emailList').equalTo(str).on('value', (snapshot) => {
-        //     const data = snapshot.val()
-        // })
+        let orgStatus = false;
+        let orgName = '';
 
-        let orgStatus = false
-        let orgName = ''
-        companysRef
-        .orderByChild('/emailList')
-        .equalTo(str)
-        .on('value', function(snapshot) {
-            console.log("Hit kommer vi")
-            if(!snapshot.val()) return;
-            console.log(snapshot.val())
-            let org = [];
-            for(const key in snapshot.val()) {
-                console.log(key)
-                org.push({key})
-            }
+        companysRef.once('value', (snapshot) => {
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                if (!childData || orgStatus) return;
+                var orgname = childSnapshot.key;
 
-            orgName = org[0].key
-            orgStatus = true
+                let list = [];
+                for (const key in childData.emailList) {
+                    list.push(childData.emailList[key]);
+                }
+                let index = list.findIndex((x) => x == str);
+                if (index !== -1) {
+                    orgStatus = true;
+                    orgName = orgname;
+                }
+            });
+        });
 
-        })
-        if(orgStatus){
-            this.setState({ organization: orgName })
+        if (orgStatus) {
+            this.setState({ organization: orgName });
             this.setState({ partOfOrganization: true });
         }
     };
 
     componentDidMount = async () => {
         const activeOrganizationsFirebase = await this.props.firebase.admin();
-
 
         activeOrganizationsFirebase.on('value', (snapshot) => {
             activeOrganizations = snapshot.val();
@@ -241,7 +238,7 @@ class SignUpFormBase extends Component {
             likedPosts,
             colors,
             Logo,
-            achievments
+            achievments,
         } = this.state;
 
         if (partOfOrganization) {
@@ -299,7 +296,7 @@ class SignUpFormBase extends Component {
                         organization,
                         userSettings,
                         likedPosts,
-                        achievments
+                        achievments,
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
@@ -326,7 +323,7 @@ class SignUpFormBase extends Component {
                                 organization,
                                 userSettings,
                                 likedPosts,
-                                achievments
+                                achievments,
                             });
                         this.props.firebase
                             // .organization(organization + '/emails')
@@ -346,7 +343,7 @@ class SignUpFormBase extends Component {
                             organization,
                             userSettings,
                             likedPosts,
-                            achievments
+                            achievments,
                         });
                     } else {
                         this.props.firebase
@@ -367,7 +364,7 @@ class SignUpFormBase extends Component {
                                 organization: organizationname,
                                 userSettings,
                                 likedPosts,
-                                achievments
+                                achievments,
                             });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
@@ -383,7 +380,7 @@ class SignUpFormBase extends Component {
                             userSettings,
                             organization: organizationname,
                             likedPosts,
-                            achievments
+                            achievments,
                         });
                     }
                 }
@@ -405,23 +402,22 @@ class SignUpFormBase extends Component {
             return;
         }
         const pattern = /[^A-Za-z0-9]/;
-        if(pattern.test(event.target.value)) {
+        if (pattern.test(event.target.value)) {
             return;
         }
 
-        this.checkIfPartOfOrg(event.target.value)
+        this.checkIfPartOfOrg(event.target.value);
 
         this.setState({ [event.target.name]: event.target.value });
         this.checkUsernameTaken(event.target.value);
     };
 
     onChangeEmail = (event) => {
-        this.checkIfPartOfOrg(event.target.value)
-
+        this.checkIfPartOfOrg(event.target.value);
 
         // console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value });
-    }
+    };
 
     onChangeCheckbox = (event) => {
         if (
@@ -459,7 +455,7 @@ class SignUpFormBase extends Component {
             this.state.usernameTaken;
 
         return (
-            <ContentWrapper partOfOrg={partOfOrganization} >
+            <ContentWrapper partOfOrg={partOfOrganization}>
                 {/*     <h1>Let's Vest</h1> */}
                 <LogoLets className="logo-lets" />
                 {this.state.loading ? (
@@ -508,44 +504,48 @@ class SignUpFormBase extends Component {
                                     placeholder="Confirm password"
                                 />
                             </label>
-                                <label className="label-part-of-org">
-                                     Organization
-                                    <input className="part-of-org-wrapper" disabled value={organization} />
-                                 </label>
+                            <label className="label-part-of-org">
+                                Organization
+                                <input
+                                    className="part-of-org-wrapper"
+                                    disabled
+                                    value={organization}
+                                />
+                            </label>
                             <label className="side-by-side">
                                 Create an organization
                                 <input
-									className="checkbox"
+                                    className="checkbox"
                                     name="isAdmin"
                                     type="checkbox"
                                     checked={isAdmin}
                                     onChange={this.onChangeCheckbox}
-								/>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-								>
-								<rect
-									x="4.75"
-									y="4.75"
-									width="14.5"
-									height="14.5"
-									rx="0.75"
-									fill="black"
-									stroke="black"
-									strokeWidth="1.5"
-								/>
-								<path
-									d="M7.75 12.25L10.75 15.25L16.75 9.25"
-									stroke="white"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
+                                />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <rect
+                                        x="4.75"
+                                        y="4.75"
+                                        width="14.5"
+                                        height="14.5"
+                                        rx="0.75"
+                                        fill="black"
+                                        stroke="black"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M7.75 12.25L10.75 15.25L16.75 9.25"
+                                        stroke="white"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
                             </label>
                             {isAdmin ? (
                                 <label>
@@ -555,13 +555,13 @@ class SignUpFormBase extends Component {
                                         name="organization"
                                         value={organization}
                                         onChange={this.onChange}
-										type="text"
+                                        type="text"
                                     />{' '}
                                 </label>
                             ) : (
                                 ''
                             )}
-                        {/*     {partOfOrganization ? (
+                            {/*     {partOfOrganization ? (
                                 <label>
                                     {' '}
                                     Organization{' '}

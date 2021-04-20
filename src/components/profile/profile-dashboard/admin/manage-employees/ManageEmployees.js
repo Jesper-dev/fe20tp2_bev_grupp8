@@ -11,8 +11,8 @@ const AddEmployee = () => {
     const firebase = useContext(FirebaseContext);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
-    let employeeID = ''
-    let userData = {}
+    let employeeID = '';
+    let userData = {};
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,12 +49,12 @@ const AddEmployee = () => {
 
     const makeUserAdmin = (email) => {
         findUser(email, 'makeAdmin');
-        console.log(userData)
+        console.log(userData);
     };
 
     const findUser = (email, makeAdmin) => {
         let users = [];
-        console.log('Email in findUser: ', email)
+        console.log('Email in findUser: ', email);
         firebase
             .organization(user.organization)
             .child('/users')
@@ -73,20 +73,18 @@ const AddEmployee = () => {
                 let index = users.findIndex((x) => x.email == email);
 
                 let foundObj = users[index];
-                employeeID = foundObj.id
-                if(makeAdmin == 'makeAdmin'){
-                    updateEmployee(foundObj.id)
+                employeeID = foundObj.id;
+                if (makeAdmin == 'makeAdmin') {
+                    updateEmployee(foundObj.id);
                 }
-                console.log(foundObj)
-                userData = foundObj
+                console.log(foundObj);
+                userData = foundObj;
                 return foundObj;
-
             });
-
     };
 
     const updateEmployee = (id) => {
-        console.log(id)
+        console.log(id);
         firebase
             .organization(user.organization)
             .child(`/users/${id}/roles`)
@@ -106,26 +104,32 @@ const AddEmployee = () => {
     };
 
     const addEmailToDb = (email, name) => {
-        firebase.organization(user.organization).child('/emailList').update({
-            [name]: email
-        })
+        firebase
+            .organization(user.organization)
+            .child('/emailList')
+            .update({
+                [name]: email,
+            });
         setEmailValue('');
         setNameValue('');
     };
 
     useEffect(() => {
         let orgData;
-        firebase.organization(user.organization).child('/emailList').once('value', (snapshot) => {
-            const data = snapshot.val()
-            if (!data) return;
-            let list = []
+        firebase
+            .organization(user.organization)
+            .child('/emailList')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
+                let list = [];
 
-            for(const key in data) {
-                list.push(data[key])
-            }
-            setEmployeeList(list);
-            console.log(list)
-        })
+                for (const key in data) {
+                    list.push(data[key]);
+                }
+                setEmployeeList(list);
+                console.log(list);
+            });
     }, [firebase.db, user.organization, nameValue]); //varning!
 
     return (
