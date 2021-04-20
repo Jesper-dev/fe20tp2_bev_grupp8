@@ -8,7 +8,7 @@ import { fetchUserSnapshotArray } from '../functions/firebase-functions';
 
 import { FirebaseContext } from '../../firebase/context';
 
-import { GenericVestBtn } from '../button/ButtonElements'
+import { GenericVestBtn } from '../button/ButtonElements';
 
 import { ContentWrapper } from './CustomComponentsElements';
 
@@ -24,10 +24,10 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
     const [firstArr, setFirstArr] = useState([]);
     const [list, setList] = useState([]);
     const FollowingCrypto = useSelector((state) => state.FollowingCrypto);
-    const FetchedCryptoList = useSelector(state => state.FetchedCryptoList)
+    const FetchedCryptoList = useSelector((state) => state.FetchedCryptoList);
 
     useEffect(() => {
-    loadCryptosInit()
+        loadCryptosInit();
 
         //  (async () => {
         //         await axios
@@ -49,51 +49,45 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
     }, []);
 
     const loadCryptosInit = () => {
-
-        firebase.user(user.uid).child('/followingCrypto').once('value', (snapshot) => {
-            const data = snapshot.val()
-            if(!data) return;
-            let arr = []
-            let newList = []
-            for (const key in data) {
-                arr.push({ ...data[key] });
-            }
-            if(arr.length == 1 || arr.length == 2) {
-                for(let i = 0; i < 1; i++) {
-                    newList.push(arr[i])
-
+        firebase
+            .user(user.uid)
+            .child('/followingCrypto')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
+                let arr = [];
+                let newList = [];
+                for (const key in data) {
+                    arr.push({ ...data[key] });
                 }
-                setInitArr(newList)
-                setWatching(newList)
-                setFirstArr(newList)
-                return;
-            }
-            setInitArr(arr)
-            for(let i = 0; i < 3; i++) {
-                newList.push(arr[i])
-            }
+                if (arr.length < 3) {
+                    for (let i = 0; i < 1; i++) {
+                        newList.push(arr[i]);
+                    }
+                    setInitArr(newList);
+                    setWatching(newList);
+                    setFirstArr(newList);
+                    return;
+                }
+                setInitArr(arr);
+                for (let i = 0; i < 3; i++) {
+                    newList.push(arr[i]);
+                }
 
-
-            setWatching(newList)
-            setFirstArr(newList)
-        })
+                setWatching(newList);
+                setFirstArr(newList);
+            });
     };
 
     const loadCryptos = (init, first) => {
-
-        let newList = []
-        if(loadmore == true) {
-            setWatching(init)
+        let newList = [];
+        if (loadmore == true) {
+            setWatching(init);
         } else {
-            setWatching(first)
+            setWatching(first);
         }
-        console.log(newList)
-        setLoadmore(!loadmore)
-
-
+        setLoadmore(!loadmore);
     };
-
-
 
     const createCryptoIdList = (cryptoList) => {
         for (let i = 0; i < cryptoList.length; i++) {
@@ -103,12 +97,15 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
     };
 
     const findIndex = (item) => {
-        let index = FetchedCryptoList[FetchedCryptoList.findIndex(x => x.id == item.id)]
-  /*       if(index == -1 ){
+        let index =
+            FetchedCryptoList[
+                FetchedCryptoList.findIndex((x) => x.id == item.id)
+            ];
+        /*       if(index == -1 ){
             return index = 0
         } */
-        return index
-    }
+        return index;
+    };
 
     return (
         <ContentWrapper gap={gap}>
@@ -117,41 +114,47 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
             {watching.map((item, index) => {
                 return (
                     <>
-                    {!FetchedCryptoList.length > 0 || !watching.length > 0 ? null : (
-<>
-                        {item.name == 'lets-vest-Cry' ? (
-                            <CryptoCard
-                            key={index}
-                            name={item.name}
-                            price={item.regularMarketPrice}
-                            percent={item.regularMarketChangePercent}
-                            img={item.image}
-                            />
-                            ) : (
-                                <CryptoCard
-                                key={item.name}
-                                name={findIndex(item).name}
-                                symbol={findIndex(item).symbol}
-                                price={findIndex(item).current_price}
-                                percent={findIndex(item).price_change_percentage_24h}
-                                img={findIndex(item).image}
-                                id={findIndex(item).id}
-                                />
+                        {!FetchedCryptoList.length > 0 ||
+                        !watching.length > 0 ? null : (
+                            <>
+                                {item.name == 'lets-vest-Cry' ? (
+                                    <CryptoCard
+                                        key={index}
+                                        name={item.name}
+                                        price={item.regularMarketPrice}
+                                        percent={
+                                            item.regularMarketChangePercent
+                                        }
+                                        img={item.image}
+                                    />
+                                ) : (
+                                    <CryptoCard
+                                        key={item.name}
+                                        name={findIndex(item).name}
+                                        symbol={findIndex(item).symbol}
+                                        price={findIndex(item).current_price}
+                                        percent={
+                                            findIndex(item)
+                                                .price_change_percentage_24h
+                                        }
+                                        img={findIndex(item).image}
+                                        id={findIndex(item).id}
+                                    />
                                 )}
-</>
-                                )}
-                             </>
-                                )
-                            })}
+                            </>
+                        )}
+                    </>
+                );
+            })}
             <GenericVestBtn
-            onClick={() => loadCryptos(initArr, firstArr)}
-            pad='4px'
-            border='1px solid black'
-            br='40px'
-            bg='var(---clr-primary)'
-            co='var(---clr-secondary)'
-            wid='10%'
-            fz='0.9rem'
+                onClick={() => loadCryptos(initArr, firstArr)}
+                pad="4px"
+                border="1px solid black"
+                br="40px"
+                bg="var(---clr-primary)"
+                co="var(---clr-secondary)"
+                wid="10%"
+                fz="0.9rem"
             >
                 {loadmore ? 'Show more' : 'Show Less'}
             </GenericVestBtn>

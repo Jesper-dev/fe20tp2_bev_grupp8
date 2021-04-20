@@ -42,14 +42,20 @@ export const ManageWrapper = styled.div`
         border-radius: 10px;
 
         &::-webkit-scrollbar-track {
-            width: 10px;
-            background-color: var(--primary);
-            box-shadow: inset 0 0 5px var(--primary);
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
+            background-color: #cccccc;
         }
+
         &::-webkit-scrollbar {
-            background-color: var(--third);
-            width: 10px;
+            width: 12px;
+            background-color: #cccccc;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: var(--clr-primary-light__dimmer);
         }
     }
 
@@ -66,6 +72,7 @@ export const ManageWrapper = styled.div`
     }
 
     form > label > input {
+        margin-top: 0.375rem;
         width: 100%;
         padding: 0.5rem 0.375rem 0.5rem 0;
         border: 0.09375rem solid #c8c8c8;
@@ -79,12 +86,12 @@ export const ManageWrapper = styled.div`
         text-indent: 0.375rem;
         transition: border-color 125ms linear, box-shadow 125ms linear;
         &:hover {
-            border-color: var(--third);
+            border-color: var(--clr-primary__brighter);
         }
 
         &:focus {
-            border-color: var(--third);
-            box-shadow: 0 0 0 0.1875rem #ddeafd;
+            border-color: var(--clr-primary__brighter);
+            box-shadow: 0 0 0 0.1875rem var(--clr-primary-light__dimmer);
         }
 
         &:invalid {
@@ -99,14 +106,14 @@ export const ManageWrapper = styled.div`
     }
 
     form > button {
-        color: var(--lighter-green);
+        color: var(--clr-primary);
         background: none;
         border: none;
 
         /* Maring is not best solution. Fixed this way since align center centers button relative to label height. */
-        margin-top: 10px;
+        margin-top: 1.25rem;
 
-        padding: 16px;
+        padding: 0.5rem;
         font-size: 1.2rem;
         outline: none;
         cursor: pointer;

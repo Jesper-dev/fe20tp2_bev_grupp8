@@ -25,20 +25,20 @@ const EmployeeCard = ({ email, i, removeUser, makeUserAdmin }) => {
                 <GenericVestBtn
                     onClick={() => removeUser(email)}
                     pad="8px"
-                    border="2px solid var(--primary)"
+                    border="2px solid var(--clr-primary)"
                     br="10px"
                     bg="none"
-                    co="var(--primary)"
+                    co="var(--clr-primary)"
                 >
                     DELETE
                 </GenericVestBtn>
                 <GenericVestBtn
                     onClick={() => makeUserAdmin(email)}
                     pad="8px"
-                    border="2px solid var(--primary)"
+                    border="2px solid var(--clr-primary)"
                     br="10px"
                     bg="none"
-                    co="var(--primary)"
+                    co="var(--clr-primary)"
                 >
                     MAKE ADMIN
                 </GenericVestBtn>

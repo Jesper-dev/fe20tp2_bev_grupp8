@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import StockCard from '../card/stock-card/StockCard';
 import StockCardSmall from '../card/stock-card-small/StockCardSmall';
 
@@ -25,64 +25,66 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
     const [firstArr, setFirstArr] = useState([]);
 
     useEffect(() => {
-        loadCryptosInit()
+        loadCryptosInit();
 
-            //  (async () => {
-            //         await axios
-            //             .get(
-            //                 `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
-            //             )
-            //             .then((response) => {
-            //                 setCryptoData(response.data);
-            //             console.log('hey')
-            //                 setLoading(false);
-            //             })
-            //             .catch((error) => {
-            //                 console.error(error);
-            //             });
-            //     })();
-            // return () => {
-            //     setLoading(false)
-            // }
-        }, []);
+        //  (async () => {
+        //         await axios
+        //             .get(
+        //                 `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`
+        //             )
+        //             .then((response) => {
+        //                 setCryptoData(response.data);
+        //             console.log('hey')
+        //                 setLoading(false);
+        //             })
+        //             .catch((error) => {
+        //                 console.error(error);
+        //             });
+        //     })();
+        // return () => {
+        //     setLoading(false)
+        // }
+    }, []);
 
-        const loadCryptosInit = () => {
-            firebase.user(user.uid).child('/followingStocks').once('value', (snapshot) => {
-                const data = snapshot.val()
-                let arr = []
-                let newList = []
+    const loadCryptosInit = () => {
+        firebase
+            .user(user.uid)
+            .child('/followingStocks')
+            .once('value', (snapshot) => {
+                const data = snapshot.val();
+                let arr = [];
+                let newList = [];
                 for (const key in data) {
                     arr.push({ ...data[key] });
                 }
-                if(arr.length == 1 || arr.length == 2) {
-                    for(let i = 0; i < 1; i++) {
-                        newList.push(arr[i])
-
+                if (arr.length < 3) {
+                    for (let i = 0; i < 1; i++) {
+                        newList.push(arr[i]);
                     }
-                    setInitArr(newList)
-                    setWatching(newList)
-                    setFirstArr(newList)
+                    setInitArr(newList);
+                    setWatching(newList);
+                    setFirstArr(newList);
                     return;
                 }
-                setInitArr(arr)
-                for(let i = 0; i < 3; i++) {
-                    newList.push(arr[i])
+                setInitArr(arr);
+                for (let i = 0; i < 3; i++) {
+                    newList.push(arr[i]);
                 }
-                setWatching(newList)
-                setFirstArr(newList)
-            })
-        };
+                setWatching(newList);
+                setFirstArr(newList);
+            });
+    };
 
-        const loadStocks = (init, first) => {
-            let newList = []
-            if(loadmore == true) {
-                setWatching(init)
-            } else {
-                setWatching(first)
-            }
-            console.log(newList)
-            setLoadmore(!loadmore)
-        };
+    const loadStocks = (init, first) => {
+        let newList = [];
+        if (loadmore == true) {
+            setWatching(init);
+        } else {
+            setWatching(first);
+        }
+        console.log(newList);
+        setLoadmore(!loadmore);
+    };
     return (
         <>
             <ContentWrapper gap={gap}>
@@ -139,17 +141,17 @@ const FollowingHome = ({ array, gap, stockscardsmall }) => {
                     );
                 })} */}
                 <GenericVestBtn
-            onClick={() => loadStocks(initArr, firstArr)}
-            pad='4px'
-            border='1px solid black'
-            br='40px'
-            bg='var(---clr-primary)'
-            co='var(---clr-secondary)'
-            wid='10%'
-            fz='0.9rem'
-            >
-                {loadmore ? 'Show more' : 'Show Less'}
-            </GenericVestBtn>
+                    onClick={() => loadStocks(initArr, firstArr)}
+                    pad="4px"
+                    border="1px solid black"
+                    br="40px"
+                    bg="var(---clr-primary)"
+                    co="var(---clr-secondary)"
+                    wid="10%"
+                    fz="0.9rem"
+                >
+                    {loadmore ? 'Show more' : 'Show Less'}
+                </GenericVestBtn>
             </ContentWrapper>
         </>
     );

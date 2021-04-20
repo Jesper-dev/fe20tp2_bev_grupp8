@@ -13,7 +13,7 @@ export const TradeConfirmRender = ({
     totalCost,
     img,
     name,
-    history
+    history,
 }) => {
     return (
         <>
@@ -40,7 +40,7 @@ export const TradeConfirmRender = ({
                             pad="0.6rem 3rem"
                             onClick={() => history.push('/profile')}
                         >
-                            continue
+                            Continue
                         </GenericVestBtn>
                         <Confetti
                             width={window.innerWidth}

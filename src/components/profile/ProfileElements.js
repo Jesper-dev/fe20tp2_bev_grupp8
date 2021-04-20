@@ -29,11 +29,12 @@ export const HeaderWrapper = styled.header`
         gap: 2.75rem;
     }
 
-    .name-emoji{
+    .name-emoji {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 0%;
+        gap: 0.25rem;
+        margin: 0;
     }
 
     .achievments-wrapper {
@@ -42,40 +43,40 @@ export const HeaderWrapper = styled.header`
     }
 
     .achievments-wrapper > p {
-        font-size: 0.80rem;
+        font-size: 0.8rem;
         background: none;
     }
 
     .follower-wrapper {
-            flex: 1 1 auto;
-            flex-direction: row;
+        flex: 1 1 auto;
+        flex-direction: row;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+
+        div {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-
-            div {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            div > p {
-                font-size: 1.25rem;
-            }
-
-            div > span {
-                font-size: 0.80rem;
-            }
+            flex-direction: column;
+            align-items: center;
         }
 
-        .btn-wrapper {
-            flex: 1 1 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
+        div > p {
+            font-size: 1.25rem;
         }
+
+        div > span {
+            font-size: 0.8rem;
+        }
+    }
+
+    .btn-wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
 
     .emoji-picker-wrapper {
         @media screen and (min-width: 1024px) {
@@ -132,8 +133,6 @@ export const HeaderWrapper = styled.header`
         }
     }
 
-
-
     .fa-money-bill-wave {
         color: goldenrod;
     }
@@ -145,7 +144,6 @@ export const MainWrapper = styled.main`
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.5rem 2rem;
-
 `;
 
 export const ProfileSettingsBtn = styled(Link)`

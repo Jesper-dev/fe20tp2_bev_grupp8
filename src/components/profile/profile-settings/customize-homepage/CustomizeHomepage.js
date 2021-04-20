@@ -4,7 +4,7 @@ import { ContentWrapper } from './CustomizeHomepageElements';
 
 import { FirebaseContext } from '../../../firebase/context';
 
-import BackButton from '../../../shared/button/back-button/BackButton'
+import BackButton from '../../../shared/button/back-button/BackButton';
 
 const CustomizeHomepage = () => {
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -93,65 +93,67 @@ const CustomizeHomepage = () => {
             {/* NOTE: Change whole div to only a label with an input */}
             <hr />
 
-
             <div className="home-wrapper">
-            <h4>Homepage</h4>
-            <hr />
-            <div className="tgl">
-                <p>Show Recommended</p>
-                <input
-                    type="checkbox"
-                    id="rec"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedRec}
-                    onClick={seeFunc}
-                    value="Rec"
-                />
-                <label htmlFor="rec" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Show Watching Cryptos</p>
-                <input
-                    type="checkbox"
-                    id="followCrypto"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedWatchCryptos}
-                    onClick={seeFunc}
-                    value="WatchCryptos"
-                />
-                <label htmlFor="followCrypto" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Show Watching Securitys</p>
-                <input
-                    type="checkbox"
-                    id="followCryptoSecuritys"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedWatchSecuritys}
-                    onClick={seeFunc}
-                    value="WatchSecuritys"
-                />
-                <label
-                    htmlFor="followCryptoSecuritys"
-                    className="toggle-btn"
-                ></label>
-            </div>
-            <div className="tgl">
-                <p>Show News</p>
-                <input
-                    type="checkbox"
-                    id="news"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedNews}
-                    onClick={seeFunc}
-                    value="News"
-                />
-                <label htmlFor="news" className="toggle-btn"></label>
-            </div>
+                <h4>Homepage</h4>
+                <hr />
+                <div className="tgl">
+                    <p>Show Recommended</p>
+                    <input
+                        type="checkbox"
+                        id="rec"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedRec}
+                        onClick={seeFunc}
+                        value="Rec"
+                    />
+                    <label htmlFor="rec" className="toggle-btn"></label>
+                </div>
+                <div className="tgl">
+                    <p>Show Watching Cryptos</p>
+                    <input
+                        type="checkbox"
+                        id="followCrypto"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedWatchCryptos}
+                        onClick={seeFunc}
+                        value="WatchCryptos"
+                    />
+                    <label
+                        htmlFor="followCrypto"
+                        className="toggle-btn"
+                    ></label>
+                </div>
+                <div className="tgl">
+                    <p>Show Watching Securities</p>
+                    <input
+                        type="checkbox"
+                        id="followCryptoSecuritys"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedWatchSecuritys}
+                        onClick={seeFunc}
+                        value="WatchSecuritys"
+                    />
+                    <label
+                        htmlFor="followCryptoSecuritys"
+                        className="toggle-btn"
+                    ></label>
+                </div>
+                <div className="tgl">
+                    <p>Show News</p>
+                    <input
+                        type="checkbox"
+                        id="news"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedNews}
+                        onClick={seeFunc}
+                        value="News"
+                    />
+                    <label htmlFor="news" className="toggle-btn"></label>
+                </div>
             </div>
         </ContentWrapper>
     );

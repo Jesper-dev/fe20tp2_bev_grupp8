@@ -83,7 +83,7 @@ const INITIAL_STATE = {
             recommended: true,
             watchingCryptos: true,
             watchingSecuritys: true,
-            news: true,
+            news: false,
         },
     },
     following: {
@@ -114,6 +114,7 @@ const INITIAL_STATE = {
         profile_pic: 'null',
     },
     email: '',
+    followerCount: 0,
 
     /*   list: [
         {
@@ -152,20 +153,12 @@ class SignUpFormBase extends Component {
 
     checkUsernameTaken = (str) => {
         this.setState({ usernameTaken: false });
-        /*  console.log('heete') */
         const usersRef = this.props.firebase.users();
-        // const usersRef = this.props.firebase.db.ref('users/');
-
-        // usersRef.startAt(null, str).endAt(null, str).on("value", () => {
-        // 		console.log("Username already in use!");
-        // 		this.setState({ usernameTaken: true });
-        // });
 
         usersRef
             .orderByChild('username')
             .equalTo(str)
             .on('child_added', () => {
-                /*        console.log('Username already in use!'); */
                 this.setState({ usernameTaken: true });
             });
     };
@@ -179,16 +172,22 @@ class SignUpFormBase extends Component {
         let orgName = '';
 
         companysRef.once('value', (snapshot) => {
-            snapshot.forEach(function (childSnapshot) {
-                var childData = childSnapshot.val();
+            /* SNAPCHAT OF ALL CHILDREN */
+            snapshot.forEach((childSnapshot) => {
+                const childData = childSnapshot.val();
+                /* IF NO CHILDREN DATA OR NO ORGSTATUS YOU WILL BE SENT AWAY */
                 if (!childData || orgStatus) return;
-                var orgname = childSnapshot.key;
+                let orgname = childSnapshot.key;
 
+                /* PUSHES ALLA EMAILS TO AN ARRAY */
                 let list = [];
                 for (const key in childData.emailList) {
                     list.push(childData.emailList[key]);
                 }
+
+                /* CHECK IF THIS ARRAY CONTAINS THE WRITEN EMAIL */
                 let index = list.findIndex((x) => x == str);
+                /* IF IT DOES, RETURN TRUE AND EXIT THE FUCNTION */
                 if (index !== -1) {
                     orgStatus = true;
                     orgName = orgname;
@@ -239,6 +238,7 @@ class SignUpFormBase extends Component {
             colors,
             Logo,
             achievments,
+            followerCount,
         } = this.state;
 
         if (partOfOrganization) {
@@ -297,6 +297,7 @@ class SignUpFormBase extends Component {
                         userSettings,
                         likedPosts,
                         achievments,
+                        followerCount,
                     });
                     // Create a user in your Firebase realtime database that is part of an organization
                 } else {
@@ -324,6 +325,7 @@ class SignUpFormBase extends Component {
                                 userSettings,
                                 likedPosts,
                                 achievments,
+                                followerCount,
                             });
                         this.props.firebase
                             // .organization(organization + '/emails')
@@ -344,6 +346,7 @@ class SignUpFormBase extends Component {
                             userSettings,
                             likedPosts,
                             achievments,
+                            followerCount,
                         });
                     } else {
                         this.props.firebase
@@ -365,6 +368,7 @@ class SignUpFormBase extends Component {
                                 userSettings,
                                 likedPosts,
                                 achievments,
+                                followerCount,
                             });
                         this.props.firebase.user(authUser.user.uid).set({
                             username,
@@ -381,6 +385,7 @@ class SignUpFormBase extends Component {
                             organization: organizationname,
                             likedPosts,
                             achievments,
+                            followerCount,
                         });
                     }
                 }
