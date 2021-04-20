@@ -6,6 +6,10 @@ export const ContentWrapper = styled.div`
     /*  justify-content: center; */
     align-items: center;
 
+    @media screen and (max-width: 550px) {
+        flex-direction: column;
+    }
+
     form {
         display: flex;
         flex-direction: column;

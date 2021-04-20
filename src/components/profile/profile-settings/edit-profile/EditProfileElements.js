@@ -12,6 +12,10 @@ export const ContentWrapper = styled.div`
 
     padding: 8rem;
 
+    @media screen and (max-width: 550px) {
+        padding: 0px;
+    }
+
     .topbar-wrapper {
         display: flex;
         align-items: center;
@@ -27,6 +31,13 @@ export const ContentWrapper = styled.div`
         border-radius: 0.25rem;
         gap: 1rem;
         padding: 1rem;
+
+        @media screen and(max-width: 550px) {
+            flex-direction: column;
+            padding: 0;
+            min-width: 90%;
+            gap: 0;
+        }
 
         .delete-account-btn {
             padding: 0.375rem 0.375rem;
@@ -58,6 +69,10 @@ export const ContentWrapper = styled.div`
             resize: none;
             transition: border-color 125ms linear, box-shadow 125ms linear;
 
+            @media screen and (max-width: 550px) {
+                width: 100%;
+            }
+
             &::placeholder {
                 color: grey;
                 opacity: 1;
@@ -67,7 +82,15 @@ export const ContentWrapper = styled.div`
                 border-color: var(--clr-primary__brighter);
                 box-shadow: 0 0 0 0.1875rem var(--clr-primary-light__dimmer);
             }
+
+
         }
+    }
+
+    .bio-wrapper {
+        @media screen and (max-width: 550px) {
+                width: 100%;
+            }
     }
     label {
         display: flex;

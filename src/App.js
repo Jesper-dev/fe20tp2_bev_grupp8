@@ -126,16 +126,16 @@ const App = () => {
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    
+
                     <Route exact path={ROUTES.PROFILE_WALL}>
                         <Profile />
                         {/* <UserPosts /> */}
-                        
+
                         {/* <ProfileWall /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-                    
+
                     <Route exact path={ROUTES.PROFILE_POSTS}>
                         <Profile />
                         {/* <ProfileWall /> */}
@@ -154,8 +154,8 @@ const App = () => {
 
                     <Route exact path={ROUTES.PROFILE_SETTINGS}>
                         <ProfileSettings />
-                        <NavbarLeft />
-                        <Toolbar />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_CUSTOMIZE}>
                         <ProfileSettings />

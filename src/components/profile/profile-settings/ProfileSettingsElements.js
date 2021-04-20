@@ -6,6 +6,13 @@ export const Mainwrapper = styled.section`
     /* 	align-items: center; */
     /* background: linear-gradient(var(--clr-primary-light__dimmer), var(--clr-primary-light)); */
     height: 100vh;
+
+    @media screen and (max-width: 550px) {
+        flex-direction: column;
+        margin-top: 56px;
+    }
+
+
 `;
 
 export const ButtonWrapper = styled.div`

@@ -7,6 +7,7 @@ import { ContentWrapper } from './EditProfileElements';
 import { ButtonPrimary } from '../../../shared/button/ButtonElements';
 import { ButtonWrapper } from '../ProfileSettingsElements';
 import SignOutButton from '../../../sign-out/SignOut';
+import BackButton from '../../../shared/button/back-button/BackButton'
 
 import { fetchUserSnapshotObject } from '../../../shared/functions/firebase-functions';
 import { FirebaseContext } from '../../../firebase/context';
@@ -50,9 +51,9 @@ const EditProfile = () => {
         console.log(data);
     }, []);
 
-    console.log(data);
     return (
         <ContentWrapper>
+            <BackButton />
             <div className="topbar-wrapper">
                 <h3>Edit Profile</h3> <SignOutButton />
             </div>
@@ -88,7 +89,7 @@ const EditProfile = () => {
                             )}
                         </label>
 
-                        <label>
+                        <label className="bio-wrapper">
                             Bio
                             <textarea disabled value={data.bio} />
                         </label>
