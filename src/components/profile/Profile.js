@@ -53,7 +53,7 @@ const Profile = () => {
 
     const checkUser = (currency, arr) => {
         let list = [];
-        if (currency >= 100000000) {
+        if (currency >= 1000000) {
             // setMillionaire(true);
             firebase.user(userData.uid).child('/achievments/millionaire').update({
                 done: true,
