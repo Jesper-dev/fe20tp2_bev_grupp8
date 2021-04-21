@@ -11,7 +11,7 @@ import { GenericVestBtn } from '../shared/button/ButtonElements';
 import { ReusabelInputField } from '../shared/reusable-elements/ReusableElements';
 import ContentWrapper from '../shared/wrappers/ContentWrapper';
 
-import { TradeConfirmRender } from './TradeRenders'
+import { TradeConfirmRender } from './TradeRenders';
 
 import UsFlag from '../svgs/flags/America';
 
@@ -27,7 +27,7 @@ const Trade = () => {
     let buyMeACoin = false;
     let stockIncludes;
 
-    let history = useHistory()
+    let history = useHistory();
 
     const [didMount, setDidMount] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -264,7 +264,7 @@ const Trade = () => {
         if (numOfStocks === 0 || totalCost > userData.currency) {
             return;
         }
-        console.log(buyMeACoin)
+        console.log(buyMeACoin);
         if (buy === false) {
             setConfirmBuy(true);
             setConfirm(true);
@@ -324,6 +324,7 @@ const Trade = () => {
 
     //*When we sell a stock
     const onSell = (numOfStocks, sellMeACoin) => {
+        if (numOfStocks > holding) return;
         if (sell === false) {
             setConfirmBuy(false);
             setConfirm(true);
@@ -395,110 +396,115 @@ const Trade = () => {
                 <ContentWrapper>
                     <MainWrapper>
                         {confirm ? (
-                               <TradeConfirmRender
-                       /*         img={cryptoData.image.large} */
-                               name={symbol}
-                               ConfirmTrade={ConfirmTrade}
-                               setConfirm={setConfirm}
-                               onClickConfirm={onClickConfirm}
-                               numOfCoins={numOfStocks}
-                               finalStep={finalStep}
-                               price={price}
-                               totalCost={totalCost}
-                               history={history}
-                           />
-                         ) : (
-                             
-                             <section>
-                            <div className="stock-overview-wrapper">
-                                <span
-                                    style={
-                                        changePercent < 0
-                                        ? { color: 'var(--lighter-red)' }
-                                        : { color: 'var(--lighter-green)' }
-                                    }
+                            <TradeConfirmRender
+                                /*         img={cryptoData.image.large} */
+                                name={symbol}
+                                ConfirmTrade={ConfirmTrade}
+                                setConfirm={setConfirm}
+                                onClickConfirm={onClickConfirm}
+                                numOfCoins={numOfStocks}
+                                finalStep={finalStep}
+                                price={price}
+                                totalCost={totalCost}
+                                history={history}
+                            />
+                        ) : (
+                            <section>
+                                <div className="stock-overview-wrapper">
+                                    <span
+                                        style={
+                                            changePercent < 0
+                                                ? {
+                                                      color:
+                                                          'var(--lighter-red)',
+                                                  }
+                                                : {
+                                                      color:
+                                                          'var(--lighter-green)',
+                                                  }
+                                        }
                                     >
-                                    {changePercent > 0 ? (
-                                        <i className="fas fa-long-arrow-alt-up"></i>
+                                        {changePercent > 0 ? (
+                                            <i className="fas fa-long-arrow-alt-up"></i>
                                         ) : (
                                             <i className="fas fa-long-arrow-alt-down"></i>
-                                    )}
-                                    {changePercent.toFixed(2)}%
-                                </span>
-                                <h2>{symbol}</h2>
-                                <span>{price.toFixed(2)} $</span>
-                                <span>Your holding: {holding}</span>
-                            </div>
-                            <label>
-                                Wallet
-                                <div className="wallet-wrapper">
-                                    {!userData.currency
-                                        ? 'Loading...'
-                                        : userData.currency.currency.toLocaleString()}{' '}
-                                    $
+                                        )}
+                                        {changePercent.toFixed(2)}%
+                                    </span>
+                                    <h2>{symbol}</h2>
+                                    <span>{price.toFixed(2)} $</span>
+                                    <span>Your holding: {holding}</span>
                                 </div>
-                            </label>
+                                <label>
+                                    Wallet
+                                    <div className="wallet-wrapper">
+                                        {!userData.currency
+                                            ? 'Loading...'
+                                            : userData.currency.currency.toLocaleString()}{' '}
+                                        $
+                                    </div>
+                                </label>
 
-                            <label>
-                                Total amount in dollar
-                                <ReusabelInputField
-                                    id="amount-dollar"
-                                    min="0"
-                                    placeholder="Total amount"
-                                    type="number"
-                                    onChange={setValuesDom}
-                                    value={amountInDollar}
+                                <label>
+                                    Total amount in dollar
+                                    <ReusabelInputField
+                                        id="amount-dollar"
+                                        min="0"
+                                        placeholder="Total amount"
+                                        type="number"
+                                        onChange={setValuesDom}
+                                        value={amountInDollar}
                                     />
-                            </label>
+                                </label>
 
-                            <label>
-                                Amount of stocks
-                                <ReusabelInputField
-                                    min="0"
-                                    max="999"
-                                    placeholder="Amount"
-                                    type="number"
-                                    onChange={setValuesDom}
-                                    value={numOfStocks}
+                                <label>
+                                    Amount of stocks
+                                    <ReusabelInputField
+                                        min="0"
+                                        max="999"
+                                        placeholder="Amount"
+                                        type="number"
+                                        onChange={setValuesDom}
+                                        value={numOfStocks}
                                     />
-                            </label>
+                                </label>
 
-                            <div className="brokage-wrapper">
-                                <span>Brokerage</span>
-                                <span>{numOfStocks / 10}$</span>
-                            </div>
-                            <div className="amountWrapper">
-                                <span>Total Amount</span>
-                                <span>{totalCost.toFixed(2)} $</span>
-                            </div>
-                            <div className="buttonWrapper">
-                                <GenericVestBtn
-                                bg="var(--clr-primary)"
-                                hovbg="var(--lighter-green)"
-                                co="var(--body)"
-                                br="2rem"
-                                border="0.125rem solid var(--clr-primary)"
-                                pad="0.6rem 3rem"
-                                onClick={onButtonClick}
-                                >
-                                    BUY
-                                </GenericVestBtn>
-                                <GenericVestBtn
-                                         bg="white"
-                                         hovbg="var(--lighter-red)"
-                                         hovco="#fff"
-                                         /*   hovbg="var(--clr-primary)" */
-                                         co="var(--clr-primary)"
-                                         br="2rem"
-                                         border="0.125rem solid var(--clr-primary)"
-                                         pad="0.6rem 3rem"
-                                         onClick={onButtonClick}
-                                         >
-                                    SELL
-                                </GenericVestBtn>
-                            </div>
-                        </section>
-                            )}
+                                <div className="brokage-wrapper">
+                                    <span>Brokerage</span>
+                                    <span>{numOfStocks / 10}$</span>
+                                </div>
+                                <div className="amountWrapper">
+                                    <span>Total Amount</span>
+                                    <span>{totalCost.toFixed(2)} $</span>
+                                </div>
+                                <div className="buttonWrapper">
+                                    <GenericVestBtn
+                                        bg="var(--clr-primary)"
+                                        hovbg="var(--lighter-green)"
+                                        co="var(--body)"
+                                        br="2rem"
+                                        border="0.125rem solid var(--clr-primary)"
+                                        pad="0.6rem 3rem"
+                                        onClick={onButtonClick}
+                                    >
+                                        BUY
+                                    </GenericVestBtn>
+                                    <GenericVestBtn
+                                        bg="white"
+                                        hovbg="var(--lighter-red)"
+                                        hovco="#fff"
+                                        /*   hovbg="var(--clr-primary)" */
+                                        co="var(--clr-primary)"
+                                        br="2rem"
+                                        border="0.125rem solid var(--clr-primary)"
+                                        pad="0.6rem 3rem"
+                                        onClick={onButtonClick}
+                                    >
+                                        SELL
+                                    </GenericVestBtn>
+                                </div>
+                            </section>
+                        )}
                     </MainWrapper>
                 </ContentWrapper>
             )}

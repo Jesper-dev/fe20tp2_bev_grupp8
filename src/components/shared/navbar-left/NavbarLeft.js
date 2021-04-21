@@ -21,7 +21,7 @@ const NavbarLeft = ({ authUser }) => {
             firebase
                 .organization(user.organization)
                 .child('/Logo')
-                .once('value', (snapshot) => {
+                .on('value', (snapshot) => {
                     const data = snapshot.val();
                     setLogo(data.Logo);
                 });

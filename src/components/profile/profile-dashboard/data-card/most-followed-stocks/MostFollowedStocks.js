@@ -88,7 +88,7 @@ const MostFollowedStocks = ({ orgName, pie }) => {
                 label: 'Most followed stocks',
                 data: stockAmountState,
                 backgroundColor: [
-					'#2C3E50',
+                    '#2C3E50',
                     '#E74C3C',
                     '#F5A503',
                     '#9768D1',

@@ -72,14 +72,15 @@ export const GenericVestBtn = styled.button`
     font-family: inherit;
     font-weight: 500;
     cursor: pointer;
+    white-space: nowrap;
     transition: background-color 100ms linear, color 100ms linear;
     outline: none;
+    min-width: min-content;
 
     &:hover {
         background-color: ${(props) => props.hovbg};
         color: ${(props) => props.hovco} !important;
         border: ${(props) => props.hovbor};
-
     }
 
     @media screen and (max-width: 500px) {

@@ -16,7 +16,7 @@ export const EmployeeWrapper = styled.div`
 
     i {
         margin-right: 8px;
-        color: var(--primary);
+        color: var(--clr-primary);
         cursor: pointer;
     }
 
