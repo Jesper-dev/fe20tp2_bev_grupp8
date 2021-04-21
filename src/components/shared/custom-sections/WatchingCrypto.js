@@ -151,8 +151,8 @@ const WatchingCrypto = ({ cryptoList, gap }) => {
                 pad="4px"
                 border="1px solid black"
                 br="40px"
-                bg="var(---clr-primary)"
-                co="var(---clr-secondary)"
+                bg="var(--clr-primary)"
+                co="var(--clr-secondary)"
                 wid="10%"
                 fz="0.9rem"
             >
