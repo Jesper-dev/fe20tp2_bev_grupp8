@@ -34,6 +34,7 @@ export const USER = '/user/:id';
 
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/signin';
+export const ABOUT_US = '/about';
 
 export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
