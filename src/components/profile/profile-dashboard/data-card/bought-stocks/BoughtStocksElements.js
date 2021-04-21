@@ -6,4 +6,6 @@ export const ContentWrapper = styled.div`
     margin-bottom: 56px;
     padding: 8px;
     gap: 1rem;
+    max-width: 100%;
+    overflow: hidden;
 `;

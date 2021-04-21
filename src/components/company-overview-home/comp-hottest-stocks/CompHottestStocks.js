@@ -81,12 +81,11 @@ const CompHottestStocks = () => {
                                 <StockCardSmall
                                     key={i}
                                     i={i}
-                                    name={findIndex(item).symbol}
-                                    shortname={findIndex(item).shortName}
-                                    cost={findIndex(item).regularMarketPrice}
+                                    name={findIndex(item)?.symbol ?? 'LV'}
+                                    shortname={findIndex(item)?.shortName ?? 'LV'}
+                                    cost={findIndex(item)?.regularMarketPrice ?? 250}
                                     percent={
-                                        findIndex(item)
-                                            .regularMarketChangePercent
+                                        findIndex(item)?.regularMarketChangePercent ?? 2.32
                                     }
                                 />
                             );

@@ -10,6 +10,7 @@ export const ContentWrapper = styled.article`
     border-radius: 4px;
     background: var(--body);
     box-shadow: var(--box-shadow-cards);
+   /*  height: 5rem; */
 
     .drop-down-wrapper {
         display: flex;

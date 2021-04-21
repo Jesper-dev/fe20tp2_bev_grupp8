@@ -11,6 +11,7 @@ export const ContentWrapper = styled.section`
     margin: auto;
     width: 100%;
     max-width: 40rem;
+    min-height: 8rem;
     max-height: 50%;
     padding: 1rem;
 

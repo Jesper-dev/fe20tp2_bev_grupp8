@@ -72,7 +72,11 @@ export const TabBarDropDownElement = styled.section`
         justify-content: center;
         /*      height: 35%; */
         transition: background-color 125ms linear, color 125ms linear;
+<<<<<<< HEAD
+        background-color: var(--clr-primary__dimmer);
+=======
         background-color: var(--clr-primary);
+>>>>>>> db2d480557d7d05c53f4f43a494314ae36c6999d
         border-radius: 4px;
         color: #fff !important;
     }

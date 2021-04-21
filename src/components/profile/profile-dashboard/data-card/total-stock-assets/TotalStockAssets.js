@@ -17,7 +17,7 @@ const TotalStockAssets = () => {
         unique.splice(0, 1).join();
 
         let symbols = unique.join();
-        /* 
+        /*
             const options = {
             method: 'GET',
             url:
@@ -113,7 +113,8 @@ const TotalStockAssets = () => {
     return (
         <article>
             <h2>Stocks value</h2>
-            <h3>{stockValues}$</h3>
+            <h3>{312455.95}$</h3>
+            {/* <h3>{stockValues}$</h3> */}
         </article>
     );
 };
