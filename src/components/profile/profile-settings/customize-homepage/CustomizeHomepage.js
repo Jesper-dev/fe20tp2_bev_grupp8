@@ -34,8 +34,12 @@ const CustomizeHomepage = () => {
                     : setCheckedWatchSecuritys(false);
                 data.news ? setCheckedNews(true) : setCheckedNews(false);
                 data.recommended ? setCheckedRec(true) : setCheckedRec(false);
-                data.hottestCrypto ? setCheckedHottestC(true) : setCheckedHottestC(false);
-                data.hottestStocks ? setCheckedHottestS(true) : setCheckedHottestS(false);
+                data.hottestCrypto
+                    ? setCheckedHottestC(true)
+                    : setCheckedHottestC(false);
+                data.hottestStocks
+                    ? setCheckedHottestS(true)
+                    : setCheckedHottestS(false);
             });
     };
 
@@ -114,7 +118,6 @@ const CustomizeHomepage = () => {
             <hr />
 
             <div className="home-wrapper">
-<<<<<<< HEAD
                 <h4>Homepage</h4>
                 <hr />
                 <div className="tgl">
@@ -147,7 +150,7 @@ const CustomizeHomepage = () => {
                     ></label>
                 </div>
                 <div className="tgl">
-                    <p>Show Watching Securities</p>
+                    <p>Show Watching Securites</p>
                     <input
                         type="checkbox"
                         id="followCryptoSecuritys"
@@ -175,91 +178,38 @@ const CustomizeHomepage = () => {
                     />
                     <label htmlFor="news" className="toggle-btn"></label>
                 </div>
-=======
-            <h4>Homepage</h4>
-            <hr />
-            <div className="tgl">
-                <p>Show Recommended</p>
-                <input
-                    type="checkbox"
-                    id="rec"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedRec}
-                    onClick={seeFunc}
-                    value="Rec"
-                />
-                <label htmlFor="rec" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Show Watching Cryptos</p>
-                <input
-                    type="checkbox"
-                    id="followCrypto"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedWatchCryptos}
-                    onClick={seeFunc}
-                    value="WatchCryptos"
-                />
-                <label htmlFor="followCrypto" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Show Watching Securites</p>
-                <input
-                    type="checkbox"
-                    id="followCryptoSecuritys"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedWatchSecuritys}
-                    onClick={seeFunc}
-                    value="WatchSecuritys"
-                />
-                <label
-                    htmlFor="followCryptoSecuritys"
-                    className="toggle-btn"
-                ></label>
-            </div>
-            <div className="tgl">
-                <p>Show News</p>
-                <input
-                    type="checkbox"
-                    id="news"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedNews}
-                    onClick={seeFunc}
-                    value="News"
-                />
-                <label htmlFor="news" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Hottest Cryptocurrencies</p>
-                <input
-                    type="checkbox"
-                    id="hottestcrypto"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedHottestC}
-                    onClick={seeFunc}
-                    value="hottestcrypto"
-                />
-                <label htmlFor="hottestcrypto" className="toggle-btn"></label>
-            </div>
-            <div className="tgl">
-                <p>Hottest Securites</p>
-                <input
-                    type="checkbox"
-                    id="hotteststocks"
-                    className="checkbox"
-                    onChange={onChange}
-                    checked={checkedHottestS}
-                    onClick={seeFunc}
-                    value="hotteststocks"
-                />
-                <label htmlFor="hotteststocks" className="toggle-btn"></label>
-            </div>
->>>>>>> 301632344351df465b86165b21ac2431ca94ec02
+                <div className="tgl">
+                    <p>Hottest Cryptocurrencies</p>
+                    <input
+                        type="checkbox"
+                        id="hottestcrypto"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedHottestC}
+                        onClick={seeFunc}
+                        value="hottestcrypto"
+                    />
+                    <label
+                        htmlFor="hottestcrypto"
+                        className="toggle-btn"
+                    ></label>
+                </div>
+                <div className="tgl">
+                    <p>Hottest Securites</p>
+                    <input
+                        type="checkbox"
+                        id="hotteststocks"
+                        className="checkbox"
+                        onChange={onChange}
+                        checked={checkedHottestS}
+                        onClick={seeFunc}
+                        value="hotteststocks"
+                    />
+                    <label
+                        htmlFor="hotteststocks"
+                        className="toggle-btn"
+                    ></label>
+                </div>
             </div>
         </ContentWrapper>
     );
