@@ -57,6 +57,8 @@ const Home = () => {
     const [watchingCryptos, setWatchingCryptos] = useState(true);
     const [watchingSecuritys, setWatchingSecuritys] = useState(true);
     const [news, setNews] = useState(true);
+    const [hottestC, setHottestC] = useState(true);
+    const [hottestS, setHottestS] = useState(true);
 
     const dispatch = useDispatch();
     const [didMount, setDidMount] = useState(false);
@@ -92,6 +94,8 @@ const Home = () => {
                     : setWatchingSecuritys(false);
                 data.news ? setNews(true) : setNews(false);
                 data.recommended ? setRec(true) : setRec(false);
+                data.hottestCrypto ? setHottestC(true) : setHottestC(false);
+                data.hottestStocks ? setHottestS(true) : setHottestS(false);
             });
     };
 
@@ -166,8 +170,13 @@ const Home = () => {
                         <section>
                             <PortfolioOverview total={totalCurrency} />
                         </section>
-                        <MostBougthCrypto />
-                        <MostBougthStocks />
+
+    {hottestC ? (
+        <MostBougthCrypto />
+    ) : null}
+                        {hottestS ? (
+                            <MostBougthStocks />
+                        ) : null }
 
                         {news ? (
                             <News

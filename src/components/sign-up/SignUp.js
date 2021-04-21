@@ -83,7 +83,9 @@ const INITIAL_STATE = {
             recommended: true,
             watchingCryptos: true,
             watchingSecuritys: true,
-            news: true,
+            news: false,
+            hottestCrypto: false,
+            hottestStocks: false,
         },
     },
     following: {
