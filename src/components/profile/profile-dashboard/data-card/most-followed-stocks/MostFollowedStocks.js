@@ -133,6 +133,7 @@ const MostFollowedStocks = ({ orgName, pie }) => {
                         classNames="my-node"
                     >
                         <Pie
+                        id="stock-chart"
                             data={data}
                             options={{
                                 maintainAspectRatio: false,
@@ -148,7 +149,7 @@ const MostFollowedStocks = ({ orgName, pie }) => {
                         timeout={1500}
                         classNames="my-node"
                     >
-                        <Bar data={data} options={options} />
+                        <Bar id="stock-chart" data={data} options={options} />
                     </CSSTransition>
                 )}
             </TransitionGroup>

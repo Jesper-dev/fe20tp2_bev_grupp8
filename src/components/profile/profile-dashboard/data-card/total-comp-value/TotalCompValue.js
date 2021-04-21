@@ -79,7 +79,8 @@ const TotalCompValue = () => {
                             : { color: 'var(--lighter-red)' }
                     }
                 >
-                    {change.toFixed(2)}%
+                    {/* {change.toFixed(2)}% */}
+                    {5.32}%
                 </h2>
             </article>
             <article>

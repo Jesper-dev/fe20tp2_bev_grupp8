@@ -48,7 +48,7 @@ const TotalCompUser = () => {
                                 {(
                                     ((item.currency.currency - 100000) /
                                         100000) *
-                                    100
+                                    100 / 10
                                 ).toFixed(2)}
                                 %
                             </td>

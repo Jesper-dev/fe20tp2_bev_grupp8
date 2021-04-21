@@ -75,13 +75,14 @@ const TotalCompValue = () => {
                 <h2>Change</h2>
                 <h3
                     style={
-                        change > 0
+                        5 > 0
                             ? { color: 'var(--lighter-green)' }
                             : { color: 'var(--lighter-red)' }
                     }
                 >
                     {/* {!Infinity ? 'Loading' : change.toFixed(2)}% */}
-                    {change.toFixed(2)}%
+                    {/* {change.toFixed(2)}% */}
+                    {5.24}%
                 </h3>
             </article>
             <article>

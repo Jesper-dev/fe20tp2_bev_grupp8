@@ -128,6 +128,7 @@ const MostFollowedCrypto = ({ orgName, pie }) => {
                         classNames="my-node"
                     >
                         <Pie
+                            id="cry-chart"
                             data={data}
                             options={{
                                 maintainAspectRatio: false,
@@ -140,7 +141,7 @@ const MostFollowedCrypto = ({ orgName, pie }) => {
                         timeout={1500}
                         classNames="my-node"
                     >
-                        <Bar data={data} options={options} />
+                        <Bar id="cry-chart" data={data} options={options} />
                     </CSSTransition>
                 )}
             </TransitionGroup>

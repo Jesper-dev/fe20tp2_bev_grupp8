@@ -8,7 +8,7 @@ export const TabBarDropDownElement = styled.section`
         padding: 0;
         list-style: none;
         width: 250px;
-        background-color: var(--light-blue);
+        background-color: var(--clr-primary-light__dimmer);
         border-radius: 4px;
         cursor: pointer;
     }
@@ -36,7 +36,7 @@ export const TabBarDropDownElement = styled.section`
         list-style: none;
         display: none;
         line-height: normal;
-        background-color: var(--light-blue);
+        background-color: var(--clr-primary-light__dimmer);
         border-radius: 4px;
         height: inherit;
     }
@@ -72,7 +72,7 @@ export const TabBarDropDownElement = styled.section`
         justify-content: center;
         /*      height: 35%; */
         transition: background-color 125ms linear, color 125ms linear;
-        background-color: #d2dff7;
+        background-color: var(--clr-primary__dimmer);
         border-radius: 4px;
         color: #fff !important;
     }

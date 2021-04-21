@@ -77,6 +77,8 @@ const BoughtStocks = () => {
                         key={index}
                         name={item.symbol}
                         amount={item.amount}
+                        percent={(Math.random() * 5)}
+                        cost={(Math.random() * 1500)}
                     />
                 );
             })}

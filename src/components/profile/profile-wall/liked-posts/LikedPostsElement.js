@@ -7,7 +7,7 @@ const LikedPostsElement = styled.section`
     margin: 2rem auto;
     width: 100%;
     max-width: 40rem;
-    max-height: 80vh;
+    /* max-height: 80vh; */     //Need or not need? Thats the question
     overflow-y: none;
 
     scrollbar-width: thin;
