@@ -84,6 +84,11 @@ const INITIAL_STATE = {
             watchingCryptos: true,
             watchingSecuritys: true,
             news: false,
+<<<<<<< HEAD
+=======
+            hottestCrypto: false,
+            hottestStocks: false,
+>>>>>>> 301632344351df465b86165b21ac2431ca94ec02
         },
     },
     following: {

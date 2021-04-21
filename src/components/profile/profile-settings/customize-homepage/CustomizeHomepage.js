@@ -12,6 +12,8 @@ const CustomizeHomepage = () => {
     const [checkedWatchCryptos, setCheckedWatchCryptos] = useState(true);
     const [checkedWatchSecuritys, setCheckedWatchSecuritys] = useState(true);
     const [checkedNews, setCheckedNews] = useState(true);
+    const [checkedHottestC, setCheckedHottestC] = useState(true);
+    const [checkedHottestS, setCheckedHottestS] = useState(true);
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
@@ -32,6 +34,8 @@ const CustomizeHomepage = () => {
                     : setCheckedWatchSecuritys(false);
                 data.news ? setCheckedNews(true) : setCheckedNews(false);
                 data.recommended ? setCheckedRec(true) : setCheckedRec(false);
+                data.hottestCrypto ? setCheckedHottestC(true) : setCheckedHottestC(false);
+                data.hottestStocks ? setCheckedHottestS(true) : setCheckedHottestS(false);
             });
     };
 
@@ -51,6 +55,14 @@ const CustomizeHomepage = () => {
         } else if (value === 'News') {
             firebase.user(user.uid).child(path).update({
                 news: !state,
+            });
+        } else if (value === 'hottestC') {
+            firebase.user(user.uid).child(path).update({
+                hottestCrypto: !state,
+            });
+        } else if (value === 'hottestS') {
+            firebase.user(user.uid).child(path).update({
+                hottestStocks: !state,
             });
         }
     };
@@ -72,6 +84,10 @@ const CustomizeHomepage = () => {
             );
         } else if (e.target.value === 'News') {
             updateDB('/userSettings/settings', 'News', checkedNews);
+        } else if (e.target.value === 'hottestcrypto') {
+            updateDB('/userSettings/settings', 'hottestC', checkedHottestC);
+        } else if (e.target.value === 'hotteststocks') {
+            updateDB('/userSettings/settings', 'hottestS', checkedHottestS);
         }
     };
 
@@ -84,6 +100,10 @@ const CustomizeHomepage = () => {
             setCheckedWatchSecuritys(!checkedWatchSecuritys);
         } else if (e.target.value === 'News') {
             setCheckedNews(!checkedNews);
+        } else if (e.target.value === 'hottestcrypto') {
+            setCheckedHottestC(!checkedHottestC);
+        } else if (e.target.value === 'hotteststocks') {
+            setCheckedHottestS(!checkedHottestS);
         }
     };
     return (
@@ -94,6 +114,7 @@ const CustomizeHomepage = () => {
             <hr />
 
             <div className="home-wrapper">
+<<<<<<< HEAD
                 <h4>Homepage</h4>
                 <hr />
                 <div className="tgl">
@@ -154,6 +175,91 @@ const CustomizeHomepage = () => {
                     />
                     <label htmlFor="news" className="toggle-btn"></label>
                 </div>
+=======
+            <h4>Homepage</h4>
+            <hr />
+            <div className="tgl">
+                <p>Show Recommended</p>
+                <input
+                    type="checkbox"
+                    id="rec"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedRec}
+                    onClick={seeFunc}
+                    value="Rec"
+                />
+                <label htmlFor="rec" className="toggle-btn"></label>
+            </div>
+            <div className="tgl">
+                <p>Show Watching Cryptos</p>
+                <input
+                    type="checkbox"
+                    id="followCrypto"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedWatchCryptos}
+                    onClick={seeFunc}
+                    value="WatchCryptos"
+                />
+                <label htmlFor="followCrypto" className="toggle-btn"></label>
+            </div>
+            <div className="tgl">
+                <p>Show Watching Securites</p>
+                <input
+                    type="checkbox"
+                    id="followCryptoSecuritys"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedWatchSecuritys}
+                    onClick={seeFunc}
+                    value="WatchSecuritys"
+                />
+                <label
+                    htmlFor="followCryptoSecuritys"
+                    className="toggle-btn"
+                ></label>
+            </div>
+            <div className="tgl">
+                <p>Show News</p>
+                <input
+                    type="checkbox"
+                    id="news"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedNews}
+                    onClick={seeFunc}
+                    value="News"
+                />
+                <label htmlFor="news" className="toggle-btn"></label>
+            </div>
+            <div className="tgl">
+                <p>Hottest Cryptocurrencies</p>
+                <input
+                    type="checkbox"
+                    id="hottestcrypto"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedHottestC}
+                    onClick={seeFunc}
+                    value="hottestcrypto"
+                />
+                <label htmlFor="hottestcrypto" className="toggle-btn"></label>
+            </div>
+            <div className="tgl">
+                <p>Hottest Securites</p>
+                <input
+                    type="checkbox"
+                    id="hotteststocks"
+                    className="checkbox"
+                    onChange={onChange}
+                    checked={checkedHottestS}
+                    onClick={seeFunc}
+                    value="hotteststocks"
+                />
+                <label htmlFor="hotteststocks" className="toggle-btn"></label>
+            </div>
+>>>>>>> 301632344351df465b86165b21ac2431ca94ec02
             </div>
         </ContentWrapper>
     );

@@ -30,29 +30,29 @@ const ProfileWall = () => {
     <>
         <ProfileBio />
 
-        
+
       {/*   <ul>
                 <li>
         	<Link
                     exact to={ROUTES.PROFILE_POSTS}
-                     component={UserPosts} 
-            > Posts</Link> 
+                     component={UserPosts}
+            > Posts</Link>
             </li>
             <li>
         	<Link
                     exact to={ROUTES.PROFILE_LIKED}
-                     component={LikedPosts} 
-                    > Liked</Link> 
+                     component={LikedPosts}
+                    > Liked</Link>
             </li>
         </ul>  */}
-        
+
    {/*  <MainWrapper> */}
-            <PostTabBar tabs={tabs} />
+            {/* <PostTabBar tabs={tabs} /> */}
 
            {/* <Switch> */}
-           
+
                 <PostsWrapper>
-               {/*  <Route exact path="/"> 
+               {/*  <Route exact path="/">
                 <UserPosts />
                 </Route>   */}
                   {/* </PostsWrapper> */}
@@ -62,23 +62,23 @@ const ProfileWall = () => {
                     /* component={UserPosts} */
                     >
                         <UserPosts />
-                </Route> 
+                </Route>
                 {/* </PostsWrapper> */}
                 {/* <PostsWrapper> */}
                 <Route exact path={ROUTES.PROFILE_POSTS}/*  component={LikedPosts} */
-                > 
-                  <LikedPosts />  
-                </Route> 
-                
+                >
+                  <LikedPosts />
+                </Route>
+
                 </PostsWrapper>
 
-           {/*  </Switch> */} 
+           {/*  </Switch> */}
         {/* </MainWrapper> */}
 
             {/* <UserPosts /> */}
             {/* <LikedPosts /> */}
-            
-        
+
+
     </>
     );
 };

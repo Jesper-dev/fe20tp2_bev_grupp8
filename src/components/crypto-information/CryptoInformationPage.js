@@ -74,13 +74,11 @@ const CryptoInformationPage = ({ symbol }) => {
                     }
                     for (let i = 0; i < cryptos.length; i++) {
                         if (cryptos[i].name == cryptoList.name) {
-                            console.log('It includes');
                             setChecked(true);
                             return;
                         } else {
                             console.log('It does not include');
                             setChecked(false);
-                            console.log(checked);
                         }
                     }
                 });
@@ -95,15 +93,16 @@ const CryptoInformationPage = ({ symbol }) => {
 
         if (checked == true) {
             console.log('Hit kommer vi');
+            console.log(cryptoData.id)
             firebase
                 .user(user.uid)
-                .child(`/followingCrypto/${cryptoData.id}`)
+                .child(`/followingCrypto/${cryptoData.name}`)
                 .remove();
             if (user.organization) {
                 firebase
                     .organization(user.organization)
                     .child(
-                        `/users/${user.uid}/followingCrypto/${cryptoData.id}`
+                        `/users/${user.uid}/followingCrypto/${cryptoData.name}`
                     )
                     .remove();
             }

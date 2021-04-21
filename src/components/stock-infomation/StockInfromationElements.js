@@ -6,14 +6,24 @@ export const MainWrapper = styled.main`
     flex-wrap: wrap;
     justify-content: center;
     /* flex-direction: column; */
-    /* align-items: center; */
+    align-items: center;
     gap: 1rem;
+    width: 100%;
+
+    .demo-wrapper{
+        max-width: 50rem;
+    }
 
     & > h1 {
         width: 80%;
         margin: 0;
         font-size: 1.5rem;
         text-align: center;
+    }
+
+    .chart-wrapper{
+        height: 100%;
+        max-width: 50rem;
     }
 
     .chart-container {

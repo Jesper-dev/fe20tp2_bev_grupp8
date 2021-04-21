@@ -139,6 +139,8 @@ const StockInformationPage = () => {
                 <p>Loading...</p>
             ) : (
                 <MainWrapper>
+                    <div className="demo-wrapper">
+
                     <BackButton />
                             <h1>
                                 {stockData.quoteType.shortName
@@ -163,7 +165,9 @@ const StockInformationPage = () => {
                                         <i className="far fa-eye"></i>
                                     </WatchStockButton>
                                 </div>
+                                <div className="chart-wrapper">
                                 <LineChart />
+                                </div>
                             </div>
                             <div className="info-container">
                                 <p>{stockData.symbol}</p>
@@ -195,6 +199,7 @@ const StockInformationPage = () => {
                                     </label>
                                 </article>
                             </div>
+                        </div>
                 </MainWrapper>
             )}
         </ContentWrapper>
