@@ -30,6 +30,7 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
+import AboutUs from './components/about-us/AboutUs'
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
 import Beta from './components/Beta'
@@ -125,6 +126,10 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.LANDING}>
                         <Landingpage />
+                         <Beta />
+                    </Route>
+                    <Route exact path={ROUTES.ABOUT_US}>
+                        <AboutUs />
                          <Beta />
                     </Route>
                     {/*  <Route exact path={ROUTES.PORTFOLIO}>

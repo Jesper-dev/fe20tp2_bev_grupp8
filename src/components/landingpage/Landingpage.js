@@ -33,26 +33,32 @@ const Landingpage = () => {
                 {/*       <h1>Let's Vest</h1> */}
                 <LogoLets className="logo-lets" />
                 <ul>
-                    <li>
+                <li>
+                        <Button to={ROUTES.ABOUT_US} primary="true">
+                              About Us
+                          </Button>
+                        </li>
                         {firebase.auth.currentUser ? (
+                                <li>
                             <Button to={ROUTES.PROFILE} primary="true">
                                 Profile
                             </Button>
+                                </li>
                         ) : (
+                            <>
+                            <li>
                             <Button to={ROUTES.SIGN_IN} secondary="true">
                                 Sign In
                             </Button>
+                            </li>
+                            <li>
+                              <Button to={ROUTES.SIGN_UP} primary="true">
+                              Sign Up
+                          </Button>
+                            </li>
+                            </>
                         )}
-                    </li>
-                    <li>
-                        {firebase.auth.currentUser ? (
-                            ''
-                        ) : (
-                            <Button to={ROUTES.SIGN_UP} primary="true">
-                                Sign Up
-                            </Button>
-                        )}
-                    </li>
+
                 </ul>
             </NavBar>
             <Banner>
