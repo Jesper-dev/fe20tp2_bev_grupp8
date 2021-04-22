@@ -30,8 +30,10 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
+import AboutUs from './components/about-us/AboutUs'
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
+import Beta from './components/Beta'
 
 import { setOrgColor } from './components/shared/functions/colorTheme';
 
@@ -53,32 +55,37 @@ const App = () => {
                 <Switch>
                     <Route exact path={ROUTES.HOME}>
                         <Home />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route path={ROUTES.DISCOVER}>
                         <Discover />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SOCIAL}>
                         <SocialPage />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.USER}>
                         <UserInfoCard />
+                        <Beta />
                         <NavbarLeft />
                     </Route>
                     <Route exact path={ROUTES.PROFILE}>
                         <Profile />
-
+                        <Beta />
                         {/* <ProfilePortfolio /> */}
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.INFO_STOCK}>
                         <StockInfoPage />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
@@ -89,30 +96,41 @@ const App = () => {
                     </Route> */}
                     <Route exact path={ROUTES.TRADE_STOCK}>
                         <Trade />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.TRADE_CRYPTO}>
                         <TradeCrypto />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.INFO_CRYPTO}>
                         <CryptoInfoPage />
+                         <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SIGN_IN}>
                         <SignIn />
+                         <Beta />
                     </Route>
                     <Route exact path={ROUTES.SIGN_UP}>
                         <SignUp />
+                         <Beta />
                     </Route>
                     <Route exact path={ROUTES.PASSWORD_FORGET}>
                         <PasswordForget />
+                         <Beta />
                     </Route>
                     <Route exact path={ROUTES.LANDING}>
                         <Landingpage />
+                         <Beta />
+                    </Route>
+                    <Route exact path={ROUTES.ABOUT_US}>
+                        <AboutUs />
+                         <Beta />
                     </Route>
                     {/*  <Route exact path={ROUTES.PORTFOLIO}>
                     <Profile />
@@ -124,6 +142,7 @@ const App = () => {
                         <Profile />
                         {/* <ProfileDashboard /> */}
                         <NavbarLeft />
+                         <Beta />
                         <Toolbar />
                     </Route>
 
@@ -133,6 +152,7 @@ const App = () => {
 
                         {/* <ProfileWall /> */}
                         <NavbarLeft />
+                         <Beta />
                         <Toolbar />
                     </Route>
 
@@ -141,12 +161,14 @@ const App = () => {
                         {/* <ProfileWall /> */}
                         {/* <UserPosts /> */}
                         <NavbarLeft />
+                         <Beta />
                         <Toolbar />
                     </Route>
 
                     <Route exact path={ROUTES.PROFILE_LIKED}>
                         <Profile />
                         <ProfileWall />
+                         <Beta />
                         <LikedPosts />
                         <NavbarLeft />
                         <Toolbar />
@@ -154,21 +176,25 @@ const App = () => {
 
                     <Route exact path={ROUTES.PROFILE_SETTINGS}>
                         <ProfileSettings />
+                         <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_CUSTOMIZE}>
                         <ProfileSettings />
+                         <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_ACHIEVMENTS}>
                         <ProfileSettings />
+                         <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.ADMIN_SETTINGS}>
                         <OrganizationSettings />
+                         <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
