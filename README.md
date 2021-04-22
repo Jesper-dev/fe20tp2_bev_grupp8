@@ -1,8 +1,8 @@
+![Icon of Lets Vest](pictures/lets-vest-icon.png)
+
 # Let's Vest (BETA)
 
 Let's vest is a website where you can see stock market information and information about crypto. You can share your portfolio/account to other accounts on the website. Make posts, see other posts and like other posts. Earn achievements where you can display your reward on your profile.
-
-![Icon of Lets Vest](pictures/lets-vest-icon.png)
 
 ## Created by
 
