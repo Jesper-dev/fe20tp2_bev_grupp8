@@ -13,7 +13,7 @@ const DistributionPortfolioChart = ({ currency }) => {
         datasets: [
             {
                 label: 'Total assets',
-                data: [currency, TotalStocks, TotalCrypto],
+                data: [50000, TotalStocks, TotalCrypto],
                 backgroundColor: ['#9BC53D', '#5BC0EB', '#FDE74C'],
                 minBarLength: 50,
                 hoverOffset: 1,
