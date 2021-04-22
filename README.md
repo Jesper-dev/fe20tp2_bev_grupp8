@@ -1,6 +1,8 @@
-# Let's Vest (Work in progress)
+# Let's Vest (BETA)
 
-Let's vest is a website where you can see stock market information and information about crypto. You can share your portfolio/account to other accounts on the website. Make posts, see other posts and like other posts. Built for mobile first.
+![Icon of Lets Vest](pictures/lets-vest-icon.png)
+
+Let's vest is a website where you can see stock market information and information about crypto. You can share your portfolio/account to other accounts on the website. Make posts, see other posts and like other posts. Earn achievements where you can display your reward on your profile.
 
 ## Created by
 
@@ -19,5 +21,10 @@ Let's vest is a website where you can see stock market information and informati
 - **See information about other accounts**
 - **Message other accounts**
 - **Make posts about almost anything**
+- **Earn achievements**
+
+#### Screenshot
+
+![Screenshot of Lets Vest](pictures/lets-vest-readme.png)
 
 [Trello](https://trello.com/b/aSBjDnhs/tp2-b-e-v)
