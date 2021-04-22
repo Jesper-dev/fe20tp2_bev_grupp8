@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-import { ChatCardWrapper } from './ChatCardElements'
+import { ChatCardWrapper } from './ChatCardElements';
 
-const ChatCard = ({msg, pic, yourMsg}) => {
+const ChatCard = ({ msg, pic, yourMsg }) => {
     return (
         <ChatCardWrapper yourMsg={yourMsg}>
-            <img src={pic} />
+            {yourMsg ? null : <img src={pic} />}
             <span>{msg}</span>
         </ChatCardWrapper>
-    )
-}
+    );
+};
 
-export default ChatCard
+export default ChatCard;
