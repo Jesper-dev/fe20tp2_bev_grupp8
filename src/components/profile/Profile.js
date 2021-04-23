@@ -72,6 +72,14 @@ const Profile = () => {
                     });
                 }
             }
+            if (item.symbol === 'doge') {
+                if (item.amount >= 500000) {
+                    // setBitcoin(true);
+                    firebase.user(userData.uid).child('/achievments/dogecoin').update({
+                        done: true,
+                    });
+                }
+            }
         });
     };
 

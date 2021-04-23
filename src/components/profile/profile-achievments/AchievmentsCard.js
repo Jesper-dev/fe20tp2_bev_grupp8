@@ -11,7 +11,6 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
     const [ach, setAch] = useState(false);
     const userData = JSON.parse(localStorage.getItem('authUser'));
     const firebase = useContext(FirebaseContext);
-    const toast = document.querySelector('.toast');
     useEffect(() => {
         firebase
             .user(userData.uid)
@@ -25,7 +24,6 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
                     setChecked(false)
                 }
             });
-/*         console.log(name); */
 
         firebase
             .user(userData.uid)
@@ -33,15 +31,14 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
             .on('value', (snapshot) => {
                 const data = snapshot.val();
                 let list = [];
-     /*            console.log(data); */
                 for (const key in data) {
                     list.push(data[key]);
                 }
                 setAch(list);
             });
     }, [checked]);
+
     const onChangeFunc = (arr, id) => {
-        let showAch = checked;
         disableAchs(arr);
         setChecked(!checked);
 
@@ -66,7 +63,6 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
         <>
             <AchievmentsCardWrapper show={show} done={done} checked={checked}>
                 <MillionareSvg />
-                {/*         <img>{svg}</img> */}
                 <section>
                     <section className="text-wrapper">
                         <span>{name}</span>
@@ -84,11 +80,6 @@ const AchievmentsCard = ({ icon, name, desc, done, id, show, svg, reward }) => {
                 >
                     <MoneyBagSvg className="moneybag" />
                 </button>
-               {/*     <input
-                    type="checkbox"
-                    checked={showCard.show}
-                    onClick={() => onChangeFunc(ach, id)}
-                /> */}
             </AchievmentsCardWrapper>
         </>
     );

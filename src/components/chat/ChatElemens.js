@@ -72,12 +72,15 @@ export const ChatIcon = styled.button`
     position: fixed;
     right: 2rem;
     bottom: 2rem;
+    outline: none;
 
     font-size: 4rem;
+    /* color: ${(props) => props.showChat ? '20%' : '100%'}; */
     color: var(--clr-primary);
     background: none;
     border: none;
     cursor: pointer;
+    opacity: ${(props) => props.showChat ? '50%' : '100%'};
 
     transition: all 150ms ease-in-out;
 
