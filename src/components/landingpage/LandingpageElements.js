@@ -11,10 +11,15 @@ export const NavBar = styled.nav`
 
     ul {
         display: flex;
+        align-items: center;
         gap: 1rem;
         list-style-type: none;
         margin: 0;
         padding: 0;
+        li:nth-child(1) > a {
+            color: var(--primary);
+            text-decoration: none;
+        }
     }
 
     h1 {

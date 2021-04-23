@@ -3,7 +3,7 @@ import { NavBar, Banner, About } from './LandingpageElements';
 import { Button } from '../shared/button/ButtonElements';
 import * as ROUTES from '../../constants/routes';
 import FirebaseContext from '../firebase/context';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import MoneySvg from '../svgs/LandingSvg';
 import InvestSvg from '../svgs/InvestSvg';
@@ -33,32 +33,31 @@ const Landingpage = () => {
                 {/*       <h1>Let's Vest</h1> */}
                 <LogoLets className="logo-lets" />
                 <ul>
-                <li>
-                        <Button to={ROUTES.ABOUT_US} primary="true">
-                              About Us
-                          </Button>
-                        </li>
-                        {firebase.auth.currentUser ? (
-                                <li>
+                    <li>
+                        <Link to={ROUTES.ABOUT_US} primary="true">
+                            About Us
+                        </Link>
+                    </li>
+                    {firebase.auth.currentUser ? (
+                        <li>
                             <Button to={ROUTES.PROFILE} primary="true">
                                 Profile
                             </Button>
-                                </li>
-                        ) : (
-                            <>
+                        </li>
+                    ) : (
+                        <>
                             <li>
-                            <Button to={ROUTES.SIGN_IN} secondary="true">
-                                Sign In
-                            </Button>
+                                <Button to={ROUTES.SIGN_IN} secondary="true">
+                                    Sign In
+                                </Button>
                             </li>
                             <li>
-                              <Button to={ROUTES.SIGN_UP} primary="true">
-                              Sign Up
-                          </Button>
+                                <Button to={ROUTES.SIGN_UP} primary="true">
+                                    Sign Up
+                                </Button>
                             </li>
-                            </>
-                        )}
-
+                        </>
+                    )}
                 </ul>
             </NavBar>
             <Banner>
