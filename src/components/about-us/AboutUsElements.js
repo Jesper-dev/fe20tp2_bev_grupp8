@@ -12,23 +12,55 @@ export const ContentWrapper = styled.main`
     /*     width: inherit; */
     gap: 1rem;
 
+    svg{
+        width: auto;
+        height: 24rem;
+    }
+
     header {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
         gap: 1rem;
+      /*   max-width: 80rem; */
     }
 
     h1,
     h2 {
+        font-size: 2.2rem;
+        width: 100%;
         text-align: center;
-        color: var(--clr-almost-black);
+        color: var(--secondary);
+        /* color: var(--clr-almost-black); */
     }
 
     p {
+        font-size: 1.2rem;
         text-align: center;
-        max-width: 50rem;
+        max-width: 45rem;
+        font-weight: 600;
         color: var(--clr-almost-black);
+    }
+
+    .contact-wrapper {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-wrapper > a {
+        text-decoration: none;
+
+        color: white;
+    }
+
+    .contact-wrapper > a:hover {
+
+        opacity: 50%;
+
     }
 `;
 
@@ -45,6 +77,9 @@ export const About = styled.section`
         display: flex;
         flex-direction: column;
         align-items: center;
+        p{
+            font-size: 0.9rem;
+        }
     }
 
     p,

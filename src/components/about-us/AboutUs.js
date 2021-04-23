@@ -7,13 +7,12 @@ import * as ROUTES from '../../constants/routes';
 import FirebaseContext from '../firebase/context';
 import { Link } from 'react-router-dom';
 
-import MoneySvg from '../svgs/LandingSvg';
-import InvestSvg from '../svgs/InvestSvg';
-import ProfitsSvg from '../svgs/ProfitsSvg';
+import FinanceData from '../svgs/illustations/FinancialData';
+import BitcoinGirls from '../svgs/illustations/BitcoinGirls';
 import LogoLets from '../svgs/LogoLets';
 
 import JonImg from '../../img/JonBild.png';
-import JesperImg from '../../img/jeppe.png';
+import JesperImg from '../../img/jeppe2.png';
 import AntonImg from '../../img/anton.png';
 import KevinImg from '../../img/kevin.png';
 
@@ -58,20 +57,25 @@ const AboutUs = () => {
                 <header>
                     <h1>The vision for Let's Vest</h1>
                     <p>
-                        “Let’s vest” is a software idé designed for investing
-                        companies to train their employees. The fundamental idé
+                        “Let’s vest” is a software idea designed for investing
+                        companies to train their employees. The fundamental idea
                         is to allow companies to register and create a personal
                         page where they can analyze their employees fictional
                         investment decisions by analyzing data and results.
-                        Cryptocurrency will be included is also aviable for
+                        Cryptocurrency will be included and also available for
                         purschase.
-                        <br />
-                        <br /> This is achived by allowing their employees to
+                    </p>
+                    <FinanceData />
+
+                    <BitcoinGirls />
+                    <p>
+
+                        This is achieved by allowing their employees to
                         connect their user/device to the account page. The
                         employee's/user will first and foremost use the software
                         to browse and view the stock market. But the users will
                         also be able to use a fictional currency to make
-                        hypotecial investments that will change in relation to
+                        hypothetical investments that will change in relation to
                         the marketvalue. The software will gather data from the
                         users that the company will be able to display in a
                         custom companydata view.
@@ -84,37 +88,49 @@ const AboutUs = () => {
                         <h3>Jon Sundelöf</h3>
                         <h4>CEO</h4>
                         <p>
-                            Hej! Mitt namn är Jon Sundelöf. Jag är en del av
-                            Let's Vest AB och älskar kod och programmering.
+                            I'm Jon Sundelöf and im the Chief Executive Officer of Lets's Vest AB. I'm a passionate and hardwoking induvidual who always brings it 100%.
                         </p>
+                        <div className="contact-wrapper">
+                            <a href="mailto:jon@sundelof.se">jon@sundelof.se</a>
+                            <a href="http://jonsundelof.surge.sh/" target="_blank">Portfolio</a>
+                        </div>
                     </article>
                     <article>
                         <img src={JesperImg} />
-                        <h3>Jesper Petterson</h3>
+                        <h3>Jesper Pettersson</h3>
                         <h4>CTO</h4>
                         <p>
-                            Hej! Mitt namn är Jesper Petterson. Jag är en del av
-                            Let's Vest AB och älskar kod och programmering.
+                            Hello! My name is Jesper Pettersson. I'm the CTO of Lets Vest AB. I love to code and I love my co-workers.
+                            Feel free to contact me.
                         </p>
+                        <div className="contact-wrapper">
+                            <a href="mailto:jesper.pettersson00@hotmail.com">Jesper.petterson00@hotmail.com</a>
+                            <a href="http://www.jesper-portfolio.surge.sh" target="_blank">Portfolio</a>
+                        </div>
                     </article>
                     <article>
                         <img src={AntonImg} />
-                        <h3>Anton Larsson-Andersson</h3>
+                        <h3>Anton Larsson-Auna</h3>
                         <h4>CFO</h4>
                         <p>
-                            Hej! Mitt namn är Anton Larson-Andersson? Jag är en
-                            del av Let's Vest AB och älskar kod och
-                            programmering.
+                            I'm Anton Larsson-Auna Y'all. Investment is my passion. If you want investment tips I'm your guy. I also love Innis & Gunn.
                         </p>
+                        <div className="contact-wrapper">
+                            <a href="mailto:antonlarssonauna@gmail.com">antonlarssonauna@gmail.com</a>
+                            <a href="http://antonla-portfolio.surge.sh/" target="_blank">Portfolio</a>
+                        </div>
                     </article>
                     <article>
                         <img src={KevinImg} />
-                        <h3>Kevin Naomi</h3>
+                        <h3>Kevin Namousi</h3>
                         <h4>CDO</h4>
                         <p>
-                            Hej! Mitt namn är Kevin Naomi? Jag är en del av
-                            Let's Vest AB och älskar kod och programmering.
+                           I'm Kevin Namousi. I love sunny beaches and spending my time in Spain. I know my shit when it comes to CSS and thats that. Don't question my authority.
                         </p>
+                        <div className="contact-wrapper">
+                            <a href="mailto:kevin.namousi@student.kyh.se">kevin.namousi@student.kyh.se</a>
+                            <a href="http://www.jesper-portfolio.surge.sh" target="_blank">Portfolio</a>
+                        </div>
                     </article>
                 </About>
             </ContentWrapper>
