@@ -42,7 +42,7 @@ const Chat = () => {
 
     const onMsgSend = (e, name, pic, text, id) => {
         e.preventDefault();
-
+        let date = Date.now()
         if (!text) return;
 
         firebase
@@ -53,6 +53,7 @@ const Chat = () => {
                     name,
                     pic,
                     text,
+                    date,
                 },
             });
 
@@ -61,7 +62,7 @@ const Chat = () => {
 
     return (
         <>
-            <ChatIcon onClick={() => setShowChat(!showChat)}>
+            <ChatIcon onClick={() => setShowChat(!showChat)} showChat={showChat}>
                 <i className="fas fa-comments-dollar"></i>
             </ChatIcon>
 
@@ -80,6 +81,7 @@ const Chat = () => {
                                             ? true
                                             : false
                                     }
+                                    date={item.date}
                                 />
                             );
                         })}
@@ -110,6 +112,7 @@ const Chat = () => {
                     </form>
                 </section>
             </ChatWrapper>
+
         </>
     );
 };

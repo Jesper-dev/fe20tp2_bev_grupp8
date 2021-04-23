@@ -38,6 +38,7 @@ import Beta from './components/Beta'
 import { setOrgColor } from './components/shared/functions/colorTheme';
 
 
+
 const App = () => {
     const firebase = useContext(FirebaseContext);
     const user = JSON.parse(localStorage.getItem('authUser'));
@@ -47,6 +48,8 @@ const App = () => {
             setOrgColor(firebase, user);
         }
     }, []);
+
+
 
     return (
         <>

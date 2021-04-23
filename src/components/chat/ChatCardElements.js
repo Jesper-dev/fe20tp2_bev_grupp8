@@ -17,7 +17,7 @@ export const ChatCardWrapper = styled.article`
         border-radius: 50%;
     }
 
-    span {
+    .container > span {
         font-size: 0.8rem;
         background: ${(props) =>
             props.yourMsg ? 'var(--clr-primary-light__dimmer)' : '#f0f2f5'};
@@ -25,5 +25,18 @@ export const ChatCardWrapper = styled.article`
         /* background: #f0f2f5; */
         padding: 0.5rem;
         border-radius: 20px;
+    }
+
+    .container > time {
+        font-size: 0.7rem;
+        /* background: var(--clr-primary-light); */
+        /* background: #f0f2f5; */
+        padding: 0.5rem;
+        border-radius: 20px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
     }
 `;
