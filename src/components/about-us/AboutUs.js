@@ -62,8 +62,7 @@ const AboutUs = () => {
                         is to allow companies to register and create a personal
                         page where they can analyze their employees fictional
                         investment decisions by analyzing data and results.
-                        Cryptocurrency will be included and also available for
-                        purschase.
+                        Cryptocurrency is included a also available a source for investment.
                     </p>
                     <FinanceData />
 
