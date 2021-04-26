@@ -66,7 +66,6 @@ class Firebase {
 
                                     //let id = authUser.uid;
                                     let localOrg = dbUser;
-
                                     console.log(localOrg);
                                     /*            console.log(dbUserKey); */
 
@@ -114,6 +113,8 @@ class Firebase {
     // *** User API ***
 
     user = (uid) => this.db.ref(`users/${uid}`);
+
+    // currentUser = () => this.db.ref(`users/${this.auth.currentUser}`);
 
     admin = () => this.db.ref(`organizations/`);
 

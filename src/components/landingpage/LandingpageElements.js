@@ -64,9 +64,13 @@ export const Banner = styled.section`
 
     h2,
     p {
+        color: var(--clr-almost-black);
         margin: 0;
         text-align: center;
         max-width: 40rem;
+    }
+    p {
+        font-weight: 600;
     }
 
     h2 {

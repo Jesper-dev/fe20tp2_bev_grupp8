@@ -37,13 +37,13 @@ const Profile = () => {
     const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [userInfo, setUserInfo] = useState({});
-    const [millionaire, setMillionaire] = useState(false);
     const [bitcoin, setBitcoin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [followerCount, setFollowerCount] = useState(false);
     const [followingCount, setFollowingCount] = useState(false);
     const [chosenEmoji, setChosenEmoji] = useState(null);
     const [showEmoji, setShowEmoji] = useState(false);
+    const [lvlPercent, setLvlPercent] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
     const FetchedStockList = useSelector((state) => state.FetchedStockList);
@@ -51,16 +51,26 @@ const Profile = () => {
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
-    const checkUser = (currency, arr) => {
+    const checkUser = (currency, arr, achs) => {
         let list = [];
         if (currency >= 1000000) {
             // setMillionaire(true);
+            checkIfGotXp(achs.millionaire.gotXp);
             firebase
                 .user(userData.uid)
                 .child('/achievments/millionaire')
                 .update({
                     done: true,
                 });
+
+            firebase
+                .user(userData.uid)
+                .child('/achievments/millionaire')
+                .update({
+                    gotXp: true,
+                });
+
+            return;
         }
 
         for (const key in arr) {
@@ -77,6 +87,8 @@ const Profile = () => {
                             done: true,
                         });
                 }
+
+                return;
             }
             if (item.symbol === 'doge') {
                 if (item.amount >= 500000) {
@@ -88,7 +100,21 @@ const Profile = () => {
                             done: true,
                         });
                 }
+                return;
             }
+        });
+    };
+
+    const checkIfGotXp = (gotXp) => {
+        if (gotXp === false) {
+            updateLevelPercent();
+        }
+    };
+
+    const updateLevelPercent = () => {
+        let newPercent = userInfo.levelPercent + 10;
+        firebase.user(userData.uid).update({
+            levelPercent: newPercent,
         });
     };
 
@@ -125,6 +151,7 @@ const Profile = () => {
     };
 
     useEffect(() => {
+        let list = [];
         // const theUserId = firebase.auth.currentUser.uid;
         // console.log(`THE USER ID --> ${theUserId}`);
         fetchUserSnapshotObject(
@@ -141,8 +168,16 @@ const Profile = () => {
             checkFollowingCount(data.following);
             setUsername(data.username);
             setUserInfo(data);
+            // for (const key in data.achievments) {
+            //     list.push(data.achievments[key]);
+            // }
+            // setAchievmentsData(list);
             if (!data.picture) return;
-            checkUser(data.currency.currency, data.possessionCrypto);
+            checkUser(
+                data.currency.currency,
+                data.possessionCrypto,
+                data.achievments
+            );
             let blobLink = data.picture.profile_pic;
             dispatch(setProfileImage(blobLink));
             if (!data.roles) return;

@@ -17,8 +17,8 @@ import SignIn from './components/sign-in/SignIn';
 import PasswordForget from './components/password-forget/PasswordForget';
 import PageNotFound from './components/404/PageNotFound';
 
-import UserPosts from "./components/profile/profile-wall/user-posts/UserPosts";
-import LikedPosts from "./components/profile/profile-wall/liked-posts/LikedPosts";
+import UserPosts from './components/profile/profile-wall/user-posts/UserPosts';
+import LikedPosts from './components/profile/profile-wall/liked-posts/LikedPosts';
 import ProfileWall from './components/profile/profile-wall/ProfileWall';
 // import ProfilePortfolio from './components/profile/profile-portfolio/ProfilePortfolio';
 // import ProfileDashboard from './components/profile/profile-dashboard/ProfileDashboard';
@@ -30,14 +30,12 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landingpage from './components/landingpage/Landingpage';
-import AboutUs from './components/about-us/AboutUs'
+import AboutUs from './components/about-us/AboutUs';
 import { withAuthentication } from './components/session';
 import { FirebaseContext } from './components/firebase';
-import Beta from './components/Beta'
+import Beta from './components/Beta';
 
 import { setOrgColor } from './components/shared/functions/colorTheme';
-
-
 
 const App = () => {
     const firebase = useContext(FirebaseContext);
@@ -48,8 +46,6 @@ const App = () => {
             setOrgColor(firebase, user);
         }
     }, []);
-
-
 
     return (
         <>
@@ -111,29 +107,29 @@ const App = () => {
                     </Route>
                     <Route exact path={ROUTES.INFO_CRYPTO}>
                         <CryptoInfoPage />
-                         <Beta />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
                     <Route exact path={ROUTES.SIGN_IN}>
                         <SignIn />
-                         <Beta />
+                        <Beta />
                     </Route>
                     <Route exact path={ROUTES.SIGN_UP}>
                         <SignUp />
-                         <Beta />
+                        <Beta />
                     </Route>
                     <Route exact path={ROUTES.PASSWORD_FORGET}>
                         <PasswordForget />
-                         <Beta />
+                        <Beta />
                     </Route>
                     <Route exact path={ROUTES.LANDING}>
                         <Landingpage />
-                         <Beta />
+                        <Beta />
                     </Route>
                     <Route exact path={ROUTES.ABOUT_US}>
                         <AboutUs />
-                         <Beta />
+                        <Beta />
                     </Route>
                     {/*  <Route exact path={ROUTES.PORTFOLIO}>
                     <Profile />
@@ -145,7 +141,7 @@ const App = () => {
                         <Profile />
                         {/* <ProfileDashboard /> */}
                         <NavbarLeft />
-                         <Beta />
+                        <Beta />
                         <Toolbar />
                     </Route>
 
@@ -155,7 +151,7 @@ const App = () => {
 
                         {/* <ProfileWall /> */}
                         <NavbarLeft />
-                         <Beta />
+                        <Beta />
                         <Toolbar />
                     </Route>
 
@@ -164,14 +160,14 @@ const App = () => {
                         {/* <ProfileWall /> */}
                         {/* <UserPosts /> */}
                         <NavbarLeft />
-                         <Beta />
+                        <Beta />
                         <Toolbar />
                     </Route>
 
                     <Route exact path={ROUTES.PROFILE_LIKED}>
                         <Profile />
                         <ProfileWall />
-                         <Beta />
+                        <Beta />
                         <LikedPosts />
                         <NavbarLeft />
                         <Toolbar />
@@ -179,33 +175,34 @@ const App = () => {
 
                     <Route exact path={ROUTES.PROFILE_SETTINGS}>
                         <ProfileSettings />
-                         <Beta />
+                        <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_CUSTOMIZE}>
                         <ProfileSettings />
-                         <Beta />
+                        <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.PROFILE_SETTINGS_ACHIEVMENTS}>
                         <ProfileSettings />
-                         <Beta />
+                        <Beta />
+                        {/* <NavbarLeft />
+                        <Toolbar /> */}
+                    </Route>
+                    <Route exact path={ROUTES.PROFILE_SETTINGS_LEVEL}>
+                        <ProfileSettings />
+                        <Beta />
                         {/* <NavbarLeft />
                         <Toolbar /> */}
                     </Route>
                     <Route exact path={ROUTES.ADMIN_SETTINGS}>
                         <OrganizationSettings />
-                         <Beta />
+                        <Beta />
                         <NavbarLeft />
                         <Toolbar />
                     </Route>
-               {/*      <Route exact path={ROUTES.PROFILE_ACHIEVMENTS}>
-                        <ProfileAchievments />
-                        <NavbarLeft />
-                        <Toolbar />
-                    </Route> */}
                     <Route component={PageNotFound} />
                 </Switch>
             </Router>
@@ -273,7 +270,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--clr-almost-white);
   /*   background-color: #F0F2F5; */
 
-    &::-webkit-scrollbar-track
+/*     &::-webkit-scrollbar-track
     {-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #CCCCCC;
@@ -288,8 +285,7 @@ const GlobalStyle = createGlobalStyle`
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: var(--clr-primary-light__dimmer);
-/* 	background-color: #555; */
-}
+} */
   }
 
     p {

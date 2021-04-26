@@ -17,6 +17,7 @@ export const PROFILE_DASHBOARD = '/profile/dashboard';
 export const PROFILE_SETTINGS = '/profile/settings';
 export const PROFILE_SETTINGS_CUSTOMIZE = '/profile/settings/customize';
 export const PROFILE_SETTINGS_ACHIEVMENTS = '/profile/settings/achievements';
+export const PROFILE_SETTINGS_LEVEL = '/profile/settings/level';
 /* export const PROFILE_SETTINGS = '/profile/settings'; */
 
 /*

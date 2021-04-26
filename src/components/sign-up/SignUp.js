@@ -102,6 +102,7 @@ const INITIAL_STATE = {
             reward: 'Title "Bitcoin Enthusiast"',
             show: false,
             id: 'bitcoin',
+            gotXp: false,
         },
         millionaire: {
             name: 'Selfmade Millionaire',
@@ -110,6 +111,7 @@ const INITIAL_STATE = {
             reward: 'Title "Selfmade Millionaire"',
             show: false,
             id: 'millionaire',
+            gotXp: false,
         },
         dogecoin: {
             name: 'Doge Coin.. Really?',
@@ -118,6 +120,7 @@ const INITIAL_STATE = {
             reward: 'Title "Doge Coin.. Really?"',
             show: false,
             id: 'dogecoin',
+            gotXp: false,
         },
     },
     picture: {

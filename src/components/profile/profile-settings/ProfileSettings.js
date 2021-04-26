@@ -9,6 +9,7 @@ import LeftSettingsNav from '../../shared/leftside-settings-nav/LeftSettingsNav'
 
 import Achievments from '../profile-achievments/ProfileAchievments';
 import EditProfile from './edit-profile/EditProfile';
+import LevelWall from './profile-xp/LevelWall';
 import ProfileImgChoose from './profile-img/ProfileChooseImg';
 import CustomizeHomepage from './customize-homepage/CustomizeHomepage';
 import SignOutButton from '../../sign-out/SignOut';
@@ -22,19 +23,24 @@ const ProfileSettings = () => {
 
     const tabs = [
         {
-            icon: <i class="fas fa-pen"></i>,
+            icon: <i className="fas fa-pen"></i>,
             label: ' Edit Profile',
             link: ROUTES.PROFILE_SETTINGS,
         },
         {
-            icon: <i class="fas fa-hammer"></i>,
+            icon: <i className="fas fa-hammer"></i>,
             label: ' Customize Application',
             link: ROUTES.PROFILE_SETTINGS_CUSTOMIZE,
         },
         {
-            icon: <i class="fas fa-trophy"></i>,
+            icon: <i className="fas fa-trophy"></i>,
             label: ' Achievements',
             link: ROUTES.PROFILE_SETTINGS_ACHIEVMENTS,
+        },
+        {
+            icon: <i className="fas fa-user"></i>,
+            label: ' Level',
+            link: ROUTES.PROFILE_SETTINGS_LEVEL,
         },
     ];
 
@@ -60,11 +66,11 @@ const ProfileSettings = () => {
                     path={ROUTES.PROFILE_SETTINGS_ACHIEVMENTS}
                     component={Achievments}
                 />
-                {/*      <ButtonWrapper>
-                <ButtonPrimary className="primary" to={ROUTES.PROFILE_ACHIEVMENTS}> <i className="fas fa-trophy"></i> Achievments</ButtonPrimary>
-                <SignOutButton />
-                <button className="delete-account-btn " onClick={deleteAccount}>Delete account</button>
-            </ButtonWrapper> */}
+                <Route
+                    exact
+                    path={ROUTES.PROFILE_SETTINGS_LEVEL}
+                    component={LevelWall}
+                />
             </Mainwrapper>
         </ContentWrapper>
     );
