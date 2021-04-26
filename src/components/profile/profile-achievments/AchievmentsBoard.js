@@ -1,49 +1,52 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { FirebaseContext } from '../../firebase/context';
 
 const AchievmentsBoard = () => {
     const firebase = useContext(FirebaseContext);
-    const [achData, setAchData] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false);
+    const [achName, setAchName] = useState(false);
     const userData = JSON.parse(localStorage.getItem('authUser'));
 
     useEffect(() => {
-        firebase.user(userData.uid).child('/achievments').once('value', (snapshot) => {
-            if(!snapshot.val()) return;
-            setAchData(snapshot.val())
-        })
+        setLoading(true);
+        let list = [];
+        firebase
+            .user(userData.uid)
+            .child('/achievments')
+            .on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
+                for (const key in data) {
+                    list.push(data[key]);
+                }
+                chooseAch(list);
+            });
 
         return () => {
-            setLoading(false)
-        }
-    }, [achData])
+            setLoading(false);
+        };
+    }, [loading]);
 
+    const chooseAch = (array) => {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].show === true) {
+                setAchName(array[i].name);
+                return;
+            }
+        }
+    };
 
     return (
-<>
-
-    {loading ? <p>Loading...</p> : <div>
-        {achData.millionaire.show ? (
-                <p>{achData.millionaire.name}</p>
+        <>
+            {'' ? (
+                <p>Loading...</p>
             ) : (
-                null
+                <div>
+                    <p>{achName ? achName : ''}</p>
+                </div>
             )}
-            {achData.bitcoin.show ? (
-                <p>{achData.bitcoin.name}</p>
-            ) : (
-                null
-            )}
-            {achData.dogecoin.show ? (
-                <p>{achData.dogecoin.name}</p>
-            ) : (
-                null
-            )}
-        </div>}
+        </>
+    );
+};
 
-</>
-        // </div>
-
-    )
-}
-
-export default AchievmentsBoard
+export default AchievmentsBoard;
