@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
     .side-by-side {
-		position: relative;
+        position: relative;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -11,12 +11,12 @@ export const ContentWrapper = styled.div`
         .checkbox {
             appearance: none;
             position: absolute;
-			padding: 0;
+            padding: 0;
             margin: 0;
             width: 100%;
             height: 100%;
             cursor: pointer;
-			border: none;
+            border: none;
         }
 
         .checkbox:checked ~ svg > rect {
@@ -50,15 +50,14 @@ export const ContentWrapper = styled.div`
         margin-top: 25px;
         width: 550px;
 
-        @media screen and (max-width: 768px){
+        @media screen and (max-width: 768px) {
             width: 450px;
             height: 120px;
         }
-        @media screen and (max-width: 460px){
+        @media screen and (max-width: 460px) {
             width: 280px;
             min-height: 65px;
         }
-
     }
 
     box-sizing: border-box;
@@ -125,28 +124,35 @@ export const ContentWrapper = styled.div`
         }
 
         .label-part-of-org {
-            color: ${props => props.partOfOrg ? '#383838' : 'grey'};
+            color: ${(props) => (props.partOfOrg ? '#383838' : 'grey')};
             transition: color 1s linear;
         }
 
         .part-of-org-wrapper {
-
             &:hover {
-                border: ${props => props.partOfOrg ? '0.09375rem solid  #58D7AC' : '0.09375rem solid #c8c8c8'};
+                border: ${(props) =>
+                    props.partOfOrg
+                        ? '0.09375rem solid  #58D7AC'
+                        : '0.09375rem solid #c8c8c8'};
             }
             padding: 0.5rem 0.375rem 0.5rem 0;
 
             border-radius: 0.25rem;
             min-height: 16px;
-            text-indent: ${props => props.partOfOrg ? '0.375rem' : '-10rem'};
+            text-indent: ${(props) =>
+                props.partOfOrg ? '0.375rem' : '-10rem'};
             overflow: hidden;
 
             transition: all 1s ease-in-out;
 
-
-            border: ${props => props.partOfOrg ? '0.09375rem solid  #58D7AC' : '0.09375rem solid #c8c8c8'};
-            box-shadow: ${props => props.partOfOrg ? '0 0 0 0.1875rem  rgba(88, 215, 172, 0.2)' : 'none'};
-
+            border: ${(props) =>
+                props.partOfOrg
+                    ? '0.09375rem solid  #58D7AC'
+                    : '0.09375rem solid #c8c8c8'};
+            box-shadow: ${(props) =>
+                props.partOfOrg
+                    ? '0 0 0 0.1875rem  rgba(88, 215, 172, 0.2)'
+                    : 'none'};
         }
 
         button {
@@ -206,5 +212,16 @@ export const ContentWrapper = styled.div`
             background-color: #ffd3c4;
             font-weight: 500;
         }
+    }
+
+    .security-message {
+        color: red;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .security-message > span {
+        font-size: 1.2rem;
     }
 `;

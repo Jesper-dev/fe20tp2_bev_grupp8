@@ -15,6 +15,13 @@ export const ChatWrapper = styled.main`
     height: 40vh;
     width: 20rem;
 
+    @media screen and (max-width: 550px) {
+        right: 5.5rem;
+        bottom: 4rem;
+        width: 60%;
+        height: 70%;
+    }
+
     form {
         display: flex;
         align-items: center;
@@ -38,6 +45,10 @@ export const ChatWrapper = styled.main`
             width: 100%;
             padding: 0.4rem;
         }
+
+        @media screen and (max-width: 550px) {
+            width: 80%;
+        }
     }
 
     button {
@@ -47,6 +58,10 @@ export const ChatWrapper = styled.main`
         color: var(--clr-primary);
 
         cursor: pointer;
+
+        @media screen and (max-width: 550px) {
+            font-size: 1.4rem;
+        }
     }
 
     .chat-wrapper {
@@ -75,17 +90,27 @@ export const ChatIcon = styled.button`
     outline: none;
 
     font-size: 4rem;
-    /* color: ${(props) => props.showChat ? '20%' : '100%'}; */
     color: var(--clr-primary);
     background: none;
     border: none;
     cursor: pointer;
-    opacity: ${(props) => props.showChat ? '50%' : '100%'};
+    opacity: ${(props) => (props.showChat ? '50%' : '100%')};
 
     transition: all 150ms ease-in-out;
 
     &:hover {
         color: var(--clr-primary__dimmer);
         font-size: 4.2rem;
+    }
+
+    @media screen and (max-width: 550px) {
+        right: 1.5rem;
+        bottom: 4rem;
+        font-size: 3rem;
+
+        &:hover {
+            color: var(--clr-primary__dimmer);
+            font-size: 3rem;
+        }
     }
 `;

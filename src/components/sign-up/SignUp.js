@@ -599,6 +599,10 @@ class SignUpFormBase extends Component {
                                 <Link to={ROUTES.SIGN_IN}>Sign in</Link>
                             </p>
                         </form>
+                        <p className="security-message">
+                            <span>CAUTION</span> Do not use your real email, use
+                            a fake one.
+                        </p>
                     </>
                 )}
             </ContentWrapper>
