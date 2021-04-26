@@ -12,8 +12,8 @@ import ProfileWall from './profile-wall/ProfileWall';
 import ProfileDashboard from './profile-dashboard/ProfileDashboard';
 import AchievmentsBoard from './profile-achievments/AchievmentsBoard';
 import { fetchUserSnapshotObject } from '../shared/functions/firebase-functions';
-import FetchAllCrypto from '../../api/user-api-components/FetchAllCrypto'
-import FetchStockList from '../../api/user-api-components/FetchAllStocks'
+import FetchAllCrypto from '../../api/user-api-components/FetchAllCrypto';
+import FetchStockList from '../../api/user-api-components/FetchAllStocks';
 
 import { FirebaseContext } from '../firebase/context';
 import { withAuthorization } from '../session';
@@ -46,7 +46,7 @@ const Profile = () => {
     const [showEmoji, setShowEmoji] = useState(false);
 
     const ProfileImgReducer = useSelector((state) => state.ProfileImgReducer);
-    const FetchedStockList= useSelector((state) => state.FetchedStockList);
+    const FetchedStockList = useSelector((state) => state.FetchedStockList);
     const FetchedCryptoList = useSelector((state) => state.FetchedCryptoList);
 
     const userData = JSON.parse(localStorage.getItem('authUser'));
@@ -55,9 +55,12 @@ const Profile = () => {
         let list = [];
         if (currency >= 1000000) {
             // setMillionaire(true);
-            firebase.user(userData.uid).child('/achievments/millionaire').update({
-                done: true,
-            });
+            firebase
+                .user(userData.uid)
+                .child('/achievments/millionaire')
+                .update({
+                    done: true,
+                });
         }
 
         for (const key in arr) {
@@ -67,17 +70,23 @@ const Profile = () => {
             if (item.symbol === 'btc') {
                 if (item.amount >= 5) {
                     // setBitcoin(true);
-                    firebase.user(userData.uid).child('/achievments/bitcoin').update({
-                        done: true,
-                    });
+                    firebase
+                        .user(userData.uid)
+                        .child('/achievments/bitcoin')
+                        .update({
+                            done: true,
+                        });
                 }
             }
             if (item.symbol === 'doge') {
                 if (item.amount >= 500000) {
                     // setBitcoin(true);
-                    firebase.user(userData.uid).child('/achievments/dogecoin').update({
-                        done: true,
-                    });
+                    firebase
+                        .user(userData.uid)
+                        .child('/achievments/dogecoin')
+                        .update({
+                            done: true,
+                        });
                 }
             }
         });
@@ -157,113 +166,117 @@ const Profile = () => {
 
     return (
         <>
-        {FetchedCryptoList == 0 ? (
-                 <FetchAllCrypto />
-            ) : null}
-        {FetchedStockList == 0 ? (
-                <FetchStockList />
-            ) : null}
-        <ContentWrapper>
-            <HeaderWrapper>
-                <section>
-                    <div className="first-wrapper">
-                        <div className="name-emoji">
-                            <h2>{username}</h2>
-                            {chosenEmoji ? (
-                                <span
-                                    className="emoji"
-                                    onClick={() => setShowEmoji(!showEmoji)}
-                                >
-                                    {chosenEmoji.emoji}
-                                </span>
-                            ) : (
-                                <span className="emoji" onClick={() => setShowEmoji(!showEmoji)} >+</span>
-                            )}
+            {FetchedCryptoList == 0 ? <FetchAllCrypto /> : null}
+            {FetchedStockList == 0 ? <FetchStockList /> : null}
+            <ContentWrapper>
+                <HeaderWrapper>
+                    <section>
+                        <div className="first-wrapper">
+                            <div className="name-emoji">
+                                <h2>{username}</h2>
+                                {chosenEmoji ? (
+                                    <span
+                                        className="emoji"
+                                        onClick={() => setShowEmoji(!showEmoji)}
+                                    >
+                                        {chosenEmoji.emoji}
+                                    </span>
+                                ) : (
+                                    <span
+                                        className="emoji"
+                                        onClick={() => setShowEmoji(!showEmoji)}
+                                    >
+                                        +
+                                    </span>
+                                )}
+                            </div>
+                            <AchievmentsBoard />
                         </div>
-                        <AchievmentsBoard />
-                    </div>
-                    <div className="main-wrapper">
-                    <div>
-                        {ProfileImgReducer == 'null' ? (
-                            <ProfileSvg
-                                className="profile-avatar-svg"
-                                fillColor="var(--clr-primary)"
-                            />
-                        ) : (
-                            <ProfileImg img={ProfileImgReducer} />
-                        )}
+                        <div className="main-wrapper">
+                            <div>
+                                {ProfileImgReducer == 'null' ? (
+                                    <ProfileSvg
+                                        className="profile-avatar-svg"
+                                        fillColor="var(--clr-primary)"
+                                    />
+                                ) : (
+                                    <ProfileImg img={ProfileImgReducer} />
+                                )}
+                            </div>
+                            <div className="follower-wrapper">
+                                <div>
+                                    <p>
+                                        {followerCount > 0 ? followerCount : 0}
+                                    </p>
+                                    <span>Followers</span>
+                                </div>
+                                <div>
+                                    <p>
+                                        {followingCount > 0
+                                            ? followingCount
+                                            : 0}
+                                    </p>
+                                    <span>Following</span>
+                                </div>
+                            </div>
 
+                            <div
+                                className="emoji-picker-wrapper"
+                                style={
+                                    showEmoji
+                                        ? { display: 'flex' }
+                                        : { display: 'none' }
+                                }
+                            >
+                                <Picker
+                                    onEmojiClick={onEmojiClick}
+                                    groupVisibility={{
+                                        symbols: false,
+                                        objects: false,
+                                        activities: false,
+                                        travel_places: false,
+                                        animals_nature: false,
+                                        food_drink: false,
+                                        recently_used: false,
+                                    }}
+                                    preload={true}
+                                ></Picker>
+                            </div>
 
-                    </div>
-                    <div className="follower-wrapper">
-                        <div>
-                            <p>{followerCount > 0 ? followerCount : 0}</p>
-                            <span>Followers</span>
-                        </div>
-                        <div>
-                            <p>{followingCount > 0 ? followingCount : 0}</p>
-                            <span>Following</span>
-
-                        </div>
-                    </div>
-
-                    <div
-                        className="emoji-picker-wrapper"
-                        style={
-                            showEmoji
-                                ? { display: 'flex' }
-                                : { display: 'none' }
-                        }
-                    >
-                        <Picker
-                            onEmojiClick={onEmojiClick}
-                            groupVisibility={{
-                                symbols: false,
-                                objects: false,
-                                activities: false,
-                                travel_places: false,
-                                animals_nature: false,
-                                food_drink: false,
-                                recently_used: false,
-                            }}
-                            preload={true}
-                        ></Picker>
-
-                    </div>
-
-                    {/* <div className="btn-and-follower-wrapper">
+                            {/* <div className="btn-and-follower-wrapper">
 
 
                     </div> */}
-                    <div className="btn-wrapper">
-                            <ProfileSettingsBtn to={ROUTES.PROFILE_SETTINGS}>
-                                <i className="fas fa-user-edit"></i>
-                                Edit Profile
-                            </ProfileSettingsBtn>
+                            <div className="btn-wrapper">
+                                <ProfileSettingsBtn
+                                    to={ROUTES.PROFILE_SETTINGS}
+                                >
+                                    <i className="fas fa-user-edit"></i>
+                                    Edit Profile
+                                </ProfileSettingsBtn>
+                            </div>
                         </div>
-                    </div>
-
-                </section>
-                <TabBar tabs={tabs} />
-            </HeaderWrapper>
-            <MainWrapper>
-                <Route
-                    exact
-                    path={ROUTES.PROFILE}
-                    component={ProfilePortfolio}
-                />
-                <Route
-                    exact
-                    path={ROUTES.PROFILE_WALL}
-                    component={ProfileWall}
-                />
-                <Route
-                    exact
-                    path={ROUTES.PROFILE_DASHBOARD}
-                    component={ProfileDashboard}
-                />
-            </MainWrapper>
-        </ContentWrapper>
+                    </section>
+                    <TabBar tabs={tabs} />
+                </HeaderWrapper>
+                <MainWrapper>
+                    <Route
+                        exact
+                        path={ROUTES.PROFILE}
+                        component={ProfilePortfolio}
+                    />
+                    <Route
+                        exact
+                        path={ROUTES.PROFILE_WALL}
+                        component={ProfileWall}
+                    />
+                    <Route
+                        exact
+                        path={ROUTES.PROFILE_DASHBOARD}
+                        component={ProfileDashboard}
+                    />
+                </MainWrapper>
+            </ContentWrapper>
         </>
     );
 };
